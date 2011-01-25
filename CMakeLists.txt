@@ -14,12 +14,16 @@ set(CMAKE_MODULE_PATH
 )
 
 #Include des dépendances
+FIND_PACKAGE( OIS REQUIRED )
 FIND_PACKAGE( OGRE REQUIRED )
+FIND_PACKAGE( CEGUI REQUIRED )
 
 
 #Gestion des includes
 include_directories(
+	${OIS_INCLUDE_DIR}
 	${OGRE_INCLUDE_DIR}
+	${CEGUI_INCLUDE_DIR}
 	${CMAKE_SOURCE_DIR}/include
 	${CMAKE_BINARY_DIR}/include
 )
@@ -44,5 +48,7 @@ add_executable(
 #Configuration de l'édition de liens
 target_link_libraries(
 	rv-simulation-bataille
+	${OIS_LIBRARIES}
 	${OGRE_LIBRARIES}
+	${CEGUI_LIBRARIES}
 )
