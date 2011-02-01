@@ -65,6 +65,7 @@ $ENV{CEGUIDIR}
 $ENV{CEGUIDIR}/include
 $ENV{CEGUI_ROOT}
 $ENV{CEGUI_ROOT}/include
+$ENV{CEGUI_ROOT}/cegui/include
 $ENV{CEGUI_HOME}
 $ENV{CEGUI_HOME}/include
 /usr/local/include
