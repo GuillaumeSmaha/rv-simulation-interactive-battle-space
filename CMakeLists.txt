@@ -26,6 +26,11 @@ IF(NOT OIS_FOUND)
     MESSAGE(SEND_ERROR "Failed to find OIS.")
 ENDIF()
 
+IF(NOT CEGUI_FOUND)
+    MESSAGE(SEND_ERROR "Failed to find CEGUI.")
+ENDIF()
+
+
 
 #Gestion des includes
 include_directories(
