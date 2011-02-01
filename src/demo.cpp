@@ -93,13 +93,19 @@ void Demo::initListeners(void) {
 }
 
 void Demo::initScene(void) {	
+
+
+	Ogre::SceneNode *headNode = this->sceneMgr->createSceneNode("HeadNode");	
+	this->sceneMgr->getRootSceneNode()->addChild(headNode);
+		
 	// charger le « mesh » à partir du nom de fichier et le nommer
-	Ogre::Entity * entity = this->sceneMgr->createEntity("Cube", "Cube.mesh");
-	
+	Ogre::Entity *entity = this->sceneMgr->createEntity("Cube", "Cube.mesh");
 	// lier l'objet à un nouveau nœud
-	Ogre::SceneNode * headNode = this->sceneMgr->getRootSceneNode()->createChildSceneNode("HeadNode");
-	headNode->attachObject(entity);
-	 
+	Ogre::SceneNode *node = this->sceneMgr->createSceneNode();
+	node->attachObject(entity);
+	// attacher ce nœud à la scène (ici, à un autre nœud nommé « parentNode »)
+	headNode->addChild(node);
+
     // Set ambient light
     this->sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
  

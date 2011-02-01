@@ -31,12 +31,12 @@ IF(NOT CEGUI_FOUND)
 ENDIF()
 
 
-
 #Gestion des includes
 include_directories(
 	${OIS_INCLUDE_DIR}
 	${OGRE_INCLUDE_DIR}
 	${CEGUI_INCLUDE_DIR}
+	${CEGUI_OGRE_INCLUDE_DIR}
 	${CMAKE_SOURCE_DIR}/include
 	${CMAKE_BINARY_DIR}/include
 )
@@ -64,4 +64,5 @@ target_link_libraries(
 	${OIS_LIBRARIES}
 	${OGRE_LIBRARIES}
 	${CEGUI_LIBRARIES}
+	${CEGUI_OGRE_LIBRARIES}
 )
