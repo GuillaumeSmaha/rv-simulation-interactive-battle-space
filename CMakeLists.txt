@@ -30,7 +30,7 @@ IF(NOT CEGUI_FOUND)
     MESSAGE(SEND_ERROR "Failed to find CEGUI.")
 ENDIF()
 
-IF(NOT CEGUI_OGRE_LIBRARIES)
+IF(NOT CEGUI_OgreRenderer_FOUND)
     MESSAGE(SEND_ERROR "Failed to find CEGUI Ogre Renderer.")
 ENDIF()
 
@@ -40,7 +40,7 @@ include_directories(
 	${OIS_INCLUDE_DIR}
 	${OGRE_INCLUDE_DIR}
 	${CEGUI_INCLUDE_DIR}
-	${CEGUI_OGRE_INCLUDE_DIR}
+	${CEGUI_OgreRenderer_INCLUDE_DIRS}
 	${CMAKE_SOURCE_DIR}/include
 	${CMAKE_BINARY_DIR}/include
 )
@@ -68,5 +68,5 @@ target_link_libraries(
 	${OIS_LIBRARIES}
 	${OGRE_LIBRARIES}
 	${CEGUI_LIBRARIES}
-	${CEGUI_OGRE_LIBRARIES}
+	${CEGUI_OgreRenderer_LIBRARIES}
 )
