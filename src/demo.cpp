@@ -48,15 +48,15 @@ bool Demo::start(void) {
 	
 	// create the camera
 	this->camera = this->sceneMgr->createCamera("mainCam");
-	this->camera->setPosition(Ogre::Vector3(20, 20, 20));
+	this->camera->setPosition(Ogre::Vector3(90, 25, 90));
 	this->camera->lookAt(this->sceneMgr->getRootSceneNode()->getPosition());
 	
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
+	//Ogre::Viewport* viewPort = this->window->addViewport(this->camera);
 	Ogre::Viewport* viewPort = this->window->addViewport(this->camera, 0);
-	viewPort->setBackgroundColour(Ogre::ColourValue(0.5f, 0.5f, 1.0f));
-	this->camera->setAspectRatio(
-		Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));	
+	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
+	this->camera->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));	
 		
 	// start the scene rendering (main loop)
 	this->root->startRendering();
@@ -93,26 +93,45 @@ void Demo::initListeners(void) {
 }
 
 void Demo::initScene(void) {	
+	
+	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			plane, 150, 150, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+	Ogre::Entity* entGround = this->sceneMgr->createEntity("GroundEntity", "ground");
+	entGround->setMaterialName("Rockwall");
+	entGround->setCastShadows(false);
+	Ogre::SceneNode *groundNode = this->sceneMgr->getRootSceneNode()->createChildSceneNode("ground");
+	groundNode->attachObject(entGround);
+	groundNode->setPosition(0, -50, 0);
 
 
-	Ogre::SceneNode *headNode = this->sceneMgr->createSceneNode("HeadNode");	
-	this->sceneMgr->getRootSceneNode()->addChild(headNode);
+	Ogre::SceneNode *headNodeObject = this->sceneMgr->getRootSceneNode()->createChildSceneNode("HeadNodeObject");	
+	Ogre::SceneNode *headNodeLight = this->sceneMgr->getRootSceneNode()->createChildSceneNode("HeadNodeLight");	
 		
 	// charger le « mesh » à partir du nom de fichier et le nommer
-	Ogre::Entity *entity = this->sceneMgr->createEntity("Cube", "Cube.mesh");
-	// lier l'objet à un nouveau nœud
-	Ogre::SceneNode *node = this->sceneMgr->createSceneNode();
-	node->attachObject(entity);
-	// attacher ce nœud à la scène (ici, à un autre nœud nommé « parentNode »)
-	headNode->addChild(node);
+	Ogre::Entity *entity = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
+	Ogre::SceneNode *nodeObjectSuzanne = headNodeObject->createChildSceneNode("NodeObjectSuzanne");
+	nodeObjectSuzanne->attachObject(entity);
+	nodeObjectSuzanne->setPosition(0, 0, 0);
+	nodeObjectSuzanne->scale(10, 10, 10);
+	
+	/*Ogre::Entity *entity1 = this->sceneMgr->createEntity("SuzanneBoiteBas", "boite_bas.mesh");
+	Ogre::Entity *entity2 = this->sceneMgr->createEntity("SuzanneBoiteFermeture", "fermeture.mesh");
+	entity = this->sceneMgr->createEntity("SuzanneBoiteHaut", "boite_haut.mesh");
+	Ogre::SceneNode *nodeObjectSuzanneBoiteHaut = headNodeObject->createChildSceneNode("NodeObjectSuzanneBoiteHaut");
+	nodeObjectSuzanneBoiteHaut->attachObject(entity);
+	nodeObjectSuzanneBoiteHaut->setPosition(0, 0, 0);
+	nodeObjectSuzanneBoiteHaut->scale(10, 10, 10);*/
 
     // Set ambient light
-    this->sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+    //this->sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+    this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
  
     // Create a light
     Ogre::Light* l = this->sceneMgr->createLight("MainLight"); 
     l->setPosition(20,80,50);
-
+	Ogre::SceneNode *nodeLight1 = headNodeLight->createChildSceneNode("NodeLight1");
+	nodeLight1->attachObject(l);
 }
 
 //------------------------------------------------------------------------------
@@ -200,7 +219,33 @@ bool Demo::keyPressed(const OIS::KeyEvent &evt) {
 		case OIS::KC_ESCAPE:
 			this->shutDown = true;
 			break;
+			
+		case OIS::KC_UP:
+			this->camera->move(Ogre::Vector3(0, 0, 5));
+			break;
+			
+		case OIS::KC_DOWN:
+			this->camera->move(Ogre::Vector3(0, 0, -5));
+			break;
+			
+		case OIS::KC_H:
+			this->camera->move(Ogre::Vector3(0, 5, 0));
+			break;
+			
+		case OIS::KC_N:
+			this->camera->move(Ogre::Vector3(0, -5, 0));
+			break;
+			
+		case OIS::KC_G:
+			this->camera->move(Ogre::Vector3(5, 0, 0));
+			break;
+			
+		case OIS::KC_B:
+			this->camera->move(Ogre::Vector3(-5, 0, 0));
+			break;
 	}
+	
+	std::cout << "PosCamera : " << this->camera->getPosition()[0] << "/" << this->camera->getPosition()[1] << "/" << this->camera->getPosition()[2] << std::endl;
 	
 	return true;
 }
