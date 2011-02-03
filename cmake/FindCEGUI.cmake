@@ -61,8 +61,8 @@ elseif (UNIX)
   set(CEGUI_PREFIX_GUESSES
     /opt/cegui
     /opt/CEGUI
-    /usr/lib
-    /usr/local/lib
+    /usr
+    /usr/local
     $ENV{HOME}/cegui
     $ENV{HOME}/CEGUI
   )
