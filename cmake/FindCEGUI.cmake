@@ -70,6 +70,7 @@ endif ()
 
 set(CEGUI_PREFIX_PATH
 	$ENV{CEGUI_HOME} $ENV{CEGUI_DIR} $ENV{CEGUI_ROOT}
+	${CEGUI_PREFIX_GUESSES}
 )
 
 create_search_paths(CEGUI)
