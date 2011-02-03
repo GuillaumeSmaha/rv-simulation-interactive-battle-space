@@ -29,6 +29,7 @@
 include(FindPkgMacros)
 include(PreprocessorUtils)
 findpkg_begin(CEGUI)
+set(CEGUI_FIND_REQUIRED 1)
 
 # Get path, convert backslashes as ${ENV_${var}}
 getenv_path(CEGUI_HOME)
