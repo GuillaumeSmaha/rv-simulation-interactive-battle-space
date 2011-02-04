@@ -5,8 +5,17 @@ Demo::Demo(void) {
 	this->sceneMgr = NULL;
 	this->window = NULL;
 	
+#ifdef _DEBUG
+	this->resourcesCfg = "resources_d.cfg";
+#else
 	this->resourcesCfg = "resources.cfg";
+#endif
+
+#ifdef _DEBUG
+	this->pluginsCfg = "plugins_d.cfg";
+#else
 	this->pluginsCfg = "plugins.cfg";
+#endif
 	
 	this->camera = NULL;
 	
