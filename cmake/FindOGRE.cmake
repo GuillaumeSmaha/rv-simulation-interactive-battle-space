@@ -53,6 +53,23 @@ include(PreprocessorUtils)
 findpkg_begin(OGRE)
 
 
+# Get path, convert backslashes as ${ENV_${var}}
+getenv_path(OGRE_HOME)
+getenv_path(OGRE_SDK)
+getenv_path(OGRE_SOURCE)
+getenv_path(OGRE_BUILD)
+getenv_path(OGRE_DEPENDENCIES_DIR)
+getenv_path(PROGRAMFILES)
+
+# Determine whether to search for a dynamic or static build
+if (OGRE_STATIC)
+  set(OGRE_LIB_SUFFIX "Static")
+else ()
+  set(OGRE_LIB_SUFFIX "")
+endif ()
+
+
+#Detect Boost
 if (WIN32 OR APPLE)
   set(Boost_USE_STATIC_LIBS TRUE)
 else ()
@@ -76,27 +93,11 @@ if (NOT Boost_FOUND)
 endif()
 find_package(Boost QUIET)
 
+
 # Set up referencing of Boost
 include_directories(${Boost_INCLUDE_DIR})
 add_definitions(-DBOOST_ALL_NO_LIB)
 set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
-
-
-# Get path, convert backslashes as ${ENV_${var}}
-getenv_path(OGRE_HOME)
-getenv_path(OGRE_SDK)
-getenv_path(OGRE_SOURCE)
-getenv_path(OGRE_BUILD)
-getenv_path(OGRE_DEPENDENCIES_DIR)
-getenv_path(PROGRAMFILES)
-
-# Determine whether to search for a dynamic or static build
-if (OGRE_STATIC)
-  set(OGRE_LIB_SUFFIX "Static")
-else ()
-  set(OGRE_LIB_SUFFIX "")
-endif ()
-
 
 set(OGRE_LIBRARY_NAMES "OgreMain${OGRE_LIB_SUFFIX}")
 get_debug_names(OGRE_LIBRARY_NAMES)
