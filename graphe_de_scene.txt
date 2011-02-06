@@ -1,0 +1,12 @@
+[monde]
+    -[groupe vaiseau]
+        -{reacteur}
+        -{corps vaiseau}
+    -[groupe planete]
+        -{planete}
+        -{soleil}
+    -[groupe asteroide]
+        -{asteroide 1}
+        -{asteroide 2}
+        -{...}
+        -{asteroide N}
