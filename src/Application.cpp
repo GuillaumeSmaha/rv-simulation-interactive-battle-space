@@ -60,10 +60,9 @@ bool Application::start(void) {
 	this->initScene();
 	
 	// create the camera
-    if(type_Camera==CAMERA_FIXE){
-        this->gestCamera= new CameraFixe(this->sceneMgr->createCamera("mainCam"), this->sceneMgr);
+    if(type_Camera == CAMERA_FIXE){
+        this->gestCamera = new CameraFixe(this->sceneMgr, "mainCamera");
         this->gestCamera->init_camera();
-
     }
 	//this->camera = this->sceneMgr->createCamera("mainCam");
 	//this->camera->setPosition(Ogre::Vector3(90, 25, 90));

@@ -65,7 +65,8 @@ include_directories(
 )
 
 #Génération du fichier de configuration
-configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_SOURCE_DIR}/include/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_SOURCE_DIR}/include/config.h)
+
 	
 #Génération de la liste des fichiers
 file(
@@ -90,6 +91,8 @@ target_link_libraries(
 	${CEGUI_OgreRenderer_LIBRARIES}
 )
 
+#Générateur de documentation
+include(UseDoxygen OPTIONAL)
 
 #Mise en garde du dossier pour la création du build en cas de non-spécification
 string(COMPARE EQUAL ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} BUILD_IS_EQUAL)

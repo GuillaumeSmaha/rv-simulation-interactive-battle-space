@@ -5,8 +5,8 @@
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
+#include <iostream>
 #include <Ogre.h>
-
 #include <OISEvents.h>
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
@@ -40,7 +40,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
         OIS::Keyboard *keyboard;
     
         int type_Camera;
-        Camera* gestCamera;
+        Camera * gestCamera;
         bool shutDown;
         
         void loadRessources(void);
@@ -69,4 +69,4 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 	
 };
 
-#endif // __DEMO_H__
+#endif // __APPLICATION_H__
