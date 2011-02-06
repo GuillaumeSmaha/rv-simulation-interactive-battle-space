@@ -13,6 +13,7 @@ set(CMAKE_MODULE_PATH
 	"${CMAKE_MODULE_PATH}"
 )
 
+include(Function)
 #Include des dépendances
 FIND_PACKAGE( OIS REQUIRED )
 FIND_PACKAGE( OGRE REQUIRED )
@@ -35,6 +36,24 @@ IF(NOT CEGUI_OgreRenderer_FOUND)
 ENDIF()
 
 
+#Copie des fichiers pour l'éxécution
+writeResourceFile("${CMAKE_BINARY_DIR}/" 0)
+writePluginFile("${CMAKE_BINARY_DIR}/" 0)
+IF(WIN32)
+	writeResourceFile("${CMAKE_BINARY_DIR}/" 1)
+	writePluginFile("${CMAKE_BINARY_DIR}/" 1)
+
+	writeResourceFile("${CMAKE_BINARY_DIR}/Debug/" 1)
+	writePluginFile("${CMAKE_BINARY_DIR}/Debug/" 1)
+	copyFilesFilter(${OGRE_PLUGIN_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)")
+	
+	writeResourceFile("${CMAKE_BINARY_DIR}/Release/" 0)
+	writePluginFile("${CMAKE_BINARY_DIR}/Release/" 0)
+	copyFilesFilter(${OGRE_PLUGIN_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)")
+ENDIF(WIN32)
+
+
+
 #Gestion des includes
 include_directories(
 	${OIS_INCLUDE_DIR}
@@ -46,7 +65,7 @@ include_directories(
 )
 
 #Génération du fichier de configuration
-configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_BINARY_DIR}/include/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/config.h.cmake ${CMAKE_SOURCE_DIR}/include/config.h)
 	
 #Génération de la liste des fichiers
 file(
@@ -70,3 +89,12 @@ target_link_libraries(
 	${CEGUI_LIBRARIES}
 	${CEGUI_OgreRenderer_LIBRARIES}
 )
+
+
+#Mise en garde du dossier pour la création du build en cas de non-spécification
+string(COMPARE EQUAL ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} BUILD_IS_EQUAL)
+IF(BUILD_IS_EQUAL)
+	message(STATUS "")
+	message(STATUS "/!\\ Il est préférable de construire le cmake dans un dossier différent de la racine (par exemple \"build\")  !")
+	message(STATUS "")
+ENDIF(BUILD_IS_EQUAL)
