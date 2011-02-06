@@ -1,9 +1,9 @@
 /*!
- **  \file  CameraFixe.h
- **  \brief Ce fichier contient la déclaration de la classe CameraFixe. C'est la classe gérant une caméra fixe.
- **/
-#ifndef __CAMERAFIXE_H__
-#define __CAMERAFIXE_H__
+ *  \file  CameraFixe.h
+ *  \brief Ce fichier contient la déclaration de la classe CameraFixe. C'est la classe gérant une caméra fixe.
+ */
+#ifndef __CAMERA_FIXE_H__
+#define __CAMERA_FIXE_H__
 
 #include "Camera.h"
 
@@ -18,7 +18,7 @@ class CameraFixe : public Camera {
 		 * \param sceneMgr Pointeur sur le manager de la scène
 		 * \param cameraName Nom de la nouvelle caméra
 		 */
-		CameraFixe(Ogre::SceneManager * sceneMgr, std::string cameraName);
+		CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName);
 		
 		/*!
 		 * \brief Initialise la position de la caméra
@@ -27,4 +27,4 @@ class CameraFixe : public Camera {
 		int init_camera();
 };
 
-#endif //__CAMERAFIXE_H__
+#endif //__CAMERA_FIXE_H__

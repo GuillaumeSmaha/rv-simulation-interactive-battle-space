@@ -1,15 +1,16 @@
-#include "OrbitCamera.h"
+#include "CameraThirdPerson.h"
 
-OrbitCamera::OrbitCamera(Ogre::SceneManager *sceneMgr, Ogre::SceneNode *target)
+CameraThirdPerson::CameraThirdPerson(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target) : Camera(sceneMgr, cameraName)
 {
-	this->sceneMgr = sceneMgr;
 	this->targetNode = target;
-	
+}
+
+
+int CameraThirdPerson::init_camera() {
 	this->orbiting = false;
 	this->zooming = false;
 
 	// create the camera
-	this->camera = this->sceneMgr->createCamera("orbitCam");
 	this->camera->setNearClipDistance(1);
 	this->camera->setFarClipDistance(1000);
 	
@@ -29,12 +30,8 @@ OrbitCamera::OrbitCamera(Ogre::SceneManager *sceneMgr, Ogre::SceneNode *target)
 	this->camera->setFixedYawAxis(true);
 }
 
-OrbitCamera::~OrbitCamera()
-{
-	this->sceneMgr->destroyCamera("orbitCam");
-}
 
-void OrbitCamera::updateMovement(const OIS::MouseEvent &evt) {
+void CameraThirdPerson::updateMovement(const OIS::MouseEvent &evt) {
 	Ogre::Real dist = (this->camera->getPosition() - this->targetNode->_getDerivedPosition()).length();
 	
 	if (this->orbiting)   // yaw around the target, and pitch locally
@@ -62,26 +59,25 @@ void OrbitCamera::updateMovement(const OIS::MouseEvent &evt) {
 			(-evt.state.Z.rel < 0 && dist > 10))
 			this->camera->moveRelative(Ogre::Vector3(0, 0, -evt.state.Z.rel * 0.0008f * dist));
 	}
-
 }
 
-Ogre::Camera *OrbitCamera::getCamera(void) { 
-	return this->camera; 
-}
 
-bool OrbitCamera::getOrbiting(void) {
+bool CameraThirdPerson::getOrbiting(void) {
 	return this->orbiting;
 }
 
-void OrbitCamera::setOrbiting(bool orbiting) {
+
+void CameraThirdPerson::setOrbiting(bool orbiting) {
 	this->orbiting = orbiting;
 }
 
-bool OrbitCamera::getZooming(void) {
+
+bool CameraThirdPerson::getZooming(void) {
 	return this->zooming;
 }
 
-void OrbitCamera::setZooming(bool zooming) {
+
+void CameraThirdPerson::setZooming(bool zooming) {
 	this->zooming = zooming;
 }
 

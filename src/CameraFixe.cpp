@@ -1,7 +1,7 @@
 #include "CameraFixe.h"
 
 
-CameraFixe::CameraFixe(Ogre::SceneManager * sceneMgr, std::string cameraName) : Camera(sceneMgr, cameraName) {
+CameraFixe::CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName) : Camera(sceneMgr, cameraName) {
 }
 		
 int CameraFixe::init_camera() {

@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "CameraFixe.h"
 
 Application::Application(void) {
 	this->root = NULL;
@@ -19,8 +18,6 @@ Application::Application(void) {
 	
 	this->shutDown = false;
 }
-
-
 
 
 //------------------------------------------------------------------------------
@@ -66,16 +63,45 @@ bool Application::start(void) {
 	
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
-	//Ogre::Viewport* viewPort = this->window->addViewport(this->camera);
-	Ogre::Viewport* viewPort = this->window->addViewport(this->gestCamera->get_camera(), 0);
+	Ogre::Viewport* viewPort = this->window->addViewport(this->gestCamera->getCamera(), 0);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
-	this->gestCamera->get_camera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));	
+	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));	
 		
 	// start the scene rendering (main loop)
 	this->root->startRendering();
 	
 	return true;
 }
+
+
+//------------------------------------------------------------------------------
+
+void Application::loadRessources(void) {
+	// setup resources
+	// Load resource paths from config file
+	Ogre::ConfigFile cf;
+	cf.load(this->resourcesCfg);
+ 
+	// Go through all sections & settings in the file
+	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+  
+	Ogre::String secName, typeName, archName;
+	while (seci.hasMoreElements())
+	{
+		secName = seci.peekNextKey();
+		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+		Ogre::ConfigFile::SettingsMultiMap::iterator i;
+		for (i = settings->begin(); i != settings->end(); ++i)
+		{
+			typeName = i->first;
+			archName = i->second;
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
+		}
+	}
+	
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+}
+
 
 //------------------------------------------------------------------------------
 
@@ -102,8 +128,14 @@ void Application::initListeners(void) {
 	this->root->addFrameListener(this);
 	this->mouse->setEventCallback(this);
 	this->keyboard->setEventCallback(this);
-
 }
+
+
+void Application::initSceneGraph(void) {	
+	
+	
+}
+
 
 void Application::initScene(void) {	
 	
@@ -145,34 +177,6 @@ void Application::initScene(void) {
     l->setPosition(20,80,50);
 	Ogre::SceneNode *nodeLight1 = headNodeLight->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
-}
-
-//------------------------------------------------------------------------------
-
-void Application::loadRessources(void) {
-	// setup resources
-	// Load resource paths from config file
-	Ogre::ConfigFile cf;
-	cf.load(this->resourcesCfg);
- 
-	// Go through all sections & settings in the file
-	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-  
-	Ogre::String secName, typeName, archName;
-	while (seci.hasMoreElements())
-	{
-		secName = seci.peekNextKey();
-		Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-		Ogre::ConfigFile::SettingsMultiMap::iterator i;
-		for (i = settings->begin(); i != settings->end(); ++i)
-		{
-			typeName = i->first;
-			archName = i->second;
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
-		}
-	}
-	
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 //------------------------------------------------------------------------------
@@ -234,31 +238,31 @@ bool Application::keyPressed(const OIS::KeyEvent &evt) {
 			break;
 			
 		case OIS::KC_UP:
-			this->gestCamera->get_camera()->move(Ogre::Vector3(0, 0, 5));
+			this->gestCamera->getCamera()->move(Ogre::Vector3(0, 0, 5));
 			break;
 			
 		case OIS::KC_DOWN:
-			this->gestCamera->get_camera()->move(Ogre::Vector3(0, 0, -5));
+			this->gestCamera->getCamera()->move(Ogre::Vector3(0, 0, -5));
 			break;
 			
 		case OIS::KC_H:
-			this->gestCamera->get_camera()->move(Ogre::Vector3(0, 5, 0));
+			this->gestCamera->getCamera()->move(Ogre::Vector3(0, 5, 0));
 			break;
 			
 		case OIS::KC_N:
-			this->gestCamera->get_camera()->move(Ogre::Vector3(0, -5, 0));
+			this->gestCamera->getCamera()->move(Ogre::Vector3(0, -5, 0));
 			break;
 			
 		case OIS::KC_G:
-			this->gestCamera->get_camera()->move(Ogre::Vector3(5, 0, 0));
+			this->gestCamera->getCamera()->move(Ogre::Vector3(5, 0, 0));
 			break;
 			
 		case OIS::KC_B:
-			this->gestCamera->get_camera()->move(Ogre::Vector3(-5, 0, 0));
+			this->gestCamera->getCamera()->move(Ogre::Vector3(-5, 0, 0));
 			break;
 	}
 	
-	std::cout << "PosCamera : " << this->gestCamera->get_camera()->getPosition()[0] << "/" << this->gestCamera->get_camera()->getPosition()[1] << "/" << this->gestCamera->get_camera()->getPosition()[2] << std::endl;
+	std::cout << "PosCamera : " << this->gestCamera->getCamera()->getPosition()[0] << "/" << this->gestCamera->getCamera()->getPosition()[1] << "/" << this->gestCamera->getCamera()->getPosition()[2] << std::endl;
 	
 	return true;
 }
@@ -272,8 +276,8 @@ bool Application::mouseMoved(const OIS::MouseEvent &evt) {
 	
 	float mRotateSpeed = 0.1f;
 	
-	this->gestCamera->get_camera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
-	this->gestCamera->get_camera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
+	this->gestCamera->getCamera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
+	this->gestCamera->getCamera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
 	
 	return true;
 }
