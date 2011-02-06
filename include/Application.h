@@ -39,7 +39,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
         OIS::Mouse *mouse;
         OIS::Keyboard *keyboard;
     
-        int type_Camera;
+        EnumTypeCamera type_Camera;
         Camera * gestCamera;
         bool shutDown;
         

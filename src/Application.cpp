@@ -8,15 +8,12 @@ Application::Application(void) {
 	
 #ifdef _DEBUG
 	this->resourcesCfg = "resources_d.cfg";
-#else
-	this->resourcesCfg = "resources.cfg";
-#endif
-
-#ifdef _DEBUG
 	this->pluginsCfg = "plugins_d.cfg";
 #else
+	this->resourcesCfg = "resources.cfg";
 	this->pluginsCfg = "plugins.cfg";
 #endif
+
 	this->type_Camera = CAMERA_FIXE;
 	this->gestCamera = NULL;
 	
@@ -60,13 +57,12 @@ bool Application::start(void) {
 	this->initScene();
 	
 	// create the camera
-    if(type_Camera == CAMERA_FIXE){
-        this->gestCamera = new CameraFixe(this->sceneMgr, "mainCamera");
-        this->gestCamera->init_camera();
+    switch(this->type_Camera) {
+		case CAMERA_FIXE :
+			this->gestCamera = new CameraFixe(this->sceneMgr, "mainCamera");
+			break;
     }
-	//this->camera = this->sceneMgr->createCamera("mainCam");
-	//this->camera->setPosition(Ogre::Vector3(90, 25, 90));
-	//this->camera->lookAt(this->sceneMgr->getRootSceneNode()->getPosition());
+	this->gestCamera->init_camera();
 	
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background

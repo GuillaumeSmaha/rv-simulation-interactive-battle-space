@@ -1,16 +1,25 @@
+/*!
+ **  \file  config.h
+ **  \brief Ce fichier contient la déclaration des constantes de configuration du projet
+ **/
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-	#ifdef NDEBUG
-		#undef _DEBUG
-	#endif
-	#ifdef _DEBUG
-		#undef NDEBUG
-	#endif
-
+	/*!
+	 **  \brief Nom du projet
+	 **/
 	#cmakedefine PROJECT_NAME "${CMAKE_PROJECT_NAME}"
+	/*!
+	 **  \brief Version du projet
+	 **/
 	#cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
+	/*!
+	 **  \brief Version complète du projet
+	 **/
 	#cmakedefine PROJECT_VERSION_FULL "@PROJECT_VERSION_FULL@"
+	/*!
+	 **  \brief Nom complet du projet
+	 **/
 	#define PROJECT_FULLNAME PROJECT_NAME" "PROJECT_VERSION_FULL
 
 #endif

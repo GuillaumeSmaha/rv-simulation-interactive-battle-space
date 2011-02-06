@@ -33,7 +33,7 @@ class Camera {
 		}
 		 
 		/*!
-		 * \brief Initialise la position de la caméra
+		 * \brief Initialise la position de la caméra\n
 		 * Méthode virtuelle pure à réimplémenter.
 		 * \return Int
 		 */
