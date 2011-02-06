@@ -1,7 +1,12 @@
 [monde]
+    -[groupe décor]
+        -{fond étoilé}
     -[groupe vaiseau]
         -{reacteur}
         -{corps vaiseau}
+        -{noeud camera first person}
+        -{noeud camera third person}
+        -{noeud camera extérieure fixe}
     -[groupe planete]
         -{planete}
         -{soleil}
