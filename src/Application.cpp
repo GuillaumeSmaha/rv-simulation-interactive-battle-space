@@ -1,5 +1,5 @@
-#include "application.h"
-#include "cameraFixe.h"
+#include "Application.h"
+#include "CameraFixe.h"
 
 Application::Application(void) {
 	this->root = NULL;
@@ -17,8 +17,8 @@ Application::Application(void) {
 #else
 	this->pluginsCfg = "plugins.cfg";
 #endif
-	this->type_Camera=CAMERA_FIXE;
-	this->gestCamera= NULL;
+	this->type_Camera = CAMERA_FIXE;
+	this->gestCamera = NULL;
 	
 	this->shutDown = false;
 }

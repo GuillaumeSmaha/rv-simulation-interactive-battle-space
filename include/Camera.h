@@ -1,3 +1,7 @@
+/*!
+ **  \file  Camera.h
+ **  \brief Ce fichier contient la déclaration de la classe Camera. C'est la classe une classe abstraite qui permet d'utiliser différents types de caméras.
+ **/
 #ifndef __CAMERA_H__
 #define __CAMERA_H__
 
@@ -5,16 +9,9 @@
 #include <OgreSceneManager.h>
 
 /*!
- **  \file  camera.h
- **  \brief Ce fichier contient la déclaration de la classe Camera. C'est la classe une classe abstraite qui permet d'utiliser différents types de caméras.
- **/
-
-/**
-    \class Camera
-    \brief Classe abstraite entre le programme principale et la caméra effectivement utilisé. Elle ne peut donc pas être instancié directement
-
-**/
-
+ * \class Camera
+ * \brief Classe abstraite entre le programme principale et la caméra effectivement utilisé. Elle ne peut donc pas être instancié directement
+ */
 class Camera {
 public:
 

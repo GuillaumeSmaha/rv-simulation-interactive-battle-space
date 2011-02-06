@@ -1,4 +1,4 @@
-#include "cameraFixe.h"
+#include "CameraFixe.h"
 
 
 CameraFixe::CameraFixe(Ogre::Camera * camera, Ogre::SceneManager * sceneMgr){
