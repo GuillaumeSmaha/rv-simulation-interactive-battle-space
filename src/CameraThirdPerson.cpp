@@ -28,6 +28,8 @@ int CameraThirdPerson::init_camera() {
 	// set the camera to track itself the target and don't 'roll' rotate 
 	this->camera->setAutoTracking(true, this->targetNode);
 	this->camera->setFixedYawAxis(true);
+	
+	return 1;
 }
 
 
