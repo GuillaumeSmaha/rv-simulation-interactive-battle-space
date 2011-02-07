@@ -1,17 +1,80 @@
+[] : Noeud
+{} : Geometry
+
 [monde]
+    -[groupes vaisseaux]
+		-[vaisseau1]
+			-[reacteur]
+				-{emeteurParticule}
+			-{corps}
+			-{arme} //Virtual
+			-[cameras]
+				-{camera first person} //Virtual
+				-{camera third person} //Virtual
+				-{camera extérieure fixe} //Virtual
+		-[vaisseau2]
+			-[reacteur]
+				-{emeteurParticule}
+			-{corps}
+			-{arme} //Virtual
+			-[cameras]
+				-{camera first person} //Virtual
+				-{camera third person} //Virtual
+				-{camera extérieure fixe} //Virtual
     -[groupe décor]
-        -{fond étoilé}
-    -[groupe vaiseau]
-        -{reacteur}
-        -{corps vaiseau}
-        -{noeud camera first person}
-        -{noeud camera third person}
-        -{noeud camera extérieure fixe}
-    -[groupe planete]
-        -{planete}
-        -{soleil}
-    -[groupe asteroide]
-        -{asteroide 1}
-        -{asteroide 2}
-        -{...}
-        -{asteroide N}
+		-[Planetes]
+			-{planete1}
+			-{planete2}
+			-{...}
+			-{planeteN}
+		-[Soleils]
+			-[soleil1]
+				-{objet}
+				-{light}
+			-[soleil2]
+				-{objet}
+				-{light}
+			-[...]
+			-[soleilN]
+				-{objet}
+				-{light}
+		-[Etoiles]
+			-[etoile1]
+				-{objet}
+				-{light}
+			-[etoile2]
+				-{objet}
+				-{light}
+			-[...]
+			-[etoileN]
+				-{objet}
+				-{light}
+		-[Cometes]
+			-[comete1]
+				-{objet}
+				-{light}
+			-[comete2]
+				-{objet}
+				-{light}
+			-[...]
+			-[cometeN]
+				-{objet}
+				-{light}
+    -[ensemble de groupes d'asteroides]
+        -[groupes d'asteroides 1]
+			-{asteroide 1}
+			-{asteroide 2}
+			-{...}
+			-{asteroide N}
+        -[groupes d'asteroides 2]
+			-{asteroide 1}
+			-{asteroide 2}
+			-{...}
+			-{asteroide N}
+		-[...]
+        -[groupes d'asteroides N]
+			-{asteroide 1}
+			-{asteroide 2}
+			-{...}
+			-{asteroide N}
+    -[fond étoilé]

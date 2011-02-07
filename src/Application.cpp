@@ -50,6 +50,9 @@ bool Application::start(void) {
 	// init the input manager and create the listeners
 	this->initListeners();
 	
+	// create the scene graph
+	this->initSceneGraph();
+	
 	// create the scene
 	this->initScene();
 	
@@ -131,51 +134,63 @@ void Application::initListeners(void) {
 }
 
 
-void Application::initSceneGraph(void) {	
+void Application::initSceneGraph(void) {
 	
+	//FondEtoiles
+	Ogre::SceneNode * FondEtoiles = this->sceneMgr->getRootSceneNode()->createChildSceneNode("FondEtoiles");	
 	
+	//Groupes Vaisseaux
+	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeVaisseaux");	
+		//Vaisseau 1
+		Ogre::SceneNode * GroupeVaisseaux_Vaisseau1 = GroupeVaisseaux->createChildSceneNode("GroupeVaisseaux_Vaisseau1");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Reacteur = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Reacteur");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Arme = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Arme");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera");
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera_FirstPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera_FirstPerson");
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera_ThirdPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ThirdPerson");
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera_ExtFixe = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ExtFixe");
+		//Vaisseau 2
+		Ogre::SceneNode * GroupeVaisseaux_Vaisseau2 = GroupeVaisseaux->createChildSceneNode("GroupeVaisseaux_Vaisseau2");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Reacteur = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Reacteur");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Corps = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Corps");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Arme = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Arme");
+			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera");
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_FirstPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_FirstPerson");
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ThirdPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ThirdPerson");
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ExtFixe = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ExtFixe");
+		
+	//Groupe décor
+	Ogre::SceneNode * GroupeDecors = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeDecors");	
+		//Groupe planetes
+		Ogre::SceneNode * GroupeDecors_GroupePlanete = GroupeDecors->createChildSceneNode("GroupeDecors_GroupePlanetes");
+		//Groupe soleils
+		Ogre::SceneNode * GroupeDecors_GroupeSoleil = GroupeDecors->createChildSceneNode("GroupeDecors_GroupeSoleils");
+	
+	//Ensemble de groupes d'astéroides
+	Ogre::SceneNode * EnsembleGroupesAsteroides = this->sceneMgr->getRootSceneNode()->createChildSceneNode("EnsembleGroupesAsteroides");	
 }
 
 
 void Application::initScene(void) {	
 	
-	Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
-	Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			plane, 150, 150, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
-	Ogre::Entity* entGround = this->sceneMgr->createEntity("GroundEntity", "ground");
-	entGround->setMaterialName("Rockwall");
-	entGround->setCastShadows(false);
-	Ogre::SceneNode *groundNode = this->sceneMgr->getRootSceneNode()->createChildSceneNode("ground");
-	groundNode->attachObject(entGround);
-	groundNode->setPosition(0, -50, 0);
-
-
-	Ogre::SceneNode *headNodeObject = this->sceneMgr->getRootSceneNode()->createChildSceneNode("HeadNodeObject");	
-	Ogre::SceneNode *headNodeLight = this->sceneMgr->getRootSceneNode()->createChildSceneNode("HeadNodeLight");	
-		
-	// charger le « mesh » à partir du nom de fichier et le nommer
-	Ogre::Entity *entity = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
-	Ogre::SceneNode *nodeObjectSuzanne = headNodeObject->createChildSceneNode("NodeObjectSuzanne");
-	nodeObjectSuzanne->attachObject(entity);
-	nodeObjectSuzanne->setPosition(0, 0, 0);
-	nodeObjectSuzanne->scale(10, 10, 10);
+//Suzanne notre vaisseau 1 : 
+	Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
+	Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
+	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
+	GroupeVaisseaux_Vaisseau1_Corps->setPosition(0, 0, 0);
+	GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
 	
-	/*Ogre::Entity *entity1 = this->sceneMgr->createEntity("SuzanneBoiteBas", "boite_bas.mesh");
-	Ogre::Entity *entity2 = this->sceneMgr->createEntity("SuzanneBoiteFermeture", "fermeture.mesh");
-	entity = this->sceneMgr->createEntity("SuzanneBoiteHaut", "boite_haut.mesh");
-	Ogre::SceneNode *nodeObjectSuzanneBoiteHaut = headNodeObject->createChildSceneNode("NodeObjectSuzanneBoiteHaut");
-	nodeObjectSuzanneBoiteHaut->attachObject(entity);
-	nodeObjectSuzanneBoiteHaut->setPosition(0, 0, 0);
-	nodeObjectSuzanneBoiteHaut->scale(10, 10, 10);*/
-
+	
+	
+	
+//Temporaire : 	
     // Set ambient light
-    //this->sceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
     this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
- 
     // Create a light
     Ogre::Light* l = this->sceneMgr->createLight("MainLight"); 
     l->setPosition(20,80,50);
-	Ogre::SceneNode *nodeLight1 = headNodeLight->createChildSceneNode("NodeLight1");
+	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
 }
 
