@@ -182,6 +182,7 @@ void Application::initScene(void) {
 //SpaceShip notre vaisseau 1 : 
 	//Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
 	Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Spaceship", "razor.mesh");
+	entityVaisseau->setMaterialName("razor");
 	Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
 	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
 	GroupeVaisseaux_Vaisseau1_Corps->setPosition(0, 0, 0);

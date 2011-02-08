@@ -1,0 +1,14 @@
+material razor
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture texship.jpg
+			}
+		}
+	}
+}
