@@ -1,5 +1,7 @@
 #include "Ship.h"
+
 using namespace Ogre;
+
 Ship::Ship(void)
 {
     this->node = MeshLoader::getSingleton()->getNode(SHIP);
@@ -28,10 +30,12 @@ Ship::Ship(void)
 	//this->node->createChildSceneNode(Vector3(0, 6.5, -67))->attachObject(thrusters);
     this->node->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
 }
+
 Ship::~Ship(void)
 {
 
 }
+
 void Ship::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {
     this->node->setPosition(x, y, z);

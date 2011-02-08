@@ -5,13 +5,13 @@
 #ifndef __CAMERA_FIXE_H__
 #define __CAMERA_FIXE_H__
 
-#include "Camera.h"
+#include "CameraFixeAbstract.h"
 
 /*!
  * \class CameraFixe
  * \brief Classe permetttant de gérer une caméra fixe.
  */
-class CameraFixe : public Camera {
+class CameraFixe : public CameraFixeAbstract {
 	public:
 		/*!
 		 * \brief Constructeur
@@ -24,7 +24,7 @@ class CameraFixe : public Camera {
 		 * \brief Initialise la position de la caméra
 		 * \return Int
 		 */
-		int init_camera();
+		void init_camera();
 };
 
 #endif //__CAMERA_FIXE_H__

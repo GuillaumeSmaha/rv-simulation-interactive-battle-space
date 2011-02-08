@@ -11,12 +11,14 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
-#include "Camera.h"
-#include "CameraFixe.h"
 #include "cameraType.h"
+#include "CameraFixeAbstract.h"
+#include "CameraFixe.h"
+#include "CameraFirstPerson.h"
+#include "CameraExterieureFixe.h"
 #include "Ship.h"
 #include "Utils.h"
-#include <MeshLoader.h>
+#include "MeshLoader.h"
 
 
 
@@ -76,12 +78,14 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		/*!
 		 *  \brief Pointeur sur la caméra utilisée
 		 */
-        Camera * gestCamera;
+        CameraFixeAbstract * gestCamera;
 		/*!
 		 *  \brief Indique si l'application doit-être arrếtée
 		 */
         bool shutDown;
 
+		float _translateX;
+		float _translateZ;
 
     public:
 		/*!

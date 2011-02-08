@@ -1,8 +1,7 @@
 #include "Utils.h"
-#include <Ogre.h>
-
 
 int Utils::_count = 0;
+
 int Utils::initialize(void)
 {
 	srand(time(NULL));

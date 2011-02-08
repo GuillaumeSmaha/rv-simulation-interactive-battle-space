@@ -11,7 +11,7 @@
 	typedef enum {
 		CAMERA_FIXE = 0,
 		CAMERA_FISRT_PERSON = 1,
-		CAMERA_THIRD_PERSON = 2
+		CAMERA_EXTERIEURE_FIXE = 2
 	} EnumTypeCamera;
 
 #endif // __CAMERA_TYPE_H__

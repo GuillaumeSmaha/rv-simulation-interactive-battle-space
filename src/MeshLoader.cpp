@@ -1,4 +1,5 @@
 #include "MeshLoader.h"
+
 MeshLoader* MeshLoader::_instance = NULL;
 
 MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
@@ -10,6 +11,7 @@ MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
 	}
 
 }
+
 MeshLoader::~MeshLoader(void)
 {
 	//this->sceneMgr = NULL;
@@ -27,6 +29,7 @@ Ogre::Entity* MeshLoader::getEntity(int meshType, Ogre::String name, bool random
 	}
 	return entity;
 }
+
 Ogre::SceneNode* MeshLoader::getNode(int meshType, Ogre::String nodeName, Ogre::String meshName, bool random)
 {
     Ogre::SceneNode *node;
@@ -41,6 +44,7 @@ Ogre::SceneNode* MeshLoader::getNode(int meshType, Ogre::String nodeName, Ogre::
 	}
 	return node;
 }
+
 MeshLoader * MeshLoader::getSingleton(void)
 {
 	return _instance;

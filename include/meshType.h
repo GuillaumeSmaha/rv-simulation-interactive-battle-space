@@ -4,7 +4,6 @@
  */
 #ifndef __MESH_TYPE_H__
 #define __MESH_TYPE_H__
-#include <Ogre.h>
 
 	/*!
 	 *  \brief Liste des différents types de caméra
