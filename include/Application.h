@@ -14,18 +14,23 @@
 #include "Camera.h"
 #include "CameraFixe.h"
 #include "cameraType.h"
+#include "Ship.h"
+#include "Utils.h"
+#include <MeshLoader.h>
+
+
 
 /*!
  * \class Application
  * \brief Class principale qui permet de démarrer le programme, d'afficher la fenêtre et de réagir aux évènements (ceux-ci sont ensuite dirigé vers les classes adaptés)
- *   
+ *
  *   En particulier elle hérite de:
  *   Ogre::FrameListener : Permet de recevoir les notifications avant et aprés chaque frame rendu à l'écran
  *
  *   Ogre::WindowEventListener : Permet d'obtenir les informations de déplacement/redimmensionnement de la fenetre ainsi que sa demande de fermeture
- *   
+ *
  *   OIS::KeyListener : Information sur les évènements claviers
- *   
+ *
  *   OIS::MouseListener
  */
 class Application : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener {
@@ -50,7 +55,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 *  \brief Chemin du fichier plugins.cfg
 		 */
         Ogre::String pluginsCfg;
-        
+
 		/*!
 		 *  \brief Capteur d'événements
 		 */
@@ -63,7 +68,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 *  \brief Capteur d'événements de la clavier
 		 */
         OIS::Keyboard * keyboard;
-    
+
 		/*!
 		 *  \brief Type de la caméra utilisé
 		 */
@@ -90,8 +95,8 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		/*!
 		 *  \brief Démarre l'application
 		 */
-	    bool start(void);	
-        
+	    bool start(void);
+
 	private:
 		/*!
 		 *  \brief Charge les ressources listées dans resources.cfg
@@ -113,7 +118,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 *  \brief Génère la frame de rendu
 		 */
         bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-        
+
         // Ogre::WindowEventListener
 		/*!
 		 *  \brief Action à effectuer pour l'événement "redimensionnement de la fenêtre"
@@ -125,7 +130,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 * 	\param rw Fenêtre de rendu
 		 */
         void windowClosed(Ogre::RenderWindow* rw);
-        
+
         // OIS::KeyListener
 		/*!
 		 *  \brief Action à effectuer pour l'événement "touche pressée"
@@ -137,7 +142,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 * 	\param evt Evenement du clavier
 		 */
         bool keyReleased( const OIS::KeyEvent &evt );
-        
+
         // OIS::MouseListener
 		/*!
 		 *  \brief Action à effectuer pour l'événement "souis en mouvement"
@@ -156,7 +161,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 * 	\param id Identifiant du bouton de la souris
 		 */
         bool mouseReleased( const OIS::MouseEvent &evt, OIS::MouseButtonID id );
-	
+
 };
 
 #endif // __APPLICATION_H__

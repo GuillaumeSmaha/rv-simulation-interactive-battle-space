@@ -1,12 +1,13 @@
 #include "Application.h"
 
+
 using namespace Ogre;
 
 Application::Application(void) {
 	this->root = NULL;
 	this->sceneMgr = NULL;
 	this->window = NULL;
-	
+
 #ifdef _DEBUG
 	this->resourcesCfg = "resources_d.cfg";
 	this->pluginsCfg = "plugins_d.cfg";
@@ -17,7 +18,7 @@ Application::Application(void) {
 
 	this->type_Camera = CAMERA_FIXE;
 	this->gestCamera = NULL;
-	
+
 	this->shutDown = false;
 }
 
@@ -35,11 +36,11 @@ Application::~Application(void) {
 bool Application::start(void) {
 	// construct Ogre::Root
 	this->root = new Ogre::Root(this->pluginsCfg);
- 
+
 	// load the ressources
 	this->loadRessources();
-	
-	// restore the config or show the configuration dialog and 
+
+	// restore the config or show the configuration dialog and
 	if(! this->root->restoreConfig() && ! this->root->showConfigDialog())
 		return false;
 
@@ -48,16 +49,19 @@ bool Application::start(void) {
 
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
-	
+
+	//init meshLoader
+	new MeshLoader(this->sceneMgr);
+
 	// init the input manager and create the listeners
 	this->initListeners();
-	
+
 	// create the scene graph
 	this->initSceneGraph();
-	
+
 	// create the scene
 	this->initScene();
-	
+
 	// create the camera
     switch(this->type_Camera) {
 		case CAMERA_FIXE :
@@ -65,16 +69,16 @@ bool Application::start(void) {
 			break;
     }
 	this->gestCamera->init_camera();
-	
+
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
 	Ogre::Viewport* viewPort = this->window->addViewport(this->gestCamera->getCamera(), 0);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
-	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));	
-		
+	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
+
 	// start the scene rendering (main loop)
 	this->root->startRendering();
-	
+
 	return true;
 }
 
@@ -86,10 +90,10 @@ void Application::loadRessources(void) {
 	// Load resource paths from config file
 	Ogre::ConfigFile cf;
 	cf.load(this->resourcesCfg);
- 
+
 	// Go through all sections & settings in the file
 	Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-  
+
 	Ogre::String secName, typeName, archName;
 	while (seci.hasMoreElements())
 	{
@@ -103,7 +107,7 @@ void Application::loadRessources(void) {
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
 		}
 	}
-	
+
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
@@ -115,19 +119,19 @@ void Application::initListeners(void) {
 	OIS::ParamList pl;
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
- 
+
 	window->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
- 
+
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
- 
+
 	this->keyboard = static_cast<OIS::Keyboard*>(inputManager->createInputObject(OIS::OISKeyboard, true));
 	this->mouse = static_cast<OIS::Mouse*>(inputManager->createInputObject(OIS::OISMouse, true));
- 
+
 	// Set initial mouse clipping size
 	windowResized(this->window);
-	
+
 	// Register the listeners
 	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
 	this->root->addFrameListener(this);
@@ -137,12 +141,14 @@ void Application::initListeners(void) {
 
 
 void Application::initSceneGraph(void) {
-	
+
 	//FondEtoiles
-	Ogre::SceneNode * FondEtoiles = this->sceneMgr->getRootSceneNode()->createChildSceneNode("FondEtoiles");	
-	
+//	Ogre::SceneNode * FondEtoiles = this->sceneMgr->getRootSceneNode()->createChildSceneNode("FondEtoiles");
+
 	//Groupes Vaisseaux
-	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeVaisseaux");	
+	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeVaisseaux");
+	//a definir qqpart, ptre dans Ship
+	/*
 		//Vaisseau 1
 		Ogre::SceneNode * GroupeVaisseaux_Vaisseau1 = GroupeVaisseaux->createChildSceneNode("GroupeVaisseaux_Vaisseau1");
 			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Reacteur = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Reacteur");
@@ -160,34 +166,48 @@ void Application::initSceneGraph(void) {
 			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera");
 				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_FirstPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_FirstPerson");
 				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ThirdPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ThirdPerson");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ExtFixe = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ExtFixe");
-		
+				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ExtFixe = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ExtFixe");*/
+
 	//Groupe décor
-	Ogre::SceneNode * GroupeDecors = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeDecors");	
+	Ogre::SceneNode * GroupeDecors = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeDecors");
 		//Groupe planetes
 		Ogre::SceneNode * GroupeDecors_GroupePlanete = GroupeDecors->createChildSceneNode("GroupeDecors_GroupePlanetes");
 		//Groupe soleils
 		Ogre::SceneNode * GroupeDecors_GroupeSoleil = GroupeDecors->createChildSceneNode("GroupeDecors_GroupeSoleils");
-	
+
 	//Ensemble de groupes d'astéroides
-	Ogre::SceneNode * EnsembleGroupesAsteroides = this->sceneMgr->getRootSceneNode()->createChildSceneNode("EnsembleGroupesAsteroides");	
+	Ogre::SceneNode * EnsembleGroupesAsteroides = this->sceneMgr->getRootSceneNode()->createChildSceneNode("EnsembleGroupesAsteroides");
 }
 
 
-void Application::initScene(void) {	
+void Application::initScene(void) {
 
 	// Mise en place du SkyBox "Etoiles"
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
-	
-//SpaceShip notre vaisseau 1 : 
+
+//SpaceShip notre vaisseau 1 :
 	//Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
-	Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Spaceship", "razor.mesh");
-	entityVaisseau->setMaterialName("razor");
+	/*Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Spaceship", "razor.mesh");
+	entityVaisseau->setMaterialName("razor");*/
+   /* Ogre::Entity *entityVaisseau = MeshLoader::getSingleton()->getEntity(SHIP);
 	Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
+
 	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
 	GroupeVaisseaux_Vaisseau1_Corps->setPosition(0, 0, 0);
+	entityVaisseau = MeshLoader::getSingleton()->getEntity(SHIP);
+	GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps")->createChildSceneNode("vsx2");
+
+	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
+	GroupeVaisseaux_Vaisseau1_Corps->setPosition(100, 100, 30);
+	GroupeVaisseaux_Vaisseau1_Corps->setOrientation(5,5,5,5);*/
 	//GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
-	
+    Ship * ship = new Ship();
+    ship->setPosition(-50,-50,-50);
+    ship = new Ship();
+    ship->setPosition(130,0,0);
+    ship->getNode()->setOrientation(5,5,5,5);
+
+    /*
 	// Création du système de particules
     Ogre::ParticleSystem* thrusters = this->sceneMgr->createParticleSystem(25);
     thrusters ->setMaterialName("Reactor");
@@ -210,13 +230,14 @@ void Application::initScene(void) {
 
 	// On attache les particules du réacteur à l'arrière du vaisseau
     this->sceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0, 6.5, -67))->attachObject(thrusters);
-	
-	
-//Temporaire : 	
+    */
+
+
+//Temporaire :
     // Set ambient light
     this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
     // Create a light
-    Ogre::Light* l = this->sceneMgr->createLight("MainLight"); 
+    Ogre::Light* l = this->sceneMgr->createLight("MainLight");
     l->setPosition(20,80,50);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
@@ -226,7 +247,7 @@ void Application::initScene(void) {
 
 bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 	int newStatus;
-	
+
 	// Stop the rendering if the window was closed, or the application stoped
 	if(this->window->isClosed() || this->shutDown)
 		return false;
@@ -246,13 +267,13 @@ void Application::windowResized(Ogre::RenderWindow *rw)
 	int left, top;
 
 	// Adjust mouse clipping area
-	rw->getMetrics(width, height, depth, left, top); 
+	rw->getMetrics(width, height, depth, left, top);
 	const OIS::MouseState &ms = this->mouse->getMouseState();
 	ms.width = width;
 	ms.height = height;
 
 }
- 
+
 void Application::windowClosed(Ogre::RenderWindow *rw)
 {
 	// Only close for window that created OIS (the main window)
@@ -263,70 +284,69 @@ void Application::windowClosed(Ogre::RenderWindow *rw)
 			// Unattach OIS before window shutdown (very important under Linux)
 			this->inputManager->destroyInputObject(this->mouse);
 			this->inputManager->destroyInputObject(this->keyboard);
- 
+
 			OIS::InputManager::destroyInputSystem(this->inputManager);
 			this->inputManager = 0;
 		}
 	}
-
 }
 
 bool Application::keyPressed(const OIS::KeyEvent &evt) {
-	
+
 	// Quit
 	switch(evt.key)
 	{
 		case OIS::KC_ESCAPE:
 			this->shutDown = true;
 			break;
-			
+
 		case OIS::KC_UP:
 			this->gestCamera->getCamera()->move(Ogre::Vector3(0, 0, 5));
 			break;
-			
+
 		case OIS::KC_DOWN:
 			this->gestCamera->getCamera()->move(Ogre::Vector3(0, 0, -5));
 			break;
-			
+
 		case OIS::KC_H:
 			this->gestCamera->getCamera()->move(Ogre::Vector3(0, 5, 0));
 			break;
-			
+
 		case OIS::KC_N:
 			this->gestCamera->getCamera()->move(Ogre::Vector3(0, -5, 0));
 			break;
-			
+
 		case OIS::KC_G:
 			this->gestCamera->getCamera()->move(Ogre::Vector3(5, 0, 0));
 			break;
-			
+
 		case OIS::KC_B:
 			this->gestCamera->getCamera()->move(Ogre::Vector3(-5, 0, 0));
 			break;
 	}
-	
+
 	std::cout << "PosCamera : " << this->gestCamera->getCamera()->getPosition()[0] << "/" << this->gestCamera->getCamera()->getPosition()[1] << "/" << this->gestCamera->getCamera()->getPosition()[2] << std::endl;
-	
+
 	return true;
 }
 
 bool Application::keyReleased(const OIS::KeyEvent &evt) {
-	
+
 	return true;
 }
 
 bool Application::mouseMoved(const OIS::MouseEvent &evt) {
-	
+
 	float mRotateSpeed = 0.1f;
-	
+
 	this->gestCamera->getCamera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
 	this->gestCamera->getCamera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
-	
+
 	return true;
 }
 
 bool Application::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
-	
+
 	return true;
 }
 
@@ -339,14 +359,14 @@ bool Application::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID i
 
 int main(void) {
 	Application appli;
-	
+
 	try {
 	    appli.start();
 	} catch( Ogre::Exception& e ) {
 		std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
 		return 1;
 	}
-	
+
 	return 0;
 }
 
