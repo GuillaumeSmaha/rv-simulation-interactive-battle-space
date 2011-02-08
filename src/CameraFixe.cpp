@@ -5,8 +5,9 @@ CameraFixe::CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName) :
 }
 		
 int CameraFixe::init_camera() {
-	this->camera->setPosition(Ogre::Vector3(90, 25, 90));
+	this->camera->setPosition(Ogre::Vector3(100, 100, -500));
 	this->camera->lookAt(this->sceneMgr->getRootSceneNode()->getPosition());
+	this->camera->setNearClipDistance(5);
 	
 	return 1;
 }

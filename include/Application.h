@@ -6,6 +6,7 @@
 #define __APPLICATION_H__
 
 #include <Ogre.h>
+#include <OgreParticleSystem.h>
 #include <OISEvents.h>
 #include <OISInputManager.h>
 #include <OISKeyboard.h>

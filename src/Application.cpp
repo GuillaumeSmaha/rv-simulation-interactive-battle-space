@@ -1,5 +1,7 @@
 #include "Application.h"
 
+using namespace Ogre;
+
 Application::Application(void) {
 	this->root = NULL;
 	this->sceneMgr = NULL;
@@ -173,15 +175,40 @@ void Application::initSceneGraph(void) {
 
 
 void Application::initScene(void) {	
+
+	// Mise en place du SkyBox "Etoiles"
+	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
 	
-//Suzanne notre vaisseau 1 : 
-	Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
+//SpaceShip notre vaisseau 1 : 
+	//Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
+	Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Spaceship", "razor.mesh");
 	Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
 	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
 	GroupeVaisseaux_Vaisseau1_Corps->setPosition(0, 0, 0);
-	GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
+	//GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
 	
-	
+	// Création du système de particules
+    Ogre::ParticleSystem* thrusters = this->sceneMgr->createParticleSystem(25);
+    thrusters ->setMaterialName("Reactor");
+    thrusters ->setDefaultDimensions(25, 25);
+
+	// Création de 2 émetteurs pour le système de particules
+	for (unsigned int i = 0; i < 2; i++)
+	{
+		Ogre::ParticleEmitter* emitter = thrusters ->addEmitter("Point");
+
+		// set the emitter properties
+		emitter->setAngle(Ogre::Degree(3));
+		emitter->setTimeToLive(0.5);
+		emitter->setEmissionRate(25);
+		emitter->setParticleVelocity(25);
+		emitter->setDirection(Vector3::NEGATIVE_UNIT_Z);
+		emitter->setColour(ColourValue::White, ColourValue::Red);
+		emitter->setPosition(Vector3(i == 0 ? 5.7 : -18, 0, 0));
+	}
+
+	// On attache les particules du réacteur à l'arrière du vaisseau
+    this->sceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0, 6.5, -67))->attachObject(thrusters);
 	
 	
 //Temporaire : 	
