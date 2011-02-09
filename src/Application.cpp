@@ -6,7 +6,6 @@ using namespace Ogre;
 Application::Application(void) {
 	this->root = NULL;
 	this->sceneMgr = NULL;
-	this->window = NULL;
 	
 #ifdef _DEBUG
 	this->resourcesCfg = "resources_d.cfg";
@@ -29,10 +28,10 @@ Application::Application(void) {
 //------------------------------------------------------------------------------
 
 Application::~Application(void) 
-
+{
 	// remove ourself as a Window listener
-	//Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
-	//windowClosed(this->window);
+	//Ogre::WindowEventUtilities::removeWindowEventListener(this->listenerWindow->getWindow(), this);
+	//windowClosed(this->listenerWindow->getWindow());
 }
 
 //------------------------------------------------------------------------------
@@ -49,9 +48,10 @@ bool Application::start(void)
 	if(! this->root->restoreConfig() && ! this->root->showConfigDialog())
 		return false;
 
-	// initialise the system, create the default rendering window
-	this->window = this->root->initialise(true, "Combat spatial");
 
+	// initialise the system, create the default rendering window
+	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
+	
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
 
@@ -85,7 +85,7 @@ bool Application::start(void)
 	
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
-	Ogre::Viewport * viewPort = this->window->addViewport(this->gestCamera->getCamera(), 0);
+	Ogre::Viewport * viewPort = this->listenerWindow->getWindow()->addViewport(this->gestCamera->getCamera(), 0);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));	
 	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
 		
@@ -135,21 +135,18 @@ void Application::initListeners(void)
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
  
-	window->getCustomAttribute("WINDOW", &windowHnd);
+	this->listenerWindow->getWindow()->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
  
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
  
-	this->keyboard = static_cast<OIS::Keyboard*>(inputManager->createInputObject(OIS::OISKeyboard, true));
-	this->mouse = static_cast<OIS::Mouse*>(inputManager->createInputObject(OIS::OISMouse, true));
- 
 	// Set initial mouse clipping size
-	//windowResized(this->window);
+	//windowResized(this->listenerWindow->getWindow());
 	
 	// Register the listeners
 	/*
-	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
+	Ogre::WindowEventUtilities::addWindowEventListener(this->listenerWindow->getWindow(), this);
 	
 	this->root->addFrameListener(this);
 	this->mouse->setEventCallback(this);

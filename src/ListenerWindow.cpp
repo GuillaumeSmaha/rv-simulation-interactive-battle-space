@@ -1,8 +1,18 @@
 #include "ListenerWindow.h"
 
-ListenerWindow::ListenerWindow()
+ListenerWindow::ListenerWindow(Ogre::Root * root, Ogre::String nameWindow)
 {
+	this->root = root;
+	this->window = this->root->initialise(true, nameWindow);
 	
+	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
+	this->windowResized(this->window);
+}
+
+ListenerWindow::~ListenerWindow()
+{
+	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
+	this->windowClosed(this->window);
 }
 
 void ListenerWindow::windowResized(Ogre::RenderWindow *rw)

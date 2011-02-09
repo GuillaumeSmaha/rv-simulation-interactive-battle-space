@@ -5,6 +5,7 @@
 #ifndef __LISTENER_MOUSE_H__
 #define __LISTENER_MOUSE_H__
 
+#include <OISInputManager.h>
 #include <OISMouse.h>
 
 /*!
@@ -12,11 +13,34 @@
  * \brief Classe permettant de gérer les événements de la souris.
  */
 class ListenerMouse : public OIS::MouseListener {
+	private:
+		/*!
+		 *  \brief Gestionnaire d'événements
+		 */
+        OIS::InputManager * inputManager;
+		/*!
+		 *  \brief Capteur d'événements de la souris
+		 */
+        OIS::Mouse * mouse;
+        
 	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerMouse();
+		ListenerMouse(OIS::InputManager * inputManager);
+		/*!
+		 * \brief Destructeur
+		 */
+		~ListenerMouse();
+		
+		/*!
+		 * \brief Constructeur
+		 * \return Le pointeur sur le capteur d'événements de la souris
+		 */
+		OIS::Mouse * getMouse()
+		{
+			return this->mouse;
+		}
 		
 		/*!
 		 *  \brief Action à effectuer pour l'événement "souis en mouvement"

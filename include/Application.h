@@ -7,8 +7,10 @@
 
 #include <Ogre.h>
 #include <OISInputManager.h>
-#include <OISMouse.h>
-#include <OISKeyboard.h>
+#include "ListenerFrame.h"
+#include "ListenerWindow.h"
+#include "ListenerKeyboard.h"
+#include "ListenerMouse.h"
 #include "nodeName.h"
 #include "CameraFixeAbstract.h"
 #include "CameraFixe.h"
@@ -44,10 +46,6 @@ class Application {
 		 */
         Ogre::SceneManager * sceneMgr;
 		/*!
-		 *  \brief Fenêtre de Rendu
-		 */
-        Ogre::RenderWindow * window;
-		/*!
 		 *  \brief Chemin du fichier resources.cfg
 		 */
         Ogre::String resourcesCfg;
@@ -60,14 +58,11 @@ class Application {
 		 *  \brief Capteur d'événements
 		 */
         OIS::InputManager * inputManager;
+        
 		/*!
-		 *  \brief Capteur d'événements de la souris
+		 *  \brief Capteur d'événements de la fenêtre
 		 */
-        OIS::Mouse * mouse;
-		/*!
-		 *  \brief Capteur d'événements de la clavier
-		 */
-        OIS::Keyboard * keyboard;
+        ListenerWindow * listenerWindow;
 
 		/*!
 		 *  \brief Type de la caméra utilisé

@@ -1,8 +1,14 @@
 #include "ListenerMouse.h"
 
-ListenerMouse::ListenerMouse()
+ListenerMouse::ListenerMouse(OIS::InputManager * inputManager)
 {
-	
+	this->inputManager = inputManager;
+	this->mouse = static_cast<OIS::Mouse*>(inputManager->createInputObject(OIS::OISMouse, true));
+}
+
+ListenerMouse::~ListenerMouse()
+{
+	this->inputManager->destroyInputObject(this->mouse);
 }
 
 bool ListenerMouse::mouseMoved(const OIS::MouseEvent &evt) {	

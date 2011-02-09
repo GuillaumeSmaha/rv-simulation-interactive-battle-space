@@ -5,6 +5,7 @@
 #ifndef __LISTENER_KEYBOARD_H__
 #define __LISTENER_KEYBOARD_H__
 
+#include <OISInputManager.h>
 #include <OISKeyboard.h>
 
 /*!
@@ -12,11 +13,34 @@
  * \brief Classe permettant de gérer les événements du clavier.
  */
 class ListenerKeyboard : public OIS::KeyListener {
+	private:
+		/*!
+		 *  \brief Gestionnaire d'événements
+		 */
+        OIS::InputManager * inputManager;
+		/*!
+		 *  \brief Capteur d'événements du clavier
+		 */
+        OIS::Keyboard * keyboard;
+	
 	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerKeyboard();
+		ListenerKeyboard(OIS::InputManager * inputManager);
+		/*!
+		 * \brief Destructeur
+		 */
+		~ListenerKeyboard();
+		
+		/*!
+		 * \brief Constructeur
+		 * \return Le pointeur sur le capteur d'événements du clavier
+		 */
+		OIS::Keyboard * getKeyboard()
+		{
+			return this->keyboard;
+		}
 		
 		/*!
 		 *  \brief Action à effectuer pour l'événement "touche pressée"

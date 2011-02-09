@@ -1,8 +1,14 @@
 #include "ListenerKeyboard.h"
 
-ListenerKeyboard::ListenerKeyboard()
+ListenerKeyboard::ListenerKeyboard(OIS::InputManager * inputManager)
 {
-	
+	this->inputManager = inputManager;
+	this->keyboard = static_cast<OIS::Keyboard*>(inputManager->createInputObject(OIS::OISKeyboard, true));
+}
+
+ListenerKeyboard::~ListenerKeyboard()
+{
+	this->inputManager->destroyInputObject(this->keyboard);
 }
 
 bool ListenerKeyboard::keyPressed(const OIS::KeyEvent &evt) {
