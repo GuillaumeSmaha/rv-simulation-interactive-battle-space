@@ -10,7 +10,7 @@
 
 /*!
  * \class CameraExterieureFixe
- * \brief Classe permetttant de gérer une caméra fixe de dos
+ * \brief Classe permettant de gérer une caméra fixe de dos
  */
 class CameraExterieureFixe : public CameraFixeTargetAbstract {
 		

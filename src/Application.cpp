@@ -28,15 +28,17 @@ Application::Application(void) {
 
 //------------------------------------------------------------------------------
 
-Application::~Application(void) {
+Application::~Application(void) 
+
 	// remove ourself as a Window listener
-	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
-	windowClosed(this->window);
+	//Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
+	//windowClosed(this->window);
 }
 
 //------------------------------------------------------------------------------
 
-bool Application::start(void) {
+bool Application::start(void)
+{
 	// construct Ogre::Root
 	this->root = new Ogre::Root(this->pluginsCfg);
  
@@ -96,7 +98,8 @@ bool Application::start(void) {
 
 //------------------------------------------------------------------------------
 
-void Application::loadRessources(void) {
+void Application::loadRessources(void)
+{
 	// setup resources
 	// Load resource paths from config file
 	Ogre::ConfigFile cf;
@@ -125,7 +128,8 @@ void Application::loadRessources(void) {
 
 //------------------------------------------------------------------------------
 
-void Application::initListeners(void) {
+void Application::initListeners(void)
+{
 	// Init the input system
 	OIS::ParamList pl;
 	size_t windowHnd = 0;
@@ -141,23 +145,24 @@ void Application::initListeners(void) {
 	this->mouse = static_cast<OIS::Mouse*>(inputManager->createInputObject(OIS::OISMouse, true));
  
 	// Set initial mouse clipping size
-	windowResized(this->window);
+	//windowResized(this->window);
 	
 	// Register the listeners
+	/*
 	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
+	
 	this->root->addFrameListener(this);
 	this->mouse->setEventCallback(this);
 	this->keyboard->setEventCallback(this);
+	*/
 }
 
 
-void Application::initSceneGraph(void) {
-	
-	//FondEtoiles
-//	Ogre::SceneNode * FondEtoiles = this->sceneMgr->getRootSceneNode()->createChildSceneNode("FondEtoiles");	
+void Application::initSceneGraph(void)
+{
 	
 	//Groupes Vaisseaux
-	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeVaisseaux");	
+	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_VAISSEAUX);	
 	//a definir qqpart, ptre dans Ship
 	/*
 		//Vaisseau 1
@@ -181,18 +186,19 @@ void Application::initSceneGraph(void) {
 	*/
 		
 	//Groupe décor
-	Ogre::SceneNode * GroupeDecors = this->sceneMgr->getRootSceneNode()->createChildSceneNode("GroupeDecors");	
+	Ogre::SceneNode * GroupeDecors = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_DECOR);	
 		//Groupe planetes
-		Ogre::SceneNode * GroupeDecors_GroupePlanete = GroupeDecors->createChildSceneNode("GroupeDecors_GroupePlanetes");
+		Ogre::SceneNode * GroupeDecors_GroupePlanete = GroupeDecors->createChildSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
 		//Groupe soleils
-		Ogre::SceneNode * GroupeDecors_GroupeSoleil = GroupeDecors->createChildSceneNode("GroupeDecors_GroupeSoleils");
+		Ogre::SceneNode * GroupeDecors_GroupeSoleil = GroupeDecors->createChildSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_SOLEILS);
 	
 	//Ensemble de groupes d'astéroides
-	Ogre::SceneNode * EnsembleGroupesAsteroides = this->sceneMgr->getRootSceneNode()->createChildSceneNode("EnsembleGroupesAsteroides");	
+	Ogre::SceneNode * EnsembleGroupesAsteroides = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);	
 }
 
 
-void Application::initScene(void) {	
+void Application::initScene(void)
+{	
 	
 // Mise en place du SkyBox "Etoiles"
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
@@ -274,124 +280,8 @@ void Application::initScene(void) {
 
 //------------------------------------------------------------------------------
 
-bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt) {
-	
-	// Stop the rendering if the window was closed, or the application stoped
-	if(this->window->isClosed() || this->shutDown)
-		return false;
-
-    // capture value of each device
-    this->keyboard->capture();
-    this->mouse->capture();
-    
-    this->gestCamera->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
-
-	return true;
-}
-
-//------------------------------------------------------------------------------
-
-void Application::windowResized(Ogre::RenderWindow *rw)
+int main(void)
 {
-	unsigned int width, height, depth;
-	int left, top;
-
-	// Adjust mouse clipping area
-	rw->getMetrics(width, height, depth, left, top); 
-	const OIS::MouseState &ms = this->mouse->getMouseState();
-	ms.width = width;
-	ms.height = height;
-
-}
- 
-void Application::windowClosed(Ogre::RenderWindow *rw)
-{
-	// Only close for window that created OIS (the main window)
-	if(rw == this->window)
-	{
-		if(this->inputManager)
-		{
-			// Unattach OIS before window shutdown (very important under Linux)
-			this->inputManager->destroyInputObject(this->mouse);
-			this->inputManager->destroyInputObject(this->keyboard);
- 
-			OIS::InputManager::destroyInputSystem(this->inputManager);
-			this->inputManager = 0;
-		}
-	}
-
-}
-
-bool Application::keyPressed(const OIS::KeyEvent &evt) {
-	float translateSpeed = 2.5;
-	
-	switch(evt.key)
-	{
-		case OIS::KC_ESCAPE :
-			this->shutDown = true;
-			break;
-			
-		case OIS::KC_UP :
-			this->_translateZ = -translateSpeed;
-			break;
-			
-		case OIS::KC_DOWN :
-			this->_translateZ = translateSpeed;
-			break;
-			
-		case OIS::KC_LEFT :
-			this->_translateX = -translateSpeed;
-			break;
-			
-		case OIS::KC_RIGHT :
-			this->_translateX = translateSpeed;
-			break;
-	}
-    
-	return true;
-}
-
-bool Application::keyReleased(const OIS::KeyEvent &evt) {
-	
-	switch(evt.key)
-	{
-		case OIS::KC_UP :
-		case OIS::KC_DOWN :
-			this->_translateZ = 0;
-			break;
-			
-		case OIS::KC_LEFT :
-		case OIS::KC_RIGHT :
-			this->_translateX = 0;
-			break;
-	}
-	
-	return true;
-}
-
-bool Application::mouseMoved(const OIS::MouseEvent &evt) {	
-
-	float mRotateSpeed = 0.1f;
-
-	this->gestCamera->getCamera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
-	this->gestCamera->getCamera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
-		
-	return true;
-}
-
-bool Application::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
-	
-	return true;
-}
-
-bool Application::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
-
-	return true;
-}
-
-//------------------------------------------------------------------------------
-
-int main(void) {
 	Application appli;
 	
 	try {

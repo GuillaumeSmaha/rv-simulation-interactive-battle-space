@@ -15,7 +15,7 @@
 
 /*!
  * \class CameraFixeTargetAbstract
- * \brief Classe permetttant de gérer une caméra fixe ciblé sur un noeud.
+ * \brief Classe permettant de gérer une caméra fixe ciblé sur un noeud.
  */
 class CameraFixeTargetAbstract : public CameraFixeAbstract {
 	public:

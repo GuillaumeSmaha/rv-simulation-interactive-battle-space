@@ -2,6 +2,8 @@
 #define __MESH_LOADER_H__
 
 #include <Ogre.h>
+#include <OgreParticleSystem.h>
+#include "nodeName.h"
 #include "Utils.h"
 
 class MeshLoader

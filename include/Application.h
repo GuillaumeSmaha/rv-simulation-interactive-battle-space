@@ -6,11 +6,10 @@
 #define __APPLICATION_H__
 
 #include <Ogre.h>
-#include <OgreParticleSystem.h>
-#include <OISEvents.h>
 #include <OISInputManager.h>
-#include <OISKeyboard.h>
 #include <OISMouse.h>
+#include <OISKeyboard.h>
+#include "nodeName.h"
 #include "CameraFixeAbstract.h"
 #include "CameraFixe.h"
 #include "CameraFirstPerson.h"
@@ -34,7 +33,7 @@
  *
  *   OIS::MouseListener
  */
-class Application : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener {
+class Application {
 	private:
 		/*!
 		 *  \brief Ogre Root
@@ -43,11 +42,11 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		/*!
 		 *  \brief Scène Manager
 		 */
-        Ogre::SceneManager *sceneMgr;
+        Ogre::SceneManager * sceneMgr;
 		/*!
 		 *  \brief Fenêtre de Rendu
 		 */
-        Ogre::RenderWindow *window;
+        Ogre::RenderWindow * window;
 		/*!
 		 *  \brief Chemin du fichier resources.cfg
 		 */
@@ -95,6 +94,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 *  \brief Destructeur
 		 */
 	    virtual ~Application(void);
+	    
 		/*!
 		 *  \brief Démarre l'application
 		 */
@@ -117,54 +117,6 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		 *  \brief Initialise la scène
 		 */
         void initScene(void);
-		/*!
-		 *  \brief Génère la frame de rendu
-		 */
-        bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-
-        // Ogre::WindowEventListener
-		/*!
-		 *  \brief Action à effectuer pour l'événement "redimensionnement de la fenêtre"
-		 * 	\param rw Fenêtre de rendu
-		 */
-        void windowResized(Ogre::RenderWindow* rw);
-		/*!
-		 *  \brief Action à effectuer pour l'événement "fermeture de la fenêtre"
-		 * 	\param rw Fenêtre de rendu
-		 */
-        void windowClosed(Ogre::RenderWindow* rw);
-
-        // OIS::KeyListener
-		/*!
-		 *  \brief Action à effectuer pour l'événement "touche pressée"
-		 * 	\param evt Evenement du clavier
-		 */
-        bool keyPressed( const OIS::KeyEvent &evt );
-		/*!
-		 *  \brief Action à effectuer pour l'événement "touche relachée"
-		 * 	\param evt Evenement du clavier
-		 */
-        bool keyReleased( const OIS::KeyEvent &evt );
-
-        // OIS::MouseListener
-		/*!
-		 *  \brief Action à effectuer pour l'événement "souis en mouvement"
-		 * 	\param evt Evenement de la souris
-		 */
-        bool mouseMoved( const OIS::MouseEvent &evt );
-		/*!
-		 *  \brief Action à effectuer pour l'événement "touche de la souris cliquée"
-		 * 	\param evt Evenement de la souris
-		 * 	\param id Identifiant du bouton de la souris
-		 */
-        bool mousePressed( const OIS::MouseEvent &evt, OIS::MouseButtonID id );
-		/*!
-		 *  \brief Action à effectuer pour l'événement "touche de la souris relachée"
-		 * 	\param evt Evenement de la souris
-		 * 	\param id Identifiant du bouton de la souris
-		 */
-        bool mouseReleased( const OIS::MouseEvent &evt, OIS::MouseButtonID id );
-
 };
 
 #endif // __APPLICATION_H__

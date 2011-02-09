@@ -41,6 +41,4 @@ class Utils
 };
 
 
-
-
 #endif // __UTILS_H__

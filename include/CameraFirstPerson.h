@@ -10,7 +10,7 @@
 
 /*!
  * \class CameraFirstPerson
- * \brief Classe permetttant de gérer une caméra à la première personne
+ * \brief Classe permettant de gérer une caméra à la première personne
  */
 class CameraFirstPerson : public CameraFixeTargetAbstract {	
 		

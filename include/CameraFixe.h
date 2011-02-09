@@ -9,7 +9,7 @@
 
 /*!
  * \class CameraFixe
- * \brief Classe permetttant de gérer une caméra fixe.
+ * \brief Classe permettant de gérer une caméra fixe.
  */
 class CameraFixe : public CameraFixeAbstract {
 	public:

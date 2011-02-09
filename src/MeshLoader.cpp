@@ -50,14 +50,14 @@ Ogre::Entity* MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String
 	{
 	    case SHIP:
 	    case SHIP_TOUCHED:
-          node = this->sceneMgr->getSceneNode("GroupeVaisseaux");
+          node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
           node = node->createChildSceneNode(nodeName);
           node->attachObject(entity);
 	    break;
 		case PLANET:
 		case PLANET2:
 		case PLANET3:
-          node = this->sceneMgr->getSceneNode("GroupeDecors_GroupePlanetes");
+          node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
           node = node->createChildSceneNode(nodeName);
           node->attachObject(entity);
 	    break;

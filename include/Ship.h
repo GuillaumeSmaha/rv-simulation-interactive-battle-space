@@ -33,4 +33,5 @@ class Ship
 		
 		void touched(void);
 };
-#endif
+
+#endif // __SHIP_H__
