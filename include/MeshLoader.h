@@ -2,7 +2,7 @@
 #define __MESH_LOADER_H__
 
 #include <Ogre.h>
-#include "meshType.h"
+#include "MeshType.h"
 #include "Utils.h"
 
 class MeshLoader
