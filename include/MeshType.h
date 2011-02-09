@@ -4,6 +4,7 @@
  */
 #ifndef __MESH_TYPE_H__
 #define __MESH_TYPE_H__
+#include <Ogre.h>
 
 	/*!
 	 *  \brief Liste des différents types de caméra
@@ -12,7 +13,8 @@
 		SHIP = 0,
 		PLANET = 1,
 		POMPIDOU = 2, //peut etre a modifier
-		ARLEQUIN = 3
+		ARLEQUIN = 3,
+		SHIP_TOUCHED = 4
 	} EnumTypeMesh;
 
 

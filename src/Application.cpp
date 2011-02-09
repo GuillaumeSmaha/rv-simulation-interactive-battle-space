@@ -218,6 +218,7 @@ void Application::initScene(void) {
     ship = new Ship();
     ship->setPosition(130,0,0);
     ship->getNode()->setOrientation(5, 5, 5, 5);
+    ship->touched();
 
     /*
 	// Création du système de particules

@@ -4,9 +4,9 @@ using namespace Ogre;
 
 Ship::Ship(void)
 {
-    this->node = MeshLoader::getSingleton()->getNode(SHIP);
-    this->node->setPosition(0, 0, 0);
-
+    this->entity = MeshLoader::getSingleton()->getNodedEntity(SHIP);
+    this->getNode()->setPosition(0, 0, 0);
+    //this->node->getAttachedObject(this->getName())-setMaterialName("razor");
 
     //TODO:voir pour creer un MeshLoader::getParticleSystem
     Ogre::ParticleSystem* thrusters = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem(25);
@@ -28,7 +28,7 @@ Ship::Ship(void)
 		emitter->setPosition(Ogre::Vector3(i == 0 ? 5.7 : -18, 0, 0));
 	}
 	//this->node->createChildSceneNode(Vector3(0, 6.5, -67))->attachObject(thrusters);
-    this->node->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
+    this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
 }
 
 Ship::~Ship(void)
@@ -38,5 +38,9 @@ Ship::~Ship(void)
 
 void Ship::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {
-    this->node->setPosition(x, y, z);
+    this->getNode()->setPosition(x, y, z);
+}
+void Ship::touched(void)
+{
+   MeshLoader::getSingleton()->setMaterial(this->entity, SHIP_TOUCHED);
 }
