@@ -33,15 +33,22 @@ class CameraFixeTargetAbstract : public CameraFixeAbstract {
 		/*!
 		 * \brief Initialise la position de la caméra\n
 		 * Méthode virtuelle pure à réimplémenter.
-		 * \return Int
 		 */
 		virtual void init_camera() = 0;
 		
-		Ogre::SceneNode * getTarget() {
+		/*!
+		 * \brief Récupère le noeud ciblé par la caméra
+		 * \return Le noeud target
+		 */
+		Ogre::SceneNode * getTarget()
+		{
 			return this->target;
 		}
 		
 	protected:
+		/*!
+		 * \brief Le noeud ciblé par la caméra
+		 */
 		Ogre::SceneNode * target;
 };
 

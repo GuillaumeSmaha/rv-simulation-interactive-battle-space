@@ -22,7 +22,6 @@ class CameraFixe : public CameraFixeAbstract {
 		
 		/*!
 		 * \brief Initialise la position de la caméra
-		 * \return Int
 		 */
 		void init_camera();
 };

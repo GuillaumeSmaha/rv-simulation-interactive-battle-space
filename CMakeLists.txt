@@ -65,7 +65,7 @@ include_directories(
 )
 
 #Génération du fichier de configuration
-configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_SOURCE_DIR}/include/config.h)
+configure_file(${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/include/config.h)
 
 	
 #Génération de la liste des fichiers

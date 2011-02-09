@@ -11,7 +11,6 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
-#include "cameraType.h"
 #include "CameraFixeAbstract.h"
 #include "CameraFixe.h"
 #include "CameraFirstPerson.h"
@@ -74,7 +73,7 @@ class Application : public Ogre::FrameListener, public Ogre::WindowEventListener
 		/*!
 		 *  \brief Type de la caméra utilisé
 		 */
-        EnumTypeCamera type_Camera;
+        CameraFixeAbstract::CameraType type_Camera;
 		/*!
 		 *  \brief Pointeur sur la caméra utilisée
 		 */

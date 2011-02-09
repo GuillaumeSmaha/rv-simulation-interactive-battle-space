@@ -4,19 +4,19 @@ using namespace Ogre;
 
 Ship::Ship(void)
 {
-    this->entity = MeshLoader::getSingleton()->getNodedEntity(SHIP);
+    this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
     //this->node->getAttachedObject(this->getName())-setMaterialName("razor");
 
     //TODO:voir pour creer un MeshLoader::getParticleSystem
     Ogre::ParticleSystem* thrusters = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem(25);
-    thrusters ->setMaterialName("Reactor");
-    thrusters ->setDefaultDimensions(25, 25);
+    thrusters->setMaterialName("Reactor");
+    thrusters->setDefaultDimensions(25, 25);
 
 	// Création de 2 émetteurs pour le système de particules
 	for (unsigned int i = 0; i < 2; i++)
 	{
-		Ogre::ParticleEmitter* emitter = thrusters ->addEmitter("Point");
+		Ogre::ParticleEmitter * emitter = thrusters ->addEmitter("Point");
 
 		// set the emitter properties
 		emitter->setAngle(Ogre::Degree(3));
@@ -40,7 +40,8 @@ void Ship::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {
     this->getNode()->setPosition(x, y, z);
 }
+
 void Ship::touched(void)
 {
-   MeshLoader::getSingleton()->setMaterial(this->entity, SHIP_TOUCHED);
+   MeshLoader::getSingleton()->setMaterial(this->entity, MeshLoader::SHIP_TOUCHED);
 }

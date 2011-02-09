@@ -24,7 +24,6 @@ class CameraFirstPerson : public CameraFixeTargetAbstract {
 		CameraFirstPerson(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target);
 		/*!
 		 * \brief Initialise la caméra
-		 * \return Int
 		 */
 		void init_camera();
 

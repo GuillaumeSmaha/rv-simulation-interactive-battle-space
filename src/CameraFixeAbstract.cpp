@@ -1,6 +1,7 @@
 #include "CameraFixeAbstract.h"
 
-CameraFixeAbstract::CameraFixeAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName) {
+CameraFixeAbstract::CameraFixeAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName)
+{
 	this->sceneMgr = sceneMgr;
 	this->cameraName = cameraName;
 	this->camera = this->sceneMgr->createCamera(cameraName);
@@ -15,32 +16,38 @@ CameraFixeAbstract::CameraFixeAbstract(Ogre::SceneManager * sceneMgr, Ogre::Stri
 }
 
 
-CameraFixeAbstract::~CameraFixeAbstract() {
+CameraFixeAbstract::~CameraFixeAbstract()
+{
 	this->sceneMgr->destroyCamera(this->cameraName);
 }
 
 
-void CameraFixeAbstract::setDirection( Ogre::Real x, Ogre::Real y, Ogre::Real z ) {
+void CameraFixeAbstract::setDirection( Ogre::Real x, Ogre::Real y, Ogre::Real z )
+{
 	this->camera->lookAt( Ogre::Vector3(x, y, z) );
 }
 
 
-void CameraFixeAbstract::setDirection( Ogre::Vector3 direction ) {
+void CameraFixeAbstract::setDirection( Ogre::Vector3 direction )
+{
 	this->camera->lookAt( direction );
 }
 
 
-void CameraFixeAbstract::setDirection( Ogre::SceneNode * nodeDirection ) {
+void CameraFixeAbstract::setDirection( Ogre::SceneNode * nodeDirection )
+{
 	this->camera->lookAt( nodeDirection->getPosition() );
 }
 
 
-void CameraFixeAbstract::setPosition( Ogre::Real x, Ogre::Real y, Ogre::Real z ) {
+void CameraFixeAbstract::setPosition( Ogre::Real x, Ogre::Real y, Ogre::Real z )
+{
 	this->camera->setPosition( Ogre::Vector3(x, y, z) );
 }
 
 
-void CameraFixeAbstract::setPosition( Ogre::Vector3 position ) {
+void CameraFixeAbstract::setPosition( Ogre::Vector3 position )
+{
 	this->camera->setPosition( position );
 }
 

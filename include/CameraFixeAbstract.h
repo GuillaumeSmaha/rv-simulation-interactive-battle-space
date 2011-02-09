@@ -16,6 +16,19 @@
  * \brief Classe abstraite entre le programme principale et la caméra effectivement utilisé. Elle ne peut donc pas être instancié directement
  */
 class CameraFixeAbstract {
+	public:
+
+		/// Définit les différents types de caméra
+		enum CameraType
+		{
+			/// Caméra fixe
+			CAMERA_FIXE = 0,
+			/// Caméra à la première personne attachée à un noeud
+			CAMERA_FISRT_PERSON = 1,
+			/// Caméra Extérieure fixe attachée à un noeud
+			CAMERA_EXTERIEURE_FIXE = 2
+		};
+	
 	public:		 
 		/*!
 		 * \brief Constructeur
@@ -31,7 +44,6 @@ class CameraFixeAbstract {
 		/*!
 		 * \brief Initialise la position de la caméra\n
 		 * Méthode virtuelle pure à réimplémenter.
-		 * \return Int
 		 */
 		virtual void init_camera() = 0;
 		/*!
@@ -68,14 +80,16 @@ class CameraFixeAbstract {
 		 * \brief [Getter] Pointeur sur la caméra
 		 * \return Le nom de la caméra
 		 */
-		Ogre::Camera * getCamera() {
+		Ogre::Camera * getCamera()
+		{
 			return camera;
 		}
 		/*!
 		 * \brief [Getter] Nom de la caméra
 		 * \return Le nom de la caméra
 		 */
-		Ogre::String getCameraName() {
+		Ogre::String getCameraName()
+		{
 			return cameraName;
 		}
 		

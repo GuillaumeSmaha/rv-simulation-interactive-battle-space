@@ -7,24 +7,30 @@
 
 class Ship
 {
-private:
-    Ogre::Entity * entity;
-public:
-    Ship(void);
-    ~Ship(void);
-    void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
-    Ogre::String getName(void)
-    {
-        return this->getName();
-    }
-    Ogre::SceneNode * getNode(void)
-    {
-        return this->entity->getParentSceneNode();
-    }
-    Ogre::Entity * getEntity(void)
-    {
-        this->getNode();
-    }
-    void touched(void);
+	private:
+		Ogre::Entity * entity;
+		
+	public:
+		Ship(void);
+		~Ship(void);
+		
+		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
+		
+		Ogre::String getName(void)
+		{
+			return this->getName();
+		}
+		
+		Ogre::SceneNode * getNode(void)
+		{
+			return this->entity->getParentSceneNode();
+		}
+		
+		Ogre::Entity * getEntity(void)
+		{
+			this->getNode();
+		}
+		
+		void touched(void);
 };
 #endif

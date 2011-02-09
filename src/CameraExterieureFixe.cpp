@@ -1,10 +1,13 @@
 #include "CameraExterieureFixe.h"
 
-CameraExterieureFixe::CameraExterieureFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target) : CameraFixeTargetAbstract(sceneMgr, cameraName, target) {
+CameraExterieureFixe::CameraExterieureFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target) : CameraFixeTargetAbstract(sceneMgr, cameraName, target)
+{
+	
 }
 
 
-void CameraExterieureFixe::init_camera() {
+void CameraExterieureFixe::init_camera()
+{
 	
 	this->camera->yaw(Ogre::Radian(180));
 	this->camera->pitch(Ogre::Radian(-15));

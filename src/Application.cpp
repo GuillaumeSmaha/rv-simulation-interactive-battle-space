@@ -16,7 +16,7 @@ Application::Application(void) {
 	this->pluginsCfg = "plugins.cfg";
 #endif
 
-	this->type_Camera = CAMERA_FIXE;
+	this->type_Camera = CameraFixeAbstract::CAMERA_FIXE;
 	this->gestCamera = NULL;
 	
 	this->shutDown = false;
@@ -67,15 +67,15 @@ bool Application::start(void) {
 	
 	// create the camera
     switch(this->type_Camera) {
-		case CAMERA_FIXE :
+		case CameraFixeAbstract::CAMERA_FIXE :
 			this->gestCamera = new CameraFixe(this->sceneMgr, "camera_fixe");
 			break;
 			
-		case CAMERA_FISRT_PERSON :
+		case CameraFixeAbstract::CAMERA_FISRT_PERSON :
 			this->gestCamera = new CameraFirstPerson(this->sceneMgr, "camera_firstPerson", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_FirstPerson"));
 			break;
 			
-		case CAMERA_EXTERIEURE_FIXE :
+		case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
 			this->gestCamera = new CameraExterieureFixe(this->sceneMgr, "camera_exterieureFixe", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ExtFixe"));
 			break;
     }

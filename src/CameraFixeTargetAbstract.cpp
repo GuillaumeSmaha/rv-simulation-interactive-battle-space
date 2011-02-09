@@ -1,7 +1,8 @@
 #include "CameraFixeTargetAbstract.h"
 
 
-CameraFixeTargetAbstract::CameraFixeTargetAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target) : CameraFixeAbstract(sceneMgr, cameraName) {
+CameraFixeTargetAbstract::CameraFixeTargetAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target) : CameraFixeAbstract(sceneMgr, cameraName)
+{
 	this->target = target;
 	
 	this->camera->lookAt(this->target->_getDerivedPosition());
@@ -13,5 +14,7 @@ CameraFixeTargetAbstract::CameraFixeTargetAbstract(Ogre::SceneManager * sceneMgr
 	this->camera->setFixedYawAxis(true);
 }
 
-CameraFixeTargetAbstract::~CameraFixeTargetAbstract() {
+CameraFixeTargetAbstract::~CameraFixeTargetAbstract()
+{
+
 }
