@@ -12,10 +12,12 @@ class MeshLoader
 		 */
 		enum MeshType {
 			SHIP = 0,
-			PLANET = 1,
 			POMPIDOU = 2, //peut etre a modifier
 			ARLEQUIN = 3,
-			SHIP_TOUCHED = 4
+			SHIP_TOUCHED = 4,
+			PLANET = 5,
+			PLANET2 = 6,
+			PLANET3 = 7
 		} ;
 	
 	private:

@@ -21,5 +21,6 @@ int Utils::randRangeInt(int min, int max)
 
 int Utils::unique(void)
 {
-    return _count++;
+	static int c = 0;
+    return c++;
 }

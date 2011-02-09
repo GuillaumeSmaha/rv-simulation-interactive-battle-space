@@ -214,9 +214,19 @@ void Application::initScene(void) {
 	GroupeVaisseaux_Vaisseau1_Corps->setOrientation(5,5,5,5);*/
 	//GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
 
+//	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,300,300);
+	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,300,300);
+	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,-300,-300);
+//	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(-300,300,300);
 
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET)->getParentSceneNode()->setScale(10,10,10);
+	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET3)->getParentSceneNode()->setScale(10,10,10); 
+	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET)->getParentSceneNode()->setScale(10,10,10);
+	/*
+	Ogre::Entity *sphere = sceneMgr->createEntity("name", "Prefab_Sphere");
+	sphere->setMaterialName("pluton");*/
 
+//	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
+	//shete
     Ship * ship = new Ship();
     ship->setPosition(-50,-50,-50);
     ship = new Ship();
