@@ -213,6 +213,10 @@ void Application::initScene(void) {
 	GroupeVaisseaux_Vaisseau1_Corps->setPosition(100, 100, 30);
 	GroupeVaisseaux_Vaisseau1_Corps->setOrientation(5,5,5,5);*/
 	//GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
+
+
+	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET)->getParentSceneNode()->setScale(10,10,10);
+
     Ship * ship = new Ship();
     ship->setPosition(-50,-50,-50);
     ship = new Ship();
@@ -251,7 +255,9 @@ void Application::initScene(void) {
     this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
     // Create a light
     Ogre::Light* l = this->sceneMgr->createLight("MainLight"); 
-    l->setPosition(20,80,50);
+    //l->setPosition(320,480,500);
+	l->setPosition(32,48,50);
+	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
 }

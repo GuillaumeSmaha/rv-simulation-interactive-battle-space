@@ -1,0 +1,13 @@
+material pluton
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture pluton.jpg
+			}
+		}
+	}
+}
