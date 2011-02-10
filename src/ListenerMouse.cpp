@@ -12,15 +12,18 @@ ListenerMouse::~ListenerMouse()
 {
 	this->inputManager->destroyInputObject(this->mouse);
 }
+
 void ListenerMouse::capture(void)
 {
     this->mouse->capture();
 }
+
 CameraFixeAbstract *  ListenerMouse::getCamera(void)
 {
     return this->gestCamera;
 
 }
+
 bool ListenerMouse::mouseMoved(const OIS::MouseEvent &evt) {
 
 	float mRotateSpeed = 0.1f;

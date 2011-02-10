@@ -12,12 +12,15 @@ ListenerKeyboard::~ListenerKeyboard()
 {
 	this->inputManager->destroyInputObject(this->keyboard);
 }
+
 void ListenerKeyboard::capture(void)
 {
     this->keyboard->capture();
 }
+
 bool ListenerKeyboard::keyPressed(const OIS::KeyEvent &evt) {
 	float translateSpeed = 2.5;
+	
 	switch(evt.key)
 	{
 		case OIS::KC_ESCAPE :

@@ -33,6 +33,9 @@ Application::Application(void) {
 Application::~Application(void)
 {
 	// remove ourself as a Window listener
+	delete this->listenerKeyboard;
+	delete this->listenerKeyboard;
+	
 	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
 	windowClosed(this->window);
 }
@@ -165,7 +168,6 @@ void Application::initListeners(void)
 	this->root->addFrameListener(this);
 	//this->mouse->setEventCallback(this);
 	//this->keyboard->setEventCallback(this);
-
 	//this->keyboard->setEventCallback(new ListenerKeyboard());
 }
 

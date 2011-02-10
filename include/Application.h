@@ -61,7 +61,7 @@ private:
 	/*!
 	* \brief GUI pour afficher les stats
 	*/
-	Ogre::Overlay* debugOverlay;
+	Ogre::Overlay * debugOverlay;
 
 	/*!
 	* \brief Texte utile pour le debug
