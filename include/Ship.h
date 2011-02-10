@@ -9,11 +9,15 @@ class Ship
 {
 	private:
 		Ogre::Entity * entity;
+		int shipLife;
 		
 	public:
 		Ship(void);
 		~Ship(void);
 		
+		void setShipLife(int);
+		int getShipLife();
+
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		
 		Ogre::String getName(void)

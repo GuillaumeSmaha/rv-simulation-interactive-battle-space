@@ -2,7 +2,7 @@
 
 using namespace Ogre;
 
-Ship::Ship(void)
+Ship::Ship(void) : shipLife(100)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
@@ -34,6 +34,16 @@ Ship::Ship(void)
 Ship::~Ship(void)
 {
 
+}
+
+void Ship::setShipLife(int shipLife)
+{
+	this->shipLife = shipLife;
+}
+
+int Ship::getShipLife()
+{
+	return this->shipLife;
 }
 
 void Ship::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
