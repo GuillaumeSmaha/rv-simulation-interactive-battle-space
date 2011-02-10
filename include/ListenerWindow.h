@@ -7,6 +7,7 @@
 
 #include <OgreRoot.h>
 #include <OgreWindowEventUtilities.h>
+#include "Utils.h"
 
 /*!
  * \class ListenerWindow
@@ -18,12 +19,13 @@ class ListenerWindow : public Ogre::WindowEventListener {
 		 *  \brief Root
 		 */
         Ogre::Root * root;
-		/*!
+
+
+	public:
+        /*!
 		 *  \brief Fenêtre de Rendu
 		 */
         Ogre::RenderWindow * window;
-        
-	public:
 		/*!
 		 * \brief Constructeur
 		 */
@@ -32,7 +34,7 @@ class ListenerWindow : public Ogre::WindowEventListener {
 		 * \brief Destructeur
 		 */
 		~ListenerWindow();
-		
+
 		/*!
 		 * \brief [Getter] Recupère le pointeur
 		 * \return Le pointeur sur le capteur d'événements de la fenêtre
@@ -49,7 +51,7 @@ class ListenerWindow : public Ogre::WindowEventListener {
 		{
 			this->window = window;
 		}
-		
+
 		/*!
 		 *  \brief Action à effectuer pour l'événement "redimensionnement de la fenêtre"
 		 * 	\param rw Fenêtre de rendu

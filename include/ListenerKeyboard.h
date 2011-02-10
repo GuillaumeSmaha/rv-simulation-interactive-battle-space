@@ -7,11 +7,12 @@
 
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
-
+#include "Application.h"
 /*!
  * \class ListenerKeyboard
  * \brief Classe permettant de gérer les événements du clavier.
  */
+class Application;
 class ListenerKeyboard : public OIS::KeyListener {
 	private:
 		/*!
@@ -22,17 +23,19 @@ class ListenerKeyboard : public OIS::KeyListener {
 		 *  \brief Capteur d'événements du clavier
 		 */
         OIS::Keyboard * keyboard;
-	
+
+        Application * app;
+
 	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerKeyboard(OIS::InputManager * inputManager);
+		ListenerKeyboard(OIS::InputManager * inputManager, Application * app);
 		/*!
 		 * \brief Destructeur
 		 */
 		~ListenerKeyboard();
-		
+
 		/*!
 		 * \brief Constructeur
 		 * \return Le pointeur sur le capteur d'événements du clavier
@@ -41,7 +44,8 @@ class ListenerKeyboard : public OIS::KeyListener {
 		{
 			return this->keyboard;
 		}
-		
+		void capture(void);
+
 		/*!
 		 *  \brief Action à effectuer pour l'événement "touche pressée"
 		 * 	\param evt Evenement du clavier

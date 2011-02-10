@@ -21,7 +21,7 @@
 #include "MeshLoader.h"
 
 
-
+class ListenerKeyboard;
 /*!
  * \class Application
  * \brief Class principale qui permet de démarrer le programme, d'afficher la fenêtre et de réagir aux évènements (ceux-ci sont ensuite dirigé vers les classes adaptés)
@@ -58,11 +58,9 @@ class Application {
 		 *  \brief Capteur d'événements
 		 */
         OIS::InputManager * inputManager;
-        
-		/*!
-		 *  \brief Capteur d'événements de la fenêtre
-		 */
-        ListenerWindow * listenerWindow;
+
+
+
 
 		/*!
 		 *  \brief Type de la caméra utilisé
@@ -75,12 +73,17 @@ class Application {
 		/*!
 		 *  \brief Indique si l'application doit-être arrếtée
 		 */
+
+        ListenerKeyboard * listenerKeyboard;
+    public: //TODO : faire des fonctions pour ca
         bool shutDown;
 
 		float _translateX;
 		float _translateZ;
-
-    public:
+		/*!
+		 *  \brief Capteur d'événements de la fenêtre
+		 */
+        ListenerWindow * listenerWindow;
 		/*!
 		 *  \brief Constructeur
 		 */
@@ -89,7 +92,7 @@ class Application {
 		 *  \brief Destructeur
 		 */
 	    virtual ~Application(void);
-	    
+
 		/*!
 		 *  \brief Démarre l'application
 		 */

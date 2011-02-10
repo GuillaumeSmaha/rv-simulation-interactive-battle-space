@@ -58,8 +58,7 @@ bool Application::start(void)
 	//init meshLoader
 	new MeshLoader(this->sceneMgr);
 
-	// init the input manager and create the listeners
-	this->initListeners();
+
 
 	// create the scene graph
 	this->initSceneGraph();
@@ -82,6 +81,8 @@ bool Application::start(void)
 			break;
     }
 	this->gestCamera->init_camera();
+	// init the input manager and create the listeners
+	this->initListeners();
 
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
@@ -140,7 +141,9 @@ void Application::initListeners(void)
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
-
+//	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
+   this->listenerKeyboard = new ListenerKeyboard(this->inputManager, this);
+    this->root->addFrameListener(new ListenerFrame(this->listenerKeyboard, new ListenerMouse(this->inputManager, this->gestCamera),this));
 	// Set initial mouse clipping size
 	//windowResized(this->listenerWindow->getWindow());
 
@@ -152,6 +155,7 @@ void Application::initListeners(void)
 	this->mouse->setEventCallback(this);
 	this->keyboard->setEventCallback(this);
 	*/
+	//this->keyboard->setEventCallback(new ListenerKeyboard());
 }
 
 
