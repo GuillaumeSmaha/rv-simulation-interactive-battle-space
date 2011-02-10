@@ -1,5 +1,5 @@
 /*!
- *  \file  CameraFixeTargetAbstract.h
+ *  \file  CameraFixeTarget.h
  *  \brief Ce fichier contient la déclaration de la classe CameraFixe. C'est la classe gérant une caméra fixe ciblé sur un noeud.
  */
 #ifndef __CAMERA_FIXE_TARGET_ABSTRACT_H__
@@ -14,27 +14,26 @@
 #include "CameraFixeAbstract.h"
 
 /*!
- * \class CameraFixeTargetAbstract
+ * \class CameraFixeTarget
  * \brief Classe permettant de gérer une caméra fixe ciblé sur un noeud.
  */
-class CameraFixeTargetAbstract : public CameraFixeAbstract {
+class CameraFixeTarget : public CameraFixeAbstract {
 	public:
 		/*!
 		 * \brief Constructeur
 		 * \param sceneMgr Pointeur sur le manager de la scène
 		 * \param cameraName Nom de la nouvelle caméra
 		 */
-		CameraFixeTargetAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target);
+		CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target);
 		/*!
 		 * \brief Destructeur virtuel
 		 */
-		 virtual ~CameraFixeTargetAbstract();
+		 virtual ~CameraFixeTarget();
 		 
 		/*!
-		 * \brief Initialise la position de la caméra\n
-		 * Méthode virtuelle pure à réimplémenter.
+		 * \brief Initialise la position de la caméra
 		 */
-		virtual void init_camera() = 0;
+		virtual void init_camera();
 		
 		/*!
 		 * \brief Récupère le noeud ciblé par la caméra

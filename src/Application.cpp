@@ -83,11 +83,11 @@ bool Application::start(void)
 			break;
 
 		case CameraFixeAbstract::CAMERA_FISRT_PERSON :
-			this->gestCamera = new CameraFirstPerson(this->sceneMgr, "camera_firstPerson", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_FirstPerson"));
+			this->gestCamera = new CameraFixeTarget(this->sceneMgr, "camera_firstPerson", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_FirstPerson"));
 			break;
 
 		case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
-			this->gestCamera = new CameraExterieureFixe(this->sceneMgr, "camera_exterieureFixe", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ExtFixe"));
+			this->gestCamera = new CameraFixeTarget(this->sceneMgr, "camera_exterieureFixe", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ExtFixe"));
 			break;
     }
 	this->gestCamera->init_camera();
