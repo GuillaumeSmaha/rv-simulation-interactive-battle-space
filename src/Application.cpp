@@ -262,6 +262,12 @@ void Application::initScene(void)
     ship2.getNode()->setOrientation(5, 5, 5, 5);
     ship2.touched();
     
+
+    Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
+	asteroid->getParentSceneNode()->setPosition(13,13,15);
+	asteroid->getParentSceneNode()->setScale(35,35,35);
+	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true)->getParentSceneNode()->setPosition(300,-300,-300);
+
     /*
 	// Création du système de particules
     Ogre::ParticleSystem* thrusters = this->sceneMgr->createParticleSystem(25);
