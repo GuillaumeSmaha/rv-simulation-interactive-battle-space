@@ -19,7 +19,12 @@ class MeshLoader
 			SHIP_TOUCHED = 4,
 			PLANET = 5,
 			PLANET2 = 6,
-			PLANET3 = 7
+			PLANET3 = 7,
+			PLANET4 = 8,
+			PLANET5 = 9,
+			PLANET6 = 10,
+			PLANET7 = 11,
+			PLANET8 = 12
 		} ;
 
 	private:

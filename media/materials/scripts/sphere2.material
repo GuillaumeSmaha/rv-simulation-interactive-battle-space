@@ -6,7 +6,7 @@ material planet2
 		{
 			texture_unit
 			{
-				texture pluton2.jpg
+				texture planet2.jpg
 			}
 		}
 	}

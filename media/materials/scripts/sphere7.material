@@ -1,4 +1,4 @@
-material planet3
+material planet7
 {
 	technique
 	{
@@ -6,7 +6,7 @@ material planet3
 		{
 			texture_unit
 			{
-				texture planet3.jpg
+				texture planet7.jpg
 			}
 		}
 	}
