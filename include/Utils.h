@@ -38,6 +38,12 @@ class Utils
 		 * \return unique int
 		 */
 		static int unique(void);
+
+		/*!
+		* \brief Affiche un message de log sur la console
+		* \param text Texte à afficher
+		*/
+		static void log(Ogre::String text);
 };
 
 

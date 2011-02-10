@@ -24,3 +24,8 @@ int Utils::unique(void)
 	static int c = 0;
     return c++;
 }
+
+void Utils::log(Ogre::String text)
+{
+	Ogre::LogManager::getSingletonPtr()->logMessage(text);
+}
