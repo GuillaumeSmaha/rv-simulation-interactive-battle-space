@@ -1,5 +1,5 @@
 #include "MeshLoader.h"
-
+#include <sstream>
 MeshLoader* MeshLoader::_instance = NULL;
 
 MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
@@ -35,10 +35,17 @@ Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name
 			entity = sceneMgr->createEntity(name, "Prefab_Sphere");
 			if(random)
 			{
-			//	type = (MeshLoader::MeshType)((int)PLANET + Utils::randRangeInt(0,2));
+				type = (MeshLoader::MeshType)((int)PLANET + Utils::randRangeInt(0,2));
 			}
 	    break;
 	}
+	Utils::log("TTTTTTTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+	/*Ogre::String test = "bonjour";
+Utils::log("test"+Utils::toString(Utils::unique()));*/
+
+	//Utils::log(Utils::toString(3));
+	Utils::log(entity->getName());
+	//Utils::log(entity->getParentSceneNode()->getName());
 	MeshLoader::setMaterial(entity, type);
 	return entity;
 }

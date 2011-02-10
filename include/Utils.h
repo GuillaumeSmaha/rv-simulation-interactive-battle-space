@@ -8,7 +8,7 @@
 #include <Ogre.h>
 #include <math.h>
 #include <time.h>
-
+#include <sstream>
 /**
  * \class Utils
  * \brief A tools class
@@ -20,7 +20,7 @@ class Utils
 		 * Initialize the rand function
 		 */
 		static int initialize(void);
-		
+
 		/**
 		 * Value of a unique counter
 		 */
@@ -44,6 +44,9 @@ class Utils
 		* \param text Texte à afficher
 		*/
 		static void log(Ogre::String text);
+		template <typename T>
+		static Ogre::String toString( const T & Value );
+		static Ogre::String toString( int Value);
 };
 
 

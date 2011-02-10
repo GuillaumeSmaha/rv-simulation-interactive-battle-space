@@ -21,11 +21,30 @@ int Utils::randRangeInt(int min, int max)
 
 int Utils::unique(void)
 {
-	static int c = 0;
-    return c++;
+	return _count++;
 }
 
 void Utils::log(Ogre::String text)
 {
 	Ogre::LogManager::getSingletonPtr()->logMessage(text);
+}
+Ogre::String Utils::toString( int Value)
+{
+
+    // utiliser un flux de sortie pour créer la chaîne
+    std::ostringstream oss;
+    // écrire la valeur dans le flux
+    oss << Value;
+    // renvoyer une string
+    return oss.str();
+}
+template <typename T>
+Ogre::String Utils::toString( const T & Value )
+{
+    // utiliser un flux de sortie pour créer la chaîne
+    std::ostringstream oss;
+    // écrire la valeur dans le flux
+    oss << Value;
+    // renvoyer une string
+    return oss.str();
 }
