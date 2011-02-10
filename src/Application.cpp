@@ -25,6 +25,7 @@ Application::Application(void) {
 	
 	this->isStatsOn = true;
 	this->timeUntilNextToggle = 0;
+
 }
 
 
@@ -34,13 +35,12 @@ Application::~Application(void)
 {
 	// remove ourself as a Window listener
 	delete this->listenerKeyboard;
-	delete this->listenerKeyboard;
 	
 	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
 
     delete this->root;
     MeshLoader::deleteMeshLoader(); 
-    delete this->gestCamera;
+    //delete this->gestCamera;
     windowClosed(this->window);
 }
 
@@ -255,13 +255,13 @@ void Application::initScene(void)
 
 //	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
 	//shete
-    Ship * ship = new Ship();
-    ship->setPosition(-50,-50,-50);
-    Ship * ship2 = new Ship();
-    ship2->setPosition(130,0,0);
-    ship2->getNode()->setOrientation(5, 5, 5, 5);
-    ship2->touched();
-
+    Ship ship;
+    ship.setPosition(-50,-50,-50);
+    Ship ship2;
+    ship2.setPosition(130,0,0);
+    ship2.getNode()->setOrientation(5, 5, 5, 5);
+    ship2.touched();
+    
     /*
 	// Création du système de particules
     Ogre::ParticleSystem* thrusters = this->sceneMgr->createParticleSystem(25);
@@ -360,7 +360,7 @@ bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt) {
 		return false;
 
     // capture value of each device
-	//this->listenerKeyboard->getKeyboard()->capture();
+	this->listenerKeyboard->getKeyboard()->capture();
     //this->listenerMouse->getMouse()->capture();
 
 	if (timeUntilNextToggle >= 0)
