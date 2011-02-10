@@ -9,6 +9,8 @@
 #include <math.h>
 #include <time.h>
 #include <sstream>
+#include <iostream>
+
 /**
  * \class Utils
  * \brief A tools class
@@ -25,6 +27,11 @@ class Utils
 		 * Value of a unique counter
 		 */
 		static int _count;
+
+		/**
+		 * Chemin du fichier de log
+		 */
+		static Ogre::String _logFile;
 	public:
 		/**
 		* Returns an int between min and max (inclusive)
@@ -44,8 +51,27 @@ class Utils
 		* \param text Texte à afficher
 		*/
 		static void log(Ogre::String text);
-		template <typename T>
-		static Ogre::String toString( const T & Value );
+		
+		/*!
+		* \brief Initialise le fichier de sortie de log
+		* \param file Chemin du fichier
+		*/
+		static void logFileInit(Ogre::String file);
+		/*!
+		* \brief Enregistre un message de log dans le fichier de sortie
+		* \param text Texte à afficher
+		*/
+		static void logFile(Ogre::String text);
+		
+		/*!
+		* \brief Transforme une valeur en une chaine de caractère.
+		* \param Value valeur à chainer
+		*/
+		template <typename T> static Ogre::String toString( const T & Value );
+		/*!
+		* \brief Transforme un entier en une chaine de caractère.
+		* \param Value valeur à chainer
+		*/
 		static Ogre::String toString( int Value);
 };
 
