@@ -82,13 +82,9 @@ void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type)
           entity->setMaterialName("razor2");
 	    break;
 		case PLANET :
-			entity->setMaterialName("planet");
-		break;
-		case PLANET2 :
-			entity->setMaterialName("planet2");
-		break;
-		case PLANET3 :
-			entity->setMaterialName("planet3");
+		case PLANET2:
+		case PLANET3:
+			entity->setMaterialName("planet"+Utils::toString(type-PLANET+1));
 		break;
 	}
 }
