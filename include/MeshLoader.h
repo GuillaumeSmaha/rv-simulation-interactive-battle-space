@@ -32,6 +32,7 @@ class MeshLoader
 
 		MeshLoader(Ogre::SceneManager * sceneMgr);
 		~MeshLoader(void);
+        static bool deleteMeshLoader(void);
 
 
 		Ogre::Entity * getEntity(MeshLoader::MeshType meshType, bool random = false)

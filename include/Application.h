@@ -104,7 +104,7 @@ public: //TODO : faire des fonctions pour ca
 	/*!
 	*  \brief Destructeur
 	*/
-	virtual ~Application(void);
+	~Application(void);
 
 	/*!
 	*  \brief Démarre l'application

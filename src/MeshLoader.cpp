@@ -12,6 +12,17 @@ MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
 
 }
 
+
+bool MeshLoader::deleteMeshLoader(void)
+{
+    if(_instance != NULL)
+    {
+        delete _instance;
+        return true;
+    }
+    return false;
+}
+
 MeshLoader::~MeshLoader(void)
 {
 	//this->sceneMgr = NULL;

@@ -37,7 +37,11 @@ Application::~Application(void)
 	delete this->listenerKeyboard;
 	
 	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
-	windowClosed(this->window);
+
+    delete this->root;
+    MeshLoader::deleteMeshLoader(); 
+    delete this->gestCamera;
+    windowClosed(this->window);
 }
 
 //------------------------------------------------------------------------------
@@ -253,10 +257,10 @@ void Application::initScene(void)
 	//shete
     Ship * ship = new Ship();
     ship->setPosition(-50,-50,-50);
-    ship = new Ship();
-    ship->setPosition(130,0,0);
-    ship->getNode()->setOrientation(5, 5, 5, 5);
-    ship->touched();
+    Ship * ship2 = new Ship();
+    ship2->setPosition(130,0,0);
+    ship2->getNode()->setOrientation(5, 5, 5, 5);
+    ship2->touched();
 
     /*
 	// Création du système de particules
