@@ -18,7 +18,7 @@ class Ship
 		
 		Ogre::String getName(void)
 		{
-			return this->getName();
+			return entity->getName();
 		}
 		
 		Ogre::SceneNode * getNode(void)
