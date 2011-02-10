@@ -30,6 +30,11 @@ class ListenerFrame : public Ogre::FrameListener {
 		 *  \brief Génère la frame de rendu
 		 */
         bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+
+		/*!
+		*  \brief Comportement après génération de la frame
+		*/
+		bool frameEnded(const Ogre::FrameEvent& evt);
 };
 
 #endif //__LISTENER_FRAME_H__

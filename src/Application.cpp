@@ -22,6 +22,9 @@ Application::Application(void) {
 
 	this->_translateX = 0;
 	this->_translateZ = 0;
+	
+	this->isStatsOn = true;
+	this->timeUntilNextToggle = 0;
 }
 
 
@@ -30,8 +33,8 @@ Application::Application(void) {
 Application::~Application(void)
 {
 	// remove ourself as a Window listener
-	//Ogre::WindowEventUtilities::removeWindowEventListener(this->listenerWindow->getWindow(), this);
-	//windowClosed(this->listenerWindow->getWindow());
+	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
+	windowClosed(this->window);
 }
 
 //------------------------------------------------------------------------------
@@ -48,9 +51,8 @@ bool Application::start(void)
 	if(! this->root->restoreConfig() && ! this->root->showConfigDialog())
 		return false;
 
-
 	// initialise the system, create the default rendering window
-	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
+	this->window = this->root->initialise(true, "Combat spatial");
 
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
@@ -58,7 +60,8 @@ bool Application::start(void)
 	//init meshLoader
 	new MeshLoader(this->sceneMgr);
 
-
+	// Initialisation des ressources
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 	// create the scene graph
 	this->initSceneGraph();
@@ -86,10 +89,16 @@ bool Application::start(void)
 
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
-	Ogre::Viewport * viewPort = this->listenerWindow->getWindow()->addViewport(this->gestCamera->getCamera(), 0);
+	Ogre::Viewport * viewPort = this->window->addViewport(this->gestCamera->getCamera(), 0);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
 	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
 
+	// activate debugging overlay
+	debugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
+
+	// On affiche l'overlay
+	showDebugOverlay(true);
+	
 	// start the scene rendering (main loop)
 	this->root->startRendering();
 
@@ -123,7 +132,10 @@ void Application::loadRessources(void)
 		}
 	}
 
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	/* Fait dans le start() sinon plantage car il faut laisser du temps aux 
+	 * ressources de se charger.
+	 */
+	//Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 
@@ -136,25 +148,24 @@ void Application::initListeners(void)
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
 
-	this->listenerWindow->getWindow()->getCustomAttribute("WINDOW", &windowHnd);
+	this->window->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
-//	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
-   this->listenerKeyboard = new ListenerKeyboard(this->inputManager, this);
-    this->root->addFrameListener(new ListenerFrame(this->listenerKeyboard, new ListenerMouse(this->inputManager, this->gestCamera),this));
+
+	this->listenerKeyboard = new ListenerKeyboard(this->inputManager, this);
+    //this->root->addFrameListener(new ListenerFrame(this->listenerKeyboard, new ListenerMouse(this->inputManager, this->gestCamera),this));
+	
 	// Set initial mouse clipping size
-	//windowResized(this->listenerWindow->getWindow());
+	windowResized(this->window);
 
 	// Register the listeners
-	/*
-	Ogre::WindowEventUtilities::addWindowEventListener(this->listenerWindow->getWindow(), this);
-
+	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
 	this->root->addFrameListener(this);
-	this->mouse->setEventCallback(this);
-	this->keyboard->setEventCallback(this);
-	*/
+	//this->mouse->setEventCallback(this);
+	//this->keyboard->setEventCallback(this);
+
 	//this->keyboard->setEventCallback(new ListenerKeyboard());
 }
 
@@ -281,6 +292,118 @@ void Application::initScene(void)
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
+}
+
+//------------------------------------------------------------------------------
+
+void Application::updateStats(void)
+{
+	static String currFps = "Current FPS: ";
+	static String avgFps = "Average FPS: ";
+	static String bestFps = "Best FPS: ";
+	static String worstFps = "Worst FPS: ";
+	static String tris = "Triangle Count: ";
+	static String batches = "Batch Count: ";
+
+	// update stats when necessary
+	try {
+		OverlayElement* guiAvg = OverlayManager::getSingleton().getOverlayElement("Core/AverageFps");
+		OverlayElement* guiCurr = OverlayManager::getSingleton().getOverlayElement("Core/CurrFps");
+		OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
+		OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
+
+		const RenderTarget::FrameStats& stats = this->window->getStatistics();
+		guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
+		guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
+		guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
+			+" "+StringConverter::toString(stats.bestFrameTime)+" ms");
+		guiWorst->setCaption(worstFps + StringConverter::toString(stats.worstFPS)
+			+" "+StringConverter::toString(stats.worstFrameTime)+" ms");
+
+		OverlayElement* guiTris = OverlayManager::getSingleton().getOverlayElement("Core/NumTris");
+		guiTris->setCaption(tris + StringConverter::toString(stats.triangleCount));
+
+		OverlayElement* guiBatches = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
+		guiBatches->setCaption(batches + StringConverter::toString(stats.batchCount));
+
+		OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
+		guiDbg->setCaption(debugText);
+	}
+	catch(...) { /* ignore */ }
+}
+
+//------------------------------------------------------------------------------
+
+void Application::showDebugOverlay(bool show)
+{
+	if (debugOverlay)
+	{
+		if (show)
+			debugOverlay->show();
+		else
+			debugOverlay->hide();
+	}
+}
+
+//------------------------------------------------------------------------------
+
+bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt) {
+	
+	// Stop the rendering if the window was closed, or the application stoped
+	if(this->window->isClosed() || this->shutDown)
+		return false;
+
+    // capture value of each device
+	//this->listenerKeyboard->getKeyboard()->capture();
+    //this->listenerMouse->getMouse()->capture();
+
+	if (timeUntilNextToggle >= 0)
+		timeUntilNextToggle -= evt.timeSinceLastFrame;
+    
+    this->gestCamera->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
+
+	return true;
+}
+
+//------------------------------------------------------------------------------
+
+bool Application::frameEnded(const Ogre::FrameEvent& evt)
+{
+	updateStats();
+	return true;
+}
+
+//------------------------------------------------------------------------------
+
+void Application::windowResized(Ogre::RenderWindow *rw)
+{
+	unsigned int width, height, depth;
+	int left, top;
+
+	// Adjust mouse clipping area
+	rw->getMetrics(width, height, depth, left, top); 
+	//const OIS::MouseState &ms = this->mouse->getMouseState();
+	//ms.width = width;
+	//ms.height = height;
+
+}
+ 
+void Application::windowClosed(Ogre::RenderWindow *rw)
+{
+	// Only close for window that created OIS (the main window)
+	if(rw == this->window)
+	{
+		if(this->inputManager)
+		{
+			// Unattach OIS before window shutdown (very important under Linux)
+			//this->inputManager->destroyInputObject(this->mouse);
+			//this->inputManager->destroyInputObject(this->keyboard);
+ 
+			OIS::InputManager::destroyInputSystem(this->inputManager);
+			this->inputManager = 0;
+		}
+	}
+
 }
 
 //------------------------------------------------------------------------------
