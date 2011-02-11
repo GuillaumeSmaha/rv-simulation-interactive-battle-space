@@ -23,6 +23,10 @@ class Signal
             this->dispatch(NULL);
         }*/
 
+        void dispatch(void)
+        {
+            this->dispatch(NULL);
+        }
         void dispatch( Retour argument)
         {
             Utils::log("Dispatch:");

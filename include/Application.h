@@ -116,6 +116,7 @@ class Application
 
 	public:
         void appel(float b);
+        void appel(void * b);
 		/*!
 		*  \brief Constructeur
 		*/
