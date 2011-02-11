@@ -16,7 +16,7 @@ class Planet
 		
 	public:
 		Planet(void);
-		Planet::Planet(Ogre::int16 type);
+		Planet(Ogre::int16 type);
 		~Planet(void);
 		
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
