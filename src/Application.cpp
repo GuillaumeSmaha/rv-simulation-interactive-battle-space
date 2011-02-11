@@ -37,20 +37,14 @@ Application::~Application(void)
 	Utils::log("         -> delete : gestCamera");
     delete this->gestCamera;
 	
-	Utils::log("         -> delete : listenerMouse");
 	delete this->listenerMouse;
-	Utils::log("         -> delete : listenerKeyboard");
 	delete this->listenerKeyboard;
-	Utils::log("         -> delete : listenerFrame");
 	delete this->listenerFrame;
 
-	Utils::log("         -> delete : deleteMeshLoader");
 	MeshLoader::deleteMeshLoader();
-    
-	Utils::log("         -> delete : listenerWindow");
+	
 	delete this->listenerWindow;
 	
-	Utils::log("         -> delete : root");
     delete this->root;
 }
 
