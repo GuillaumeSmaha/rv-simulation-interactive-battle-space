@@ -24,7 +24,7 @@ Application::Application(void)
 
 	this->_translateX = 0;
 	this->_translateZ = 0;
-	
+
 	this->isStatsOn = true;
 	this->timeUntilNextToggle = 0;
 }
@@ -36,15 +36,15 @@ Application::~Application(void)
 {
 	Utils::log("         -> delete : gestCamera");
     delete this->gestCamera;
-	
+
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
 	delete this->listenerFrame;
 
 	MeshLoader::deleteMeshLoader();
-	
+
 	delete this->listenerWindow;
-	
+
     delete this->root;
 }
 
@@ -96,7 +96,7 @@ bool Application::start(void)
 			break;
     }
 	this->gestCamera->init_camera();
-	
+
 	// init the input manager and create the listeners
 	this->initListeners();
 
@@ -111,7 +111,7 @@ bool Application::start(void)
 
 	// On affiche l'overlay
 	showDebugOverlay(true);
-	
+
 	// start the scene rendering (main loop)
 	this->root->startRendering();
 
@@ -205,7 +205,7 @@ void Application::loadRessources(void)
 		}
 	}
 
-	/* Fait dans le start() sinon plantage car il faut laisser du temps aux 
+	/* Fait dans le start() sinon plantage car il faut laisser du temps aux
 	 * ressources de se charger.
 	 */
 	//Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
@@ -301,7 +301,23 @@ void Application::initScene(void)
     ship2.setPosition(130,0,0);
     ship2.getNode()->setOrientation(5, 5, 5, 5);
     ship2.touched();
-    
+
+    Utils::log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    float b = 4.5;
+    Utils::log(b);
+
+    //Création d'un signal prenant comme argument un float
+    Signal<float> s ;
+
+    //rajout du listener : la fonction appel
+    s.add(&Application::appel);
+    //on dispatch
+    s.dispatch(b);
+    // on supprime le listener
+    s.remove(&Application::appel);
+    //rien n'est dispatché
+    s.dispatch(b);
+
 
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
 	asteroid->getParentSceneNode()->setPosition(13,13,15);
@@ -321,7 +337,12 @@ void Application::initScene(void)
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
 }
-
+//test les signaux
+void Application::appel(float b)
+{
+     Utils::log("COUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+    Utils::log(b);
+}
 //------------------------------------------------------------------------------
 
 int main(void)
