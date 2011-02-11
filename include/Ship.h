@@ -5,11 +5,21 @@
 #include "MeshLoader.h"
 #include "Utils.h"
 
+
 class Ship
 {
 	private:
 		Ogre::Entity * entity;
 		int shipLife;
+		Ogre::Real xShip;
+		Ogre::Real yShip;
+		Ogre::Real zShip;
+		Ogre::Real wAngleShip;
+		Ogre::Real xAngleShip;
+		Ogre::Real yAngleShip;
+		Ogre::Real zAngleShip;
+		Ogre::Real speed;
+		Ogre::Real acceleration;
 		
 	public:
 		Ship(void);
@@ -18,8 +28,32 @@ class Ship
 		void setShipLife(int);
 		int getShipLife();
 
+		void setXShip (Ogre::Real);
+		void setYShip (Ogre::Real);
+		void setZShip (Ogre::Real);
+		Ogre::Real getXShip();
+		Ogre::Real getYShip();
+		Ogre::Real getZShip();
+
+		void setWAngleShip(Ogre::Real);
+		void setXAngleShip(Ogre::Real);
+		void setYAngleShip(Ogre::Real);
+		void setZAngleShip(Ogre::Real);
+		Ogre::Real getWAngleShip();
+		Ogre::Real getXAngleShip();
+		Ogre::Real getYAngleShip();
+		Ogre::Real getZAngleShip();
+
+		void setOrient(Ogre::Quaternion);
+		Ogre::Quaternion getOrient();
+
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		
+		void setSpeed (Ogre::Real);
+		void setAcceleration (Ogre::Real);
+		Ogre::Real getSpeed();
+		Ogre::Real getAcceleration();
+
 		Ogre::String getName(void)
 		{
 			return entity->getName();

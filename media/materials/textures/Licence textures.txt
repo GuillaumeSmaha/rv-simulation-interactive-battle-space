@@ -1,0 +1,40 @@
+planet texture maps
+I work in the field of advertising. One day I needed an image map of our planet for use in a rendering for a printed piece, and was suprised to discover that such a thing was pretty hard to find. So I created my own using scanned data, lots of painting, and reference to USGS digital elevation map data. Once I had completed both a bump and color map of the Earth, I turned to the other planets in our solar system, scavenging data where I could and piecing together the images I am sharing here.
+
+Above, you'll find links to pages where you can obtain high-quality texture maps of the planets for the purpose of 3D rendering. You'll find notes on the creation or source of each map, and a small sample rendering of the map to show you how it will look in your artwork. Interspersed amongst the pages you will find the occasional rendering tip.
+
+These maps are simple cylindrical projections, designed to be applied to spheres using spherical projection. If you use any other projection method, the map will appear distorted on the final product.
+
+A note about prices:
+Some of the larger maps and the 3D objects require PayPal payment. This has been done to help defray the costs associated with hosting this site. I've tried to keep the prices reasonable and fair.
+
+A note about nomenclature:
+Some of the maps here are available in more than one size. I have chosen to label these 1K, 2K, 4K, etc. The number refers to the horizontal resolution of the image. A 4K image is 4000 pixels wide. The vertical resolution is always half of the horizontal. On each page is a thumbnail image of the map used on a sphere in Cinema4D. If you click on the thumbnail image, a larger, more detailed version will open in a new window.
+
+Copyright Information
+All textures and images on this site are Copyright (c) by James Hastings-Trew. The maps are free to download and use as source material or resource in artwork or rendering (CGI or real time) in any kind of project - personal, commercial, broadcast, or display. You are not free to redistribute the maps "as is" in any medium - online, CD, for sale, etc. where the primary intent is to distribute the maps themselves and not the result of using the maps, without my permission. That is to say, the results of using the maps are free to use and distribute, but the maps as direct source material for those results may not be, unless you have my permission. The maps may not be included as they exist on this site in any kind of commercial, shareware, or freeware product without my permission. The maps may not be repackaged with 3D models and sold in any form. The maps may not be given away in whole or in part on another website or in a freeware or commercial product without my permission.
+
+Here are some examples of usage that I hope will clear the situation up:
+
+Example 1 - The Simulator or Game
+You are a software author who has created a Solar System simulator and you want to use my planet texture maps in your program. Since the primary intent of your use is to create real time renderings utilizing the planet texture maps as a resource in your software product, this is an acceptable use under my copyright terms.
+
+Example 2 - The Fantasy Poster
+You are an artist who is producting a poster for sale on the internet and you wish to use one of my planet texture maps as source material in your artwork. Since the primary intent of your use is to create artwork using the planet texture maps as a resource in your artwork, this is an acceptable use under my copyright terms.
+
+Example 3 - The Japanese Space Museum
+You are the curator of a Japanese Space Museum and you wish to use my planet texture maps in an animated display showing the motions of the solar system. Since the primary intent of your use is to create artwork (the animation) using the planet texture maps as resources, this is an acceptable use under my copyright terms.
+
+Example 4 - The 3D Rendering Program
+You are a software author and you wish to include the planet texture maps from my site with your product as part of the content set you are offering with your program (commercial, shareware, or freeware). Since you want to distribute the maps, and not the results of using the maps, you will need my permission to do so.
+
+Example 5 - The Quick Buck Artist
+You are looking to make some money off of my work, and you decide to package up some sphere models made in 3D Studio Max with my maps wrapped around them, and sell them on a website for a significant amount of money. Since you want to distribute the maps, and not the results of using the maps, you will need my persmission to do so. Except I will not give you permission to directly sell what I am giving away for free here — that would be unethical and a blot on your karma. Shame on you. Go tell your mom what you have done. She'll know what to do with you.
+
+I hope this clears up some questions about copyright usage. 
+
+
+© 2006 james hastings-trew
+
+
+http://planetpixelemporium.com/planets.html

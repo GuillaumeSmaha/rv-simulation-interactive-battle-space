@@ -8,6 +8,7 @@
 #include <Ogre.h>
 #include <math.h>
 #include <time.h>
+#include <OgreQuaternion.h>
 #include <sstream>
 #include <iostream>
 
