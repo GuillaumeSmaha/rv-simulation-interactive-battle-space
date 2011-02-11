@@ -10,6 +10,7 @@ Planet::Planet(void)
 
 Planet::Planet(Ogre::int16 _type) : type(_type)
 {
+	//Choix de types de planètes 
 	switch(type)
 	{
 	case 1 : this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET); break;
