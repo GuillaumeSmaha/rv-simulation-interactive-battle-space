@@ -1,21 +1,21 @@
 #include "ListenerWindow.h"
 
-ListenerWindow::ListenerWindow(Ogre::Root * root, Ogre::String nameWindow)
+ListenerWindow::ListenerWindow(Application * app, Ogre::Root * root, Ogre::String nameWindow)
 {
-	this->root = root;
-	this->window = this->root->initialise(true, nameWindow);
+	this->app = app;
+	this->renderWindow = root->initialise(true, nameWindow);
 
-	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
-	this->windowResized(this->window);
+	Ogre::WindowEventUtilities::addWindowEventListener(this->renderWindow, this);
+	this->windowResized(this->renderWindow);
 }
 
 ListenerWindow::~ListenerWindow()
 {
-	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
-	this->windowClosed(this->window);
+	Ogre::WindowEventUtilities::removeWindowEventListener(this->renderWindow, this);
+	this->windowClosed(this->renderWindow);
 }
 
-void ListenerWindow::windowResized(Ogre::RenderWindow *rw)
+void ListenerWindow::windowResized(Ogre::RenderWindow * rw)
 {
 	unsigned int width, height, depth;
 	int left, top;
@@ -30,21 +30,14 @@ void ListenerWindow::windowResized(Ogre::RenderWindow *rw)
 
 }
 
-void ListenerWindow::windowClosed(Ogre::RenderWindow *rw)
+void ListenerWindow::windowClosed(Ogre::RenderWindow * rw)
 {
 	// Only close for window that created OIS (the main window)
-	/*
-	if(rw == this->window)
+	if(rw == this->renderWindow)
 	{
-		if(this->inputManager)
+		if(this->app->getInputManager())
 		{
-			// Unattach OIS before window shutdown (very important under Linux)
-			this->inputManager->destroyInputObject(this->mouse);
-			this->inputManager->destroyInputObject(this->keyboard);
-
-			OIS::InputManager::destroyInputSystem(this->inputManager);
-			this->inputManager = 0;
+			this->app->killInputManager();
 		}
 	}
-	*/
 }

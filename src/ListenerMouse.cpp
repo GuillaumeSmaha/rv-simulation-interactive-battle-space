@@ -1,11 +1,11 @@
 #include "ListenerMouse.h"
 
-ListenerMouse::ListenerMouse(OIS::InputManager * inputManager, CameraFixeAbstract * gestCamera)
+ListenerMouse::ListenerMouse(Application * app)
 {
-	this->inputManager = inputManager;
+	this->app = app;
+	this->inputManager = this->app->getInputManager();
 	this->mouse = static_cast<OIS::Mouse*>(inputManager->createInputObject(OIS::OISMouse, true));
 	this->mouse->setEventCallback(this);
-	this->gestCamera = gestCamera;
 }
 
 ListenerMouse::~ListenerMouse()
@@ -18,18 +18,13 @@ void ListenerMouse::capture(void)
     this->mouse->capture();
 }
 
-CameraFixeAbstract *  ListenerMouse::getCamera(void)
+bool ListenerMouse::mouseMoved(const OIS::MouseEvent &evt)
 {
-    return this->gestCamera;
-
-}
-
-bool ListenerMouse::mouseMoved(const OIS::MouseEvent &evt) {
 
 	float mRotateSpeed = 0.1f;
 
-	this->gestCamera->getCamera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
-	this->gestCamera->getCamera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
+	this->app->getGestCamera()->getCamera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
+	this->app->getGestCamera()->getCamera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
 
 	return true;
 }

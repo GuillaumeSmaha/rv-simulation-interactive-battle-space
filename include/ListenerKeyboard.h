@@ -8,13 +8,20 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include "Application.h"
+#include "CameraFixeAbstract.h"
+
+class Application;
+
 /*!
  * \class ListenerKeyboard
  * \brief Classe permettant de gérer les événements du clavier.
  */
-class Application;
 class ListenerKeyboard : public OIS::KeyListener {
 	private:
+		/*!
+		 *  \brief Pointeur sur l'application
+		 */
+        Application * app;
 		/*!
 		 *  \brief Gestionnaire d'événements
 		 */
@@ -23,27 +30,29 @@ class ListenerKeyboard : public OIS::KeyListener {
 		 *  \brief Capteur d'événements du clavier
 		 */
         OIS::Keyboard * keyboard;
-
-        Application * app;
-
+        
 	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerKeyboard(OIS::InputManager * inputManager, Application * app);
+		ListenerKeyboard(Application * app);
 		/*!
 		 * \brief Destructeur
 		 */
 		~ListenerKeyboard();
 
 		/*!
-		 * \brief Constructeur
+		 * \brief [Getter] Recupère la valeur de keyboard
 		 * \return Le pointeur sur le capteur d'événements du clavier
 		 */
 		OIS::Keyboard * getKeyboard()
 		{
 			return this->keyboard;
 		}
+		
+		/*!
+		 * \brief Recupère les événements
+		 */
 		void capture(void);
 
 		/*!

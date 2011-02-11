@@ -3,7 +3,9 @@
 
 using namespace Ogre;
 
-Application::Application(void) {
+
+Application::Application(void)
+{
 	this->root = NULL;
 	this->sceneMgr = NULL;
 
@@ -25,7 +27,6 @@ Application::Application(void) {
 	
 	this->isStatsOn = true;
 	this->timeUntilNextToggle = 0;
-
 }
 
 
@@ -33,15 +34,24 @@ Application::Application(void) {
 
 Application::~Application(void)
 {
-	// remove ourself as a Window listener
-	delete this->listenerKeyboard;
+	Utils::log("         -> delete : gestCamera");
+    delete this->gestCamera;
 	
-	Ogre::WindowEventUtilities::removeWindowEventListener(this->window, this);
+	Utils::log("         -> delete : listenerMouse");
+	delete this->listenerMouse;
+	Utils::log("         -> delete : listenerKeyboard");
+	delete this->listenerKeyboard;
+	Utils::log("         -> delete : listenerFrame");
+	delete this->listenerFrame;
 
+	Utils::log("         -> delete : deleteMeshLoader");
+	MeshLoader::deleteMeshLoader();
+    
+	Utils::log("         -> delete : listenerWindow");
+	delete this->listenerWindow;
+	
+	Utils::log("         -> delete : root");
     delete this->root;
-    MeshLoader::deleteMeshLoader(); 
-    //delete this->gestCamera;
-    windowClosed(this->window);
 }
 
 //------------------------------------------------------------------------------
@@ -59,7 +69,8 @@ bool Application::start(void)
 		return false;
 
 	// initialise the system, create the default rendering window
-	this->window = this->root->initialise(true, "Combat spatial");
+	this->listenerWindow = new ListenerWindow(this, this->root, "Combat spatial");
+	//this->window = this->root->initialise(true, "Combat spatial");
 
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
@@ -91,12 +102,13 @@ bool Application::start(void)
 			break;
     }
 	this->gestCamera->init_camera();
+	
 	// init the input manager and create the listeners
 	this->initListeners();
 
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
-	Ogre::Viewport * viewPort = this->window->addViewport(this->gestCamera->getCamera(), 0);
+	Ogre::Viewport * viewPort = this->listenerWindow->getRenderWindow()->addViewport(this->gestCamera->getCamera(), 0);
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
 	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
 
@@ -112,6 +124,66 @@ bool Application::start(void)
 	return true;
 }
 
+
+void Application::updateStats(void)
+{
+	static String currFps = "Current FPS: ";
+	static String avgFps = "Average FPS: ";
+	static String bestFps = "Best FPS: ";
+	static String worstFps = "Worst FPS: ";
+	static String tris = "Triangle Count: ";
+	static String batches = "Batch Count: ";
+
+	// update stats when necessary
+	try {
+		OverlayElement* guiAvg = OverlayManager::getSingleton().getOverlayElement("Core/AverageFps");
+		OverlayElement* guiCurr = OverlayManager::getSingleton().getOverlayElement("Core/CurrFps");
+		OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
+		OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
+
+		const RenderTarget::FrameStats& stats = this->listenerWindow->getRenderWindow()->getStatistics();
+		guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
+		guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
+		guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
+			+" "+StringConverter::toString(stats.bestFrameTime)+" ms");
+		guiWorst->setCaption(worstFps + StringConverter::toString(stats.worstFPS)
+			+" "+StringConverter::toString(stats.worstFrameTime)+" ms");
+
+		OverlayElement* guiTris = OverlayManager::getSingleton().getOverlayElement("Core/NumTris");
+		guiTris->setCaption(tris + StringConverter::toString(stats.triangleCount));
+
+		OverlayElement* guiBatches = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
+		guiBatches->setCaption(batches + StringConverter::toString(stats.batchCount));
+
+		OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
+		guiDbg->setCaption(debugText);
+	}
+	catch(...) { /* ignore */ }
+}
+
+//------------------------------------------------------------------------------
+
+void Application::showDebugOverlay(bool show)
+{
+	if (debugOverlay)
+	{
+		if (show)
+			debugOverlay->show();
+		else
+			debugOverlay->hide();
+	}
+}
+
+void Application::killApplication()
+{
+	this->setShutDown(true);
+}
+
+void Application::killInputManager()
+{
+	OIS::InputManager::destroyInputSystem(this->inputManager);
+	this->inputManager = 0;
+}
 
 //------------------------------------------------------------------------------
 
@@ -155,24 +227,15 @@ void Application::initListeners(void)
 	size_t windowHnd = 0;
 	std::ostringstream windowHndStr;
 
-	this->window->getCustomAttribute("WINDOW", &windowHnd);
+	this->listenerWindow->getRenderWindow()->getCustomAttribute("WINDOW", &windowHnd);
 	windowHndStr << windowHnd;
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
 
-	this->listenerKeyboard = new ListenerKeyboard(this->inputManager, this);
-    //this->root->addFrameListener(new ListenerFrame(this->listenerKeyboard, new ListenerMouse(this->inputManager, this->gestCamera),this));
-	
-	// Set initial mouse clipping size
-	windowResized(this->window);
-
-	// Register the listeners
-	Ogre::WindowEventUtilities::addWindowEventListener(this->window, this);
-	this->root->addFrameListener(this);
-	//this->mouse->setEventCallback(this);
-	//this->keyboard->setEventCallback(this);
-	//this->keyboard->setEventCallback(new ListenerKeyboard());
+	this->listenerMouse = new ListenerMouse(this);
+	this->listenerKeyboard = new ListenerKeyboard(this);
+	this->listenerFrame = new ListenerFrame(this, this->root);
 }
 
 
@@ -221,23 +284,6 @@ void Application::initScene(void)
 // Mise en place du SkyBox "Etoiles"
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
 
-//SpaceShip notre vaisseau 1 :
-	//Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Suzanne", "suzanne.mesh");
-	/*Ogre::Entity *entityVaisseau = this->sceneMgr->createEntity("Spaceship", "razor.mesh");
-	entityVaisseau->setMaterialName("razor");*/
-   /* Ogre::Entity *entityVaisseau = MeshLoader::getSingleton()->getEntity(SHIP);
-	Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
-
-	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
-	GroupeVaisseaux_Vaisseau1_Corps->setPosition(0, 0, 0);
-	entityVaisseau = MeshLoader::getSingleton()->getEntity(SHIP);
-	GroupeVaisseaux_Vaisseau1_Corps = this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Corps")->createChildSceneNode("vsx2");
-
-	GroupeVaisseaux_Vaisseau1_Corps->attachObject(entityVaisseau);
-	GroupeVaisseaux_Vaisseau1_Corps->setPosition(100, 100, 30);
-	GroupeVaisseaux_Vaisseau1_Corps->setOrientation(5,5,5,5);*/
-	//GroupeVaisseaux_Vaisseau1_Corps->scale(10, 10, 10);
-
 
     Ogre::Entity * planet = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true);
 	planet->getParentSceneNode()->setPosition(1300,1300,15300);
@@ -268,30 +314,6 @@ void Application::initScene(void)
 	asteroid->getParentSceneNode()->setScale(35,35,35);
 	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true)->getParentSceneNode()->setPosition(300,-300,-300);
 
-    /*
-	// Création du système de particules
-    Ogre::ParticleSystem* thrusters = this->sceneMgr->createParticleSystem(25);
-    thrusters ->setMaterialName("Reactor");
-    thrusters ->setDefaultDimensions(25, 25);
-
-	// Création de 2 émetteurs pour le système de particules
-	for (unsigned int i = 0; i < 2; i++)
-	{
-		Ogre::ParticleEmitter* emitter = thrusters ->addEmitter("Point");
-
-		// set the emitter properties
-		emitter->setAngle(Ogre::Degree(3));
-		emitter->setTimeToLive(0.5);
-		emitter->setEmissionRate(25);
-		emitter->setParticleVelocity(25);
-		emitter->setDirection(Vector3::NEGATIVE_UNIT_Z);
-		emitter->setColour(ColourValue::White, ColourValue::Red);
-		emitter->setPosition(Vector3(i == 0 ? 5.7 : -18, 0, 0));
-	}
-
-	// On attache les particules du réacteur à l'arrière du vaisseau
-    this->sceneMgr->getRootSceneNode()->createChildSceneNode(Vector3(0, 6.5, -67))->attachObject(thrusters);
-    */
 
 
 //Temporaire :
@@ -304,118 +326,6 @@ void Application::initScene(void)
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
-}
-
-//------------------------------------------------------------------------------
-
-void Application::updateStats(void)
-{
-	static String currFps = "Current FPS: ";
-	static String avgFps = "Average FPS: ";
-	static String bestFps = "Best FPS: ";
-	static String worstFps = "Worst FPS: ";
-	static String tris = "Triangle Count: ";
-	static String batches = "Batch Count: ";
-
-	// update stats when necessary
-	try {
-		OverlayElement* guiAvg = OverlayManager::getSingleton().getOverlayElement("Core/AverageFps");
-		OverlayElement* guiCurr = OverlayManager::getSingleton().getOverlayElement("Core/CurrFps");
-		OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
-		OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
-
-		const RenderTarget::FrameStats& stats = this->window->getStatistics();
-		guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
-		guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
-		guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
-			+" "+StringConverter::toString(stats.bestFrameTime)+" ms");
-		guiWorst->setCaption(worstFps + StringConverter::toString(stats.worstFPS)
-			+" "+StringConverter::toString(stats.worstFrameTime)+" ms");
-
-		OverlayElement* guiTris = OverlayManager::getSingleton().getOverlayElement("Core/NumTris");
-		guiTris->setCaption(tris + StringConverter::toString(stats.triangleCount));
-
-		OverlayElement* guiBatches = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
-		guiBatches->setCaption(batches + StringConverter::toString(stats.batchCount));
-
-		OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
-		guiDbg->setCaption(debugText);
-	}
-	catch(...) { /* ignore */ }
-}
-
-//------------------------------------------------------------------------------
-
-void Application::showDebugOverlay(bool show)
-{
-	if (debugOverlay)
-	{
-		if (show)
-			debugOverlay->show();
-		else
-			debugOverlay->hide();
-	}
-}
-
-//------------------------------------------------------------------------------
-
-bool Application::frameRenderingQueued(const Ogre::FrameEvent& evt) {
-	
-	// Stop the rendering if the window was closed, or the application stoped
-	if(this->window->isClosed() || this->shutDown)
-		return false;
-
-    // capture value of each device
-	this->listenerKeyboard->getKeyboard()->capture();
-    //this->listenerMouse->getMouse()->capture();
-
-	if (timeUntilNextToggle >= 0)
-		timeUntilNextToggle -= evt.timeSinceLastFrame;
-    
-    this->gestCamera->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
-
-	return true;
-}
-
-//------------------------------------------------------------------------------
-
-bool Application::frameEnded(const Ogre::FrameEvent& evt)
-{
-	updateStats();
-	return true;
-}
-
-//------------------------------------------------------------------------------
-
-void Application::windowResized(Ogre::RenderWindow *rw)
-{
-	unsigned int width, height, depth;
-	int left, top;
-
-	// Adjust mouse clipping area
-	rw->getMetrics(width, height, depth, left, top); 
-	//const OIS::MouseState &ms = this->mouse->getMouseState();
-	//ms.width = width;
-	//ms.height = height;
-
-}
- 
-void Application::windowClosed(Ogre::RenderWindow *rw)
-{
-	// Only close for window that created OIS (the main window)
-	if(rw == this->window)
-	{
-		if(this->inputManager)
-		{
-			// Unattach OIS before window shutdown (very important under Linux)
-			//this->inputManager->destroyInputObject(this->mouse);
-			//this->inputManager->destroyInputObject(this->keyboard);
- 
-			OIS::InputManager::destroyInputSystem(this->inputManager);
-			this->inputManager = 0;
-		}
-	}
-
 }
 
 //------------------------------------------------------------------------------
@@ -433,4 +343,3 @@ int main(void)
 
 	return 0;
 }
-

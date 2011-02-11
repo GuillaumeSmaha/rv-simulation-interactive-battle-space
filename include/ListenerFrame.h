@@ -6,26 +6,31 @@
 #define __LISTENER_FRAME_H__
 
 #include <OgreFrameListener.h>
-#include <ListenerKeyboard.h>
-#include <ListenerMouse.h>
-#include <Application.h>
-class ListenerKeyboard;
-class ListenerMouse;
+#include "Application.h"
+
 class Application;
+
 /*!
  * \class ListenerFrame
  * \brief Classe permettant de gérer les événements de la mise à jour du rendu.
  */
 class ListenerFrame : public Ogre::FrameListener {
     private:
-        ListenerKeyboard * keyboard;
-        ListenerMouse * mouse;
+		/*!
+		 *  \brief Pointeur sur l'application
+		 */
         Application * app;
+        
 	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerFrame(ListenerKeyboard * keyboard, ListenerMouse * mouse, Application * app);
+		ListenerFrame(Application * app, Ogre::Root * root);
+		/*!
+		 * \brief Destructeur
+		 */
+		~ListenerFrame();
+		
 		/*!
 		 *  \brief Génère la frame de rendu
 		 */

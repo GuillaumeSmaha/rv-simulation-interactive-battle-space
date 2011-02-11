@@ -8,12 +8,21 @@
 #include <OISInputManager.h>
 #include <OISMouse.h>
 #include "CameraFixeAbstract.h"
+#include "Application.h"
+#include "CameraFixeAbstract.h"
+
+class Application;
+
 /*!
  * \class ListenerMouse
  * \brief Classe permettant de gérer les événements de la souris.
  */
 class ListenerMouse : public OIS::MouseListener {
 	private:
+		/*!
+		 *  \brief Pointeur sur l'application
+		 */
+        Application * app;
 		/*!
 		 *  \brief Gestionnaire d'événements
 		 */
@@ -22,27 +31,30 @@ class ListenerMouse : public OIS::MouseListener {
 		 *  \brief Capteur d'événements de la souris
 		 */
         OIS::Mouse * mouse;
-        CameraFixeAbstract * gestCamera;
+        
 	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerMouse(OIS::InputManager * inputManager, CameraFixeAbstract * gestCamera);
+		ListenerMouse(Application * app);
 		/*!
 		 * \brief Destructeur
 		 */
 		~ListenerMouse();
 
 		/*!
-		 * \brief Constructeur
+		 * \brief [Getter] Récupère la valeur de mouse
 		 * \return Le pointeur sur le capteur d'événements de la souris
 		 */
 		OIS::Mouse * getMouse()
 		{
 			return this->mouse;
 		}
+		
+		/*!
+		 * \brief Recupère les événements
+		 */
 		void capture(void);
-		CameraFixeAbstract *  getCamera(void);
 		/*!
 		 *  \brief Action à effectuer pour l'événement "souis en mouvement"
 		 * 	\param evt Evenement de la souris

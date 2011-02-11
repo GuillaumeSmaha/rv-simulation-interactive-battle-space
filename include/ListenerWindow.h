@@ -8,6 +8,9 @@
 #include <OgreRoot.h>
 #include <OgreWindowEventUtilities.h>
 #include "Utils.h"
+#include "Application.h"
+
+class Application;
 
 /*!
  * \class ListenerWindow
@@ -16,20 +19,20 @@
 class ListenerWindow : public Ogre::WindowEventListener {
 	private:
 		/*!
-		 *  \brief Root
+		 *  \brief Pointeur sur l'application
 		 */
-        Ogre::Root * root;
-
-
-	public:
+        Application * app;
         /*!
 		 *  \brief Fenêtre de Rendu
 		 */
-        Ogre::RenderWindow * window;
+        Ogre::RenderWindow * renderWindow;
+
+
+	public:
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerWindow(Ogre::Root * root, Ogre::String nameWindow);
+		ListenerWindow(Application * app, Ogre::Root * root, Ogre::String nameWindow);
 		/*!
 		 * \brief Destructeur
 		 */
@@ -39,29 +42,29 @@ class ListenerWindow : public Ogre::WindowEventListener {
 		 * \brief [Getter] Recupère le pointeur
 		 * \return Le pointeur sur le capteur d'événements de la fenêtre
 		 */
-		Ogre::RenderWindow * getWindow()
+		Ogre::RenderWindow * getRenderWindow()
 		{
-			return this->window;
+			return this->renderWindow;
 		}
 		/*!
-		 * \brief [Setter] Recupère le pointeur
+		 * \brief [Setter] Définit le pointeur
 		 * \return window Le pointeur sur le capteur d'événements de la fenêtre
 		 */
-		void setWindow(Ogre::RenderWindow *window)
+		void setRenderWindow(Ogre::RenderWindow * renderWindow)
 		{
-			this->window = window;
+			this->renderWindow = renderWindow;
 		}
 
 		/*!
 		 *  \brief Action à effectuer pour l'événement "redimensionnement de la fenêtre"
 		 * 	\param rw Fenêtre de rendu
 		 */
-        void windowResized(Ogre::RenderWindow* rw);
+        void windowResized(Ogre::RenderWindow * rw);
 		/*!
 		 *  \brief Action à effectuer pour l'événement "fermeture de la fenêtre"
 		 * 	\param rw Fenêtre de rendu
 		 */
-        void windowClosed(Ogre::RenderWindow* rw);
+        void windowClosed(Ogre::RenderWindow * rw);
 };
 
 #endif //__LISTENER_WINDOW_H__

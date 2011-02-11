@@ -1,10 +1,10 @@
 #include "ListenerKeyboard.h"
 
-ListenerKeyboard::ListenerKeyboard(OIS::InputManager * inputManager, Application * app)
+ListenerKeyboard::ListenerKeyboard(Application * app)
 {
-	this->inputManager = inputManager;
-	this->keyboard = static_cast<OIS::Keyboard*>(inputManager->createInputObject(OIS::OISKeyboard, true));
 	this->app = app;
+	this->inputManager = this->app->getInputManager();
+	this->keyboard = static_cast<OIS::Keyboard*>(this->inputManager->createInputObject(OIS::OISKeyboard, true));
 	this->keyboard->setEventCallback(this);
 }
 
@@ -18,14 +18,14 @@ void ListenerKeyboard::capture(void)
     this->keyboard->capture();
 }
 
-bool ListenerKeyboard::keyPressed(const OIS::KeyEvent &evt) {
+bool ListenerKeyboard::keyPressed(const OIS::KeyEvent &evt)
+{
 	float translateSpeed = 2.5;
 	
 	switch(evt.key)
 	{
 		case OIS::KC_ESCAPE :
-
-			this->app->shutDown = true;
+			this->app->killApplication();
 			break;
 
 		case OIS::KC_UP :
@@ -48,8 +48,9 @@ bool ListenerKeyboard::keyPressed(const OIS::KeyEvent &evt) {
 	return true;
 }
 
-bool ListenerKeyboard::keyReleased(const OIS::KeyEvent &evt) {
 
+bool ListenerKeyboard::keyReleased(const OIS::KeyEvent &evt)
+{
 
 	switch(evt.key)
 	{

@@ -7,10 +7,10 @@
 
 #include <Ogre.h>
 #include <OISInputManager.h>
-#include "ListenerFrame.h"
-#include "ListenerWindow.h"
 #include "ListenerKeyboard.h"
 #include "ListenerMouse.h"
+#include "ListenerWindow.h"
+#include "ListenerFrame.h"
 #include "nodeName.h"
 #include "CameraFixeAbstract.h"
 #include "CameraFixe.h"
@@ -20,7 +20,11 @@
 #include "MeshLoader.h"
 
 
+class ListenerWindow;
+class ListenerMouse;
 class ListenerKeyboard;
+class ListenerFrame;
+
 /*!
 * \class Application
 * \brief Class principale qui permet de démarrer le programme, d'afficher la fenêtre et de réagir aux évènements (ceux-ci sont ensuite dirigé vers les classes adaptés)
@@ -34,132 +38,193 @@ class ListenerKeyboard;
 *
 *   OIS::MouseListener
 */
-class Application : public Ogre::FrameListener, public Ogre::WindowEventListener {
-private:
-	/*!
-	*  \brief Ogre Root
-	*/
-	Ogre::Root * root;
-	/*!
-	*  \brief Scène Manager
-	*/
-	Ogre::SceneManager * sceneMgr;
-	/*!
-	*  \brief Fenêtre de Rendu
-	*/
-	Ogre::RenderWindow *window;
-	/*!
-	*  \brief Chemin du fichier resources.cfg
-	*/
-	Ogre::String resourcesCfg;
-	/*!
-	*  \brief Chemin du fichier plugins.cfg
-	*/
-	Ogre::String pluginsCfg;
+class Application
+{
+	private:
+		/*!
+		*  \brief Ogre Root
+		*/
+		Ogre::Root * root;
+		/*!
+		*  \brief Scène Manager
+		*/
+		Ogre::SceneManager * sceneMgr;
+		/*!
+		*  \brief Chemin du fichier resources.cfg
+		*/
+		Ogre::String resourcesCfg;
+		/*!
+		*  \brief Chemin du fichier plugins.cfg
+		*/
+		Ogre::String pluginsCfg;
 
-	/*!
-	* \brief GUI pour afficher les stats
-	*/
-	Ogre::Overlay * debugOverlay;
+		/*!
+		* \brief GUI pour afficher les stats
+		*/
+		Ogre::Overlay * debugOverlay;
+		/*!
+		* \brief Texte utile pour le debug
+		*/
+		Ogre::String debugText;
 
-	/*!
-	* \brief Texte utile pour le debug
-	*/
-	Ogre::String debugText;
+		/*!
+		*  \brief Type de la caméra utilisé
+		*/
+		CameraFixeAbstract::CameraType type_Camera;
+		/*!
+		*  \brief Pointeur sur la caméra utilisée
+		*/
+		CameraFixeAbstract * gestCamera;
 
-	/*!
-	*  \brief Capteur d'événements
-	*/
-	OIS::InputManager * inputManager;
 
-	/*!
-	*  \brief Type de la caméra utilisé
-	*/
-	CameraFixeAbstract::CameraType type_Camera;
-	/*!
-	*  \brief Pointeur sur la caméra utilisée
-	*/
-	CameraFixeAbstract * gestCamera;
+		/*!
+		*  \brief Capteur d'événements
+		*/
+		OIS::InputManager * inputManager;
+		/*!
+		* \brief Listener pour les événements fenetre
+		*/
+		ListenerWindow * listenerWindow;
+		/*!
+		* \brief Listener pour les événements souris
+		*/
+		ListenerMouse * listenerMouse;
+		/*!
+		* \brief Listener pour les événements clavier
+		*/
+		ListenerKeyboard * listenerKeyboard;
+		/*!
+		* \brief Listener pour les événements rendu
+		*/
+		ListenerFrame * listenerFrame;
+		
+		
 
-	/*!
-	* \brief Listener pour les evts clavier
-	*/
-	ListenerKeyboard * listenerKeyboard;
+	public: //TODO : faire des fonctions pour ca		
 
-	/* Pour la gestion des stats */
-	Ogre::Real timeUntilNextToggle;
-	bool isStatsOn;
+		/* Pour la gestion des stats */
+		Ogre::Real timeUntilNextToggle;
+		bool isStatsOn;
+		bool shutDown;
+		
+		
+		float _translateX;
+		float _translateZ;
+		
+		
+		
+	public:
+		/*!
+		*  \brief Constructeur
+		*/
+		Application(void);
+		/*!
+		*  \brief Destructeur
+		*/
+		~Application(void);
 
-public: //TODO : faire des fonctions pour ca
-	bool shutDown;
+		/*!
+		*  \brief Démarre l'application
+		*/
+		bool start(void);
+			
+			
+		/*!
+		* \brief Mise à jour des stats (FPS, etc...)
+		*/
+		void updateStats(void);
+		/*!
+		* \brief Affiche l'overlay des stats
+		*/
+		void showDebugOverlay(bool);
+		/*!
+		*  \brief Ferme l'application
+		*/
+		void killApplication();
+		/*!
+		*  \brief Tue le gestionnaire d'événements
+		*/
+		void killInputManager();
+		
+		
+		
+// Getter/Setter
+		
+		/*!
+		*  \brief [Getter] Camera
+		*/
+		CameraFixeAbstract * getGestCamera()
+		{
+			return this->gestCamera;
+		}
+		/*!
+		*  \brief [Getter] Capteur d'événements
+		*/
+		OIS::InputManager * getInputManager()
+		{
+			return this->inputManager;
+		}
+		/*!
+		*  \brief [Getter] Capteur d'événements fenêtre
+		*/
+		ListenerWindow * getListenerWindow()
+		{
+			return this->listenerWindow;
+		}
+		/*!
+		*  \brief [Getter] Capteur d'événements souris
+		*/
+		ListenerMouse * getListenerMouse()
+		{
+			return this->listenerMouse;
+		}
+		/*!
+		*  \brief [Getter] Capteur d'événements clavier
+		*/
+		ListenerKeyboard * getListenerKeyboard()
+		{
+			return this->listenerKeyboard;
+		}
+		/*!
+		*  \brief [Getter] Capteur d'événements rendu
+		*/
+		ListenerFrame * getListenerFrame()
+		{
+			return this->listenerFrame;
+		}
+		/*!
+		*  \brief [Getter] SI on doit fermer l'application
+		*/
+		bool getShutDown()
+		{
+			return this->shutDown;
+		}
+		/*!
+		*  \brief [Setter] Ferme l'application
+		*/
+		void setShutDown(bool shutdown)
+		{
+			this->shutDown = shutdown;
+		}
 
-	float _translateX;
-	float _translateZ;
 
-	/*!
-	*  \brief Constructeur
-	*/
-	Application(void);
-	/*!
-	*  \brief Destructeur
-	*/
-	~Application(void);
-
-	/*!
-	*  \brief Démarre l'application
-	*/
-	bool start(void);
-
-private:
-	/*!
-	*  \brief Charge les ressources listées dans resources.cfg
-	*/
-	void loadRessources(void);
-	/*!
-	*  \brief Initialise l'écoute de l'entrée clavier et souris
-	*/
-	void initListeners(void);
-	/*!
-	*  \brief Initialise le graphe de scène
-	*/
-	void initSceneGraph(void);
-	/*!
-	*  \brief Initialise la scène
-	*/
-	void initScene(void);
-
-	/*!
-	* \brief Mise à jour des stats (FPS, etc...)
-	*/
-	void updateStats(void);
-
-	/*!
-	* \brief Affiche l'overlay des stats
-	*/
-	void showDebugOverlay(bool);
-
-	/*!
-	*  \brief Génère la frame de rendu
-	*/
-	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-
-	/*!
-	*  \brief Comportement à effectuer à la fin de la génération 
-	*  de chaque frame
-	*/
-	bool frameEnded(const Ogre::FrameEvent& evt);
-
-	/*!
-	*  \brief Action à effectuer pour l'événement "redimensionnement de la fenêtre"
-	*      \param rw Fenêtre de rendu
-	*/
-	void windowResized(Ogre::RenderWindow* rw);
-	
-	/*!
-	*  \brief Action à effectuer pour l'événement "fermeture de la fenêtre"
-	*      \param rw Fenêtre de rendu
-	*/
-	void windowClosed(Ogre::RenderWindow* rw);
+	private:
+		/*!
+		*  \brief Charge les ressources listées dans resources.cfg
+		*/
+		void loadRessources(void);
+		/*!
+		*  \brief Initialise l'écoute de l'entrée clavier et souris
+		*/
+		void initListeners(void);
+		/*!
+		*  \brief Initialise le graphe de scène
+		*/
+		void initSceneGraph(void);
+		/*!
+		*  \brief Initialise la scène
+		*/
+		void initScene(void);
 };
 
 #endif // __APPLICATION_H__
