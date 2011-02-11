@@ -19,6 +19,7 @@
 #include "Utils.h"
 #include "MeshLoader.h"
 #include "Signal.h"
+#include "Planet.h"
 
 
 class ListenerWindow;
