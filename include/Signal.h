@@ -1,18 +1,25 @@
+/*!
+*  \file  Signal.h
+*  \brief Ce fichier contient la déclaration de la classe Signal. 
+*/
 #ifndef __SIGNAL_H__
 #define __SIGNAL_H__
 
 #include <vector>
 #include "Utils.h"
+#include "ObjectRoot.h"
+
 
 /*!
  * \class Signal
  * \brief Permet la communication entre 2 classes facilement et proprement
  */
 template <typename Retour>
-//typedef  void(*SIGNAL)(Retour);
-
-class Signal
-{
+class Signal : public ObjectRoot
+{	
+	/*!
+	 * \brief Déclare une structure permettant de stocker la classe et le la méthode
+	 */
     public:
         /*!
 		* \brief Constructor
@@ -20,8 +27,7 @@ class Signal
         Signal()
         {
 
-        }
-        
+        }        
         /*!
          * \brief Destructor
          */
@@ -33,11 +39,13 @@ class Signal
         /*!
 		* \brief Enregistre la fonction passée en paramètre comme listener
 		* \param function La fonction listener
+		* \param ptrClass La class contenant le listener
 		*/
-        template<typename myclass>
-        void add(void (myclass::* function)(Retour))
-        {
-               this->listeners.push_back((void(*)(Retour))function);
+        template<class myclass>
+        void add(void (myclass::* function)(Retour), myclass * ptrClass)
+        {			
+			this->listenersClass.push_back(ptrClass);
+			this->listenersMethod.push_back((void(ObjectRoot::*)(Retour))function);
         }
         
         /*!
@@ -55,42 +63,61 @@ class Signal
         void dispatch( Retour argument)
         {
             Utils::log("Dispatch:");
-            Utils::log(argument);
-            void (* func)(Retour);
+            Ogre::String arg = "-> Argument : ";
+            arg.append(Utils::toString(argument));
+			Utils::log(arg);
+			
+			ObjectRoot * ptrClass;
+            void (ObjectRoot::* func)(Retour);
+            for ( size_t i = 0, size = this->listenersClass.size(); i < size; ++i )
+            {
+				ptrClass = this->listenersClass[i];
+                func = this->listenersMethod[i];
+                (ptrClass->*func)(argument);
+            }
+            
+            /*
+			classAndMethod_t<Retour> * cAm;
             for ( size_t i = 0, size = this->listeners.size(); i < size; ++i )
             {
-                //(*(this->listeners[i])) (argument);
-                func = this->listeners[i];
-                (*func)(argument);
+                cAm = this->listeners[i];
+                ((cAm->_class)->*(cAm->_method))(argument);
             }
+			*/
         }
         
         /*!
 		* \brief Retire des listeners la fonction passée en paramètre
 		* \param function La fonction listener
+		* \param ptrClass La class contenant le listener
 		*/
-        template<typename myclass>
-        void remove(void (myclass::* function)(Retour))
+        template<class myclass>
+        void remove(void (myclass::* function)(Retour), myclass * ptrClass)
         {
-            void (* func)(Retour);
-            func = (void(*)(Retour))function;
-            std::vector<void (* )(Retour)> _listeners;
-            for ( size_t i = 0; i < this->listeners.size(); ++i )
+            void (ObjectRoot::* func)(Retour);
+            func = (void(ObjectRoot::*)(Retour))function;
+			ObjectRoot * ptr_class = ptrClass;
+            
+            for ( size_t i = 0; i < this->listenersClass.size(); ++i )
             {
-                if(this->listeners[i]!=func)
+                if(this->listenersClass[i] == ptr_class && this->listenersMethod[i] == func)
                 {
-                    _listeners.push_back(this->listeners[i]);
+                    this->listenersClass.erase(this->listenersClass.begin()+i);
+                    this->listenersMethod.erase(this->listenersMethod.begin()+i);
+                    break;
                 }
             }
-            this->listeners = _listeners;
         }
 
     private:
         /*!
-         * \brief Contient la liste des listeners
+         * \brief Contient la liste des listeners Class
          */
-		//  std::vector<void (* )(void *)> listeners;
-		std::vector<void (* )(Retour)> listeners;
+		std::vector<ObjectRoot *> listenersClass;
+		std::vector<void (ObjectRoot::*)(Retour)> listenersMethod;
+        /*!
+         * \brief Contient la liste des listeners Method
+         */
 };
 
 #endif // __SIGNAL_H__

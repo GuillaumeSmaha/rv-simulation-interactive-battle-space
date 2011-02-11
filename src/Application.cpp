@@ -309,19 +309,26 @@ void Application::initScene(void)
     ship2.touched();
 
     Utils::log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    Utils::log("-- test");
     float b = 4.5;
-    Utils::log(b);
+	Ogre::String arg = "b=";
+	arg.append(Utils::toString(b));
+	Utils::log(arg);
 
     //Création d'un signal prenant comme argument un float
     Signal<float> s ;
 
     //rajout du listener : la fonction appel
-    s.add(&Application::appel);
-    //on dispatch
+    Utils::log("-- ajout du listener : la fonction appel");
+    s.add(&Application::appel, this);
+    //on dispatch    
+    Utils::log("-- on dispatch");
     s.dispatch(b);
     // on supprime le listener
-    s.remove(&Application::appel);
+    Utils::log("-- on supprime le listener");
+    s.remove(&Application::appel, this);
     //rien n'est dispatché
+    Utils::log("-- on dispatch");
     s.dispatch(b);
 
 
@@ -346,8 +353,10 @@ void Application::initScene(void)
 //test les signaux
 void Application::appel(float b)
 {
-     Utils::log("COUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-    Utils::log(b);
+	Utils::log("appel : COUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+	Ogre::String arg = "appel : b=";
+	arg.append(Utils::toString(b));
+	Utils::log(arg);
 }
 //------------------------------------------------------------------------------
 

@@ -7,6 +7,7 @@
 
 #include <Ogre.h>
 #include <OISInputManager.h>
+#include "ObjectRoot.h"
 #include "ListenerKeyboard.h"
 #include "ListenerMouse.h"
 #include "ListenerWindow.h"
@@ -40,7 +41,7 @@ class ListenerFrame;
 *
 *   OIS::MouseListener
 */
-class Application
+class Application : public ObjectRoot
 {
 	private:
 		/*!
@@ -117,7 +118,7 @@ class Application
 
 	public:
         void appel(float b);
-        void appel(void * b);
+        //void appel(void * b);
 		/*!
 		*  \brief Constructeur
 		*/
