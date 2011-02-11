@@ -76,24 +76,29 @@ void Utils::logFile(Ogre::String text)
 	}
 }
 
-Ogre::String Utils::toString( int Value)
+Ogre::String Utils::toString( float Value )
 {
-
-    // utiliser un flux de sortie pour créer la chaîne
-    std::ostringstream oss;
-    // écrire la valeur dans le flux
-    oss << Value;
-    // renvoyer une string
-    return oss.str();
+	std::ostringstream oss;
+	oss << Value;
+	return oss.str();
 }
-Ogre::String Utils::toString( void * Value)
-{
 
-    // utiliser un flux de sortie pour créer la chaîne
+Ogre::String Utils::toString( int Value )
+{
+	std::ostringstream oss;
+	oss << Value;
+	return oss.str();
+}
+
+Ogre::String Utils::toString( int * Value)
+{
+	return Utils::toString(*Value);
+}
+
+Ogre::String Utils::toString( void * Value )
+{
     std::ostringstream oss;
-    // écrire la valeur dans le flux
     oss << Value;
-    // renvoyer une string
     return oss.str();
 }
 

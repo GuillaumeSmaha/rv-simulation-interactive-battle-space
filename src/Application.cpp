@@ -34,7 +34,6 @@ Application::Application(void)
 
 Application::~Application(void)
 {
-	Utils::log("         -> delete : gestCamera");
     delete this->gestCamera;
 
 	delete this->listenerMouse;
