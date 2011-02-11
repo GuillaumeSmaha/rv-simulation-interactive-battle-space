@@ -4,15 +4,27 @@
 #include <vector>
 #include "Utils.h"
 
+/**
+ * \class Signal
+ * \brief Permet la communication entre 2 classes facilement et proprement
+ */
 template <typename Retour>
 //typedef  void(*SIGNAL)(Retour);
+
 class Signal
 {
     public:
+        /**
+		* Constructor
+		*/
         Signal()
         {
 
         }
+        /**
+		* Enregistre la fonction passée en paramètre comme listener
+		* \param function La fonction listener
+		*/
         template<typename myclass>
         void add(void (myclass::* function)(Retour))
         {
@@ -22,11 +34,17 @@ class Signal
         {
             this->dispatch(NULL);
         }*/
-
+        /**
+		* Appelle les différents listeners sans leur passer de paramètre
+		*/
         void dispatch(void)
         {
             this->dispatch(NULL);
         }
+        /**
+		* Appelle les différents listeners en leur passant un paramètre
+		* \param argument Paramètre passé aux listeners
+		*/
         void dispatch( Retour argument)
         {
             Utils::log("Dispatch:");
@@ -39,6 +57,10 @@ class Signal
                 (*func)(argument);
             }
         }
+        /**
+		* Retire des listeners la fonction passée en paramètre
+		* \param function La fonction listener
+		*/
         template<typename myclass>
         void remove(void (myclass::* function)(Retour))
         {
@@ -54,6 +76,9 @@ class Signal
             }
             this->listeners = _listeners;
         }
+        /**
+         * Destructor
+         */
         virtual ~Signal()
         {
 
@@ -61,6 +86,9 @@ class Signal
 
     protected:
     private:
+        /**
+         * Contient la liste des listeners
+         */
       //  std::vector<void (* )(void *)> listeners;
       std::vector<void (* )(Retour)> listeners;
 };
