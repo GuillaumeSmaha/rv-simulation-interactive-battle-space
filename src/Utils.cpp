@@ -38,7 +38,7 @@ void Utils::logFileInit(Ogre::String file)
 		if (fileLog.is_open())
 		{
 			Utils::_logFile.assign(file);
-			
+
 			fileLog.close();
 			std::remove((file.c_str()));
 		}
@@ -65,13 +65,13 @@ void Utils::logFile(Ogre::String text)
 		struct tm * timeinfo;
 		char bufferTime[10];
 		std::ofstream fileLog(Utils::_logFile.c_str(), std::ios_base::app);
-		
+
 		time ( &rawtime );
 		timeinfo = localtime ( &rawtime );
 		strftime(bufferTime, 80, "%X: ", timeinfo);
-		
+
 		fileLog << bufferTime << text << "\n";
-		
+
 		fileLog.close();
 	}
 }
@@ -86,10 +86,9 @@ Ogre::String Utils::toString( int Value)
     // renvoyer une string
     return oss.str();
 }
-
-template <typename T>
-Ogre::String Utils::toString( const T & Value )
+Ogre::String Utils::toString( void * Value)
 {
+
     // utiliser un flux de sortie pour créer la chaîne
     std::ostringstream oss;
     // écrire la valeur dans le flux
@@ -97,3 +96,4 @@ Ogre::String Utils::toString( const T & Value )
     // renvoyer une string
     return oss.str();
 }
+

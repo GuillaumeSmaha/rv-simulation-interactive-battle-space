@@ -18,6 +18,7 @@
 #include "Ship.h"
 #include "Utils.h"
 #include "MeshLoader.h"
+#include "Signal.h"
 
 
 class ListenerWindow;
@@ -97,23 +98,24 @@ class Application
 		* \brief Listener pour les événements rendu
 		*/
 		ListenerFrame * listenerFrame;
-		
-		
 
-	public: //TODO : faire des fonctions pour ca		
+
+
+	public: //TODO : faire des fonctions pour ca
 
 		/* Pour la gestion des stats */
 		Ogre::Real timeUntilNextToggle;
 		bool isStatsOn;
 		bool shutDown;
-		
-		
+
+
 		float _translateX;
 		float _translateZ;
-		
-		
-		
+
+
+
 	public:
+        void appel(float b);
 		/*!
 		*  \brief Constructeur
 		*/
@@ -127,8 +129,8 @@ class Application
 		*  \brief Démarre l'application
 		*/
 		bool start(void);
-			
-			
+
+
 		/*!
 		* \brief Mise à jour des stats (FPS, etc...)
 		*/
@@ -145,11 +147,11 @@ class Application
 		*  \brief Tue le gestionnaire d'événements
 		*/
 		void killInputManager();
-		
-		
-		
+
+
+
 // Getter/Setter
-		
+
 		/*!
 		*  \brief [Getter] Camera
 		*/

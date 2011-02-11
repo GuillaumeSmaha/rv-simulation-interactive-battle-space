@@ -52,7 +52,46 @@ class Utils
 		* \param text Texte à afficher
 		*/
 		static void log(Ogre::String text);
-		
+		/*!
+		* \brief Affiche un message de log sur la console (type générique)
+		* \param text Texte à afficher
+		*/
+		/*$
+		template <typename T>
+        Ogre::String log( const T & Value )
+        {
+            return Utils::toString<T>(Value);
+        }*/
+
+		/*!
+		* \brief Affiche un message de log sur la console
+		* \param text Texte à afficher
+		*/
+		static void log(int text)
+		{
+		    Utils::log(Utils::toString(text));
+		}
+		/*!
+		* \brief Affiche un message de log sur la console
+		* \param text Texte à afficher
+		*/
+		static void log(int * text)
+		{
+		    Utils::log(Utils::toString(text));
+		}
+		/*!
+		* \brief Affiche un message de log sur la console
+		* \param text Texte à afficher
+		*/
+		static void log(void * text)
+		{
+		    Utils::log(Utils::toString(text));
+		}
+        static void log(float text)
+		{
+		    Utils::log(Utils::toString(text));
+		}
+
 		/*!
 		* \brief Initialise le fichier de sortie de log
 		* \param file Chemin du fichier
@@ -63,17 +102,50 @@ class Utils
 		* \param text Texte à afficher
 		*/
 		static void logFile(Ogre::String text);
-		
+
 		/*!
 		* \brief Transforme une valeur en une chaine de caractère.
 		* \param Value valeur à chainer
 		*/
-		template <typename T> static Ogre::String toString( const T & Value );
+		template <typename T>
+       static Ogre::String toString( const T & Value )
+        {
+            // utiliser un flux de sortie pour créer la chaîne
+            std::ostringstream oss;
+            // écrire la valeur dans le flux
+            oss << Value;
+            // renvoyer une string
+            return oss.str();
+        }
+        static Ogre::String toString( float Value)
+        {
+
+            // utiliser un flux de sortie pour créer la chaîne
+            std::ostringstream oss;
+            // écrire la valeur dans le flux
+            oss << Value;
+            // renvoyer une string
+            return oss.str();
+        }
+
 		/*!
 		* \brief Transforme un entier en une chaine de caractère.
 		* \param Value valeur à chainer
 		*/
 		static Ogre::String toString( int Value);
+        /*!
+		* \brief Transforme un pointeur d'entier en une chaine de caractère.
+		* \param Value valeur à chainer
+		*/
+		static Ogre::String toString( int * Value)
+		{
+            return Utils::toString(*Value);
+		}
+        /*!
+		* \brief Transforme un pointeur quelconque en une chaine de caractère (son addresse).
+		* \param Value valeur à chainer
+		*/
+		static Ogre::String toString( void * Value);
 };
 
 
