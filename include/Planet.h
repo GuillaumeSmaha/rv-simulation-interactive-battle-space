@@ -1,3 +1,7 @@
+/*!
+*  \file  Planet.h
+*  \brief Ce fichier contient la déclaration de la classe Planet.
+*/
 #ifndef __PLANET_H__
 #define __PLANET_H__
 
@@ -5,6 +9,10 @@
 #include "MeshLoader.h"
 #include "Utils.h"
 
+/*!
+* \class Planet
+* \brief Classe gérant les planètes
+*/
 class Planet
 {
 	private:

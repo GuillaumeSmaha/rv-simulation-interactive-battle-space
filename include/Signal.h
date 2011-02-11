@@ -16,10 +16,7 @@
  */
 template <typename Retour>
 class Signal : public ObjectRoot
-{	
-	/*!
-	 * \brief Déclare une structure permettant de stocker la classe et le la méthode
-	 */
+{
     public:
         /*!
 		* \brief Constructor
