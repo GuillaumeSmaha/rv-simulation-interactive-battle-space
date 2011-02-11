@@ -8,6 +8,10 @@ material planet5
 			{
 				texture planet5.jpg
 			}
+			texture_unit
+			{
+				texture planet5bump.jpg
+			}			
 		}
 	}
 }

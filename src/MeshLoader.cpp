@@ -47,6 +47,7 @@ Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name
 		case PLANET6:
 		case PLANET7:
 		case PLANET8:
+		case PLANET9:
           //entity = this->sceneMgr->createEntity(name, "sphere.mesh");
 			entity = sceneMgr->createEntity(name, "Prefab_Sphere");
 			if(random)
@@ -55,7 +56,6 @@ Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name
 			}
 	    break;
 		case ASTEROID:
-          //entity = this->sceneMgr->createEntity(name, "sphere.mesh");
 			entity = this->sceneMgr->createEntity(name, "asteroid.mesh");
 			if(random)
 			{
@@ -93,6 +93,7 @@ Ogre::Entity* MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String
 		case PLANET6:
 		case PLANET7:
 		case PLANET8:
+		case PLANET9:
           node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
           node = node->createChildSceneNode(nodeName);
           node->attachObject(entity);
@@ -123,6 +124,7 @@ void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type)
 		case PLANET6:
 		case PLANET7:
 		case PLANET8:
+		case PLANET9:
 			entity->setMaterialName("planet"+Utils::toString(type-PLANET+1));
 		break;
 		case ASTEROID:

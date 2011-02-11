@@ -1,0 +1,17 @@
+material planet9
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture planet9.jpg
+			}
+			texture_unit
+			{
+				texture planet9bump.jpg
+			}			
+		}
+	}
+}
