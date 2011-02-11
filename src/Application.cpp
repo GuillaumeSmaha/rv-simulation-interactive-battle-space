@@ -278,13 +278,13 @@ void Application::initScene(void)
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
 
 
-    Ogre::Entity * planet = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true);
-	planet->getParentSceneNode()->setPosition(1300,1300,15300);
-	planet->getParentSceneNode()->setScale(35,35,35);
+    //Ogre::Entity * planet = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true);
+	//planet->getParentSceneNode()->setPosition(1300,1300,15300);
+	//planet->getParentSceneNode()->setScale(35,35,35);
 
 //	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,300,300);
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,-300,-300);
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(-300,300,300);
+	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,-300,-300);
+	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(-300,300,300);
 
 		//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET3)->getParentSceneNode()->setScale(10,10,10);
 	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET)->getParentSceneNode()->setScale(10,10,10);
@@ -294,7 +294,14 @@ void Application::initScene(void)
 
 //	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
 	//shete
-    Ship ship;
+    
+	Planet *planet = new Planet();
+	Planet *planet2 = new Planet(2);
+	planet2->setPosition(400, 450, -300);
+	planet2->getNode()->setScale(0.3, 0.3, 0.3);
+	
+	
+	Ship ship;
     ship.setPosition(-50,-50,-50);
     Ship ship2;
     ship2.setPosition(130,0,0);
