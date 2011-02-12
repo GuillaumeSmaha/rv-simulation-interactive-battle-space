@@ -2,7 +2,7 @@
 
 using namespace Ogre;
 
-Ship::Ship(void) : shipLife(100), wAngleShip(0), xAngleShip(0), yAngleShip(0), zAngleShip(0)
+Ship::Ship(void) : shipLife(100)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
@@ -45,52 +45,35 @@ int Ship::getShipLife()
 	return this->shipLife;
 }
 
-void Ship::setWAngleShip(Ogre::Real wAngle){
-	this->wAngleShip = wAngle;
-}
-void Ship::setXAngleShip(Ogre::Real xAngle){
-	this->xAngleShip = xAngle;
-}
-void Ship::setYAngleShip(Ogre::Real yAngle){
-	this->yAngleShip = yAngle;
-}
-void Ship::setZAngleShip(Ogre::Real zAngle){
-	this->zAngleShip = zAngle;
-}
-Ogre::Real Ship::getWAngleShip() {
-	return this->wAngleShip;
-}
-Ogre::Real Ship::getXAngleShip() {
-	return this->xAngleShip;
-}
-Ogre::Real Ship::getYAngleShip() {
-	return this->yAngleShip;
-}
-Ogre::Real Ship::getZAngleShip() {
-	return this->zAngleShip;
+
+void Ship::setOrientation(Ogre::Quaternion  q)
+{
+	this->getNode()->setOrientation(q);
 }
 
-void Ship::setOrient(Ogre::Quaternion  q) {
-	setWAngleShip(q[0]);
-	setXAngleShip(q[1]);
-	setYAngleShip(q[2]);
-	setZAngleShip(q[3]);
+void Ship::setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a) 
+{
+	this->getNode()->setOrientation(x,y,z,a);
 }
 
-Quaternion Ship::getOrient() {
-	return Ogre::Quaternion::Quaternion(this->getWAngleShip(),this->getXAngleShip(),this->getYAngleShip(),this->getZAngleShip());
+Quaternion Ship::getOrientation() 
+{
+	return this->getNode()->getOrientation();
 }
 
-void Ship::setSpeed (Ogre::Real speed) {
+void Ship::setSpeed (Ogre::Real speed) 
+{
 	this->speed = speed;
 }
-void Ship::setAcceleration (Ogre::Real acceleration) {
+void Ship::setAcceleration (Ogre::Real acceleration) 
+{
 	this->acceleration = acceleration;
 }
 Ogre::Real Ship::getSpeed() {
 	return this->speed;
 }
-Ogre::Real Ship::getAcceleration() {
+Ogre::Real Ship::getAcceleration() 
+{
 	return this->acceleration;
 }
 

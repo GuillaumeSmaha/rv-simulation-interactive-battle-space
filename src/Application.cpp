@@ -308,7 +308,7 @@ void Application::initScene(void)
     ship->setPosition(-50,-50,-50);
     Ship * ship2= new Ship();
     ship2->setPosition(130,0,0);
-    ship2->getNode()->setOrientation(5, 5, 5, 5);
+    ship2->setOrientation(5, 5, 5, 5);
     ship->setSpeed(1);
     ship2->touched();
 

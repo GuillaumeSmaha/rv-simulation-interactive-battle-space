@@ -5,16 +5,23 @@
 #include "MeshLoader.h"
 #include "Utils.h"
 
+/*!
+*  \file  Ship.h
+*  \brief Ce fichier contient la déclaration de la classe Ship. C'est la classe qui gère les vaiseaux individuellements
+*/
+
+/*!
+* \class Ship
+* \brief Classe gérant les vaiseaux individuellements
+*   Comporte un attribut Ogre::entity qui correspond à un unique mesh déplacable
+*   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
+*/
 
 class Ship
 {
 	private:
 		Ogre::Entity * entity;
 		int shipLife;
-		Ogre::Real wAngleShip;
-		Ogre::Real xAngleShip;
-		Ogre::Real yAngleShip;
-		Ogre::Real zAngleShip;
 		Ogre::Real speed;
 		Ogre::Real acceleration;
 		
@@ -27,17 +34,10 @@ class Ship
 
         Ogre::Vector3 getPosition();
 
-		void setWAngleShip(Ogre::Real);
-		void setXAngleShip(Ogre::Real);
-		void setYAngleShip(Ogre::Real);
-		void setZAngleShip(Ogre::Real);
-		Ogre::Real getWAngleShip();
-		Ogre::Real getXAngleShip();
-		Ogre::Real getYAngleShip();
-		Ogre::Real getZAngleShip();
-
-		void setOrient(Ogre::Quaternion);
-		Ogre::Quaternion getOrient();
+		void setOrientation(Ogre::Quaternion);
+        void setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a);
+		
+        Ogre::Quaternion getOrientation();
 
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		
