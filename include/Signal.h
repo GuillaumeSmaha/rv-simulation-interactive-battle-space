@@ -72,15 +72,6 @@ class Signal : public ObjectRoot
                 func = this->listenersMethod[i];
                 (ptrClass->*func)(argument);
             }
-            
-            /*
-			classAndMethod_t<Retour> * cAm;
-            for ( size_t i = 0, size = this->listeners.size(); i < size; ++i )
-            {
-                cAm = this->listeners[i];
-                ((cAm->_class)->*(cAm->_method))(argument);
-            }
-			*/
         }
         
         /*!

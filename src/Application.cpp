@@ -285,9 +285,9 @@ void Application::initScene(void)
 	//planet->getParentSceneNode()->setPosition(1300,1300,15300);
 	//planet->getParentSceneNode()->setScale(35,35,35);
 
-//	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,300,300);
-	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,-300,-300);
-	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(-300,300,300);
+	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,300,300);
+	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,-300,-300);
+	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(-300,300,300);
 
 		//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET3)->getParentSceneNode()->setScale(10,10,10);
 	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET)->getParentSceneNode()->setScale(10,10,10);
@@ -339,12 +339,12 @@ void Application::initScene(void)
     Utils::log("-- on dispatch");
     s.dispatch(b);
 
-
+/*
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
 	asteroid->getParentSceneNode()->setPosition(13,13,15);
 	asteroid->getParentSceneNode()->setScale(35,35,35);
 	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true)->getParentSceneNode()->setPosition(300,-300,-300);
-
+*/
 
 
 //Temporaire :
