@@ -25,9 +25,6 @@ class Ship
 		void setShipLife(int);
 		int getShipLife();
 
-		void setXShip (Ogre::Real);
-		void setYShip (Ogre::Real);
-		void setZShip (Ogre::Real);
         Ogre::Vector3 getPosition();
 
 		void setWAngleShip(Ogre::Real);
