@@ -40,7 +40,7 @@ void Ship::setShipLife(int shipLife)
 {
 	this->shipLife = shipLife;
 }
-int Ship::getShipLife()
+int Ship::getShipLife(void)
 {
 	return this->shipLife;
 }
@@ -56,7 +56,7 @@ void Ship::setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a
 	this->getNode()->setOrientation(x,y,z,a);
 }
 
-Quaternion Ship::getOrientation() 
+Quaternion Ship::getOrientation(void) 
 {
 	return this->getNode()->getOrientation();
 }
@@ -69,10 +69,10 @@ void Ship::setAcceleration (Ogre::Real acceleration)
 {
 	this->acceleration = acceleration;
 }
-Ogre::Real Ship::getSpeed() {
+Ogre::Real Ship::getSpeed(void) {
 	return this->speed;
 }
-Ogre::Real Ship::getAcceleration() 
+Ogre::Real Ship::getAcceleration(void) 
 {
 	return this->acceleration;
 }
@@ -82,8 +82,19 @@ void Ship::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
     this->getNode()->setPosition(x, y, z);
 }
 
+void Ship::updatePosition(void) {
+	Vector3 position = getPosition();
+	if (this->acceleration != 0) 
+	{
+		this->setSpeed(this->getSpeed()+this->acceleration);
+	}
+	if (this->speed != 0) 
+	{
+		this->setPosition(position[0]+this->getSpeed(), position[1], position[2]);
+	}
+}
 
-Ogre::Vector3 Ship::getPosition()
+Ogre::Vector3 Ship::getPosition(void)
 {
     return this->getNode()->getPosition();   
 }
@@ -91,11 +102,5 @@ Ogre::Vector3 Ship::getPosition()
 void Ship::touched(void)
 {
    MeshLoader::getSingleton()->setMaterial(this->entity, MeshLoader::SHIP_TOUCHED);
-}
-
-void Ship::updatePosition()
-{
-    
-    /*TODO*/
 }
 

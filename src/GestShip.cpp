@@ -20,8 +20,13 @@ void GestShip::updateShips()
 {
     vector<Ship *>::iterator itShip;
     for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++){
-        //std::cout<<(*itShip)->getSpeed()<<std::endl;
         (*itShip)->updatePosition();
+		if ((*itShip)->getSpeed()<1)
+		{
+			(*itShip)->setSpeed((*itShip)->getSpeed()+1);
+		}
+		(*itShip)->updatePosition();
+		//std::cout<<(*itShip)->getSpeed()<<std::endl;
     }
 }
 

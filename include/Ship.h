@@ -21,32 +21,40 @@ class Ship
 {
 	private:
 		Ogre::Entity * entity;
-		int shipLife;
-		Ogre::Real speed;
-		Ogre::Real acceleration;
+		int shipLife; // santé du vaisseau
+		Ogre::Real speed; //vitesse du vaisseau
+		Ogre::Real acceleration; //acceleration du vaisseau
 		
 	public:
 		Ship(void);
 		~Ship(void);
 		
+		//setter et getter de la vie du vaisseau
 		void setShipLife(int);
 		int getShipLife();
 
-        Ogre::Vector3 getPosition();
+        Ogre::Vector3 getPosition(void);
 
+		//setter et getter de l'orientation du vaisseau
+		/*!
+		 *  \brief utilisation d'un quaternion plutot que les 4 angles
+		 */
 		void setOrientation(Ogre::Quaternion);
         void setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a);
 		
-        Ogre::Quaternion getOrientation();
+        Ogre::Quaternion getOrientation(void);
 
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		
+		//setter et getter de la vitesse et l'acceleration du vaisseau
 		void setSpeed (Ogre::Real);
 		void setAcceleration (Ogre::Real);
-		void updatePosition();
-        Ogre::Real getSpeed();
-		Ogre::Real getAcceleration();
+        Ogre::Real getSpeed(void);
+		Ogre::Real getAcceleration(void);
         
+		//update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
+		void updatePosition(void);
+		
 		Ogre::String getName(void)
 		{
 			return entity->getName();
