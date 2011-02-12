@@ -11,9 +11,6 @@ class Ship
 	private:
 		Ogre::Entity * entity;
 		int shipLife;
-		Ogre::Real xShip;
-		Ogre::Real yShip;
-		Ogre::Real zShip;
 		Ogre::Real wAngleShip;
 		Ogre::Real xAngleShip;
 		Ogre::Real yAngleShip;
@@ -31,9 +28,7 @@ class Ship
 		void setXShip (Ogre::Real);
 		void setYShip (Ogre::Real);
 		void setZShip (Ogre::Real);
-		Ogre::Real getXShip();
-		Ogre::Real getYShip();
-		Ogre::Real getZShip();
+        Ogre::Vector3 getPosition();
 
 		void setWAngleShip(Ogre::Real);
 		void setXAngleShip(Ogre::Real);
