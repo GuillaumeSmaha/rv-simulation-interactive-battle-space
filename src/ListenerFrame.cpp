@@ -27,7 +27,9 @@ bool ListenerFrame::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		this->app->timeUntilNextToggle -= evt.timeSinceLastFrame;
     
     this->app->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->app->_translateX, 0.0f, this->app->_translateZ) );
-    
+ 
+    this->app->getGestShip()->updateShips();
+   
 	return true;
 }
 

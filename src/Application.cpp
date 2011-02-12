@@ -19,6 +19,7 @@ Application::Application(void)
 
 	this->type_Camera = CameraFixeAbstract::CAMERA_FIXE;
 	this->gestCamera = NULL;
+    this->gestShip= NULL;
 
 	this->shutDown = false;
 
@@ -34,6 +35,9 @@ Application::Application(void)
 
 Application::~Application(void)
 {
+    gestShip->deleteAllShips();
+    delete this->gestShip;
+
     delete this->gestCamera;
 
 	delete this->listenerMouse;
@@ -116,7 +120,6 @@ bool Application::start(void)
 
 	return true;
 }
-
 
 void Application::updateStats(void)
 {
@@ -300,13 +303,18 @@ void Application::initScene(void)
 	planet2->setPosition(400, 450, -300);
 	planet2->getNode()->setScale(0.3, 0.3, 0.3);
 	
-	
-	Ship ship;
-    ship.setPosition(-50,-50,-50);
-    Ship ship2;
-    ship2.setPosition(130,0,0);
-    ship2.getNode()->setOrientation(5, 5, 5, 5);
-    ship2.touched();
+	gestShip= new GestShip();
+	Ship * ship= new Ship();
+    ship->setPosition(-50,-50,-50);
+    Ship * ship2= new Ship();
+    ship2->setPosition(130,0,0);
+    ship2->getNode()->setOrientation(5, 5, 5, 5);
+    ship->setSpeed(1);
+    ship2->touched();
+
+    gestShip->addShip(ship);
+    gestShip->addShip(ship2);
+
 
     Utils::log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     Utils::log("-- test");

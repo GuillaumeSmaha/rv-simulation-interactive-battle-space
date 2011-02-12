@@ -123,3 +123,9 @@ void Ship::touched(void)
 {
    MeshLoader::getSingleton()->setMaterial(this->entity, MeshLoader::SHIP_TOUCHED);
 }
+
+void Ship::updatePosition()
+{
+    /*TODO*/
+}
+

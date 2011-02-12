@@ -51,9 +51,10 @@ class Ship
 		
 		void setSpeed (Ogre::Real);
 		void setAcceleration (Ogre::Real);
-		Ogre::Real getSpeed();
+		void updatePosition();
+        Ogre::Real getSpeed();
 		Ogre::Real getAcceleration();
-
+        
 		Ogre::String getName(void)
 		{
 			return entity->getName();

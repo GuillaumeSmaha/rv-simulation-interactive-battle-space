@@ -17,6 +17,7 @@
 #include "CameraFixe.h"
 #include "CameraFixeTarget.h"
 #include "Ship.h"
+#include "GestShip.h"
 #include "Utils.h"
 #include "MeshLoader.h"
 #include "Signal.h"
@@ -101,7 +102,10 @@ class Application : public ObjectRoot
 		*/
 		ListenerFrame * listenerFrame;
 
-
+        /*!
+        * \brief gere l'ensemble des vaiseaux
+        */
+        GestShip * gestShip;
 
 	public: //TODO : faire des fonctions pour ca
 
@@ -162,6 +166,13 @@ class Application : public ObjectRoot
 		{
 			return this->gestCamera;
 		}
+        /*!
+        * \brief [Getter] gestion des vaiseaux
+        */
+        GestShip * getGestShip()
+        {
+            return this->gestShip;
+        }
 		/*!
 		*  \brief [Getter] Capteur d'événements
 		*/
