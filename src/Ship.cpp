@@ -45,58 +45,80 @@ int Ship::getShipLife(void)
 	return this->shipLife;
 }
 
-
+Quaternion Ship::getOrientation(void) 
+{
+	return this->getNode()->getOrientation();
+}
 void Ship::setOrientation(Ogre::Quaternion  q)
 {
 	this->getNode()->setOrientation(q);
 }
-
 void Ship::setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a) 
 {
 	this->getNode()->setOrientation(x,y,z,a);
 }
 
-Quaternion Ship::getOrientation(void) 
+Ogre::Real Ship::getSpeed(void)
 {
-	return this->getNode()->getOrientation();
+	return this->speed;
 }
-
 void Ship::setSpeed (Ogre::Real speed) 
 {
 	this->speed = speed;
+}
+
+Ogre::Real Ship::getAcceleration(void) 
+{
+	return this->acceleration;
 }
 void Ship::setAcceleration (Ogre::Real acceleration) 
 {
 	this->acceleration = acceleration;
 }
-Ogre::Real Ship::getSpeed(void) {
-	return this->speed;
-}
-Ogre::Real Ship::getAcceleration(void) 
-{
-	return this->acceleration;
-}
-
-void Ship::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
-{
-    this->getNode()->setPosition(x, y, z);
-}
-
-void Ship::updatePosition(void) {
-	Vector3 position = getPosition();
-	if (this->acceleration != 0) 
-	{
-		this->setSpeed(this->getSpeed()+this->acceleration);
-	}
-	if (this->speed != 0) 
-	{
-		this->setPosition(position[0]+this->getSpeed(), position[1], position[2]);
-	}
-}
 
 Ogre::Vector3 Ship::getPosition(void)
 {
     return this->getNode()->getPosition();   
+}
+void Ship::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
+{
+    this->getNode()->setPosition(x, y, z);
+}
+
+void Ship::move(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
+{
+	Vector3 pos = this->getPosition();
+	this->setPosition(pos[0]+x, pos[1]+y, pos[2]+z);
+}
+void Ship::move(const Ogre::Vector3 &vec)
+{
+	Vector3 pos = this->getPosition() + vec;
+	this->setPosition(pos[0], pos[1], pos[2]);
+}
+
+void Ship::moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
+{
+	this->moveRelative(Ogre::Vector3(x, y, z));
+}
+void Ship::moveRelative(const Ogre::Vector3 &vec)
+{
+	Vector3 trans = this->getOrientation() * vec;
+	Vector3 pos = this->getPosition() + trans;
+	this->setPosition(pos[0], pos[1], pos[2]);
+}
+
+void Ship::updatePosition(void)
+{
+	Vector3 position = this->getPosition();
+	if (this->acceleration != 0) 
+	{
+		this->setSpeed(this->getSpeed()+this->acceleration);
+		this->acceleration = 0;
+	}
+	if (this->speed != 0) 
+	{
+		this->moveRelative(0.0, 0.0, this->getSpeed());
+	}
 }
 
 void Ship::touched(void)
