@@ -141,7 +141,7 @@ class Application : public ObjectRoot
 		/*!
 		* \brief Mise à jour des stats (FPS, etc...)
 		*/
-		void updateStats(void);
+		void updateStats(void*);
 		/*!
 		* \brief Affiche l'overlay des stats
 		*/

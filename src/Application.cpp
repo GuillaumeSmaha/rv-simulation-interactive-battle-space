@@ -121,7 +121,7 @@ bool Application::start(void)
 	return true;
 }
 
-void Application::updateStats(void)
+void Application::updateStats(void*)
 {
 	static String currFps = "Current FPS: ";
 	static String avgFps = "Average FPS: ";
@@ -232,6 +232,7 @@ void Application::initListeners(void)
 	this->listenerMouse = new ListenerMouse(this);
 	this->listenerKeyboard = new ListenerKeyboard(this);
 	this->listenerFrame = new ListenerFrame(this, this->root);
+	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
 }
 
 
@@ -297,12 +298,12 @@ void Application::initScene(void)
 
 //	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
 	//shete
-    
+
 	Planet *planet = new Planet();
 	Planet *planet2 = new Planet(2);
 	planet2->setPosition(400, 450, -300);
 	planet2->getNode()->setScale(0.3, 0.3, 0.3);
-	
+
 	gestShip= new GestShip();
 	Ship * ship= new Ship();
     ship->setPosition(-50,-50,-50);
@@ -329,7 +330,7 @@ void Application::initScene(void)
     //rajout du listener : la fonction appel
     Utils::log("-- ajout du listener : la fonction appel");
     s.add(&Application::appel, this);
-    //on dispatch    
+    //on dispatch
     Utils::log("-- on dispatch");
     s.dispatch(b);
     // on supprime le listener
@@ -338,6 +339,9 @@ void Application::initScene(void)
     //rien n'est dispatché
     Utils::log("-- on dispatch");
     s.dispatch(b);
+    Signal<void*> s2 ;
+    s2.add(&Application::updateStats, this);
+    s2.dispatch();
 
 /*
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);

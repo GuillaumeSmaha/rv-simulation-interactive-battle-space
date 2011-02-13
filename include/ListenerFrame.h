@@ -7,7 +7,7 @@
 
 #include <OgreFrameListener.h>
 #include "Application.h"
-
+#include "Signal.h"
 class Application;
 
 /*!
@@ -20,8 +20,16 @@ class ListenerFrame : public Ogre::FrameListener {
 		 *  \brief Pointeur sur l'application
 		 */
         Application * app;
-        
+
 	public:
+        /*!
+         * \brief Dispatche le signal à chaque image. N'a aucun argument.
+         */
+        Signal<void*> signalFrameRendering;
+        /*!
+         * \brief Dispatche le signal à chaque fin d'image. N'a aucun argument.
+         */
+        Signal<void*> signalFrameEnded;
 		/*!
 		 * \brief Constructeur
 		 */
@@ -30,7 +38,7 @@ class ListenerFrame : public Ogre::FrameListener {
 		 * \brief Destructeur
 		 */
 		~ListenerFrame();
-		
+
 		/*!
 		 *  \brief Génère la frame de rendu
 		 */

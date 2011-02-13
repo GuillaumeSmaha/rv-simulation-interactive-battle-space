@@ -25,16 +25,17 @@ bool ListenerFrame::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 	if (this->app->timeUntilNextToggle >= 0)
 		this->app->timeUntilNextToggle -= evt.timeSinceLastFrame;
-    
+
     this->app->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->app->_translateX, 0.0f, this->app->_translateZ) );
- 
+
     this->app->getGestShip()->updateShips();
-   
+    this->signalFrameRendering.dispatch();
 	return true;
 }
 
 bool ListenerFrame::frameEnded(const Ogre::FrameEvent& evt)
 {
-	this->app->updateStats();
+	//this->app->updateStats();
+	this->signalFrameEnded.dispatch();
 	return true;
 }
