@@ -48,7 +48,6 @@ Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name
 		case PLANET7:
 		case PLANET8:
 		case PLANET9:
-          //entity = this->sceneMgr->createEntity(name, "sphere.mesh");
 			entity = sceneMgr->createEntity(name, "Prefab_Sphere");
 			if(random)
 			{
@@ -63,13 +62,6 @@ Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name
 			}
 	    break;
 	}
-	Utils::log("TTTTTTTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSSSSSSSSSTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-	/*Ogre::String test = "bonjour";
-Utils::log("test"+Utils::toString(Utils::unique()));*/
-
-	//Utils::log(Utils::toString(3));
-	Utils::log(entity->getName());
-	//Utils::log(entity->getParentSceneNode()->getName());
 	MeshLoader::setMaterial(entity, type);
 	return entity;
 }

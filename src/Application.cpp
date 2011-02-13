@@ -364,32 +364,6 @@ void Application::initScene(void)
     gestShip->addShip(ship2);
 
 
-    Utils::log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    Utils::log("-- test");
-    float b = 4.5;
-	Ogre::String arg = "b=";
-	arg.append(Utils::toString(b));
-	Utils::log(arg);
-
-    //Création d'un signal prenant comme argument un float
-    Signal<float> s ;
-
-    //rajout du listener : la fonction appel
-    Utils::log("-- ajout du listener : la fonction appel");
-    s.add(&Application::appel, this);
-    //on dispatch
-    Utils::log("-- on dispatch");
-    s.dispatch(b);
-    // on supprime le listener
-    Utils::log("-- on supprime le listener");
-    s.remove(&Application::appel, this);
-    //rien n'est dispatché
-    Utils::log("-- on dispatch");
-    s.dispatch(b);
-    Signal<void*> s2 ;
-    s2.add(&Application::updateStats, this);
-    s2.dispatch();
-
 /*
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
 	asteroid->getParentSceneNode()->setPosition(13,13,15);
@@ -409,14 +383,7 @@ void Application::initScene(void)
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
 }
-//test les signaux
-void Application::appel(float b)
-{
-	Utils::log("appel : COUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-	Ogre::String arg = "appel : b=";
-	arg.append(Utils::toString(b));
-	Utils::log(arg);
-}
+
 //------------------------------------------------------------------------------
 
 int main(void)
