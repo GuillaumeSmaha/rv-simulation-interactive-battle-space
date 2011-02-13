@@ -30,13 +30,14 @@ class PlayerControls: public ObjectRoot
 		/// Définit les différents types de contrôles
 		enum Controls
 		{
-			SHOOT1 = 0,
-			SHOOT2 = 1,
-			ACCELERATION = 2,
-			BRAKE = 3,
-			LEFT = 4,
-			RIGHT = 5,
-			QUIT = 6
+			NONE = 0,
+			SHOOT1 = 1,
+			SHOOT2 = 2,
+			ACCELERATION = 3,
+			BRAKE = 4,
+			LEFT = 5,
+			RIGHT = 6,
+			QUIT = 7
 		};
 		/*!
 		 * \brief Emet un dispatche lorsqu'une touche est préssée  Signal(PlayerControls::Controls key)
