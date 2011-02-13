@@ -2,7 +2,7 @@
 
 using namespace Ogre;
 
-Ship::Ship(void) : shipLife(100)
+Ship::Ship(void) : shipLife(100), speed(0), acceleration(0)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
@@ -98,7 +98,8 @@ void Ship::move(const Ogre::Vector3 &vec)
 
 void Ship::moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
 {
-	this->moveRelative(Ogre::Vector3(x, y, z));
+	Ogre::Vector3 vec = Ogre::Vector3(x, y, z);
+	this->moveRelative(vec);
 }
 void Ship::moveRelative(const Ogre::Vector3 &vec)
 {
