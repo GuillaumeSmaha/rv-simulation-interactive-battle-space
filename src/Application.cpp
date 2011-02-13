@@ -230,9 +230,56 @@ void Application::initListeners(void)
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
 
 	this->listenerMouse = new ListenerMouse(this);
-	this->listenerKeyboard = new ListenerKeyboard(this);
+	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 	this->listenerFrame = new ListenerFrame(this, this->root);
 	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
+	PlayerControls *player = new PlayerControls(/*this->listenerMouse,*/ this->listenerKeyboard);
+	player->signalKeyPressed.add(&Application::tempKeyboardControl, this);
+	player->signalKeyReleased.add(&Application::tempKeyboardControlReleased, this);
+
+}
+void Application::tempKeyboardControl(PlayerControls::Controls key)
+{
+	float translateSpeed = 2.5;
+
+	switch(key)
+	{
+		case PlayerControls::QUIT :
+			this->killApplication();
+			break;
+
+		case PlayerControls::ACCELERATION :
+			this->_translateZ = -translateSpeed;
+			break;
+
+		case PlayerControls::BRAKE :
+			this->_translateZ = translateSpeed;
+			break;
+
+		case PlayerControls::LEFT :
+			this->_translateX = -translateSpeed;
+			break;
+
+		case PlayerControls::RIGHT :
+			this->_translateX = translateSpeed;
+			break;
+	}
+
+}
+void Application::tempKeyboardControlReleased(PlayerControls::Controls key)
+{
+    switch(key)
+	{
+		case PlayerControls::ACCELERATION :
+		case PlayerControls::BRAKE :
+			this->_translateZ = 0;
+			break;
+
+		case PlayerControls::LEFT :
+		case PlayerControls::RIGHT :
+			this->_translateX = 0;
+			break;
+	}
 }
 
 

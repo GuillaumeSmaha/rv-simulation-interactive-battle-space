@@ -8,6 +8,7 @@
 #include <Ogre.h>
 #include <OISInputManager.h>
 #include "ObjectRoot.h"
+#include "PlayerControls.h"
 #include "ListenerKeyboard.h"
 #include "ListenerMouse.h"
 #include "ListenerWindow.h"
@@ -28,6 +29,7 @@ class ListenerWindow;
 class ListenerMouse;
 class ListenerKeyboard;
 class ListenerFrame;
+
 
 /*!
 * \class Application
@@ -106,6 +108,7 @@ class Application : public ObjectRoot
         * \brief gere l'ensemble des vaiseaux
         */
         GestShip * gestShip;
+
 
 	public: //TODO : faire des fonctions pour ca
 
@@ -241,6 +244,14 @@ class Application : public ObjectRoot
 		*  \brief Initialise la scène
 		*/
 		void initScene(void);
+        /*!
+         * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
+         */
+        void tempKeyboardControl(PlayerControls::Controls key);
+         /*!
+         * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
+         */
+        void tempKeyboardControlReleased(PlayerControls::Controls key);
 };
 
 #endif // __APPLICATION_H__

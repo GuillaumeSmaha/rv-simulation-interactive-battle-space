@@ -31,7 +31,7 @@ class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
 		 *  \brief Capteur d'événements de la souris
 		 */
         OIS::Mouse * mouse;
-        
+
 	public:
 		/*!
 		 * \brief Constructeur
@@ -50,7 +50,7 @@ class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
 		{
 			return this->mouse;
 		}
-		
+
 		/*!
 		 * \brief Recupère les événements
 		 */

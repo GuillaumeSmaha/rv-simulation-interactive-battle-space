@@ -9,6 +9,7 @@
 #include <OgreWindowEventUtilities.h>
 #include "Utils.h"
 #include "Application.h"
+#include "Signal.h"
 
 class Application;
 
