@@ -58,11 +58,6 @@ class Signal : public ObjectRoot
 		*/
         void dispatch( Retour argument)
         {
-            //Utils::log("Dispatch:");
-            /*Ogre::String arg = "-> Argument : ";
-            arg.append(Utils::toString(argument));
-			Utils::log(arg);*/
-
 			ObjectRoot * ptrClass;
             void (ObjectRoot::* func)(Retour);
             for ( size_t i = 0, size = this->listenersClass.size(); i < size; ++i )
