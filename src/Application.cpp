@@ -358,10 +358,10 @@ void Application::initScene(void)
 	planet2->setPosition(400, 450, -300);
 	planet2->getNode()->setScale(0.3, 0.3, 0.3);
 
-	gestShip= new GestShip();
-	Ship * ship= new Ship();
+	gestShip = new GestShip();
+	ShipIA * ship = new ShipIA();
     ship->setPosition(-50,-50,-50);
-    Ship * ship2= new Ship();
+    ShipIA * ship2 = new ShipIA();
     ship2->setPosition(130,0,0);
     ship2->setOrientation(5, 5, 5, 5);
     ship->setSpeed(1);
