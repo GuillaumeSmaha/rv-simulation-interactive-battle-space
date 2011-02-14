@@ -81,8 +81,7 @@ bool Application::start(void)
 	// create the scene graph
 	this->initSceneGraph();
 
-	// create the scene
-	this->initScene();
+
 
 	// create the camera
     switch(this->type_Camera) {
@@ -102,7 +101,8 @@ bool Application::start(void)
 
 	// init the input manager and create the listeners
 	this->initListeners();
-
+	// create the scene
+	this->initScene();
 	// create one viewport, entire window
 	// use the same color for the fog and viewport background
 	Ogre::Viewport * viewPort = this->listenerWindow->getRenderWindow()->addViewport(this->gestCamera->getCamera(), 0);
@@ -362,7 +362,7 @@ void Application::initScene(void)
 	planet2->getNode()->setScale(200.0, 200.0, 200.0);
 
 	gestShip = new GestShip();
-    
+
 	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
     ShipIA * ship2 = new ShipIA();
