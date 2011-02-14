@@ -250,6 +250,10 @@ class Application : public ObjectRoot
          * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
          */
         void tempKeyboardControlReleased(PlayerControls::Controls key);
+        /*!
+         * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
+         */
+        void tempMouseMoved(Ogre::Vector3 vect);
 };
 
 #endif // __APPLICATION_H__

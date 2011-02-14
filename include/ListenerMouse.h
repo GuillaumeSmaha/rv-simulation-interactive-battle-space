@@ -8,10 +8,9 @@
 #include <OISInputManager.h>
 #include <OISMouse.h>
 #include "ObjectRoot.h"
-#include "Application.h"
 #include "CameraFixeAbstract.h"
+#include "Signal.h"
 
-class Application;
 
 /*!
  * \class ListenerMouse
@@ -19,10 +18,6 @@ class Application;
  */
 class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
 	private:
-		/*!
-		 *  \brief Pointeur sur l'application
-		 */
-        Application * app;
 		/*!
 		 *  \brief Gestionnaire d'événements
 		 */
@@ -33,10 +28,22 @@ class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
         OIS::Mouse * mouse;
 
 	public:
+        /*!
+		 * \brief Dispatche un signal lorsque la souris bouge Signal(Ogre::Vector3(X, Y, Z)))
+		 */
+        Signal<Ogre::Vector3> signalMouseMoved;
+        /*!
+		 * \brief Dispatche un signal lorsque une touche de la souris est enfoncée Signal(OIS::MouseButtonID)
+		 */
+        Signal<OIS::MouseButtonID> signalMousePressed;
+        /*!
+		 * \brief Dispatche un signal lorsque une touche de la souris est relâchée Signal(OIS::MouseButtonID)
+		 */
+        Signal<OIS::MouseButtonID> signalMouseReleased;
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerMouse(Application * app);
+		ListenerMouse(OIS::InputManager * inputManager);
 		/*!
 		 * \brief Destructeur
 		 */

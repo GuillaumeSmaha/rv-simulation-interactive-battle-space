@@ -229,14 +229,21 @@ void Application::initListeners(void)
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
 
-	this->listenerMouse = new ListenerMouse(this);
+	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 	this->listenerFrame = new ListenerFrame(this, this->root);
 	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
-	PlayerControls *player = new PlayerControls(/*this->listenerMouse,*/ this->listenerKeyboard);
+	PlayerControls *player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::tempKeyboardControl, this);
 	player->signalKeyReleased.add(&Application::tempKeyboardControlReleased, this);
+	player->signalMouseMoved.add(&Application::tempMouseMoved, this);
 
+}
+void Application::tempMouseMoved(Ogre::Vector3 vect)
+{
+    float mRotateSpeed = 0.1f;
+    this->getGestCamera()->getCamera()->yaw(Ogre::Degree(-vect.x * mRotateSpeed));
+    this->getGestCamera()->getCamera()->pitch(Ogre::Degree(-vect.y * mRotateSpeed));
 }
 void Application::tempKeyboardControl(PlayerControls::Controls key)
 {

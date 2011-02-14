@@ -28,7 +28,7 @@ class ListenerKeyboard : public OIS::KeyListener, public ObjectRoot {
 
 	public:
         /*!
-         * \brief Dispatche un signal lorsqu'une touche du clavier est préssée Signal(onst OIS::KeyEvent &evt)
+         * \brief Dispatche un signal lorsqu'une touche du clavier est préssée Signal(const OIS::KeyEvent &evt)
          */
         Signal<const OIS::KeyEvent&> signalKeyPressed;
         /*!
