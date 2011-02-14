@@ -1,10 +1,8 @@
 #include "ListenerWindow.h"
 
-ListenerWindow::ListenerWindow(Application * app, Ogre::Root * root, Ogre::String nameWindow)
+ListenerWindow::ListenerWindow(Ogre::Root * root, Ogre::String nameWindow)
 {
-	this->app = app;
 	this->renderWindow = root->initialise(true, nameWindow);
-
 	Ogre::WindowEventUtilities::addWindowEventListener(this->renderWindow, this);
 	this->windowResized(this->renderWindow);
 }
@@ -25,8 +23,8 @@ void ListenerWindow::windowResized(Ogre::RenderWindow * rw)
 	rw->getMetrics(width, height, depth, left, top);
 	const OIS::MouseState &ms = this->mouse->getMouseState();
 	ms.width = width;
-	ms.height = height;
-	*/
+	ms.height = height;*/
+	
 
 }
 
@@ -35,9 +33,6 @@ void ListenerWindow::windowClosed(Ogre::RenderWindow * rw)
 	// Only close for window that created OIS (the main window)
 	if(rw == this->renderWindow)
 	{
-		if(this->app->getInputManager())
-		{
-			this->app->killInputManager();
-		}
+		this->signalWindowClosed.dispatch();
 	}
 }

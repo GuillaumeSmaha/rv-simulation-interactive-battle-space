@@ -156,7 +156,7 @@ class Application : public ObjectRoot
 		/*!
 		*  \brief Tue le gestionnaire d'événements
 		*/
-		void killInputManager();
+		void killInputManager(void*);
 
 
 

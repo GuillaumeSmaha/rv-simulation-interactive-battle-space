@@ -8,10 +8,8 @@
 #include <OgreRoot.h>
 #include <OgreWindowEventUtilities.h>
 #include "Utils.h"
-#include "Application.h"
 #include "Signal.h"
 
-class Application;
 
 /*!
  * \class ListenerWindow
@@ -19,21 +17,21 @@ class Application;
  */
 class ListenerWindow : public Ogre::WindowEventListener, public ObjectRoot {
 	private:
-		/*!
-		 *  \brief Pointeur sur l'application
-		 */
-        Application * app;
         /*!
-		 *  \brief Fenêtre de Rendu
+		 *  \brief Dispatche un signal lorsque la souris bouge Signal(Ogre::Vector3(X, Y, Z)))
 		 */
         Ogre::RenderWindow * renderWindow;
-
+		
 
 	public:
 		/*!
+		 * \brief Dispatche un signal lorsque la fenêtre est fermée Signal(void)
+		 */
+		Signal<void*> signalWindowClosed;
+		/*!
 		 * \brief Constructeur
 		 */
-		ListenerWindow(Application * app, Ogre::Root * root, Ogre::String nameWindow);
+		ListenerWindow(Ogre::Root * root, Ogre::String nameWindow);
 		/*!
 		 * \brief Destructeur
 		 */

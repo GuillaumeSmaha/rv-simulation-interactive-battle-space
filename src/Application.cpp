@@ -66,7 +66,7 @@ bool Application::start(void)
 		return false;
 
 	// initialise the system, create the default rendering window
-	this->listenerWindow = new ListenerWindow(this, this->root, "Combat spatial");
+	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
 	//this->window = this->root->initialise(true, "Combat spatial");
 
 	// get the generic SceneManager
@@ -175,7 +175,7 @@ void Application::killApplication()
 	this->setShutDown(true);
 }
 
-void Application::killInputManager()
+void Application::killInputManager(void*)
 {
 	OIS::InputManager::destroyInputSystem(this->inputManager);
 	this->inputManager = 0;
@@ -228,7 +228,7 @@ void Application::initListeners(void)
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
-
+	this->listenerWindow->signalWindowClosed.add(&Application::killInputManager, this);
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 	this->listenerFrame = new ListenerFrame(this, this->root);
