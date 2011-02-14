@@ -73,7 +73,7 @@ class Ship
 		
 		Ogre::Entity * getEntity(void)
 		{
-			this->getNode();
+			return this->entity;
 		}
 };
 
