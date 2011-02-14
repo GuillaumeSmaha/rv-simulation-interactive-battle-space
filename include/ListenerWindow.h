@@ -17,7 +17,7 @@ class Application;
  * \class ListenerWindow
  * \brief Classe permettant de gérer les événements de la fenêtre.
  */
-class ListenerWindow : public Ogre::WindowEventListener {
+class ListenerWindow : public Ogre::WindowEventListener, public ObjectRoot {
 	private:
 		/*!
 		 *  \brief Pointeur sur l'application

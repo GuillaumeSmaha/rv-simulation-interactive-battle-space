@@ -14,7 +14,7 @@ class Application;
  * \class ListenerFrame
  * \brief Classe permettant de gérer les événements de la mise à jour du rendu.
  */
-class ListenerFrame : public Ogre::FrameListener {
+class ListenerFrame : public Ogre::FrameListener, public ObjectRoot {
     private:
 		/*!
 		 *  \brief Pointeur sur l'application
