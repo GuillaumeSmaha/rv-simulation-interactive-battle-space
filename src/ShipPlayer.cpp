@@ -2,9 +2,9 @@
 
 using namespace Ogre;
 
-ShipPlayer::ShipPlayer(void) : ShipAbstract()
+ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 {
-    
+   //pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
 }
 
 ShipPlayer::~ShipPlayer(void)
@@ -23,5 +23,17 @@ void ShipPlayer::updatePosition(void)
 	if (this->getSpeed() != 0) 
 	{
 		this->moveRelative(0.0, 0.0, this->getSpeed());
+	}
+}
+
+void ShipPlayer::keyPressed(const PlayerControls::Controls key)
+{
+    switch(key)
+	{
+		case PlayerControls::ACCELERATION :
+            std::cout<<"shoot";
+			break;
+		default:
+			break;
 	}
 }

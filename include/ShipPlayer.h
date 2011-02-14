@@ -6,6 +6,8 @@
 #define __SHIP_PLAYER_H__
 
 #include "ShipAbstract.h"
+#include "PlayerControls.h"
+#include "ObjectRoot.h"
 
 /*!
 * \class ShipPlayer
@@ -13,13 +15,13 @@
 *   Comporte un attribut Ogre::entity qui correspond à un unique mesh déplacable
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
 */
-class ShipPlayer : public ShipAbstract
+class ShipPlayer : public ShipAbstract, public ObjectRoot
 {
 	public:
 		/*!
 		 * \brief Construction
 		*/
-		ShipPlayer(void);
+		ShipPlayer(PlayerControls * pControl);
 		/*!
 		 * \brief Destructeur
 		*/
@@ -29,6 +31,11 @@ class ShipPlayer : public ShipAbstract
 		 *  \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
 		 */
 		void updatePosition(void);
+
+        /*!
+         * \brief permet de réagir aux évènement sur le clavier et la souris en utilisant PlayerControls
+         */
+        void keyPressed(PlayerControls::Controls key);
 };
 
 #endif // __SHIP_PLAYER_H__

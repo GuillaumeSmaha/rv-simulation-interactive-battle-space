@@ -107,6 +107,11 @@ class Application : public ObjectRoot
 		ListenerFrame * listenerFrame;
 
         /*!
+        * Gere les controles claviers / souris utisable par le joueur
+        */
+        PlayerControls *player;
+    
+        /*!
         * \brief gere l'ensemble des vaiseaux
         */
         GestShip * gestShip;

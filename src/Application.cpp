@@ -233,7 +233,7 @@ void Application::initListeners(void)
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 	this->listenerFrame = new ListenerFrame(this, this->root);
 	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
-	PlayerControls *player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
+	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::tempKeyboardControl, this);
 	player->signalKeyReleased.add(&Application::tempKeyboardControlReleased, this);
 	player->signalMouseMoved.add(&Application::tempMouseMoved, this);
@@ -362,7 +362,8 @@ void Application::initScene(void)
 	planet2->getNode()->setScale(200.0, 200.0, 200.0);
 
 	gestShip = new GestShip();
-	ShipIA * ship = new ShipIA();
+    
+	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
     ShipIA * ship2 = new ShipIA();
     ship2->setPosition(130,0,0);
