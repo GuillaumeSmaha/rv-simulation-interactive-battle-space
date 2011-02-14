@@ -353,10 +353,13 @@ void Application::initScene(void)
 //	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
 	//shete
 
-	Planet *planet = new Planet();
+	Planet *planet1 = new Planet();
+	planet1->setPosition(2500.0, 300.0, 12500.0);
+	planet1->getNode()->setScale(150.0, 150.0, 150.0);
+
 	Planet *planet2 = new Planet(2);
-	planet2->setPosition(400, 450, -300);
-	planet2->getNode()->setScale(0.3, 0.3, 0.3);
+	planet2->setPosition(25000.0, 900.0, 300.0);
+	planet2->getNode()->setScale(200.0, 200.0, 200.0);
 
 	gestShip = new GestShip();
 	ShipIA * ship = new ShipIA();
