@@ -110,7 +110,7 @@ class Application : public ObjectRoot
         * Gere les controles claviers / souris utisable par le joueur
         */
         PlayerControls *player;
-    
+
         /*!
         * \brief gere l'ensemble des vaiseaux
         */
@@ -145,7 +145,10 @@ class Application : public ObjectRoot
 		*/
 		bool start(void);
 
-
+        /*!
+		* \brief Mise à jour générale
+		*/
+		void update(void*);
 		/*!
 		* \brief Mise à jour des stats (FPS, etc...)
 		*/
@@ -250,9 +253,9 @@ class Application : public ObjectRoot
 		*/
 		void initScene(void);
         /*!
-         * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
+         * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)
          */
-        void tempKeyboardControl(PlayerControls::Controls key);
+        void onKeyPressed(PlayerControls::Controls key);
          /*!
          * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
          */

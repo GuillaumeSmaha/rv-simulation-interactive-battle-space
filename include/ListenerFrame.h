@@ -6,21 +6,19 @@
 #define __LISTENER_FRAME_H__
 
 #include <OgreFrameListener.h>
-#include "Application.h"
 #include "Signal.h"
-class Application;
-
+#include "ObjectRoot.h"
+#include <Ogre.h>
 /*!
  * \class ListenerFrame
  * \brief Classe permettant de gérer les événements de la mise à jour du rendu.
  */
 class ListenerFrame : public Ogre::FrameListener, public ObjectRoot {
-    private:
-		/*!
-		 *  \brief Pointeur sur l'application
-		 */
-        Application * app;
-
+    private :
+        /*!
+         * \brief Indique si l'application est fermée
+         */
+         bool closed;
 	public:
         /*!
          * \brief Dispatche le signal à chaque image. N'a aucun argument.
@@ -33,12 +31,11 @@ class ListenerFrame : public Ogre::FrameListener, public ObjectRoot {
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerFrame(Application * app, Ogre::Root * root);
+		ListenerFrame(Ogre::Root * root);
 		/*!
 		 * \brief Destructeur
 		 */
 		~ListenerFrame();
-
 		/*!
 		 *  \brief Génère la frame de rendu
 		 */
@@ -48,6 +45,17 @@ class ListenerFrame : public Ogre::FrameListener, public ObjectRoot {
 		*  \brief Comportement après génération de la frame
 		*/
 		bool frameEnded(const Ogre::FrameEvent& evt);
+		/*!
+        * \brief Appelée lorsque l'application est fermée
+        */
+        void shutdown()
+        {
+            this->shutdown(NULL);
+        }
+		/*!
+        * \brief Appelée lorsque l'application est fermée
+        */
+        void shutdown(void*);
 };
 
 #endif //__LISTENER_FRAME_H__

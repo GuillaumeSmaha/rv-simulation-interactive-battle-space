@@ -109,6 +109,7 @@ bool Application::start(void)
 	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
 	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
 
+
 	// activate debugging overlay
 	debugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
 
@@ -120,7 +121,15 @@ bool Application::start(void)
 
 	return true;
 }
+void Application::update(void*)
+{
+       /* if (this->timeUntilNextToggle >= 0)
+            this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
+    this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 
+    this->getGestShip()->updateShips();
+
+}
 void Application::updateStats(void*)
 {
 	static String currFps = "Current FPS: ";
@@ -173,6 +182,7 @@ void Application::showDebugOverlay(bool show)
 void Application::killApplication()
 {
 	this->setShutDown(true);
+	this->listenerFrame->shutdown();
 }
 
 void Application::killInputManager(void*)
@@ -228,13 +238,29 @@ void Application::initListeners(void)
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
+    this->listenerFrame = new ListenerFrame(this->root);
+	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
+	this->listenerFrame->signalFrameEnded.add(&Application::update, this);
 	this->listenerWindow->signalWindowClosed.add(&Application::killInputManager, this);
+	this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
+
+
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
-	this->listenerFrame = new ListenerFrame(this, this->root);
-	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
+
+    this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
+    this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
+
+    // capture value of each device
+    //this->app->getListenerMouse()->getMouse()->capture();
+	//this->app->getListenerKeyboard()->getKeyboard()->capture();
+
+
+
+
+
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
-	player->signalKeyPressed.add(&Application::tempKeyboardControl, this);
+	player->signalKeyPressed.add(&Application::onKeyPressed, this);
 	player->signalKeyReleased.add(&Application::tempKeyboardControlReleased, this);
 	player->signalMouseMoved.add(&Application::tempMouseMoved, this);
 
@@ -245,7 +271,7 @@ void Application::tempMouseMoved(Ogre::Vector3 vect)
     this->getGestCamera()->getCamera()->yaw(Ogre::Degree(-vect.x * mRotateSpeed));
     this->getGestCamera()->getCamera()->pitch(Ogre::Degree(-vect.y * mRotateSpeed));
 }
-void Application::tempKeyboardControl(PlayerControls::Controls key)
+void Application::onKeyPressed(PlayerControls::Controls key)
 {
 	float translateSpeed = 2.5;
 
@@ -255,22 +281,23 @@ void Application::tempKeyboardControl(PlayerControls::Controls key)
 			this->killApplication();
 			break;
 
-		case PlayerControls::ACCELERATION :
-			this->_translateZ = -translateSpeed;
-			break;
+        case PlayerControls::ACCELERATION :
+                this->_translateZ = -translateSpeed;
+                break;
 
-		case PlayerControls::BRAKE :
-			this->_translateZ = translateSpeed;
-			break;
+        case PlayerControls::BRAKE :
+                this->_translateZ = translateSpeed;
+                break;
 
-		case PlayerControls::LEFT :
-			this->_translateX = -translateSpeed;
-			break;
+        case PlayerControls::LEFT :
+                this->_translateX = -translateSpeed;
+                break;
 
-		case PlayerControls::RIGHT :
-			this->_translateX = translateSpeed;
-			break;
-	}
+        case PlayerControls::RIGHT :
+                this->_translateX = translateSpeed;
+                break;
+}
+
 
 }
 void Application::tempKeyboardControlReleased(PlayerControls::Controls key)
@@ -365,9 +392,10 @@ void Application::initScene(void)
 
 	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
+    ship->setOrientation(5, 5, 5, 5);
     ShipIA * ship2 = new ShipIA();
     ship2->setPosition(130,0,0);
-    ship2->setOrientation(5, 5, 5, 5);
+
     ship->setSpeed(1);
     ship2->touched();
 

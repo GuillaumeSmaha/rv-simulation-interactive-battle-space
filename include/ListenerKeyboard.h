@@ -56,7 +56,7 @@ class ListenerKeyboard : public OIS::KeyListener, public ObjectRoot {
 		/*!
 		 * \brief Recupère les événements
 		 */
-		void capture(void);
+		void capture(void*);
 
 		/*!
 		 *  \brief Action à effectuer pour l'événement "touche pressée"

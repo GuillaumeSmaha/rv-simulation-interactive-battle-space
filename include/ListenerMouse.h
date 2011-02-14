@@ -61,7 +61,7 @@ class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
 		/*!
 		 * \brief Recupère les événements
 		 */
-		void capture(void);
+		void capture(void*);
 		/*!
 		 *  \brief Action à effectuer pour l'événement "souis en mouvement"
 		 * 	\param evt Evenement de la souris

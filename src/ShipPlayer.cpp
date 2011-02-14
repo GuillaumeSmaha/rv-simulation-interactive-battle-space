@@ -28,11 +28,20 @@ void ShipPlayer::updatePosition(void)
 
 void ShipPlayer::keyPressed(PlayerControls::Controls key)
 {
+    Quaternion r(Degree(90), Vector3::UNIT_X);
+    Quaternion orientation;
     switch(key)
 	{
 		case PlayerControls::ACCELERATION :
-            std::cout<<"shoot";
-			break;
+            //std::cout<<"shoot";
+            this->setAcceleration(15);
+        break;
+        case PlayerControls::LEFT :
+            orientation = this->getOrientation();
+
+            //orientation = orientation * r;
+            this->setOrientation(orientation* r);
+        break;
 		default:
 			break;
 	}

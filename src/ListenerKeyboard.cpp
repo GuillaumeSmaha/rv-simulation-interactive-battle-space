@@ -12,7 +12,7 @@ ListenerKeyboard::~ListenerKeyboard()
 	this->inputManager->destroyInputObject(this->keyboard);
 }
 
-void ListenerKeyboard::capture(void)
+void ListenerKeyboard::capture(void*)
 {
     this->keyboard->capture();
 }
