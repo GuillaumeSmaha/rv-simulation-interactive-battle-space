@@ -38,6 +38,9 @@ Application::~Application(void)
     gestShip->deleteAllShips();
     delete this->gestShip;
 
+	gestPlanet->deleteAllPlanet();
+	delete this->gestPlanet;
+
     delete this->gestCamera;
 
 	delete this->listenerMouse;
