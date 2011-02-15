@@ -57,6 +57,29 @@ void ShipAbstract::move(const Ogre::Vector3 &vec)
 	Vector3 pos = this->getPosition() + vec;
 	this->setPosition(pos[0], pos[1], pos[2]);
 }
+void ShipAbstract::updatePosition(void)
+{
+    std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
+    std::cout<<"acceleration"<<this->getRollAcceleration()<<std::endl;
+	Vector3 position = this->getPosition();
+    //calcule des nouvelles vitesses et positions
+    this->setSpeed(this->getSpeed()+this->getAcceleration());
+	if (this->getSpeed() != 0)
+	{
+		this->moveRelative(0.0, 0.0, this->getSpeed());
+	}
+    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+    this->rotateRelative(this->getRollSpeed());
+
+    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+    this->goUp(this->getPitchSpeed());
+
+    //on réduit chacune des accélération
+    this->setAcceleration(0);
+    this->setPitchAcceleration(Ogre::Radian(0));
+    this->setRollAcceleration(Ogre::Radian(0));
+
+}
 
 
 void ShipAbstract::moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)

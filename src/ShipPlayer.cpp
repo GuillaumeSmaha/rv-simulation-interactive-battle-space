@@ -12,29 +12,7 @@ ShipPlayer::~ShipPlayer(void)
 
 }
 
-void ShipPlayer::updatePosition(void)
-{
-    std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
-    std::cout<<"acceleration"<<this->getRollAcceleration()<<std::endl;
-	Vector3 position = this->getPosition();
-    //calcule des nouvelles vitesses et positions
-    this->setSpeed(this->getSpeed()+this->getAcceleration());
-	if (this->getSpeed() != 0)
-	{
-		this->moveRelative(0.0, 0.0, this->getSpeed());
-	}
-    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
-    this->rotateRelative(this->getRollSpeed());
 
-    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
-    this->goUp(this->getPitchSpeed());
-
-    //on réduit chacune des accélération
-    this->setAcceleration(0);
-    this->setPitchAcceleration(Ogre::Radian(0));
-    this->setRollAcceleration(Ogre::Radian(0));
-
-}
 
 void ShipPlayer::keyPressed(PlayerControls::Controls key)
 {

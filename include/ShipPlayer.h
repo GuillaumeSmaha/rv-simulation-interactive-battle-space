@@ -27,11 +27,6 @@ class ShipPlayer : public ShipAbstract, public ObjectRoot
 		*/
 		~ShipPlayer(void);
 		
-		/*!
-		 *  \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
-		 */
-		void updatePosition(void);
-
         /*!
          * \brief permet de réagir aux évènement sur le clavier et la souris en utilisant PlayerControls
          */

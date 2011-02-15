@@ -64,7 +64,7 @@ class ShipAbstract
 		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
 		 * Méthode virtuelle pure
 		*/
-		virtual void updatePosition(void) = 0;
+		void updatePosition(void);
 		
 		void touched(void);
 		
