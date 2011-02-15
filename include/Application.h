@@ -25,7 +25,7 @@
 #include "MeshLoader.h"
 #include "Signal.h"
 #include "Planet.h"
-
+#include "GestPlanet.h"
 
 class ListenerWindow;
 class ListenerMouse;
@@ -116,6 +116,7 @@ class Application : public ObjectRoot
         */
         GestShip * gestShip;
 
+		GestPlanet * gestPlanet;
 
 	public: //TODO : faire des fonctions pour ca
 

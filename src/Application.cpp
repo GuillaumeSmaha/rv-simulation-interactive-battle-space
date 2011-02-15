@@ -381,14 +381,18 @@ void Application::initScene(void)
 
 //	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
 	//shete
+	gestPlanet = new GestPlanet();
 
 	Planet *planet1 = new Planet();
 	planet1->setPosition(2500.0, 300.0, 12500.0);
-	planet1->getNode()->setScale(150.0, 150.0, 150.0);
+	planet1->setScale(150.0, 150.0, 150.0);
 
 	Planet *planet2 = new Planet(2);
 	planet2->setPosition(25000.0, 900.0, 300.0);
-	planet2->getNode()->setScale(200.0, 200.0, 200.0);
+	planet2->setScale(200.0, 200.0, 200.0);
+
+	gestPlanet->addPlanet(planet1);
+	gestPlanet->addPlanet(planet2);
 
 	gestShip = new GestShip();
 
@@ -403,8 +407,7 @@ void Application::initScene(void)
 
     gestShip->addShip(ship);
     gestShip->addShip(ship2);
-
-
+	
 /*
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
 	asteroid->getParentSceneNode()->setPosition(13,13,15);
