@@ -1,3 +1,6 @@
+#ifndef __GESTGROUPASTEROIDS_H__
+#define __GESTGROUPASTEROIDS_H__
+
 #include <Ogre.h>
 #include "GroupAsteroid.h"
 
@@ -29,3 +32,4 @@ class GestGroupAsteroids
 
         void deleteAllGroupsAsteroids();
 };
+#endif // __GESTGROUPASTEROIDS_H__

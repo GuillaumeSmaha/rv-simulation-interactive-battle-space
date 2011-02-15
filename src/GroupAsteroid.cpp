@@ -2,7 +2,8 @@
 
 using namespace std;
 
-GroupAsteroid::GroupAsteroid(){
+GroupAsteroid::GroupAsteroid()
+{
    lstGroupAsteroid.clear();
 }
 

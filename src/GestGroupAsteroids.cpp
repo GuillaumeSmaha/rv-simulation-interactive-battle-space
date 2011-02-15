@@ -2,7 +2,8 @@
 
 using namespace std;
 
-GestGroupAsteroids::GestGroupAsteroids(){
+GestGroupAsteroids::GestGroupAsteroids()
+{
    lstGroupAsteroids.clear();
 }
 

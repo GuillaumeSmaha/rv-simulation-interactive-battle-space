@@ -1,3 +1,6 @@
+#ifndef __GROUPASTEROID_H__
+#define __GROUPASTEROID_H__
+
 #include <Ogre.h>
 #include "Asteroid.h"
 
@@ -41,3 +44,4 @@ class GroupAsteroid
 
         void deleteAllGroupAsteroids();
 };
+#endif // __GROUPASTEROID_H__

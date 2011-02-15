@@ -40,6 +40,9 @@ Application::~Application(void)
 	gestPlanet->deleteAllPlanet();
 	delete this->gestPlanet;
 
+	gestGroupAsteroids->deleteAllGroupsAsteroids();
+	delete this->gestGroupAsteroids;
+
     delete this->gestCamera;
 
 	delete this->listenerMouse;
@@ -132,6 +135,7 @@ void Application::update(void*)
     this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 
     this->getGestShip()->updateShips();
+	this->getGestGroupAsteroids()->updateGroupsAsteroids();
 
 }
 void Application::updateStats(void*)
@@ -414,7 +418,24 @@ void Application::initScene(void)
 
     gestShip->addShip(ship);
     gestShip->addShip(ship2);
-	
+
+	gestGroupAsteroids = new GestGroupAsteroids();
+	GroupAsteroid *group1 = new GroupAsteroid();
+	GroupAsteroid *group2 = new GroupAsteroid();
+
+	Asteroid *asteroid1 = new Asteroid();
+	Asteroid *asteroid2 = new Asteroid();
+	Asteroid *asteroid3 = new Asteroid();
+	asteroid1->setPosition(-100,100,-100);
+	asteroid2->setPosition(100,-100,100);
+	asteroid3->setPosition(1000,-100,100);
+
+	group1->addAsteroid(asteroid1);
+	group1->addAsteroid(asteroid2);
+	group2->addAsteroid(asteroid3);
+	gestGroupAsteroids->addGroupAsteroids(group1);
+	gestGroupAsteroids->addGroupAsteroids(group2);
+
 /*
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
 	asteroid->getParentSceneNode()->setPosition(13,13,15);

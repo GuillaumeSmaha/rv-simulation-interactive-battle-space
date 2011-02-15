@@ -21,6 +21,9 @@
 #include "ShipIA.h"
 #include "ShipPlayer.h"
 #include "GestShip.h"
+#include "Asteroid.h"
+#include "GroupAsteroid.h"
+#include "GestGroupAsteroids.h"
 #include "Utils.h"
 #include "MeshLoader.h"
 #include "Signal.h"
@@ -112,10 +115,10 @@ class Application : public ObjectRoot
         PlayerControls *player;
 
         /*!
-        * \brief gere l'ensemble des vaiseaux
+        * \brief gere l'ensemble des vaiseaux, asteroids et planet
         */
         GestShip * gestShip;
-
+		GestGroupAsteroids * gestGroupAsteroids;
 		GestPlanet * gestPlanet;
 
 	public: //TODO : faire des fonctions pour ca
@@ -184,6 +187,13 @@ class Application : public ObjectRoot
         GestShip * getGestShip()
         {
             return this->gestShip;
+        }
+        /*!
+        * \brief [Getter] gestion des groupes d'asteroids
+        */
+        GestGroupAsteroids * getGestGroupAsteroids()
+        {
+            return this->gestGroupAsteroids;
         }
 		/*!
 		*  \brief [Getter] Capteur d'événements
