@@ -36,7 +36,13 @@ class ShipAbstract
 		 * \brief Vitesse du vaisseau
 		*/
 		Ogre::Real speed;
+		/*!
+		 * \brief Vitesse de rotation du vaisseau
+		*/
 		Ogre::Radian rollSpeed;
+		/*!
+		 * \brief Vitesse de rotation du vaisseau
+		*/
 		Ogre::Radian pitchSpeed;
 		/*!
 		 * \brief Accélération du vaisseau
@@ -67,9 +73,13 @@ class ShipAbstract
 		 * Méthode virtuelle pure
 		*/
 		virtual void updatePosition(void);
-		
+		/*!
+		 * \brief Applique une texture blessé au vaisseau
+		*/
 		void touched(void);
-		
+		/*!
+		 * \brief Définit les particules des réacteurs
+		*/
 		void defineParticules(void);
 		
 		/*!
@@ -109,45 +119,164 @@ class ShipAbstract
          * /param w l'angle d'inclinaison
         */
         void goUp(const Ogre::Radian w);
-        
-        
-        //Getter/Setter
-
-		int getShipLife();
-		void setShipLife(int shipLife);
-		
-		int getShipLifeMax();
-		void setShipLifeMax(int shipLifeMax);
-		
-        Ogre::Real getSpeed(void);
-        Ogre::Radian getRollSpeed(void);
-        Ogre::Radian getPitchSpeed(void);
-		void setSpeed(const Ogre::Real speed);
-		void setRollSpeed(const Ogre::Radian speed);
-		void setPitchSpeed(const Ogre::Radian speed);
-		
-		Ogre::Real getAcceleration(void);
-		Ogre::Radian getRollAcceleration(void);
-		Ogre::Radian getPitchAcceleration(void);
-
-		void setAcceleration(const Ogre::Real acceleration);
-		void setRollAcceleration(const Ogre::Radian acceleration);
-		void setPitchAcceleration(const Ogre::Radian acceleration);
+                
 
         /*!
-         * Permet d'augmenter diminuer l'accélération en fonction de ce qu'elle était avant
+         * \brief Permet d'augmenter diminuer l'accélération en fonction de ce qu'elle était avant
+         * \param coefAcceleration Coefficient d'accélération
         */
         void accelerate(const Ogre::Real coefAcceleration);
 
         /*!
-         * Permet d'augmenter diminuer l'accélération de la rotation en fonction de ce qu'elle était avant
+         * \brief Permet d'augmenter diminuer l'accélération de la rotation en fonction de ce qu'elle était avant
+         * \param coefAcceleration Coefficient d'accélération
         */
         void pitchAccelerate(const Ogre::Radian coefAcceleration);
 
         /*!
-         * Permet d'augmenter diminuer l'accélération de l'inclinaison en fonction de ce qu'elle était avant
+         * \brief Permet d'augmenter diminuer l'accélération de l'inclinaison en fonction de ce qu'elle était avant
+         * \param coefAcceleration Coefficient d'accélération
         */
         void rollAccelerate(const Ogre::Radian coefAcceleration);
+        
+        
+        //Getter/Setter
+
+		/*!
+		 * \brief [Getter] Récupère la vie du vaisseau
+		 * \return Vie du vaisseau
+		*/
+		int getShipLife()
+		{
+			return this->shipLife;
+		}
+		/*!
+		 * \brief [Setter] Définit la vie du vaisseau
+		 * \param shipLife Vie du vaisseau
+		*/
+		void setShipLife(int shipLife)
+		{
+			this->shipLife = shipLife;
+		}
+		
+		/*!
+		 * \brief [Getter] Récupère la vie maximale du vaisseau
+		 * \return Vie maximale du vaisseau
+		*/
+		int getShipLifeMax()
+		{
+			return this->shipLifeMax;
+		}
+		/*!
+		 * \brief [Setter] Définit la vie maximale du vaisseau
+		 * \param shipLifeMax Vie maximale du vaisseau
+		*/
+		void setShipLifeMax(int shipLifeMax)
+		{
+			this->shipLifeMax = shipLifeMax;
+		}
+		
+		/*!
+		 * \brief [Getter] Récupère la vitesse du vaisseau
+		 * \return Vitesse du vaisseau
+		*/
+        Ogre::Real getSpeed(void)
+		{
+			return this->speed;
+		}
+		/*!
+		 * \brief [Setter] Définit la vitesse du vaisseau
+		 * \param speed Vitesse du vaisseau
+		*/
+		void setSpeed(const Ogre::Real speed)
+		{
+			this->speed = speed;
+		}
+		
+		/*!
+		 * \brief [Getter] Récupère de rotation la vitesse du vaisseau
+		 * \return Vitesse de rotation du vaisseau
+		*/
+        Ogre::Radian getRollSpeed(void)
+		{
+			return this->rollSpeed;
+		}
+		/*!
+		 * \brief [Setter] Définit la vitesse de rotation du vaisseau
+		 * \param rollSpeed Vitesse de rotation du vaisseau
+		*/
+		void setRollSpeed(const Ogre::Radian rollSpeed)
+		{
+			this->rollSpeed = rollSpeed;
+		}
+		
+		/*!
+		 * \brief [Getter] Récupère de rotation la vitesse du vaisseau
+		 * \return Vitesse de rotation du vaisseau
+		*/
+        Ogre::Radian getPitchSpeed(void)
+		{
+			return this->pitchSpeed;
+		}
+		/*!
+		 * \brief [Setter] Définit la vitesse de rotation du vaisseau
+		 * \param pitchSpeed Vitesse de rotation du vaisseau
+		*/
+		void setPitchSpeed(const Ogre::Radian pitchSpeed)
+		{
+			this->pitchSpeed = pitchSpeed;
+		}
+				
+		/*!
+		 * \brief [Getter] Récupère l'accélération du vaisseau
+		 * \return Accélération du vaisseau
+		*/
+		Ogre::Real getAcceleration(void)
+		{
+			return this->acceleration;
+		}
+		/*!
+		 * \brief [Setter] Définit l'accélération du vaisseau
+		 * \param acceleration Accélération du vaisseau
+		*/
+		void setAcceleration(const Ogre::Real acceleration)
+		{
+			this->acceleration = acceleration;
+		}
+		
+		/*!
+		 * \brief [Getter] Récupère l'accélération de rotation du vaisseau
+		 * \return Accélération de rotation du vaisseau
+		*/
+		Ogre::Radian getRollAcceleration(void)
+		{
+			return this->rollAcceleration;
+		}
+		/*!
+		 * \brief [Setter] Définit l'accélération de rotation du vaisseau
+		 * \param rollAcceleration Accélération de rotation du vaisseau
+		*/
+		void setRollAcceleration(const Ogre::Radian rollAcceleration)
+		{
+			this->rollAcceleration = rollAcceleration;
+		}
+		
+		/*!
+		 * \brief [Getter] Récupère l'accélération de rotation du vaisseau
+		 * \return Accélération de rotation du vaisseau
+		*/
+		Ogre::Radian getPitchAcceleration(void)
+		{
+			return this->pitchAcceleration;
+		}
+		/*!
+		 * \brief [Setter] Définit l'accélération de rotation du vaisseau
+		 * \param pitchAcceleration Accélération de rotation du vaisseau
+		*/
+		void setPitchAcceleration(const Ogre::Radian pitchAcceleration)
+		{
+			this->pitchAcceleration = pitchAcceleration;
+		}
 
 		/*!
 		 * \brief [Getter] Récupère l'orientation de l'objet
@@ -161,7 +290,7 @@ class ShipAbstract
 		void setOrientation(const Ogre::Quaternion &q);
 		/*!
 		 * \brief [Setter] Définit l'orientation de l'objet
-		 * \param X Orientation de l'objet sur l'axe x
+		 * \param x Orientation de l'objet sur l'axe x
 		 * \param y Orientation de l'objet sur l'axe y
 		 * \param z Orientation de l'objet sur l'axe z
 		 * \param a Orientation

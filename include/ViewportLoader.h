@@ -1,3 +1,7 @@
+/*!
+*  \file  ViewportLoader.h
+*  \brief Ce fichier contient la déclaration de la classe ViewportLoader. 
+*/
 #ifndef __VIEWPORT_LOADER_H__
 #define __VIEWPORT_LOADER_H__
 
@@ -40,7 +44,7 @@ class ViewportLoader
 
         /*!
 		 * \brief Constructor
-		 * \param sceneMgr Scène de graphe
+		 * \param listenerWindow Listener de window
 		 */
 		ViewportLoader(ListenerWindow * listenerWindow);
 		/*!
@@ -51,14 +55,14 @@ class ViewportLoader
 		
 		/*!
 		 * \brief Ajoute un nouveau viewport
-		 * \param camera La caméra correspondant au viewport
+		 * \param gestCamera La caméra correspondant au viewport
 		 * \return Id du viewport
 		 */
 		int addViewport(CameraFixeAbstract * gestCamera);
 		/*!
 		 * \brief Change la caméra affecté à un viewport
 		 * \param idViewport Id du viewport
-		 * \param camera La caméra correspondant au viewport
+		 * \param gestCamera La caméra correspondant au viewport
 		 * \return Si le changement a réussit
 		 */
 		bool changeCameraViewport(int idViewport, CameraFixeAbstract * gestCamera);

@@ -1,5 +1,5 @@
 /*!
- *  \file  Camera.h
+ *  \file  CameraFixeAbstract.h
  *  \brief Ce fichier contient la déclaration de la classe CameraFixeAbstract. C'est la classe une classe abstraite qui permet d'utiliser différents types de caméras fixes.
  */
 #ifndef __CAMERA_FIXE_ABSTRACT_H__
@@ -62,12 +62,12 @@ class CameraFixeAbstract {
         virtual void setDirection( Ogre::Real x, Ogre::Real y, Ogre::Real z );
 		/*!
 		 *  \brief Direction de la caméra
-		 * 	\param vector Direction
+		 * 	\param direction Direction
 		 */
         virtual void setDirection( Ogre::Vector3 direction );
 		/*!
 		 *  \brief Direction de la caméra
-		 * 	\param vector Direction
+		 * 	\param nodeDirection Direction
 		 */
         virtual void setDirection( Ogre::SceneNode * nodeDirection );
 		/*!
@@ -79,7 +79,7 @@ class CameraFixeAbstract {
         virtual void setPosition( Ogre::Real x, Ogre::Real y, Ogre::Real z );
 		/*!
 		 *  \brief Position de la caméra
-		 * 	\param vector Position
+		 * 	\param position Position
 		 */
         virtual void setPosition( Ogre::Vector3 position );
 		

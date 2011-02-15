@@ -49,23 +49,19 @@ class ListenerMouse : public ObjectRoot, public OIS::MouseListener
 		 * \brief Destructeur
 		 */
 		~ListenerMouse();
-
-		/*!
-		 * \brief [Getter] Récupère la valeur de mouse
-		 * \return Le pointeur sur le capteur d'événements de la souris
-		 */
-		OIS::Mouse * getMouse()
-		{
-			return this->mouse;
-		}
-		void capture()
-		{
-				this->capture(NULL);
-		}
+		
 		/*!
 		 * \brief Recupère les événements
 		 */
-		void capture(void*);
+		void capture()
+		{
+			this->capture(NULL);
+		}
+		/*!
+		 * \brief Recupère les événements
+		 * \param paramCapture Parametre de capture 
+		 */
+		void capture(void * paramCapture);
 		/*!
 		 *  \brief Action à effectuer pour l'événement "souis en mouvement"
 		 * 	\param evt Evenement de la souris
@@ -83,6 +79,17 @@ class ListenerMouse : public ObjectRoot, public OIS::MouseListener
 		 * 	\param id Identifiant du bouton de la souris
 		 */
         bool mouseReleased( const OIS::MouseEvent &evt, OIS::MouseButtonID id );
+        
+        //getter/setter
+
+		/*!
+		 * \brief [Getter] Récupère la valeur de mouse
+		 * \return Le pointeur sur le capteur d'événements de la souris
+		 */
+		OIS::Mouse * getMouse()
+		{
+			return this->mouse;
+		}
 };
 
 #endif //__LISTENER_MOUSE_H__

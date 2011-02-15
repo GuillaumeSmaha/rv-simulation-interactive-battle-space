@@ -12,7 +12,7 @@ ListenerMouse::~ListenerMouse()
 	this->inputManager->destroyInputObject(this->mouse);
 }
 
-void ListenerMouse::capture(void*)
+void ListenerMouse::capture(void * paramCapture)
 {
     this->mouse->capture();
 }

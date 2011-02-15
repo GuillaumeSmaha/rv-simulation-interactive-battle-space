@@ -1,13 +1,20 @@
-#ifndef PLAYERCONTROLS_H
-#define PLAYERCONTROLS_H
+/*!
+*  \file  PlayerControls.h
+*  \brief Ce fichier contient la déclaration de la classe PlayerControls. 
+*/
+#ifndef __PLAYERCONTROLS_H__
+#define __PLAYERCONTROLS_H__
+
 #include "Signal.h"
 #include "ListenerMouse.h"
 #include "ObjectRoot.h"
 #include "ListenerKeyboard.h"
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
+
 class ListenerKeyboard;
 class ListenerMouse;
+
 /*!
 * \class PlayerControls
 * \brief Class Permettant de gérer le contrôle de manière "haut niveau" du joueur au d'utiliser directement les évènements de base de Ogre
@@ -67,7 +74,7 @@ class PlayerControls: public ObjectRoot
         void keyboardReleased(const OIS::KeyEvent &evt);
         /*!
 		 * \brief Reçoit un dispatche lorsqu'un la souris est bougée et le transmet à signalMouseMoved
-		 * \param evt Vector3(X, Y, Z)
+		 * \param vect Vector3(X, Y, Z)
 		 */
         void mouseMoved(Ogre::Vector3 vect);
         /*!
@@ -95,4 +102,4 @@ class PlayerControls: public ObjectRoot
 
 };
 
-#endif // PLAYERCONTROLS_H
+#endif // __PLAYERCONTROLS_H__

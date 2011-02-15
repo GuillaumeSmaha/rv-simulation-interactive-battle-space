@@ -1,3 +1,7 @@
+/*!
+*  \file  MeshLoader.h
+*  \brief Ce fichier contient la déclaration de la classe MeshLoader. 
+*/
 #ifndef __MESH_LOADER_H__
 #define __MESH_LOADER_H__
 
@@ -121,7 +125,7 @@ class MeshLoader
 		}
         /*!
 		 * \brief Permet de modifier le material pour l'affichage d'un mesh
-         * \param Entity dont on veut changer le material d'affichage
+         * \param entity dont on veut changer le material d'affichage
          * \param meshType Correspondant au material
          */
 		void setMaterial(Ogre::Entity * entity, MeshLoader::MeshType meshType);

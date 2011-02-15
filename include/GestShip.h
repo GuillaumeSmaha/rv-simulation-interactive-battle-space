@@ -13,6 +13,9 @@
 class GestShip
 {
     private:
+		/*!
+		 * \brief Liste des vaisseaux
+		*/
         std::vector<ShipAbstract *> lstShip;
 
     public:

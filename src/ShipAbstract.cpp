@@ -103,91 +103,6 @@ void ShipAbstract::goUp(const Ogre::Radian w)
     this->entity->getParentNode()->pitch(w);
 }
 
-
-//Getter-Setter
-
-int ShipAbstract::getShipLife(void)
-{
-	return this->shipLife;
-}
-
-void ShipAbstract::setShipLife(int shipLife)
-{
-	this->shipLife = shipLife;
-}
-
-
-int ShipAbstract::getShipLifeMax(void)
-{
-	return this->shipLifeMax;
-}
-
-void ShipAbstract::setShipLifeMax(int shipLife)
-{
-	this->shipLifeMax = shipLifeMax;
-}
-
-
-Ogre::Real ShipAbstract::getSpeed(void)
-{
-	return this->speed;
-}
-
-Ogre::Radian ShipAbstract::getRollSpeed(void)
-{
-	return this->rollSpeed;
-}
-
-Ogre::Radian ShipAbstract::getPitchSpeed(void)
-{
-	return this->pitchSpeed;
-}
-
-void ShipAbstract::setSpeed(const Ogre::Real speed) 
-{
-	this->speed = speed;
-}
-void ShipAbstract::setRollSpeed(const Ogre::Radian speed) 
-{
-	this->rollSpeed = speed;
-}
-void ShipAbstract::setPitchSpeed(const Ogre::Radian speed) 
-{
-	this->pitchSpeed= speed;
-}
-
-
-Ogre::Real ShipAbstract::getAcceleration(void) 
-{
-	return this->acceleration;
-}
-
-Ogre::Radian ShipAbstract::getRollAcceleration(void) 
-{
-	return this->rollAcceleration;
-}
-
-Ogre::Radian ShipAbstract::getPitchAcceleration(void) 
-{
-	return this->pitchAcceleration;
-}
-
-
-void ShipAbstract::setAcceleration(const Ogre::Real acceleration) 
-{
-	this->acceleration = acceleration;
-}
-
-void ShipAbstract::setRollAcceleration(const Ogre::Radian acceleration) 
-{
-	this->rollAcceleration = acceleration;
-}
-
-void ShipAbstract::setPitchAcceleration(const Ogre::Radian acceleration) 
-{
-	this->pitchAcceleration = acceleration;
-}
-
 void ShipAbstract::accelerate(const Ogre::Real coefAcceleration)
 {
     this->acceleration +=coefAcceleration;
@@ -202,6 +117,11 @@ void ShipAbstract::pitchAccelerate(const Ogre::Radian coefAcceleration)
 {
     this->pitchAcceleration +=coefAcceleration;
 }
+
+
+
+//Getter-Setter
+
 
 
 
