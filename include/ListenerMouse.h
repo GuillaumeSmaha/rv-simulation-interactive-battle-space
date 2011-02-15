@@ -57,7 +57,10 @@ class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
 		{
 			return this->mouse;
 		}
-
+		void capture()
+		{
+				this->capture(NULL);
+		}
 		/*!
 		 * \brief Recupère les événements
 		 */

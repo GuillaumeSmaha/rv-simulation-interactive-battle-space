@@ -125,7 +125,7 @@ void Application::update(void*)
 {
        /* if (this->timeUntilNextToggle >= 0)
             this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
-	this->listenerMouse->capture(NULL);
+	this->listenerMouse->capture();
 	this->listenerKeyboard->capture(NULL);
     this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 
@@ -244,7 +244,7 @@ void Application::initListeners(void)
 	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
 	this->listenerFrame->signalFrameEnded.add(&Application::update, this);
 	this->listenerWindow->signalWindowClosed.add(&Application::killInputManager, this);
-	this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
+	//this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
 
 
 	this->listenerMouse = new ListenerMouse(this->inputManager);
