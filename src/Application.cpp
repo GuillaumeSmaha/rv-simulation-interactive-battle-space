@@ -70,6 +70,10 @@ bool Application::start(void)
 	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
 	//this->window = this->root->initialise(true, "Combat spatial");
 
+    //initialise cegui
+    Menus * menus= new Menus();
+    menus->affiche_btn_exit();
+
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
 
