@@ -14,16 +14,26 @@ ShipPlayer::~ShipPlayer(void)
 
 void ShipPlayer::updatePosition(void)
 {
+    std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
+    std::cout<<"acceleration"<<this->getRollAcceleration()<<std::endl;
 	Vector3 position = this->getPosition();
-	if (this->getAcceleration() != 0)
-	{
-		this->setSpeed(this->getSpeed()+this->getAcceleration());
-		this->setAcceleration(0);
-	}
+    //calcule des nouvelles vitesses et positions
+    this->setSpeed(this->getSpeed()+this->getAcceleration());
 	if (this->getSpeed() != 0)
 	{
 		this->moveRelative(0.0, 0.0, this->getSpeed());
 	}
+    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+    this->rotateRelative(this->getRollSpeed());
+
+    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+    this->goUp(this->getPitchSpeed());
+
+    //on réduit chacune des accélération
+    this->setAcceleration(0);
+    this->setPitchAcceleration(Ogre::Radian(0));
+    this->setRollAcceleration(Ogre::Radian(0));
+
 }
 
 void ShipPlayer::keyPressed(PlayerControls::Controls key)
@@ -33,22 +43,22 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
     switch(key)
 	{
 		case PlayerControls::ACCELERATION :
-            this->setAcceleration(15);
+            this->accelerate(1);
             break;
         case PlayerControls::BRAKE:
-            this->setAcceleration(-15);
+            this->accelerate(-1);
             break;
         case PlayerControls::LEFT :
-            this->rotateRelative(Ogre::Radian(0.2));
+            this->rollAccelerate(Ogre::Radian(0.001));
             break;
         case PlayerControls::RIGHT :
-            this->rotateRelative(Ogre::Radian(-0.2));
+            this->rollAccelerate(Ogre::Radian(-0.001));
             break;
         case PlayerControls::UP :
-            this->goUp(Ogre::Radian(0.2));
+            this->pitchAccelerate(Ogre::Radian(0.001));
             break;
             case PlayerControls::DOWN :
-            this->goUp(Ogre::Radian(-0.2));
+            this->pitchAccelerate(Ogre::Radian(-0.001));
 		default:
 			break;
 	}

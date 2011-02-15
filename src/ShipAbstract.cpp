@@ -2,7 +2,7 @@
 
 using namespace Ogre;
 
-ShipAbstract::ShipAbstract(void) : shipLife(100), speed(0), acceleration(0)
+ShipAbstract::ShipAbstract(void) : shipLife(100), speed(0), rollSpeed(0), pitchSpeed(0), acceleration(0), rollAcceleration(0), pitchAcceleration(0)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
@@ -109,10 +109,26 @@ Ogre::Real ShipAbstract::getSpeed(void)
 {
 	return this->speed;
 }
+Ogre::Radian ShipAbstract::getRollSpeed(void)
+{
+	return this->rollSpeed;
+}
+Ogre::Radian ShipAbstract::getPitchSpeed(void)
+{
+	return this->pitchSpeed;
+}
 
 void ShipAbstract::setSpeed(const Ogre::Real speed) 
 {
 	this->speed = speed;
+}
+void ShipAbstract::setRollSpeed(const Ogre::Radian speed) 
+{
+	this->rollSpeed = speed;
+}
+void ShipAbstract::setPitchSpeed(const Ogre::Radian speed) 
+{
+	this->pitchSpeed= speed;
 }
 
 
@@ -120,11 +136,41 @@ Ogre::Real ShipAbstract::getAcceleration(void)
 {
 	return this->acceleration;
 }
+Ogre::Radian ShipAbstract::getRollAcceleration(void) 
+{
+	return this->rollAcceleration;
+}
+Ogre::Radian ShipAbstract::getPitchAcceleration(void) 
+{
+	return this->pitchAcceleration;
+}
+
 
 void ShipAbstract::setAcceleration(const Ogre::Real acceleration) 
 {
 	this->acceleration = acceleration;
 }
+void ShipAbstract::setRollAcceleration(const Ogre::Radian acceleration) 
+{
+	this->rollAcceleration = acceleration;
+}
+void ShipAbstract::setPitchAcceleration(const Ogre::Radian acceleration) 
+{
+	this->pitchAcceleration = acceleration;
+}
+void ShipAbstract::accelerate(const Ogre::Real coefAcceleration)
+{
+    this->acceleration +=coefAcceleration;
+}
+void ShipAbstract::rollAccelerate(const Ogre::Radian coefAcceleration)
+{
+    this->rollAcceleration +=coefAcceleration;
+}
+void ShipAbstract::pitchAccelerate(const Ogre::Radian coefAcceleration)
+{
+    this->pitchAcceleration +=coefAcceleration;
+}
+
 
 
 Quaternion ShipAbstract::getOrientation(void) 

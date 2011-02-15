@@ -396,7 +396,7 @@ void Application::initScene(void)
     ShipIA * ship2 = new ShipIA();
     ship2->setPosition(130,0,0);
 
-    ship->setSpeed(1);
+    ship->setSpeed(0);
     ship2->touched();
 
     gestShip->addShip(ship);

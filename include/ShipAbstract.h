@@ -35,11 +35,20 @@ class ShipAbstract
 		 * \brief Vitesse du vaisseau
 		*/
 		Ogre::Real speed;
+		Ogre::Radian rollSpeed;
+		Ogre::Radian pitchSpeed;
 		/*!
 		 * \brief Accélération du vaisseau
 		*/
 		Ogre::Real acceleration;
-		
+		/*!
+         * \brief Accelération de la rotation du vaiseau
+        */
+        Ogre::Radian rollAcceleration;	
+       	/*!
+         * \brief Accelération de l'inclinaison du vaiseau
+        */
+        Ogre::Radian pitchAcceleration;
 	public:
 		/*!
 		 * \brief Construction
@@ -106,10 +115,34 @@ class ShipAbstract
 		void setShipLifeMax(int shipLifeMax);
 		
         Ogre::Real getSpeed(void);
+        Ogre::Radian getRollSpeed(void);
+        Ogre::Radian getPitchSpeed(void);
 		void setSpeed(const Ogre::Real speed);
+		void setRollSpeed(const Ogre::Radian speed);
+		void setPitchSpeed(const Ogre::Radian speed);
 		
 		Ogre::Real getAcceleration(void);
+		Ogre::Radian getRollAcceleration(void);
+		Ogre::Radian getPitchAcceleration(void);
+
 		void setAcceleration(const Ogre::Real acceleration);
+		void setRollAcceleration(const Ogre::Radian acceleration);
+		void setPitchAcceleration(const Ogre::Radian acceleration);
+
+        /*!
+         * Permet d'augmenter diminuer l'accélération en fonction de ce qu'elle était avant
+        */
+        void accelerate(const Ogre::Real coefAcceleration);
+
+        /*!
+         * Permet d'augmenter diminuer l'accélération de la rotation en fonction de ce qu'elle était avant
+        */
+        void pitchAccelerate(const Ogre::Radian coefAcceleration);
+
+        /*!
+         * Permet d'augmenter diminuer l'accélération de l'inclinaison en fonction de ce qu'elle était avant
+        */
+        void rollAccelerate(const Ogre::Radian coefAcceleration);
 
 		/*!
 		 * \brief [Getter] Récupère l'orientation de l'objet
