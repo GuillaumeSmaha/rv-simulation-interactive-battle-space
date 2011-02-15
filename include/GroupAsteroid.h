@@ -17,11 +17,23 @@ class GroupAsteroid
 {
     private:
         std::vector<Asteroid *> lstGroupAsteroid;
+		Ogre::Quaternion angleRotation; //angle de rotation de l'asteroid par rapport au centre
+		Ogre::Vector3 centreRotation; //centre de la rotation
+		Ogre::Real rotationSpeed; //vitesse de rotation de l'asteroid
 
     public:
         GroupAsteroid();
         ~GroupAsteroid();
-        void addAsteroid(Asteroid * asteroid);
+
+		//getter et setter de l'angle de rotation, le centre de rotation et la vitesse de rotation
+		void setAngleRotation(Ogre::Quaternion);
+		Ogre::Quaternion getAngleRotation(void);
+		void setCentreRotation(Ogre::Vector3);
+		Ogre::Vector3 getCentreRotation(void);
+		void setRotationSpeed(Ogre::Real);
+		Ogre::Real getRotationSpeed(void);
+        
+		void addAsteroid(Asteroid * asteroid);
         std::vector<Asteroid> getAllGroupAsteroids();
         /*permet de mettre à jour la position de tous les asteroids du groupe
         */
