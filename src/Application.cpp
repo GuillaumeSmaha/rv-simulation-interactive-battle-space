@@ -339,7 +339,7 @@ void Application::initScene(void)
     ship->setPosition(-50,-50,-50);
     //ship->setOrientation(5, 5, 5, 5);
     
-    ShipPlayer * ship2 = new ShipPlayer(this->player);
+    ShipIA * ship2 = new ShipIA();
     ship2->setPosition(130,0,0);
     ship2->touched();
     
