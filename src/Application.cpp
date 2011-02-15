@@ -36,23 +36,23 @@ Application::~Application(void)
 {
     gestShip->deleteAllShips();
     delete this->gestShip;
-
+	
 	gestPlanet->deleteAllPlanet();
 	delete this->gestPlanet;
-
+	
 	gestGroupAsteroids->deleteAllGroupsAsteroids();
 	delete this->gestGroupAsteroids;
-
+	
     delete this->gestCamera;
-
+	
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
 	delete this->listenerFrame;
-
+	
 	MeshLoader::deleteMeshLoader();
-
-	delete this->listenerWindow;
-
+	
+	//delete this->listenerWindow;
+	
     delete this->root;
 }
 
@@ -60,6 +60,7 @@ Application::~Application(void)
 
 bool Application::start(void)
 {
+	Utils::logFileInit("mymyoux.log");
 	// construct Ogre::Root
 	this->root = new Ogre::Root(this->pluginsCfg);
 

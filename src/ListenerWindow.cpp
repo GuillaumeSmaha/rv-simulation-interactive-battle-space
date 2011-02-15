@@ -9,8 +9,9 @@ ListenerWindow::ListenerWindow(Ogre::Root * root, Ogre::String nameWindow)
 
 ListenerWindow::~ListenerWindow()
 {
-	Ogre::WindowEventUtilities::removeWindowEventListener(this->renderWindow, this);
-	this->windowClosed(this->renderWindow);
+
+		Ogre::WindowEventUtilities::removeWindowEventListener(this->renderWindow, this);
+		this->windowClosed(this->renderWindow);
 }
 
 void ListenerWindow::windowResized(Ogre::RenderWindow * rw)

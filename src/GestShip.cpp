@@ -1,5 +1,5 @@
 #include "GestShip.h"
-
+#include "Utils.h"
 using namespace std;
 
 GestShip::GestShip()
@@ -28,6 +28,7 @@ void GestShip::updateShips()
 
 void GestShip::deleteAllShips()
 {
+	//Utils::logFile("kill hsips");
     vector<ShipAbstract *>::iterator itShip;
     for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)
     {
