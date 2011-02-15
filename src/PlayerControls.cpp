@@ -87,6 +87,13 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::KeyEven
 		case OIS::KC_D :
             key = PlayerControls::RIGHT;
 			break;
+	    case OIS::KC_H :
+            key = PlayerControls::UP;
+			break;
+	    case OIS::KC_N :
+            key = PlayerControls::DOWN;
+			break;
+
 		default:
 			key = PlayerControls::NONE;
 			break;

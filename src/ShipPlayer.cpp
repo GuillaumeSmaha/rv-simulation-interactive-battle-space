@@ -33,15 +33,22 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
     switch(key)
 	{
 		case PlayerControls::ACCELERATION :
-            //std::cout<<"shoot";
             this->setAcceleration(15);
-        break;
+            break;
+        case PlayerControls::BRAKE:
+            this->setAcceleration(-15);
+            break;
         case PlayerControls::LEFT :
-            orientation = this->getOrientation();
-
-            //orientation = orientation * r;
-            this->setOrientation(orientation* r);
-        break;
+            this->rotateRelative(Ogre::Radian(0.2));
+            break;
+        case PlayerControls::RIGHT :
+            this->rotateRelative(Ogre::Radian(-0.2));
+            break;
+        case PlayerControls::UP :
+            this->goUp(Ogre::Radian(0.2));
+            break;
+            case PlayerControls::DOWN :
+            this->goUp(Ogre::Radian(-0.2));
 		default:
 			break;
 	}

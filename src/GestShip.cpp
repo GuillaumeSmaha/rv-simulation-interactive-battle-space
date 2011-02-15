@@ -23,11 +23,6 @@ void GestShip::updateShips()
     for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)
     {
         (*itShip)->updatePosition();
-		if ((*itShip)->getSpeed()<1)
-		{
-			(*itShip)->setSpeed((*itShip)->getSpeed()+1);
-		}
-		(*itShip)->updatePosition();
     }
 }
 

@@ -71,6 +71,15 @@ void ShipAbstract::moveRelative(const Ogre::Vector3 &vec)
 	Vector3 pos = this->getPosition() + trans;
 	this->setPosition(pos[0], pos[1], pos[2]);
 }
+void ShipAbstract::rotateRelative(const Ogre::Radian w)
+{
+    this->entity->getParentNode()->roll(w);
+}
+void ShipAbstract::goUp(const Ogre::Radian w)
+{
+    this->entity->getParentNode()->pitch(w);
+}
+
 
 //Getter-Setter
 

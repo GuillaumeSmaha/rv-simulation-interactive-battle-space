@@ -86,8 +86,19 @@ class ShipAbstract
 		 * \param vec Déplacement de l'objet selon le vecteur v
 		*/
 		void moveRelative(const Ogre::Vector3 &vec);
-		
-		
+	
+        /*!
+         * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
+         * \param w un angle en radian
+        */	
+		void rotateRelative(const Ogre::Radian w);
+
+        /*!
+         * \brief Permet d'incliner le vaiseau vers le haut (angle positif) ou vers le bas (angle négatif)
+         * /param w l'angle d'inclinaison
+        */
+        void goUp(const Ogre::Radian w);
+
 		int getShipLife();
 		void setShipLife(int shipLife);
 		

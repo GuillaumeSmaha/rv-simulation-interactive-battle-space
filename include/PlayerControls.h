@@ -37,7 +37,9 @@ class PlayerControls: public ObjectRoot
 			BRAKE = 4,
 			LEFT = 5,
 			RIGHT = 6,
-			QUIT = 7
+            UP =7,
+            DOWN =8,
+			QUIT = 9
 		};
 		/*!
 		 * \brief Emet un dispatche lorsqu'une touche est préssée  Signal(PlayerControls::Controls key)
