@@ -35,7 +35,8 @@ class Planet
 		
 		//Configurer la position de planète par rapport au noeud de groupe de planètes
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
-		
+		void setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
+		void updatePosition(void);
 
 		Ogre::String getName(void)
 		{

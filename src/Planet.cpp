@@ -35,3 +35,11 @@ void Planet::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
     this->getNode()->setPosition(x, y, z);
 }
 
+void Planet::setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z)
+{
+	this->getNode()->setScale(x, y, z);
+}
+
+void Planet::updatePosition(void)
+{
+}
