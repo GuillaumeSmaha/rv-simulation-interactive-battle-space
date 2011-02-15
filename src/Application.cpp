@@ -125,6 +125,8 @@ void Application::update(void*)
 {
        /* if (this->timeUntilNextToggle >= 0)
             this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
+	this->listenerMouse->capture(NULL);
+	this->listenerKeyboard->capture(NULL);
     this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 
     this->getGestShip()->updateShips();
@@ -248,8 +250,8 @@ void Application::initListeners(void)
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 
-    this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
-    this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
+   // this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
+   // this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
 
     // capture value of each device
     //this->app->getListenerMouse()->getMouse()->capture();
