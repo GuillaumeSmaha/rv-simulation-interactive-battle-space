@@ -16,14 +16,9 @@ Application::Application(void)
 	this->pluginsCfg = "plugins.cfg";
 #endif
 
-	this->type_Camera = CameraFixeAbstract::CAMERA_FIXE;
-	this->gestCamera = NULL;
     this->gestShip= NULL;
 
 	this->shutDown = false;
-
-	this->_translateX = 0;
-	this->_translateZ = 0;
 
 	this->isStatsOn = true;
 	this->timeUntilNextToggle = 0;
@@ -43,12 +38,11 @@ Application::~Application(void)
 	gestGroupAsteroids->deleteAllGroupsAsteroids();
 	delete this->gestGroupAsteroids;
 	
-    delete this->gestCamera;
-	
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
 	delete this->listenerFrame;
 	
+	ViewportLoader::deleteViewportLoader();
 	MeshLoader::deleteMeshLoader();
 	
 	//delete this->listenerWindow;
@@ -60,7 +54,8 @@ Application::~Application(void)
 
 bool Application::start(void)
 {
-	Utils::logFileInit("mymyoux.log");
+	Utils::logFileInit("error.log");
+	
 	// construct Ogre::Root
 	this->root = new Ogre::Root(this->pluginsCfg);
 
@@ -81,40 +76,20 @@ bool Application::start(void)
 	//init meshLoader
 	new MeshLoader(this->sceneMgr);
 
+	//init viewportLoader
+	new ViewportLoader(this->listenerWindow);
+
 	// Initialisation des ressources
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 	// create the scene graph
 	this->initSceneGraph();
 
-
-
-	// create the camera
-    switch(this->type_Camera) {
-		case CameraFixeAbstract::CAMERA_FIXE :
-			this->gestCamera = new CameraFixe(this->sceneMgr, "camera_fixe");
-			break;
-
-		case CameraFixeAbstract::CAMERA_FISRT_PERSON :
-			this->gestCamera = new CameraFixeTarget(this->sceneMgr, "camera_firstPerson", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_FirstPerson"));
-			break;
-
-		case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
-			this->gestCamera = new CameraFixeTarget(this->sceneMgr, "camera_exterieureFixe", this->sceneMgr->getSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ExtFixe"));
-			break;
-    }
-	this->gestCamera->init_camera();
-
 	// init the input manager and create the listeners
 	this->initListeners();
+	
 	// create the scene
 	this->initScene();
-	// create one viewport, entire window
-	// use the same color for the fog and viewport background
-	Ogre::Viewport * viewPort = this->listenerWindow->getRenderWindow()->addViewport(this->gestCamera->getCamera(), 0);
-	viewPort->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
-	this->gestCamera->getCamera()->setAspectRatio(Ogre::Real(viewPort->getActualWidth()) / Ogre::Real(viewPort->getActualHeight()));
-
 
 	// activate debugging overlay
 	debugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
@@ -129,12 +104,12 @@ bool Application::start(void)
 }
 void Application::update(void*)
 {
-       /* if (this->timeUntilNextToggle >= 0)
-            this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
+   /* if (this->timeUntilNextToggle >= 0)
+		this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
+	//this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 	//this->listenerMouse->capture();
 	//this->listenerKeyboard->capture(NULL);
-    this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
-
+	
     this->getGestShip()->updateShips();
 	this->getGestGroupAsteroids()->updateGroupsAsteroids();
 
@@ -269,63 +244,16 @@ void Application::initListeners(void)
     //this->app->getListenerMouse()->getMouse()->capture();
 	//this->app->getListenerKeyboard()->getKeyboard()->capture();
 
-
-
-
-
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::onKeyPressed, this);
-	player->signalKeyReleased.add(&Application::tempKeyboardControlReleased, this);
-	player->signalMouseMoved.add(&Application::tempMouseMoved, this);
+}
 
-}
-void Application::tempMouseMoved(Ogre::Vector3 vect)
-{
-    float mRotateSpeed = 0.1f;
-    this->getGestCamera()->getCamera()->yaw(Ogre::Degree(-vect.x * mRotateSpeed));
-    this->getGestCamera()->getCamera()->pitch(Ogre::Degree(-vect.y * mRotateSpeed));
-}
 void Application::onKeyPressed(PlayerControls::Controls key)
 {
-	float translateSpeed = 2.5;
-
 	switch(key)
 	{
 		case PlayerControls::QUIT :
 			this->killApplication();
-			break;
-
-        case PlayerControls::ACCELERATION :
-                this->_translateZ = -translateSpeed;
-                break;
-
-        case PlayerControls::BRAKE :
-                this->_translateZ = translateSpeed;
-                break;
-
-        case PlayerControls::LEFT :
-                this->_translateX = -translateSpeed;
-                break;
-
-        case PlayerControls::RIGHT :
-                this->_translateX = translateSpeed;
-                break;
-}
-
-
-}
-void Application::tempKeyboardControlReleased(PlayerControls::Controls key)
-{
-    switch(key)
-	{
-		case PlayerControls::ACCELERATION :
-		case PlayerControls::BRAKE :
-			this->_translateZ = 0;
-			break;
-
-		case PlayerControls::LEFT :
-		case PlayerControls::RIGHT :
-			this->_translateX = 0;
 			break;
 	}
 }
@@ -333,7 +261,6 @@ void Application::tempKeyboardControlReleased(PlayerControls::Controls key)
 
 void Application::initSceneGraph(void)
 {
-
 	//Groupes Vaisseaux
 	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 	//a definir qqpart, ptre dans Ship
@@ -410,13 +337,12 @@ void Application::initScene(void)
 
 	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
-    ship->setOrientation(5, 5, 5, 5);
-    ShipIA * ship2 = new ShipIA();
+    //ship->setOrientation(5, 5, 5, 5);
+    
+    ShipPlayer * ship2 = new ShipPlayer(this->player);
     ship2->setPosition(130,0,0);
-
-    ship->setSpeed(0);
     ship2->touched();
-
+    
     gestShip->addShip(ship);
     gestShip->addShip(ship2);
 

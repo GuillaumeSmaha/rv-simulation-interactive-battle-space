@@ -3,6 +3,7 @@
 
 #include <Ogre.h>
 #include <OgreParticleSystem.h>
+#include <sstream>
 #include "nodeName.h"
 #include "Utils.h"
 /*!

@@ -4,15 +4,108 @@ using namespace Ogre;
 
 ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 {
-   pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
+	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
+	
+	this->typeCamera = CameraFixeAbstract::CAMERA_NULL;
+	this->gestCamera = NULL;
+    
+
+    this->nodeCameraTarget = this->getNode()->createChildSceneNode("cameraTarget"+Utils::toString(Utils::unique()));
+    this->nodeCameraFirstPerson = this->getNode()->createChildSceneNode("cameraFirstPerson"+Utils::toString(Utils::unique()));
+	this->nodeCameraExterieureFixe = this->getNode()->createChildSceneNode("cameraExterieurFixe"+Utils::toString(Utils::unique()));
+	
+	
+	this->nodeCameraTarget->setPosition(0, 15, 60);
+	this->nodeCameraFirstPerson->setPosition(0, 15, 30);
+	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
+	
+	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 }
 
 ShipPlayer::~ShipPlayer(void)
 {
-
+	delete this->gestCamera;
 }
 
+void ShipPlayer::updatePosition(void)
+{
+	Vector3 position = this->getPosition();
+    //calcule des nouvelles vitesses et positions
+    this->setSpeed(this->getSpeed()+this->getAcceleration());
+	if (this->getSpeed() != 0)
+	{
+		this->moveRelative(0.0, 0.0, this->getSpeed());
+	}
+    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+    this->rotateRelative(this->getRollSpeed());
 
+    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+    this->goUp(this->getPitchSpeed());
+
+    //on réduit chacune des accélération
+    this->setAcceleration(0);
+    this->setPitchAcceleration(Ogre::Radian(0));
+    this->setRollAcceleration(Ogre::Radian(0));
+    
+    this->gestCamera->update_camera();
+}
+	
+void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
+{
+	if(this->gestCamera == NULL && type != CameraFixeAbstract::CAMERA_NULL)
+	{
+		this->typeCamera = type;
+		
+		switch(this->typeCamera)
+		{
+			case CameraFixeAbstract::CAMERA_FIXE :
+				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()));
+				break;
+
+			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
+				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
+				break;
+
+			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
+				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraExterieureFixe"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraExterieureFixe());
+				break;
+		}
+		
+		this->gestCamera->init_camera();
+		
+		this->idViewport = ViewportLoader::getSingleton()->addViewport(this->gestCamera);
+	}
+}
+	
+void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
+{
+	if(this->typeCamera != type && type != CameraFixeAbstract::CAMERA_NULL)
+	{
+		this->typeCamera = type;
+		CameraFixeAbstract * tmpGestCamera = this->gestCamera;
+		
+		switch(this->typeCamera)
+		{
+			case CameraFixeAbstract::CAMERA_FIXE :
+				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()));
+				break;
+
+			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
+				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
+				break;
+
+			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
+				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraExterieureFixe"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraExterieureFixe());
+				break;
+		}
+		
+		this->gestCamera->init_camera();
+		
+		ViewportLoader::getSingleton()->changeCameraViewport(this->idViewport, this->gestCamera);
+		
+		delete tmpGestCamera;
+	}
+}
 
 void ShipPlayer::keyPressed(PlayerControls::Controls key)
 {

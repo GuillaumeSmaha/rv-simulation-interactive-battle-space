@@ -6,6 +6,7 @@
 #define __SHIP_ABSTRACT_H__
 
 #include <Ogre.h>
+#include "CameraFixeTarget.h"
 #include "MeshLoader.h"
 #include "Utils.h"
 
@@ -44,11 +45,12 @@ class ShipAbstract
 		/*!
          * \brief Accelération de la rotation du vaiseau
         */
-        Ogre::Radian rollAcceleration;	
+        Ogre::Radian rollAcceleration;
        	/*!
          * \brief Accelération de l'inclinaison du vaiseau
         */
         Ogre::Radian pitchAcceleration;
+        
 	public:
 		/*!
 		 * \brief Construction
@@ -64,7 +66,7 @@ class ShipAbstract
 		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
 		 * Méthode virtuelle pure
 		*/
-		void updatePosition(void);
+		virtual void updatePosition(void);
 		
 		void touched(void);
 		
@@ -107,6 +109,9 @@ class ShipAbstract
          * /param w l'angle d'inclinaison
         */
         void goUp(const Ogre::Radian w);
+        
+        
+        //Getter/Setter
 
 		int getShipLife();
 		void setShipLife(int shipLife);

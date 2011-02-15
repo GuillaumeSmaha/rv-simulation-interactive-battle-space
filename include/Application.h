@@ -14,9 +14,6 @@
 #include "ListenerWindow.h"
 #include "ListenerFrame.h"
 #include "nodeName.h"
-#include "CameraFixeAbstract.h"
-#include "CameraFixe.h"
-#include "CameraFixeTarget.h"
 #include "ShipAbstract.h"
 #include "ShipIA.h"
 #include "ShipPlayer.h"
@@ -26,6 +23,7 @@
 #include "GestGroupAsteroids.h"
 #include "Utils.h"
 #include "MeshLoader.h"
+#include "ViewportLoader.h"
 #include "Signal.h"
 #include "Planet.h"
 #include "GestPlanet.h"
@@ -78,15 +76,6 @@ class Application : public ObjectRoot
 		*/
 		Ogre::String debugText;
 
-		/*!
-		*  \brief Type de la caméra utilisé
-		*/
-		CameraFixeAbstract::CameraType type_Camera;
-		/*!
-		*  \brief Pointeur sur la caméra utilisée
-		*/
-		CameraFixeAbstract * gestCamera;
-
 
 		/*!
 		*  \brief Capteur d'événements
@@ -108,18 +97,22 @@ class Application : public ObjectRoot
 		* \brief Listener pour les événements rendu
 		*/
 		ListenerFrame * listenerFrame;
-
         /*!
         * Gere les controles claviers / souris utisable par le joueur
         */
-        PlayerControls *player;
-
+        PlayerControls * player;
         /*!
-        * \brief gere l'ensemble des vaiseaux, asteroids et planet
+        * \brief Gere l'ensemble des vaiseaux
         */
         GestShip * gestShip;
-		GestGroupAsteroids * gestGroupAsteroids;
+        /*!
+        * \brief Gere l'ensemble des planetes
+        */
 		GestPlanet * gestPlanet;
+        /*!
+        * \brief Gere l'ensemble des groupes d'asteroides
+        */
+		GestGroupAsteroids * gestGroupAsteroids;
 
 	public: //TODO : faire des fonctions pour ca
 
@@ -127,10 +120,6 @@ class Application : public ObjectRoot
 		Ogre::Real timeUntilNextToggle;
 		bool isStatsOn;
 		bool shutDown;
-
-
-		float _translateX;
-		float _translateZ;
 
 
 
@@ -173,14 +162,6 @@ class Application : public ObjectRoot
 
 
 // Getter/Setter
-
-		/*!
-		*  \brief [Getter] Camera
-		*/
-		CameraFixeAbstract * getGestCamera()
-		{
-			return this->gestCamera;
-		}
         /*!
         * \brief [Getter] gestion des vaiseaux
         */
@@ -267,14 +248,6 @@ class Application : public ObjectRoot
          * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)
          */
         void onKeyPressed(PlayerControls::Controls key);
-         /*!
-         * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
-         */
-        void tempKeyboardControlReleased(PlayerControls::Controls key);
-        /*!
-         * \brief Temporaire mais utilise le signal de PlayerControls pour bouger la caméra
-         */
-        void tempMouseMoved(Ogre::Vector3 vect);
 };
 
 #endif // __APPLICATION_H__

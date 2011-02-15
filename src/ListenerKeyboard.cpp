@@ -26,20 +26,6 @@ bool ListenerKeyboard::keyPressed(const OIS::KeyEvent &evt)
 
 bool ListenerKeyboard::keyReleased(const OIS::KeyEvent &evt)
 {
-/*
-	switch(evt.key)
-	{
-		case OIS::KC_UP :
-		case OIS::KC_DOWN :
-			//this->app->_translateZ = 0;
-			break;
-
-		case OIS::KC_LEFT :
-		case OIS::KC_RIGHT :
-			//this->app->_translateX = 0;
-			break;
-	}*/
 	this->signalKeyReleased.dispatch(evt);
-
 	return true;
 }

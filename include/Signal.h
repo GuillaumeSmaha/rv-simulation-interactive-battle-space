@@ -96,10 +96,10 @@ class Signal : public ObjectRoot
          * \brief Contient la liste des listeners Class
          */
 		std::vector<ObjectRoot *> listenersClass;
-		std::vector<void (ObjectRoot::*)(Retour)> listenersMethod;
         /*!
          * \brief Contient la liste des listeners Method
          */
+		std::vector<void (ObjectRoot::*)(Retour)> listenersMethod;
 };
 
 #endif // __SIGNAL_H__

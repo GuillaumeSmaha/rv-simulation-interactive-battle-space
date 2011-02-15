@@ -94,11 +94,3 @@ Ogre::String Utils::toString( int * Value)
 {
 	return Utils::toString(*Value);
 }
-
-Ogre::String Utils::toString( void * Value )
-{
-    std::ostringstream oss;
-    oss << Value;
-    return oss.str();
-}
-

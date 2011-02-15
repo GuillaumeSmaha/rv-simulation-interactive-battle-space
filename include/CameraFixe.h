@@ -24,6 +24,10 @@ class CameraFixe : public CameraFixeAbstract {
 		 * \brief Initialise la position de la caméra
 		 */
 		void init_camera();
+		/*!
+		 * \brief Initialise la position de la caméra
+		 */
+		void update_camera();
 };
 
 #endif //__CAMERA_FIXE_H__

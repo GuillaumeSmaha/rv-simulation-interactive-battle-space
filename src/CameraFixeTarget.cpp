@@ -1,17 +1,10 @@
 #include "CameraFixeTarget.h"
 
 
-CameraFixeTarget::CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target) : CameraFixeAbstract(sceneMgr, cameraName)
+CameraFixeTarget::CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeTarget, Ogre::SceneNode * nodePosition) : CameraFixeAbstract(sceneMgr, cameraName)
 {
-	this->target = target;
-	
-	this->camera->lookAt(this->target->_getDerivedPosition());
-	this->camera->setPosition(this->target->_getDerivedPosition());
-	this->camera->setOrientation(this->target->_getDerivedOrientation());
-	
-	// set the camera to track itself the target and don't 'roll' rotate 
-	this->camera->setAutoTracking(true, this->target);
-	this->camera->setFixedYawAxis(true);
+	this->nodeTarget = nodeTarget;
+	this->nodePosition = nodePosition;
 }
 
 CameraFixeTarget::~CameraFixeTarget()
@@ -19,8 +12,17 @@ CameraFixeTarget::~CameraFixeTarget()
 }
 
 void CameraFixeTarget::init_camera()
+{	
+	this->camera->setFixedYawAxis(false);
+	
+	this->update_camera();
+}
+
+void CameraFixeTarget::update_camera()
 {
-	this->camera->yaw(Ogre::Radian(180));
-	this->camera->pitch(Ogre::Radian(0));
-	this->camera->moveRelative(Ogre::Vector3(0, 5, 0));
+	this->camera->setPosition(this->getNodePosition()->_getDerivedPosition());
+	this->camera->setOrientation(this->getNodePosition()->_getDerivedOrientation());
+	this->camera->lookAt(this->getNodeTarget()->_getDerivedPosition());
+	Ogre::Vector3 v = this->getNodeTarget()->_getDerivedPosition()-this->getNodePosition()->_getDerivedPosition();
+	this->camera->rotate(v, Ogre::Degree(180));
 }

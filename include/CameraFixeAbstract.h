@@ -21,12 +21,14 @@ class CameraFixeAbstract {
 		/// Définit les différents types de caméra
 		enum CameraType
 		{
+			/// Caméra Null
+			CAMERA_NULL = 0,
 			/// Caméra fixe
-			CAMERA_FIXE = 0,
+			CAMERA_FIXE = 1,
 			/// Caméra à la première personne attachée à un noeud
-			CAMERA_FISRT_PERSON = 1,
+			CAMERA_FISRT_PERSON = 2,
 			/// Caméra Extérieure fixe attachée à un noeud
-			CAMERA_EXTERIEURE_FIXE = 2
+			CAMERA_EXTERIEURE_FIXE = 3
 		};
 	
 	public:		 
@@ -46,6 +48,11 @@ class CameraFixeAbstract {
 		 * Méthode virtuelle pure à réimplémenter.
 		 */
 		virtual void init_camera() = 0;
+		/*!
+		 * \brief Met à jour la position de la caméra\n
+		 * Méthode virtuelle pure à réimplémenter.
+		 */
+		virtual void update_camera() = 0;
 		/*!
 		 *  \brief Direction de la caméra
 		 * 	\param x Coordonnée en X

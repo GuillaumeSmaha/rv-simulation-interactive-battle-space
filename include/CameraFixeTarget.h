@@ -18,13 +18,25 @@
  * \brief Classe permettant de gérer une caméra fixe ciblé sur un noeud.
  */
 class CameraFixeTarget : public CameraFixeAbstract {
+	private:
+		/*!
+		 * \brief Le noeud ciblé par la caméra
+		 */
+		Ogre::SceneNode * nodeTarget;
+		/*!
+		 * \brief Le noeud position de la caméra
+		 */
+		Ogre::SceneNode * nodePosition;
+		
 	public:
 		/*!
 		 * \brief Constructeur
 		 * \param sceneMgr Pointeur sur le manager de la scène
 		 * \param cameraName Nom de la nouvelle caméra
+		 * \param nodeTarget Cible noeud à suivre
+		 * \param nodePosition Position de la caméra par rapport au noeud
 		 */
-		CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * target);
+		CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeTarget, Ogre::SceneNode * nodePosition);
 		/*!
 		 * \brief Destructeur virtuel
 		 */
@@ -34,21 +46,30 @@ class CameraFixeTarget : public CameraFixeAbstract {
 		 * \brief Initialise la position de la caméra
 		 */
 		virtual void init_camera();
+		 
+		/*!
+		 * \brief Met à jour la position de la caméra
+		 */
+		void update_camera();
+		
+		//getter/setter
 		
 		/*!
 		 * \brief Récupère le noeud ciblé par la caméra
 		 * \return Le noeud target
 		 */
-		Ogre::SceneNode * getTarget()
+		Ogre::SceneNode * getNodeTarget()
 		{
-			return this->target;
-		}
-		
-	protected:
+			return this->nodeTarget;
+		}		
 		/*!
-		 * \brief Le noeud ciblé par la caméra
+		 * \brief Récupère le noeud ciblé par la caméra
+		 * \return Le noeud target
 		 */
-		Ogre::SceneNode * target;
+		Ogre::SceneNode * getNodePosition()
+		{
+			return this->nodePosition;
+		}
 };
 
 #endif //__CAMERA_FIXE_TARGET_ABSTRACT_H__

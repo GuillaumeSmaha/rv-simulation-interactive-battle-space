@@ -137,11 +137,6 @@ class Utils
 		* \param Value valeur à chainer
 		*/
 		static Ogre::String toString( int * Value );
-        /*!
-		* \brief Transforme un pointeur quelconque en une chaine de caractère (son addresse).
-		* \param Value valeur à chainer
-		*/
-		static Ogre::String toString( void * Value );
 };
 
 

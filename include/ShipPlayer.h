@@ -5,9 +5,15 @@
 #ifndef __SHIP_PLAYER_H__
 #define __SHIP_PLAYER_H__
 
+#include <sstream>
+#include <Ogre.h>
 #include "ShipAbstract.h"
+#include "MeshLoader.h"
+#include "CameraFixeAbstract.h"
+#include "CameraFixe.h"
+#include "CameraFixeTarget.h"
+#include "ViewportLoader.h"
 #include "PlayerControls.h"
-#include "ObjectRoot.h"
 
 /*!
 * \class ShipPlayer
@@ -17,6 +23,32 @@
 */
 class ShipPlayer : public ShipAbstract, public ObjectRoot
 {
+	private:
+       	/*!
+         * \brief Noeud cible
+        */
+        Ogre::SceneNode * nodeCameraTarget;
+       	/*!
+         * \brief Noeud pour la caméra à la première personne
+        */
+        Ogre::SceneNode * nodeCameraFirstPerson;
+       	/*!
+         * \brief Noeud pour la caméra extérieure fixe
+        */
+        Ogre::SceneNode * nodeCameraExterieureFixe;
+		/*!
+		*  \brief Type de la caméra utilisé
+		*/
+		CameraFixeAbstract::CameraType typeCamera;
+		/*!
+		*  \brief Pointeur sur la caméra utilisée
+		*/
+		CameraFixeAbstract * gestCamera;
+		/*!
+		*  \brief Id du viewport
+		*/
+		int idViewport;
+		
 	public:
 		/*!
 		 * \brief Construction
@@ -27,10 +59,57 @@ class ShipPlayer : public ShipAbstract, public ObjectRoot
 		*/
 		~ShipPlayer(void);
 		
+		/*!
+		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
+		 * Méthode virtuelle pure
+		*/
+		void updatePosition(void);
+		
+		/*!
+		 * \brief Active la premiere caméra
+		 * \param type Type de caméra
+		*/
+		void initCamera(CameraFixeAbstract::CameraType type);
+		
+		/*!
+		 * \brief Change de caméra
+		 * \param type Type de caméra
+		*/
+		void changeCamera(CameraFixeAbstract::CameraType type);
+		
         /*!
          * \brief permet de réagir aux évènement sur le clavier et la souris en utilisant PlayerControls
          */
         void keyPressed(PlayerControls::Controls key);
+        
+        
+        //getter/setter
+        
+		
+		/*!
+		 * \brief [Getter] Récupère le noeud de la caméra à la première personne
+		 * \return Noeud de la caméra
+		*/
+		Ogre::SceneNode * getNodeCameraTarget(void)
+		{
+			return this->nodeCameraTarget;
+		}
+		/*!
+		 * \brief [Getter] Récupère le noeud de la caméra à la première personne
+		 * \return Noeud de la caméra
+		*/
+		Ogre::SceneNode * getNodeCameraFirstPerson(void)
+		{
+			return this->nodeCameraFirstPerson;
+		}
+		/*!
+		 * \brief [Getter] Récupère le noeud de la caméra extérieure fixe
+		 * \return Noeud de la caméra
+		*/
+		Ogre::SceneNode * getNodeCameraExterieureFixe(void)
+		{
+			return this->nodeCameraExterieureFixe;
+		}
 };
 
 #endif // __SHIP_PLAYER_H__

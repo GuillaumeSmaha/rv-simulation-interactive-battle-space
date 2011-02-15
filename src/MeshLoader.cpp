@@ -1,6 +1,13 @@
 #include "MeshLoader.h"
-#include <sstream>
+
 MeshLoader* MeshLoader::_instance = NULL;
+
+
+MeshLoader * MeshLoader::getSingleton(void)
+{
+	return _instance;
+}
+
 
 MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
 {
@@ -9,7 +16,6 @@ MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
 	{
 	    _instance = this;
 	}
-
 }
 
 
@@ -65,6 +71,7 @@ Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name
 	MeshLoader::setMaterial(entity, type);
 	return entity;
 }
+
 Ogre::Entity* MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random)
 {
     Ogre::SceneNode *node;
@@ -98,6 +105,7 @@ Ogre::Entity* MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String
 	}
 	return entity;
 }
+
 void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type)
 {
     switch(type)
@@ -123,9 +131,4 @@ void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type)
 			entity->setMaterialName("asteroid"+Utils::toString(type-ASTEROID+1));
 		break;
 	}
-}
-
-MeshLoader * MeshLoader::getSingleton(void)
-{
-	return _instance;
 }

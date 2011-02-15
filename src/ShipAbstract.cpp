@@ -6,7 +6,6 @@ ShipAbstract::ShipAbstract(void) : shipLife(100), speed(0), rollSpeed(0), pitchS
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
-    //this->node->getAttachedObject(this->getName())-setMaterialName("razor");
     
     this->defineParticules();
 }
@@ -41,7 +40,6 @@ void ShipAbstract::defineParticules(void)
 		emitter->setColour(ColourValue::White, ColourValue::Red);
 		emitter->setPosition(Ogre::Vector3(i == 0 ? 5.7 : -18, 0, 0));
 	}
-	//this->node->createChildSceneNode(Vector3(0, 6.5, -67))->attachObject(thrusters);
     this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
 }
 
@@ -57,6 +55,7 @@ void ShipAbstract::move(const Ogre::Vector3 &vec)
 	Vector3 pos = this->getPosition() + vec;
 	this->setPosition(pos[0], pos[1], pos[2]);
 }
+
 void ShipAbstract::updatePosition(void)
 {
     std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
@@ -78,7 +77,6 @@ void ShipAbstract::updatePosition(void)
     this->setAcceleration(0);
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
-
 }
 
 
@@ -94,10 +92,12 @@ void ShipAbstract::moveRelative(const Ogre::Vector3 &vec)
 	Vector3 pos = this->getPosition() + trans;
 	this->setPosition(pos[0], pos[1], pos[2]);
 }
+
 void ShipAbstract::rotateRelative(const Ogre::Radian w)
 {
     this->entity->getParentNode()->roll(w);
 }
+
 void ShipAbstract::goUp(const Ogre::Radian w)
 {
     this->entity->getParentNode()->pitch(w);
@@ -132,10 +132,12 @@ Ogre::Real ShipAbstract::getSpeed(void)
 {
 	return this->speed;
 }
+
 Ogre::Radian ShipAbstract::getRollSpeed(void)
 {
 	return this->rollSpeed;
 }
+
 Ogre::Radian ShipAbstract::getPitchSpeed(void)
 {
 	return this->pitchSpeed;
@@ -159,10 +161,12 @@ Ogre::Real ShipAbstract::getAcceleration(void)
 {
 	return this->acceleration;
 }
+
 Ogre::Radian ShipAbstract::getRollAcceleration(void) 
 {
 	return this->rollAcceleration;
 }
+
 Ogre::Radian ShipAbstract::getPitchAcceleration(void) 
 {
 	return this->pitchAcceleration;
@@ -173,22 +177,27 @@ void ShipAbstract::setAcceleration(const Ogre::Real acceleration)
 {
 	this->acceleration = acceleration;
 }
+
 void ShipAbstract::setRollAcceleration(const Ogre::Radian acceleration) 
 {
 	this->rollAcceleration = acceleration;
 }
+
 void ShipAbstract::setPitchAcceleration(const Ogre::Radian acceleration) 
 {
 	this->pitchAcceleration = acceleration;
 }
+
 void ShipAbstract::accelerate(const Ogre::Real coefAcceleration)
 {
     this->acceleration +=coefAcceleration;
 }
+
 void ShipAbstract::rollAccelerate(const Ogre::Radian coefAcceleration)
 {
     this->rollAcceleration +=coefAcceleration;
 }
+
 void ShipAbstract::pitchAccelerate(const Ogre::Radian coefAcceleration)
 {
     this->pitchAcceleration +=coefAcceleration;

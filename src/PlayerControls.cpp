@@ -14,10 +14,12 @@ PlayerControls::~PlayerControls()
 {
     //dtor
 }
+
 void PlayerControls::mouseMoved(Ogre::Vector3 vect)
 {
     this->signalMouseMoved.dispatch(vect);
 }
+
 void PlayerControls::mousePressed(OIS::MouseButtonID evt)
 {
     Controls key = this->OISEventToControlKey(evt);
@@ -26,6 +28,7 @@ void PlayerControls::mousePressed(OIS::MouseButtonID evt)
          this->signalKeyPressed.dispatch(key);
     }
 }
+
 void PlayerControls::mouseReleased(OIS::MouseButtonID evt)
 {
     Controls key = this->OISEventToControlKey(evt);
@@ -34,6 +37,7 @@ void PlayerControls::mouseReleased(OIS::MouseButtonID evt)
          this->signalKeyReleased.dispatch(key);
     }
 }
+
 void PlayerControls::keyboardPressed(const OIS::KeyEvent &evt)
 {
     Controls key = this->OISEventToControlKey(evt);
@@ -42,6 +46,7 @@ void PlayerControls::keyboardPressed(const OIS::KeyEvent &evt)
          this->signalKeyPressed.dispatch(key);
     }
 }
+
 PlayerControls::Controls PlayerControls::OISEventToControlKey(OIS::MouseButtonID evt)
 {
     PlayerControls::Controls key;
@@ -59,6 +64,7 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(OIS::MouseButtonID
 	}
 	return key;
 }
+
 PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::KeyEvent &evt)
 {
     PlayerControls::Controls key;
@@ -101,6 +107,7 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::KeyEven
 	return key;
 
 }
+
 void PlayerControls::keyboardReleased(const OIS::KeyEvent &evt)
 {
 
