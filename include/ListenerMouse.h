@@ -16,7 +16,8 @@
  * \class ListenerMouse
  * \brief Classe permettant de gérer les événements de la souris.
  */
-class ListenerMouse : public OIS::MouseListener, public ObjectRoot {
+class ListenerMouse : public ObjectRoot, public OIS::MouseListener 
+{
 	private:
 		/*!
 		 *  \brief Gestionnaire d'événements

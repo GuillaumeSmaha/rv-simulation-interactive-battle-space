@@ -15,7 +15,7 @@
  * \class ListenerKeyboard
  * \brief Classe permettant de gérer les événements du clavier.
  */
-class ListenerKeyboard : public OIS::KeyListener, public ObjectRoot {
+class ListenerKeyboard : public ObjectRoot , public OIS::KeyListener{
 	private:
         /*!
 		 *  \brief Gestionnaire d'événements I/O

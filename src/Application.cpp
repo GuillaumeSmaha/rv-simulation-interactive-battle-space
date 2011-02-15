@@ -1,6 +1,5 @@
 #include "Application.h"
 
-
 using namespace Ogre;
 
 
@@ -128,8 +127,8 @@ void Application::update(void*)
 {
        /* if (this->timeUntilNextToggle >= 0)
             this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
-	this->listenerMouse->capture();
-	this->listenerKeyboard->capture(NULL);
+	//this->listenerMouse->capture();
+	//this->listenerKeyboard->capture(NULL);
     this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 
     this->getGestShip()->updateShips();
@@ -194,6 +193,7 @@ void Application::killInputManager(void*)
 {
 	OIS::InputManager::destroyInputSystem(this->inputManager);
 	this->inputManager = 0;
+	//this->listenerFrame->shutdown();
 }
 
 //------------------------------------------------------------------------------
@@ -247,13 +247,17 @@ void Application::initListeners(void)
 	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
 	this->listenerFrame->signalFrameEnded.add(&Application::update, this);
 	this->listenerWindow->signalWindowClosed.add(&Application::killInputManager, this);
-	//this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
+	this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
 
 
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 
-   // this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
+    this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
+	this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
+	//Test * t = new Test(4);
+	//t->add(this->listenerFrame, this->listenerMouse);
+
    // this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
 
     // capture value of each device

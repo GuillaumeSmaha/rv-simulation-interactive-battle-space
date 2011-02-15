@@ -15,7 +15,8 @@
  * \class ListenerWindow
  * \brief Classe permettant de gérer les événements de la fenêtre.
  */
-class ListenerWindow : public Ogre::WindowEventListener, public ObjectRoot {
+class ListenerWindow :  public ObjectRoot, public Ogre::WindowEventListener
+{
 	private:
         /*!
 		 *  \brief Dispatche un signal lorsque la souris bouge Signal(Ogre::Vector3(X, Y, Z)))

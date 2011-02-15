@@ -13,7 +13,7 @@
  * \class ListenerFrame
  * \brief Classe permettant de gérer les événements de la mise à jour du rendu.
  */
-class ListenerFrame : public Ogre::FrameListener, public ObjectRoot {
+class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
     private :
         /*!
          * \brief Indique si l'application est fermée
