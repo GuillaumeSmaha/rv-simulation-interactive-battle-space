@@ -14,6 +14,11 @@ Menus::Menus()
     CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
 }
 
+Menus::~Menus()
+{
+    
+}
+
 
 void Menus::afficher_souris(void)
 {
@@ -32,8 +37,4 @@ void Menus::affiche_btn_exit(void)
 
     sheet->addChildWindow(quit);
     CEGUI::System::getSingleton().setGUISheet(sheet);
-}
-
-Menus::~Menus(){
-    
 }

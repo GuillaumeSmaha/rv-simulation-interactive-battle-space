@@ -27,6 +27,7 @@
 #include "Signal.h"
 #include "Planet.h"
 #include "GestPlanet.h"
+#include "Menus.h"
 
 class ListenerWindow;
 class ListenerMouse;
