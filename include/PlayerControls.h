@@ -37,7 +37,8 @@ class PlayerControls: public ObjectRoot
 			RIGHT = 6,
             UP =7,
             DOWN =8,
-			QUIT = 9
+            OPEN_MENU=9,
+			QUIT = 10
 		};
 		
          /*!
@@ -51,11 +52,12 @@ class PlayerControls: public ObjectRoot
 
 	private:
          /*!
-		 * \brief Emet un dispatche lorsque la souris est bougée  Signal(Ogre::Vector3)
+		 * \brief Lie une touche à un contrôle (déplacement, tir). 
+         * par exemple listKeyControl[25]=SHOOT1 position la touche repéré par le code 25 sur l'action SHOOT1
 		 */
         std::vector<PlayerControls::Controls> listKeyControl;
          /*!
-		 * \brief Emet un dispatche lorsque la souris est bougée  Signal(Ogre::Vector3)
+		 * \brief Lie un bouton de souris à un contrôle.
 		 */
         std::vector<PlayerControls::Controls> listMouseControl;
         
