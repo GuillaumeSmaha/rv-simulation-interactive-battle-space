@@ -2,15 +2,16 @@
 *  \file  PlayerControls.h
 *  \brief Ce fichier contient la déclaration de la classe PlayerControls. 
 */
-#ifndef __PLAYERCONTROLS_H__
-#define __PLAYERCONTROLS_H__
+#ifndef __PLAYER_CONTROLS_H__
+#define __PLAYER_CONTROLS_H__
 
+#include <vector>
+#include <OISInputManager.h>
+#include <OISKeyboard.h>
 #include "Signal.h"
 #include "ListenerMouse.h"
 #include "ObjectRoot.h"
 #include "ListenerKeyboard.h"
-#include <OISInputManager.h>
-#include <OISKeyboard.h>
 
 class ListenerKeyboard;
 class ListenerMouse;
@@ -24,16 +25,6 @@ class ListenerMouse;
 class PlayerControls: public ObjectRoot
 {
     public:
-        /*!
-         * \brief Constructor
-         * \param mouse MouseListener
-         * \param keyboard KeyboardListener
-         */
-        PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard);
-        /*!
-         * \brief Destructor
-         */
-        virtual ~PlayerControls();
 		/// Définit les différents types de contrôles
 		enum Controls
 		{
@@ -48,6 +39,18 @@ class PlayerControls: public ObjectRoot
             DOWN =8,
 			QUIT = 9
 		};
+		
+	private:
+         /*!
+		 * \brief Emet un dispatche lorsque la souris est bougée  Signal(Ogre::Vector3)
+		 */
+        std::vector<PlayerControls::Controls> listKeyControl;
+         /*!
+		 * \brief Emet un dispatche lorsque la souris est bougée  Signal(Ogre::Vector3)
+		 */
+        std::vector<PlayerControls::Controls> listMouseControl;
+        
+	public:
 		/*!
 		 * \brief Emet un dispatche lorsqu'une touche est préssée  Signal(PlayerControls::Controls key)
 		 */
@@ -60,7 +63,36 @@ class PlayerControls: public ObjectRoot
 		 * \brief Emet un dispatche lorsque la souris est bougée  Signal(Ogre::Vector3)
 		 */
         Signal<Ogre::Vector3> signalMouseMoved;
-    protected:
+	
+    public:
+        /*!
+         * \brief Constructor
+         * \param mouse MouseListener
+         * \param keyboard KeyboardListener
+         */
+        PlayerControls(ListenerMouse * mouse, ListenerKeyboard * keyboard);
+        /*!
+         * \brief Destructor
+         */
+        virtual ~PlayerControls();
+        
+        /*!
+         * \brief Met à zéro les controllers de touche clavier et souris
+         */
+        void resetControls(void);        
+        /*!
+         * \brief Définit une touche du clavier pour une action donnée
+         * \param keyControl Action à effectuer
+         * \param key Touche correspondante
+         */
+        void setKeyControl(const PlayerControls::Controls keyControl, const OIS::KeyCode key);
+        /*!
+         * \brief Définit une touche de la souris pour une action donnée
+         * \param keyControl Action à effectuer
+         * \param mouseId Touche correspondante
+         */
+        void setMouseControl(const PlayerControls::Controls keyControl, const OIS::MouseButtonID mouseId);
+        
     private:
          /*!
 		 * \brief Reçoit un dispatche lorsqu'une touche du clavier est pressée et le transmet à signalKeyPressed
@@ -98,8 +130,8 @@ class PlayerControls: public ObjectRoot
 		 * \param evt Mouse button ID (OIS)
 		 * \return PlayerControls::Controls key correspondante
 		 */
-        PlayerControls::Controls OISEventToControlKey(OIS::MouseButtonID evt);
+        PlayerControls::Controls OISEventToControlKey(const OIS::MouseButtonID evt);
 
 };
 
-#endif // __PLAYERCONTROLS_H__
+#endif // __PLAYER_CONTROLS_H__

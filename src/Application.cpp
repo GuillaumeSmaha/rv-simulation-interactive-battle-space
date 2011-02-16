@@ -38,6 +38,9 @@ Application::~Application(void)
 	gestGroupAsteroids->deleteAllGroupsAsteroids();
 	delete this->gestGroupAsteroids;
 	
+	delete this->player;
+	delete this->player2;
+	
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
 	delete this->listenerFrame;
@@ -250,6 +253,17 @@ void Application::initListeners(void)
 
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::onKeyPressed, this);
+	
+
+	player2 = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
+	player2->signalKeyPressed.add(&Application::onKeyPressed, this);
+    
+	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
+	player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_S);
+	player2->setKeyControl(PlayerControls::LEFT, OIS::KC_Q);
+	player2->setKeyControl(PlayerControls::RIGHT, OIS::KC_D);
+	player2->setKeyControl(PlayerControls::UP, OIS::KC_A);
+	player2->setKeyControl(PlayerControls::DOWN, OIS::KC_E);
 }
 
 void Application::onKeyPressed(PlayerControls::Controls key)
@@ -343,12 +357,17 @@ void Application::initScene(void)
     ship->setPosition(-50,-50,-50);
     //ship->setOrientation(5, 5, 5, 5);
     
-    ShipIA * ship2 = new ShipIA();
-    ship2->setPosition(130,0,0);
+	ShipPlayer * ship2 = new ShipPlayer(this->player2);
+    ship2->setPosition(-130,0,0);
     ship2->touched();
+    
+    ShipIA * ship3 = new ShipIA();
+    ship3->setPosition(130,0,0);
+    ship3->touched();
     
     gestShip->addShip(ship);
     gestShip->addShip(ship2);
+    gestShip->addShip(ship3);
 
 	gestGroupAsteroids = new GestGroupAsteroids();
 	GroupAsteroid *group1 = new GroupAsteroid();

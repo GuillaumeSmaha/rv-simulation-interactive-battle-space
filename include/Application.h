@@ -103,6 +103,10 @@ class Application : public ObjectRoot
         */
         PlayerControls * player;
         /*!
+        * Gere les controles claviers / souris utisable par le joueur
+        */
+        PlayerControls * player2;
+        /*!
         * \brief Gere l'ensemble des vaiseaux
         */
         GestShip * gestShip;
