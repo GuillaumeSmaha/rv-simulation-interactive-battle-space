@@ -43,9 +43,51 @@ void ShipPlayer::updatePosition(void)
     this->goUp(this->getPitchSpeed());
 
     //on réduit chacune des accélération
-    this->setAcceleration(0);
+    if(this->getAcceleration() > 0)
+    {
+		this->setAcceleration(this->getAcceleration()-0.1);
+		if(this->getAcceleration() < 0)
+			this->setAcceleration(0);
+	}
+    else if(this->getAcceleration() < 0)
+    {
+		this->setAcceleration(this->getAcceleration()+0.1);
+		if(this->getAcceleration() > 0)
+			this->setAcceleration(0);
+	}
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
+	
+	//on reduit la vitesse de rotation
+    if(this->getRollSpeed() > Ogre::Radian(0))
+    {
+		this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.00001));
+		if(this->getRollSpeed() < Ogre::Radian(0))
+			this->setRollSpeed(Ogre::Radian(0));
+	}
+    else if(this->getRollSpeed() < Ogre::Radian(0))
+    {
+		this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.00001));
+		if(this->getRollSpeed() > Ogre::Radian(0))
+			this->setRollSpeed(Ogre::Radian(0));
+	}
+    if(this->getPitchSpeed() > Ogre::Radian(0))
+    {
+		this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.00001));
+		if(this->getPitchSpeed() < Ogre::Radian(0))
+			this->setPitchSpeed(Ogre::Radian(0));
+	}
+    else if(this->getPitchSpeed() < Ogre::Radian(0))
+    {
+		this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.00001));
+		if(this->getPitchSpeed() > Ogre::Radian(0))
+			this->setPitchSpeed(Ogre::Radian(0));
+	}
+    
+    /*this->setAcceleration(0);
+    this->setPitchAcceleration(Ogre::Radian(0));
+    this->setRollAcceleration(Ogre::Radian(0));
+    */
     
     this->gestCamera->update_camera();
 }
