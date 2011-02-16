@@ -40,6 +40,15 @@ class PlayerControls: public ObjectRoot
 			QUIT = 9
 		};
 		
+         /*!
+		 * \brief Nombre maximum de touche clavier dans OIS
+		 */
+		static int maxOISKeyControl;
+         /*!
+		 * \brief Nombre maximum de touche souris dans OIS
+		 */
+		static int maxOISMouseControl;
+
 	private:
          /*!
 		 * \brief Emet un dispatche lorsque la souris est bougée  Signal(Ogre::Vector3)

@@ -1,5 +1,8 @@
 #include "PlayerControls.h"
 
+int PlayerControls::maxOISKeyControl = 0xED+1;
+int PlayerControls::maxOISMouseControl = 7;
+
 PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 {    
 	this->resetControls();
@@ -29,34 +32,39 @@ PlayerControls::~PlayerControls()
 
 void PlayerControls::resetControls(void)
 {
-	this->listKeyControl.reserve(0xED);
-	for(int i = 0 ; i < this->listKeyControl.capacity() ; i++)
+	this->listKeyControl.resize(PlayerControls::maxOISKeyControl);
+	for(unsigned int i = 0 ; i < this->listKeyControl.size() ; i++)
 		this->listKeyControl[i] = PlayerControls::NONE;
 		
-	this->listMouseControl.reserve(7);
-	for(int i = 0 ; i < this->listMouseControl.capacity() ; i++)
+	this->listMouseControl.resize(PlayerControls::maxOISMouseControl);
+	for(unsigned int i = 0 ; i < this->listMouseControl.size() ; i++)
 		this->listMouseControl[i] = PlayerControls::NONE;
 }
 
 void PlayerControls::setKeyControl(const PlayerControls::Controls keyControl, const OIS::KeyCode key)
 {
-	for(int i = 0 ; i < this->listKeyControl.capacity() ; i++)
+	if(key <= PlayerControls::maxOISKeyControl)
 	{
-		if(this->listKeyControl[i] == keyControl)
-			this->listKeyControl[i] = PlayerControls::NONE;
+		for(unsigned int i = 0 ; i < this->listKeyControl.size() ; i++)
+		{
+			if(this->listKeyControl[i] == keyControl)
+				this->listKeyControl[i] = PlayerControls::NONE;
+		}		
+		this->listKeyControl[key] = keyControl;
 	}
-	
-	this->listKeyControl[key] = keyControl;
 }
 
 void PlayerControls::setMouseControl(const PlayerControls::Controls keyControl, const OIS::MouseButtonID mouseId)
 {
-	for(int i = 0 ; i < this->listMouseControl.capacity() ; i++)
+	if(mouseId <= PlayerControls::maxOISMouseControl)
 	{
-		if(this->listMouseControl[i] == keyControl)
-			this->listMouseControl[i] = PlayerControls::NONE;
+		for(unsigned int i = 0 ; i < this->listMouseControl.size() ; i++)
+		{
+			if(this->listMouseControl[i] == keyControl)
+				this->listMouseControl[i] = PlayerControls::NONE;
+		}
+		this->listMouseControl[mouseId] = keyControl;
 	}
-	this->listMouseControl[mouseId] = keyControl;
 }
 
 void PlayerControls::keyboardPressed(const OIS::KeyEvent &evt)
@@ -70,7 +78,6 @@ void PlayerControls::keyboardPressed(const OIS::KeyEvent &evt)
 
 void PlayerControls::keyboardReleased(const OIS::KeyEvent &evt)
 {
-
     Controls key = this->OISEventToControlKey(evt);
     if(key != PlayerControls::NONE)
     {
@@ -144,8 +151,7 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::KeyEven
 	return key;
 	*/
 	
-	int i = evt.key;
-	PlayerControls::Controls key = this->listKeyControl[i];
+	PlayerControls::Controls key = this->listKeyControl[evt.key];
 	
 	return key;
 }
@@ -169,9 +175,7 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::MouseBu
 	}
 	return key;*/
 	
-	
-	int i = evt;
-	PlayerControls::Controls key = this->listMouseControl[i];
+	PlayerControls::Controls key = this->listMouseControl[evt];
 	
 	return key;
 }
