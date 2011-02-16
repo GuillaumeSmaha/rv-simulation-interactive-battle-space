@@ -93,7 +93,7 @@ bool Application::start(void)
 	this->initListeners();
 	
     //initialise cegui
-    Menus * menus= new Menus(this->listenerMouse);
+    Menus * menus= new Menus(this->listenerMouse, this->listenerKeyboard);
     menus->affiche_btn_exit();
 	
     // create the scene

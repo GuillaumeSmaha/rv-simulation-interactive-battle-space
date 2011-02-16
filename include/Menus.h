@@ -28,11 +28,27 @@ class Menus: public ObjectRoot
 		/*!
 		* \brief constructeur
 		*/
-		Menus(ListenerMouse * mouseListener);
+		Menus(ListenerMouse * mouseListener, ListenerKeyboard * keyControl);
 		/*!
 		* \brief destructeur
 		*/
 		~Menus();
+
+        /*!
+         * \brief Permet de récupérer appuis sur touche dans cegui
+        */
+        void keyPressed(const OIS::KeyEvent &evt);
+        
+        /*!
+         * \brief Permet de récupérer les relachements d'une touche dans cegui
+        */
+        void keyReleased(const OIS::KeyEvent &evt);
+
+
+        /*!
+         * \brief Permet de récupérer les relachement de touche dans cegui
+        */
+        void keyReleased(OIS::MouseButtonID evt);
 
         /*!
          * \brief Permet de récupérer les clics de souris dans cegui
