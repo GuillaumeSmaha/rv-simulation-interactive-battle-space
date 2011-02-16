@@ -8,30 +8,51 @@
 #include <Ogre.h>
 #include <CEGUI.h>
 #include <RendererModules/Ogre/CEGUIOgreRenderer.h>
+#include "ListenerMouse.h"
+#include "ListenerKeyboard.h"
 //#include <CEGUIOgreRenderer.h>
 
 /*!
 * \class Menus
 * \brief Classe gérant les menus du jeux 
 */
-class Menus
+class Menus: public ObjectRoot
 {
 	private:
 		/*!
 		* \brief le renderer de cegui pour ogre
 		*/
 		CEGUI::OgreRenderer * menusRenderer;
-		CEGUI::System * menusSystem;
 
 	public:
 		/*!
 		* \brief constructeur
 		*/
-		Menus();
+		Menus(ListenerMouse * mouseListener);
 		/*!
 		* \brief destructeur
 		*/
 		~Menus();
+
+        /*!
+         * \brief Permet de récupérer les clics de souris dans cegui
+        */
+        void mousePressed(OIS::MouseButtonID evt);
+
+        /*!
+         * \brief Permet de récupérer les relachements de la souris dans cegui
+        */
+        void mouseReleased(OIS::MouseButtonID evt);
+
+        /*!
+         * \brief Permet de récupérer les déplacements de la souris
+        */
+        void mouseMoved(Ogre::Vector3 vect);
+
+        /*!
+         * \brief Permet de convertir les clics de souris pour cegui (utilisé par mousePressed).
+        */
+        CEGUI::MouseButton convertButton(OIS::MouseButtonID evt);
 
 		/*!
 		* \brief pour tester: affiche un bouton quit
