@@ -56,12 +56,12 @@ class Utils
 		* \brief Affiche un message de log sur la console (type générique)
 		* \param text Texte à afficher
 		*/
-		/*$
+
 		template <typename T>
-        Ogre::String log( const T & Value )
+        static Ogre::String log( const T & Value )
         {
             return Utils::toString<T>(Value);
-        }*/
+        }
 
 		/*!
 		* \brief Affiche un message de log sur la console
@@ -79,7 +79,7 @@ class Utils
 		{
 		    Utils::log(Utils::toString(text));
 		}
-		
+
 		/*!
 		* \brief Affiche un message de log sur la console
 		* \param text Texte à afficher
@@ -107,7 +107,15 @@ class Utils
 		* \param text Texte à afficher
 		*/
 		static void logFile(Ogre::String text);
-
+        /*!
+		* \brief Enregistre un message de log dans le fichier de sortie
+		* \param text Texte à afficher
+		*/
+        template <typename T>
+        static void logFile( const T & Value )
+        {
+            Utils::logFile(Utils::toString<T>(Value));
+        }
 		/*!
 		* \brief Transforme une valeur quelconque en une chaine de caractère.
 		* \param Value valeur à chainer
