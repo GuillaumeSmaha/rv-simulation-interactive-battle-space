@@ -18,17 +18,12 @@ include(Function)
 FIND_PACKAGE( OIS REQUIRED )
 FIND_PACKAGE( OGRE REQUIRED )
 FIND_PACKAGE( CEGUI REQUIRED )
+#FIND_PACKAGE( BULLET REQUIRED )
+#FIND_PACKAGE( OGREBULLET REQUIRED )
+
  
 IF (NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")
 	MESSAGE(SEND_ERROR "You need Ogre 1.7 Cthugha to build this.")
-ENDIF()
-
-IF(NOT OIS_FOUND)
-    MESSAGE(SEND_ERROR "Failed to find OIS.")
-ENDIF()
-
-IF(NOT CEGUI_FOUND)
-    MESSAGE(SEND_ERROR "Failed to find CEGUI.")
 ENDIF()
 
 IF(NOT CEGUI_OgreRenderer_FOUND)
@@ -43,31 +38,33 @@ IF(WIN32)
 	writeResourceFile("${CMAKE_BINARY_DIR}/" 1)
 	writePluginFile("${CMAKE_BINARY_DIR}/" 1)
 	
-	STRING(REPLACE "CEGUIBase.dll" "" dirCegui ${CEGUI_BINARY_REL})
-
 	writeResourceFile("${CMAKE_BINARY_DIR}/Debug/" 1)
 	writePluginFile("${CMAKE_BINARY_DIR}/Debug/" 1)
-	copyFilesFilter(${OGRE_PLUGIN_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)")
-	copyFile("${dirCegui}CEGUIBase_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIOgreRenderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIExpatParser_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIFalagardWRBase_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIOpenGLRenderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIDirect3D9Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIDirect3D10Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
-	copyFile("${dirCegui}CEGUIDirect3D11Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFilesFilter(${OGRE_PLUGIN_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIBase_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIOgreRenderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIExpatParser_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIFalagardWRBase_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIOpenGLRenderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIDirect3D9Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIDirect3D10Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFile("${CEGUI_BINARY_DIR_DBG}CEGUIDirect3D11Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
+	copyFilesFilter(${BULLET_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+	copyFilesFilter(${OGREBULLET_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
 	
 	writeResourceFile("${CMAKE_BINARY_DIR}/Release/" 0)
 	writePluginFile("${CMAKE_BINARY_DIR}/Release/" 0)
-	copyFilesFilter(${OGRE_PLUGIN_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)")
-	copyFile("${dirCegui}CEGUIBase.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIOgreRenderer.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIExpatParser.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIFalagardWRBase.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIOpenGLRenderer.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIDirect3D9Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIDirect3D10Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
-	copyFile("${dirCegui}CEGUIDirect3D11Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFilesFilter(${OGRE_PLUGIN_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIBase.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIOgreRenderer.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIExpatParser.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIFalagardWRBase.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIOpenGLRenderer.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIDirect3D9Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIDirect3D10Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFile("${CEGUI_BINARY_DIR_REL}CEGUIDirect3D11Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
+	copyFilesFilter(${BULLET_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+	copyFilesFilter(${OGREBULLET_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
 ENDIF(WIN32)
 
 IF(CMAKE_COMPILER_IS_GNUCC)
@@ -82,6 +79,8 @@ include_directories(
 	${OGRE_INCLUDE_DIR}
 	${CEGUI_INCLUDE_DIR}
 	${CEGUI_OgreRenderer_INCLUDE_DIRS}
+	${BULLET_INCLUDE_DIR}
+	${OGREBULLET_INCLUDE_DIR}
 	${CMAKE_SOURCE_DIR}/include
 	${CMAKE_BINARY_DIR}/include
 )
@@ -111,6 +110,9 @@ target_link_libraries(
 	${OGRE_LIBRARIES}
 	${CEGUI_LIBRARIES}
 	${CEGUI_OgreRenderer_LIBRARIES}
+	${BULLET_LIBRARIES}
+	${BULLET_ConvexDecomposition_LIBRARIES}
+	${OGREBULLET_LIBRARIES}
 )
 
 #Générateur de documentation

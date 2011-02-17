@@ -3,8 +3,8 @@
 #  CEGUI_FOUND, if false, do not try to link to CEGUI
 #  CEGUI_INCLUDE_DIR, where to find headers.
 #  CEGUI_LIBRARIES, the LIBRARIES to link against
-#  CEGUI_BINARY_REL - location of the main Ogre binary (win32 non-static only, release)
-#  CEGUI_BINARY_DBG - location of the main Ogre binaries (win32 non-static only, debug)
+#  CEGUI_BINARY_REL - location of the main CEGUI binary (win32 non-static only, release)
+#  CEGUI_BINARY_DBG - location of the main CEGUI binaries (win32 non-static only, debug)
 #
 #
 # 	Modules :
@@ -193,7 +193,11 @@ if (NOT CEGUI_STATIC)
 		find_file(CEGUI_BINARY_DBG NAMES "CEGUIBase_d.dll" HINTS ${CEGUI_BIN_SEARCH_PATH}
           PATH_SUFFIXES "" debug )
 	endif()
-	mark_as_advanced(CEGUI_BINARY_REL CEGUI_BINARY_DBG)
+	
+	get_filename_component(CEGUI_BINARY_DIR_REL "${CEGUI_BINARY_REL}" PATH)
+	get_filename_component(CEGUI_BINARY_DIR_DBG "${CEGUI_BINARY_DBG}" PATH)
+	set(CEGUI_LIBRARY_DIRS ${CEGUI_BINARY_DIR_REL} ${CEGUI_BINARY_DIR_DBG})
+	mark_as_advanced(CEGUI_BINARY_REL CEGUI_BINARY_DBG CEGUI_BINARY_DIR_REL CEGUI_BINARY_DIR_DBG)
 endif()
 
 

@@ -1,0 +1,142 @@
+# - Locate OGREBULLET LIBRARIES
+# This module defines
+#  OGREBULLET_FOUND, if false, do not try to link to OGREBULLET
+#  OGREBULLET_INCLUDE_DIR, where to find headers.
+#  OGREBULLET_LIBRARIES, the LIBRARIES to link against
+#  OGREBULLET_BINARY_REL - location of the main bullet binary (release)
+#  OGREBULLET_BINARY_DBG - location of the main bullet binaries (debug)
+
+
+include(FindPkgMacros)
+include(PreprocessorUtils)
+findpkg_begin(OGREBULLET)
+set(OGREBULLET_FIND_REQUIRED 1)
+
+IF(NOT BULLET_ConvexDecomposition_FOUND)
+	MESSAGE(FATAL_ERROR "ConvexDecomposition est nécessaire pour OgreBullet !")
+ENDIF(NOT BULLET_ConvexDecomposition_FOUND)
+
+# Get path, convert backslashes as ${ENV_${var}}
+getenv_path(OGREBULLET_HOME)
+getenv_path(OGREBULLET_DIR)
+getenv_path(OGREBULLET_ROOT)
+getenv_path(PROGRAMFILES)
+
+IF(WIN32)
+	set(OGREBULLET_OgreBulletCol_LIBRARY_NAMES OgreBulletCollisions)
+	set(OGREBULLET_OgreBulletDyn_LIBRARY_NAMES OgreBulletDynamics)
+ELSE(WIN32)
+	set(OGREBULLET_OgreBulletCol_LIBRARY_NAMES OgreBulletCol)
+	set(OGREBULLET_OgreBulletDyn_LIBRARY_NAMES OgreBulletDyn)
+ENDIF(WIN32)
+
+# construct search paths from environmental hints and
+# OS specific guesses
+if (WIN32)
+  set(OGREBULLET_PREFIX_GUESSES
+    ${ENV_PROGRAMFILES}/OgreBullet
+    ${ENV_PROGRAMFILES}/ogrebullet
+    ${ENV_PROGRAMFILES}/OGREBULLET
+    C:/OGREBULLET-SDK
+    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREBULLET_HOME]
+    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREBULLET_DIR]
+    [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREBULLET_ROOT]
+  )
+elseif (UNIX)
+  set(OGREBULLET_PREFIX_GUESSES
+    /opt/ogrebullet
+    /opt/OgreBullet
+    /opt/OGREBULLET
+    /usr
+    /usr/local
+    $ENV{HOME}/ogrebullet
+    $ENV{HOME}/OgreBullet
+    $ENV{HOME}/OGREBULLET
+  )
+endif ()
+
+set(OGREBULLET_PREFIX_PATH
+	$ENV{OGREBULLET_HOME} $ENV{OGREBULLET_DIR} $ENV{OGREBULLET_ROOT}
+	${OGREBULLET_PREFIX_GUESSES}
+)
+create_search_paths(OGREBULLET)
+
+
+set(OGREBULLET_RESET_VARS 
+  OGREBULLET_INCLUDE_DIR 
+  OGREBULLET_LIBRARY_REL OGREBULLET_LIBRARY_DBG)
+
+set(OGREBULLET_PREFIX_WATCH ${OGREBULLET_PREFIX_PATH})
+clear_if_changed(OGREBULLET_PREFIX_WATCH ${OGREBULLET_RESET_VARS})
+
+# try to locate OGREBULLET via pkg-config
+use_pkgconfig(OGREBULLET_PKGC "OgreBullet")
+
+# locate OGREBULLET include files
+set(OGREBULLET_INCOMPATIBLE FALSE)
+
+
+#Collisions
+set(OGREBULLET_OgreBulletCol_FIND_REQUIRED 1)
+findpkg_begin(OGREBULLET_OgreBulletCol)
+find_path(OGREBULLET_OgreBulletCol_INCLUDE_DIR NAMES OgreBulletCollisions.h HINTS ${OGREBULLET_INC_SEARCH_PATH} ${OGREBULLET_FRAMEWORK_INCLUDES} ${OGREBULLET_PKGC_INCLUDE_DIRS} PATH_SUFFIXES "" "Collisions")
+get_debug_names(OGREBULLET_OgreBulletCol_LIBRARY_NAMES)
+find_library(OGREBULLET_OgreBulletCol_LIBRARY_REL NAMES ${OGREBULLET_OgreBulletCol_LIBRARY_NAMES} HINTS ${OGREBULLET_LIB_SEARCH_PATH} ${OGREBULLET_PKGC_LIBRARY_DIRS} ${OGREBULLET_FRAMEWORK_SEARCH_PATH} PATH_SUFFIXES "" "release" "relwithdebinfo" "minsizerel")
+find_library(OGREBULLET_OgreBulletCol_LIBRARY_DBG NAMES ${OGREBULLET_OgreBulletCol_LIBRARY_NAMES_DBG} HINTS ${OGREBULLET_LIB_SEARCH_PATH} ${OGREBULLET_PKGC_LIBRARY_DIRS} ${OGREBULLET_FRAMEWORK_SEARCH_PATH} PATH_SUFFIXES "" "debug")
+make_library_set(OGREBULLET_OgreBulletCol_LIBRARY)
+findpkg_finish(OGREBULLET_OgreBulletCol)
+
+#Dynamics
+set(OGREBULLET_OgreBulletDyn_FIND_REQUIRED 1)
+findpkg_begin(OGREBULLET_OgreBulletDyn)
+find_path(OGREBULLET_OgreBulletDyn_INCLUDE_DIR NAMES OgreBulletDynamics.h HINTS ${OGREBULLET_INC_SEARCH_PATH} ${OGREBULLET_FRAMEWORK_INCLUDES} ${OGREBULLET_PKGC_INCLUDE_DIRS} PATH_SUFFIXES "" "Dynamics")
+get_debug_names(OGREBULLET_OgreBulletDyn_LIBRARY_NAMES)
+find_library(OGREBULLET_OgreBulletDyn_LIBRARY_REL NAMES ${OGREBULLET_OgreBulletDyn_LIBRARY_NAMES} HINTS ${OGREBULLET_LIB_SEARCH_PATH} ${OGREBULLET_PKGC_LIBRARY_DIRS} ${OGREBULLET_FRAMEWORK_SEARCH_PATH} PATH_SUFFIXES "" "release" "relwithdebinfo" "minsizerel")
+find_library(OGREBULLET_OgreBulletDyn_LIBRARY_DBG NAMES ${OGREBULLET_OgreBulletDyn_LIBRARY_NAMES_DBG} HINTS ${OGREBULLET_LIB_SEARCH_PATH} ${OGREBULLET_PKGC_LIBRARY_DIRS} ${OGREBULLET_FRAMEWORK_SEARCH_PATH} PATH_SUFFIXES "" "debug")
+make_library_set(OGREBULLET_OgreBulletDyn_LIBRARY)	
+findpkg_finish(OGREBULLET_OgreBulletDyn)
+
+#Generalisation
+set(OGREBULLET_LIBRARY_REL ${OGREBULLET_OgreBulletCol_LIBRARY_REL} ${OGREBULLET_OgreBulletDyn_LIBRARY_REL})
+set(OGREBULLET_LIBRARY_DBG ${OGREBULLET_OgreBulletCol_LIBRARY_DBG} ${OGREBULLET_OgreBulletDyn_LIBRARY_DBG})
+set(OGREBULLET_LIBRARY ${OGREBULLET_OgreBulletCol_LIBRARY} ${OGREBULLET_OgreBulletDyn_LIBRARY})
+set(OGREBULLET_INCLUDE_DIR ${OGREBULLET_OgreBulletCol_INCLUDE_DIR} ${OGREBULLET_OgreBulletDyn_INCLUDE_DIR})
+set(OGREBULLET_INCLUDE_DIRS ${OGREBULLET_INCLUDE_DIR})	
+	
+	
+if(APPLE)
+  set(OGREBULLET_LIBRARY_DBG ${OGREBULLET_LIB_SEARCH_PATH})
+endif()
+if (OGREBULLET_INCOMPATIBLE)
+  set(OGREBULLET_LIBRARY "NOTFOUND")
+endif ()
+
+list(REMOVE_DUPLICATES OGREBULLET_INCLUDE_DIR)
+findpkg_finish(OGREBULLET)
+add_parent_dir(OGREBULLET_INCLUDE_DIRS OGREBULLET_INCLUDE_DIR)
+
+
+if (NOT OGREBULLET_FOUND)
+  return()
+endif ()
+
+
+
+get_filename_component(OGREBULLET_LIBRARY_DIR_REL "${OGREBULLET_LIBRARY_REL}" PATH)
+get_filename_component(OGREBULLET_LIBRARY_DIR_DBG "${OGREBULLET_LIBRARY_DBG}" PATH)
+set(OGREBULLET_LIBRARY_DIRS ${OGREBULLET_LIBRARY_DIR_REL} ${OGREBULLET_LIBRARY_DIR_DBG})
+
+
+# find binaries
+if (WIN32)
+	find_file(OGREBULLET_BINARY_REL NAMES "OgreBulletCollisions.dll" HINTS ${OGREBULLET_BIN_SEARCH_PATH} PATH_SUFFIXES "" "release" "relwithdebinfo" "minsizerel")
+	find_file(OGREBULLET_BINARY_DBG NAMES "OgreBulletCollisions_d.dll" HINTS ${OGREBULLET_BIN_SEARCH_PATH} PATH_SUFFIXES "" "debug" )
+endif()
+	
+get_filename_component(OGREBULLET_BINARY_DIR_REL "${OGREBULLET_BINARY_REL}" PATH)
+get_filename_component(OGREBULLET_BINARY_DIR_DBG "${OGREBULLET_BINARY_DBG}" PATH)
+set(OGREBULLET_LIBRARY_DIRS ${OGREBULLET_BINARY_DIR_REL} ${OGREBULLET_BINARY_DIR_DBG})
+mark_as_advanced(OGREBULLET_BINARY_REL OGREBULLET_BINARY_DBG OGREBULLET_BINARY_DIR_REL OGREBULLET_BINARY_DIR_DBG)
+
+
+clear_if_changed(OGREBULLET_PREFIX_WATCH)
