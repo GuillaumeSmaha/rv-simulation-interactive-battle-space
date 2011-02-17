@@ -70,6 +70,10 @@ IF(WIN32)
 	copyFile("${dirCegui}CEGUIDirect3D11Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
 ENDIF(WIN32)
 
+IF(CMAKE_COMPILER_IS_GNUCC)
+	ADD_DEFINITIONS(-pipe)
+ENDIF(CMAKE_COMPILER_IS_GNUCC)
+
 
 
 #Gestion des includes
