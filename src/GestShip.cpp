@@ -2,9 +2,24 @@
 #include "Utils.h"
 using namespace std;
 
+GestShip* GestShip::_instance = NULL;
+
+GestShip* GestShip::getSingleton(void)
+{
+	if (_instance == NULL)
+	{
+		_instance = new GestShip();
+	}
+	return _instance;
+}
+
 GestShip::GestShip()
 {
-   lstShip.clear();
+	if (_instance == NULL) 
+	{
+		lstShip.clear();
+		_instance = this;
+	}
 }
 
 GestShip::~GestShip()

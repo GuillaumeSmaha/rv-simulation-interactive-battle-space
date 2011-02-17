@@ -1,3 +1,6 @@
+#ifndef __GESTSHIP_H__
+#define __GESTSHIP_H__
+
 /*!
 *  \file GestShip.h
 *  \brief Ce fichier contient la déclaration de la classe GestShip. C'est la classe qui gère l'ensemble des vaiseaux
@@ -18,11 +21,23 @@ class GestShip
 		*/
         std::vector<ShipAbstract *> lstShip;
 
-    public:
+		/*!
+		 *  \brief Instance de GestShip pour le singleton
+		 */
+		static GestShip * _instance ;
+
 		/*!
 		 * \brief Construction
 		*/
         GestShip();
+
+    public:
+		/*!
+		 *  \brief Retourne une instance du singleton
+		 */
+		static GestShip * getSingleton(void);
+
+		
 		/*!
 		 * \brief Destructeur
 		*/
@@ -37,7 +52,10 @@ class GestShip
 		 * \brief Récupère la liste des vaisseaux
 		 * \return Liste des vaisseaux
 		*/
-        std::vector<ShipAbstract> getAllShips();
+        std::vector<ShipAbstract *> getAllShips()
+		{
+			return lstShip;
+		}
 		/*!
 		 * \brief Met à jour la position de tous les vaisseaux
 		*/
@@ -47,3 +65,6 @@ class GestShip
 		*/
         void deleteAllShips();
 };
+
+
+#endif // __GESTSHIP_H__
