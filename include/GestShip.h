@@ -7,13 +7,13 @@
 */
 #include <Ogre.h>
 #include "ShipAbstract.h"
-
+#include "ObjectRoot.h"
 /*!
 * \class GestShip
 * \brief Classe gérant l'ensemble des vaiseaux via un std::vecteur.
-* En particulier, on renvoit vers elle les traitements communs à tous les vaiseaux (mise à jour de la position après une frame par exemple.  
+* En particulier, on renvoit vers elle les traitements communs à tous les vaiseaux (mise à jour de la position après une frame par exemple.
 */
-class GestShip
+class GestShip : public ObjectRoot
 {
     private:
 		/*!
@@ -36,18 +36,27 @@ class GestShip
 		 *  \brief Retourne une instance du singleton
 		 */
 		static GestShip * getSingleton(void);
+        /*!
+         * \brief Detruit le singleton
+         */
+        static void destroy();
 
-		
+
 		/*!
 		 * \brief Destructeur
 		*/
         ~GestShip();
-        
+
 		/*!
 		 * \brief Ajoute un vaisseau au gestionnaire
 		 * \param ship Pointeur sur le vaisseau
 		*/
         void addShip(ShipAbstract * ship);
+        /*!
+		 * \brief Supprime un vaisseau du gestionnaire
+		 * \param ship Pointeur sur le vaisseau
+		*/
+        void remShip(ShipAbstract * ship);
 		/*!
 		 * \brief Récupère la liste des vaisseaux
 		 * \return Liste des vaisseaux
@@ -59,7 +68,14 @@ class GestShip
 		/*!
 		 * \brief Met à jour la position de tous les vaisseaux
 		*/
-        void updateShips();
+        void updateShips()
+        {
+            updateShips(NULL);
+        }
+        /*!
+		 * \brief Met à jour la position de tous les vaisseaux
+		*/
+        void updateShips(void*);
 		/*!
 		 * \brief Supprime tous les vaisseaux du gestionnaire
 		*/

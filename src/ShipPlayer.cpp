@@ -24,6 +24,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 
 ShipPlayer::~ShipPlayer(void)
 {
+    GestSceneManager::remCamera(this->gestCamera);
 	delete this->gestCamera;
 }
 

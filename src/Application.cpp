@@ -16,7 +16,7 @@ Application::Application(void)
 	this->pluginsCfg = "plugins.cfg";
 #endif
 
-    this->gestShip= NULL;
+    //this->gestShip= NULL;
 
 	this->shutDown = false;
 
@@ -29,14 +29,24 @@ Application::Application(void)
 
 Application::~Application(void)
 {
-    gestShip->deleteAllShips();
-    delete this->gestShip;
+
+    GestShip::getSingleton()->deleteAllShips();
+    GestShip::destroy();
+
+//    gestShip->deleteAllShips();
+//    delete this->gestShip;
 
 	gestPlanet->deleteAllPlanet();
 	delete this->gestPlanet;
 
-	gestGroupAsteroids->deleteAllGroupsAsteroids();
-	delete this->gestGroupAsteroids;
+	//gestGroupAsteroids->deleteAllGroupsAsteroids();
+	GestGroupAsteroids::getSingleton()->deleteAllGroupsAsteroids();
+	GestGroupAsteroids::destroy();
+
+	GestSceneManager::getSingleton()->deleteAll();
+
+	GestSceneManager::destroy();
+	//delete this->gestGroupAsteroids;
 
 	delete this->player;
 	delete this->player2;
@@ -44,6 +54,7 @@ Application::~Application(void)
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
 	delete this->listenerFrame;
+	delete this->listenerTime;
 
 	ViewportLoader::deleteViewportLoader();
 	MeshLoader::deleteMeshLoader();
@@ -114,8 +125,8 @@ bool Application::start(void)
 }
 void Application::update(void*)
 {
-    this->getGestShip()->updateShips();
-	this->getGestGroupAsteroids()->updateGroupsAsteroids();
+
+
 }
 void Application::updateStats(void*)
 {
@@ -229,8 +240,11 @@ void Application::initListeners(void)
     this->listenerFrame = new ListenerFrame(this->root);
 
     this->listenerTime = new ListenerTime(25, this->listenerFrame);
-	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
+	//this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
+	this->listenerTime->signalTimerElapsed.add(&Application::updateStats, this);
+
 	this->listenerTime->signalTimerElapsed.add(&Application::update, this);
+
 	this->listenerWindow->signalWindowClosed.add(&Application::killInputManager, this);
 	this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
 
@@ -238,6 +252,8 @@ void Application::initListeners(void)
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
 
+    //this->listenerTime->signalTimerElapsed.add(&ListenerMouse::capture, this->listenerMouse);
+    //this->listenerTime->signalTimerElapsed.add(&ListenerKeyboard::capture, this->listenerKeyboard);
     this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
 	this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
 
@@ -349,26 +365,27 @@ void Application::initScene(void)
 
 	gestPlanet->addPlanet(planet1);
 	gestPlanet->addPlanet(planet2);
+     GestShip::getSingleton();
 
-	gestShip = new GestShip();
 
 	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
     //ship->setOrientation(5, 5, 5, 5);
 
-	ShipPlayer * ship2 = new ShipPlayer(this->player2);
+	/*ShipPlayer * ship2 = new ShipPlayer(this->player2);
     ship2->setPosition(-130,0,0);
-    ship2->touched();
+    ship2->touched();*/
 
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,0);
     ship3->touched();
+    Utils::logFile("test");
+//    GestShip::getS
+    GestShip::getSingleton()->addShip(ship);
+    //gestShip->addShip(ship2);
+    GestShip::getSingleton()->addShip(ship3);
+    Utils::log("test2");
 
-    gestShip->addShip(ship);
-    gestShip->addShip(ship2);
-    gestShip->addShip(ship3);
-
-	gestGroupAsteroids = new GestGroupAsteroids();
 	GroupAsteroid *group1 = new GroupAsteroid();
 	GroupAsteroid *group2 = new GroupAsteroid();
 
@@ -378,14 +395,14 @@ void Application::initScene(void)
 	asteroid1->setPosition(-100,100,-100);
 	asteroid2->setPosition(100,-100,100);
 	asteroid3->setPosition(1000,-100,100);
-
 	group1->addAsteroid(asteroid1);
 	group1->addAsteroid(asteroid2);
 	group2->addAsteroid(asteroid3);
-	gestGroupAsteroids->addGroupAsteroids(group1);
-	gestGroupAsteroids->addGroupAsteroids(group2);
-
-
+	GestGroupAsteroids::getSingleton()->addGroupAsteroids(group1);
+	GestGroupAsteroids::getSingleton()->addGroupAsteroids(group2);
+    this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());
+    this->listenerTime->signalTimerElapsed.add(&GestGroupAsteroids::updateGroupsAsteroids,GestGroupAsteroids::getSingleton());
+    //this->getGestGroupAsteroids()->updateGroupsAsteroids();
 
 
 /*
@@ -406,8 +423,8 @@ void Application::initScene(void)
 	l->setDiffuseColour(1.0, 1.0, 1.0);
 	l->setSpecularColour(1.0, 1.0, 1.0);
     //l->setPosition(320,480,500);
-	l->setPosition(32, 48, 5000);
-	l->setDirection(-Ogre::Vector3::UNIT_Z);
+	l->setPosition(32, 48, -5000);
+	l->setDirection(Ogre::Vector3::UNIT_Z);
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);

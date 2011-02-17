@@ -9,7 +9,8 @@
 #include "CameraFixeTarget.h"
 #include "MeshLoader.h"
 #include "Utils.h"
-
+#include "Signal.h"
+#include "ObjectRoot.h"
 /*!
 * \class ShipAbstract
 * \brief Classe gérant les vaiseaux individuellements
@@ -17,7 +18,7 @@
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
 */
 
-class ShipAbstract
+class ShipAbstract : public ObjectRoot
 {
 	private:
 		/*!
@@ -56,8 +57,12 @@ class ShipAbstract
          * \brief Accelération de l'inclinaison du vaiseau
         */
         Ogre::Radian pitchAcceleration;
-        
+
 	public:
+        /*!
+		 * \brief Dispatche un signal lorsque le vaisseau est détruit Signal(ShipAbstract*)
+		 */
+		 Signal<ShipAbstract*> signalDestruction;
 		/*!
 		 * \brief Construction
 		*/
@@ -67,7 +72,7 @@ class ShipAbstract
 		*/
 		virtual ~ShipAbstract(void);
 
-        
+
 		/*!
 		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
 		 * Méthode virtuelle pure
@@ -81,7 +86,7 @@ class ShipAbstract
 		 * \brief Définit les particules des réacteurs
 		*/
 		void defineParticules(void);
-		
+
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel du monde
 		 * \param x Déplacement de l'objet en x
@@ -94,7 +99,7 @@ class ShipAbstract
 		 * \param vec Déplacement de l'objet selon le vecteur v
 		*/
 		void move(const Ogre::Vector3 &vec);
-		
+
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel de l'objet
 		 * \param x Déplacement de l'objet en x
@@ -107,11 +112,11 @@ class ShipAbstract
 		 * \param vec Déplacement de l'objet selon le vecteur v
 		*/
 		void moveRelative(const Ogre::Vector3 &vec);
-	
+
         /*!
          * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
          * \param w un angle en radian
-        */	
+        */
 		void rotateRelative(const Ogre::Radian w);
 
         /*!
@@ -119,7 +124,7 @@ class ShipAbstract
          * /param w l'angle d'inclinaison
         */
         void goUp(const Ogre::Radian w);
-                
+
 
         /*!
          * \brief Permet d'augmenter diminuer l'accélération en fonction de ce qu'elle était avant
@@ -138,8 +143,8 @@ class ShipAbstract
          * \param coefAcceleration Coefficient d'accélération
         */
         void rollAccelerate(const Ogre::Radian coefAcceleration);
-        
-        
+
+
         //Getter/Setter
 
 		/*!
@@ -158,7 +163,7 @@ class ShipAbstract
 		{
 			this->shipLife = shipLife;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère la vie maximale du vaisseau
 		 * \return Vie maximale du vaisseau
@@ -175,7 +180,7 @@ class ShipAbstract
 		{
 			this->shipLifeMax = shipLifeMax;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère la vitesse du vaisseau
 		 * \return Vitesse du vaisseau
@@ -192,7 +197,7 @@ class ShipAbstract
 		{
 			this->speed = speed;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère de rotation la vitesse du vaisseau
 		 * \return Vitesse de rotation du vaisseau
@@ -209,7 +214,7 @@ class ShipAbstract
 		{
 			this->rollSpeed = rollSpeed;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère de rotation la vitesse du vaisseau
 		 * \return Vitesse de rotation du vaisseau
@@ -226,7 +231,7 @@ class ShipAbstract
 		{
 			this->pitchSpeed = pitchSpeed;
 		}
-				
+
 		/*!
 		 * \brief [Getter] Récupère l'accélération du vaisseau
 		 * \return Accélération du vaisseau
@@ -243,7 +248,7 @@ class ShipAbstract
 		{
 			this->acceleration = acceleration;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère l'accélération de rotation du vaisseau
 		 * \return Accélération de rotation du vaisseau
@@ -260,7 +265,7 @@ class ShipAbstract
 		{
 			this->rollAcceleration = rollAcceleration;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère l'accélération de rotation du vaisseau
 		 * \return Accélération de rotation du vaisseau
@@ -296,7 +301,7 @@ class ShipAbstract
 		 * \param a Orientation
 		*/
         void setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a);
-        
+
 		/*!
 		 * \brief [Getter] Récupère la position de l'objet
 		 * \return Position de l'objet
@@ -314,7 +319,7 @@ class ShipAbstract
 		 * \param z Position de l'objet en z
 		*/
 		void setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
-		
+
 		/*!
 		 * \brief [Getter] Récupère le nom du noeud
 		 * \return Nom du noeud

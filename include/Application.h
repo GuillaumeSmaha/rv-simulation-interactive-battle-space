@@ -113,17 +113,9 @@ class Application : public ObjectRoot
         */
         PlayerControls * player2;
         /*!
-        * \brief Gere l'ensemble des vaiseaux
-        */
-        GestShip * gestShip;
-        /*!
         * \brief Gere l'ensemble des planetes
         */
 		GestPlanet * gestPlanet;
-        /*!
-        * \brief Gere l'ensemble des groupes d'asteroides
-        */
-		GestGroupAsteroids * gestGroupAsteroids;
 
 	public: //TODO : faire des fonctions pour ca
 
@@ -169,24 +161,6 @@ class Application : public ObjectRoot
 		*  \brief Tue le gestionnaire d'événements
 		*/
 		void killInputManager(void*);
-
-
-
-// Getter/Setter
-        /*!
-        * \brief [Getter] gestion des vaiseaux
-        */
-        GestShip * getGestShip()
-        {
-            return this->gestShip;
-        }
-        /*!
-        * \brief [Getter] gestion des groupes d'asteroids
-        */
-        GestGroupAsteroids * getGestGroupAsteroids()
-        {
-            return this->gestGroupAsteroids;
-        }
 		/*!
 		*  \brief [Getter] Capteur d'événements
 		*/

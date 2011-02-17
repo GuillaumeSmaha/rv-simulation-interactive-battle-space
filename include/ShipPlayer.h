@@ -22,7 +22,7 @@
 *   Comporte un attribut Ogre::entity qui correspond à un unique mesh déplacable
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
 */
-class ShipPlayer : public ObjectRoot, public ShipAbstract
+class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 {
 	private:
        	/*!
@@ -49,7 +49,6 @@ class ShipPlayer : public ObjectRoot, public ShipAbstract
 		*  \brief Id du viewport
 		*/
 		int idViewport;
-
 	public:
 		/*!
 		 * \brief Construction

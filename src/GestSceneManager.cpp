@@ -21,7 +21,13 @@ GestSceneManager::GestSceneManager()
 
 GestSceneManager::~GestSceneManager()
 {
-    //dtor
+
+    if(_sceneManager != NULL)
+    {
+        _sceneManager = NULL;
+    }
+    _listCameras.clear();
+
 }
 void GestSceneManager::addCam(CameraFixeAbstract * camera)
 {
@@ -64,4 +70,16 @@ void GestSceneManager::remCam(CameraFixeAbstract * cam)
 int GestSceneManager::getCount()
 {
    return _listCameras.size();
+}
+
+void GestSceneManager::destroy()
+{
+    if(_instance != NULL)
+    {
+        delete _instance;
+    }
+}
+void GestSceneManager::deleteAll()
+{
+    _listCameras.clear();
 }

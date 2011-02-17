@@ -39,6 +39,12 @@ class GestSceneManager
 		 */
         static GestSceneManager * getSingleton(void);
         /*!
+         * \brief Detruit le singleton
+         */
+        static void destroy();
+
+        void deleteAll();
+        /*!
 		 *  \brief Rajoute une caméra à la liste
 		 *  \param camera Caméra à rajouter à la liste
 		 */

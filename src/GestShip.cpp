@@ -15,24 +15,37 @@ GestShip* GestShip::getSingleton(void)
 
 GestShip::GestShip()
 {
-	if (_instance == NULL) 
+	if (_instance == NULL)
 	{
-		lstShip.clear();
 		_instance = this;
 	}
 }
 
 GestShip::~GestShip()
 {
+    lstShip.clear();
 }
 
 void GestShip::addShip(ShipAbstract * ship)
 {
     lstShip.push_back(ship);
+    ship->signalDestruction.add(&GestShip::remShip, this);
 }
 
+void GestShip::remShip(ShipAbstract * ship)
+{
+   int i;
+   for(i=0; i<lstShip.size(); i++)
+   {
+       if(lstShip[i]==ship)
+       {
+           lstShip.erase(lstShip.begin()+i);
+           break;
+       }
+   }
 
-void GestShip::updateShips()
+}
+void GestShip::updateShips(void*)
 {
     vector<ShipAbstract *>::iterator itShip;
     for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)
@@ -51,4 +64,10 @@ void GestShip::deleteAllShips()
     }
 }
 
-
+void GestShip::destroy()
+{
+    if(_instance != NULL)
+    {
+        delete _instance;
+    }
+}
