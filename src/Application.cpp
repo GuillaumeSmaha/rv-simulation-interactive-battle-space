@@ -79,7 +79,7 @@ bool Application::start(void)
 
     GestSceneManager::getSingleton()->setSceneManager(this->sceneMgr);
 	//init meshLoader
-	new MeshLoader();
+	//new MeshLoader();
 
 	//init viewportLoader
 	new ViewportLoader(this->listenerWindow);
@@ -114,16 +114,8 @@ bool Application::start(void)
 }
 void Application::update(void*)
 {
-   /* if (this->timeUntilNextToggle >= 0)
-		this->timeUntilNextToggle -= evt.timeSinceLastFrame;*/
-	//this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
-	//this->listenerMouse->capture();
-	//this->listenerKeyboard->capture(NULL);
-
     this->getGestShip()->updateShips();
 	this->getGestGroupAsteroids()->updateGroupsAsteroids();
-	Utils::log(GestSceneManager::getCamCount());
-
 }
 void Application::updateStats(void*)
 {

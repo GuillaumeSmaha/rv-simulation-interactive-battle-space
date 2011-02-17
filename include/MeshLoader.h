@@ -47,17 +47,15 @@ class MeshLoader
 		 *  \brief Instance de MeshLoader pour le singleton
 		 */
 		static MeshLoader * _instance ;
-
+        /*!
+		 * \brief Constructor
+         */
+		MeshLoader();
 	public:
         /*!
 		 *  \brief Retourne une instance du singleton
 		 */
 		static MeshLoader * getSingleton(void);
-
-        /*!
-		 * \brief Constructor
-         */
-		MeshLoader();
 		/*!
 		 * \brief Destructor
 		 */

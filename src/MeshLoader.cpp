@@ -5,6 +5,10 @@ MeshLoader* MeshLoader::_instance = NULL;
 
 MeshLoader * MeshLoader::getSingleton(void)
 {
+    if(_instance == NULL)
+	{
+	    _instance = new MeshLoader();
+	}
 	return _instance;
 }
 
