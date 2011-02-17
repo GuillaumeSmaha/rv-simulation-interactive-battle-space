@@ -13,6 +13,7 @@
 #include "ListenerMouse.h"
 #include "ListenerWindow.h"
 #include "ListenerFrame.h"
+#include "ListenerTime.h"
 #include "nodeName.h"
 #include "ShipAbstract.h"
 #include "ShipIA.h"
@@ -98,6 +99,10 @@ class Application : public ObjectRoot
 		* \brief Listener pour les événements rendu
 		*/
 		ListenerFrame * listenerFrame;
+        /*!
+		* \brief Listener pour les événements time
+		*/
+		ListenerTime * listenerTime;
         /*!
         * Gere les controles claviers / souris utisable par le joueur
         */

@@ -232,8 +232,10 @@ void Application::initListeners(void)
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
     this->listenerFrame = new ListenerFrame(this->root);
+
+    this->listenerTime = new ListenerTime(25, this->listenerFrame);
 	this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
-	this->listenerFrame->signalFrameEnded.add(&Application::update, this);
+	this->listenerTime->signalTimerElapsed.add(&Application::update, this);
 	this->listenerWindow->signalWindowClosed.add(&Application::killInputManager, this);
 	this->listenerWindow->signalWindowClosed.add(&ListenerFrame::shutdown, this->listenerFrame);
 
@@ -243,6 +245,7 @@ void Application::initListeners(void)
 
     this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
 	this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
+
 	//Test * t = new Test(4);
 	//t->add(this->listenerFrame, this->listenerMouse);
 
