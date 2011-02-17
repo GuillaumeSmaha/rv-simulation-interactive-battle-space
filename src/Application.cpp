@@ -365,7 +365,7 @@ void Application::initScene(void)
     ship3->touched();
 
     gestShip->addShip(ship);
- //   gestShip->addShip(ship2);
+    gestShip->addShip(ship2);
     gestShip->addShip(ship3);
 
 	gestGroupAsteroids = new GestGroupAsteroids();
