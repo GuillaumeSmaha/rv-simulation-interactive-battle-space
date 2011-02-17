@@ -397,11 +397,16 @@ void Application::initScene(void)
 
 //Temporaire :
     // Set ambient light
-    this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+    //this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
+	this->sceneMgr->setAmbientLight(Ogre::ColourValue::Black);
     // Create a light
     Ogre::Light* l = this->sceneMgr->createLight("MainLight");
+	l->setType(Ogre::Light::LT_DIRECTIONAL);
+	l->setDiffuseColour(1.0, 1.0, 1.0);
+	l->setSpecularColour(1.0, 1.0, 1.0);
     //l->setPosition(320,480,500);
-	l->setPosition(32,48,50);
+	l->setPosition(32, 48, 5000);
+	l->setDirection(-Ogre::Vector3::UNIT_Z);
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);

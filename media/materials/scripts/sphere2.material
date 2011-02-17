@@ -1,5 +1,9 @@
-material planet2
+import * from "PerPixel.material"
+
+material planet2 : PerPixel
 {
+	set_texture_alias Texture planet2.jpg
+	/*
 	technique
 	{
 		pass
@@ -10,4 +14,5 @@ material planet2
 			}
 		}
 	}
+	*/
 }

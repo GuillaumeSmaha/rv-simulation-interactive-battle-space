@@ -1,5 +1,9 @@
-material planet5
+import * from "PerPixel.material"
+
+material planet5 : PerPixel
 {
+	set_texture_alias Texture planet5.jpg
+	/*
 	technique
 	{
 		pass
@@ -10,8 +14,10 @@ material planet5
 			}
 			texture_unit
 			{
+				// TODO: gérer le bump mapping
 				texture planet5bump.jpg
 			}			
 		}
 	}
+	*/
 }

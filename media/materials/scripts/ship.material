@@ -1,14 +1,7 @@
-material razor
-{
-	technique
-	{
-		pass
-		{
+import * from "PerPixel.material"
 
-			texture_unit
-			{
-				texture texship.jpg
-			}
-		}
-	}
+material razor : PerPixel
+{
+	set_texture_alias Texture texship.jpg
+
 }

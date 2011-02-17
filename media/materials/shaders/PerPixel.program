@@ -1,0 +1,27 @@
+vertex_program PerPixelVS hlsl
+{
+	source PerPixelVS.hlsl
+	entry_point main
+	target vs_2_0
+	default_params
+	{
+		param_named_auto world_matrix world_matrix
+		param_named_auto view_proj_matrix worldviewproj_matrix
+	}
+}
+
+fragment_program PerPixelPS hlsl
+{
+	source PerPixelPS.hlsl
+	entry_point main
+	target ps_2_0
+	default_params
+	{
+		param_named_auto ambient ambient_light_colour 0
+		param_named_auto diffuse light_diffuse_colour 0
+		param_named_auto specular light_specular_colour 0
+		param_named_auto camPosition camera_position
+		param_named_auto lightPosition light_position 0
+		
+	}
+}
