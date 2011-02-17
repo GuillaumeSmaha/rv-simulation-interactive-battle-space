@@ -9,9 +9,9 @@ MeshLoader * MeshLoader::getSingleton(void)
 }
 
 
-MeshLoader::MeshLoader(Ogre::SceneManager * sceneMgr)
+MeshLoader::MeshLoader()
 {
-	this->sceneMgr = sceneMgr;
+	this->sceneMgr = GestSceneManager::getSceneManager();
 	if(_instance == NULL)
 	{
 	    _instance = this;

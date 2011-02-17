@@ -14,6 +14,7 @@
 #include "CameraFixeTarget.h"
 #include "ViewportLoader.h"
 #include "PlayerControls.h"
+#include "GestSceneManager.h"
 
 /*!
 * \class ShipPlayer
@@ -48,7 +49,7 @@ class ShipPlayer : public ObjectRoot, public ShipAbstract
 		*  \brief Id du viewport
 		*/
 		int idViewport;
-		
+
 	public:
 		/*!
 		 * \brief Construction
@@ -58,34 +59,34 @@ class ShipPlayer : public ObjectRoot, public ShipAbstract
 		 * \brief Destructeur
 		*/
 		~ShipPlayer(void);
-		
+
 		/*!
 		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
 		 * Méthode virtuelle pure
 		*/
 		void updatePosition(void);
-		
+
 		/*!
 		 * \brief Active la premiere caméra
 		 * \param type Type de caméra
 		*/
 		void initCamera(CameraFixeAbstract::CameraType type);
-		
+
 		/*!
 		 * \brief Change de caméra
 		 * \param type Type de caméra
 		*/
 		void changeCamera(CameraFixeAbstract::CameraType type);
-		
+
         /*!
          * \brief permet de réagir aux évènement sur le clavier et la souris en utilisant PlayerControls
          */
         void keyPressed(PlayerControls::Controls key);
-        
-        
+
+
         //getter/setter
-        
-		
+
+
 		/*!
 		 * \brief [Getter] Récupère le noeud de la caméra à la première personne
 		 * \return Noeud de la caméra

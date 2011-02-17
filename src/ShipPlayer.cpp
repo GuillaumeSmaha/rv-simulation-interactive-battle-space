@@ -5,20 +5,20 @@ using namespace Ogre;
 ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 {
 	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
-	
+
 	this->typeCamera = CameraFixeAbstract::CAMERA_NULL;
 	this->gestCamera = NULL;
-    
+
 
     this->nodeCameraTarget = this->getNode()->createChildSceneNode("cameraTarget"+Utils::toString(Utils::unique()));
     this->nodeCameraFirstPerson = this->getNode()->createChildSceneNode("cameraFirstPerson"+Utils::toString(Utils::unique()));
 	this->nodeCameraExterieureFixe = this->getNode()->createChildSceneNode("cameraExterieurFixe"+Utils::toString(Utils::unique()));
-	
-	
+
+
 	this->nodeCameraTarget->setPosition(0, 15, 60);
 	this->nodeCameraFirstPerson->setPosition(0, 15, 30);
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
-	
+
 	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 }
 
@@ -57,7 +57,7 @@ void ShipPlayer::updatePosition(void)
 	}
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
-	
+
 	//on reduit la vitesse de rotation
     if(this->getRollSpeed() > Ogre::Radian(0))
     {
@@ -83,21 +83,21 @@ void ShipPlayer::updatePosition(void)
 		if(this->getPitchSpeed() > Ogre::Radian(0))
 			this->setPitchSpeed(Ogre::Radian(0));
 	}
-    
+
     /*this->setAcceleration(0);
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
     */
-    
+
     this->gestCamera->update_camera();
 }
-	
+
 void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 {
 	if(this->gestCamera == NULL && type != CameraFixeAbstract::CAMERA_NULL)
 	{
 		this->typeCamera = type;
-		
+
 		switch(this->typeCamera)
 		{
 			case CameraFixeAbstract::CAMERA_FIXE :
@@ -112,20 +112,21 @@ void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraExterieureFixe"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraExterieureFixe());
 				break;
 		}
-		
+
 		this->gestCamera->init_camera();
-		
+		GestSceneManager::addCamera(this->gestCamera);
+
 		this->idViewport = ViewportLoader::getSingleton()->addViewport(this->gestCamera);
 	}
 }
-	
+
 void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 {
 	if(this->typeCamera != type && type != CameraFixeAbstract::CAMERA_NULL)
 	{
 		this->typeCamera = type;
 		CameraFixeAbstract * tmpGestCamera = this->gestCamera;
-		
+
 		switch(this->typeCamera)
 		{
 			case CameraFixeAbstract::CAMERA_FIXE :
@@ -140,11 +141,12 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraExterieureFixe"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraExterieureFixe());
 				break;
 		}
-		
+
 		this->gestCamera->init_camera();
-		
+
 		ViewportLoader::getSingleton()->changeCameraViewport(this->idViewport, this->gestCamera);
-		
+        GestSceneManager::addCamera(this->gestCamera);
+        GestSceneManager::remCamera(tmpGestCamera);
 		delete tmpGestCamera;
 	}
 }

@@ -28,6 +28,7 @@
 #include "Signal.h"
 #include "Planet.h"
 #include "GestPlanet.h"
+#include "GestSceneManager.h"
 #include "Menus.h"
 
 class ListenerWindow;

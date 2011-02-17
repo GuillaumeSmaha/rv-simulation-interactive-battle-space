@@ -1,6 +1,6 @@
 /*!
 *  \file  MeshLoader.h
-*  \brief Ce fichier contient la déclaration de la classe MeshLoader. 
+*  \brief Ce fichier contient la déclaration de la classe MeshLoader.
 */
 #ifndef __MESH_LOADER_H__
 #define __MESH_LOADER_H__
@@ -10,6 +10,7 @@
 #include <sstream>
 #include "nodeName.h"
 #include "Utils.h"
+#include "GestSceneManager.h"
 /*!
  * \class MeshLoader
  *  \brief Définit les différents types de mesh. Crée les entités et les ajoute au graphe de scène
@@ -55,9 +56,8 @@ class MeshLoader
 
         /*!
 		 * \brief Constructor
-		 * \param sceneMgr Scène de graphe
-		 */
-		MeshLoader(Ogre::SceneManager * sceneMgr);
+         */
+		MeshLoader();
 		/*!
 		 * \brief Destructor
 		 */

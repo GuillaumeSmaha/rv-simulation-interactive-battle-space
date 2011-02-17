@@ -31,25 +31,25 @@ Application::~Application(void)
 {
     gestShip->deleteAllShips();
     delete this->gestShip;
-	
+
 	gestPlanet->deleteAllPlanet();
 	delete this->gestPlanet;
-	
+
 	gestGroupAsteroids->deleteAllGroupsAsteroids();
 	delete this->gestGroupAsteroids;
-	
+
 	delete this->player;
 	delete this->player2;
-	
+
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
 	delete this->listenerFrame;
-	
+
 	ViewportLoader::deleteViewportLoader();
 	MeshLoader::deleteMeshLoader();
-	
+
 	//delete this->listenerWindow;
-	
+
     delete this->root;
 }
 
@@ -58,7 +58,7 @@ Application::~Application(void)
 bool Application::start(void)
 {
 	Utils::logFileInit("error.log");
-	
+
 	// construct Ogre::Root
 	this->root = new Ogre::Root(this->pluginsCfg);
 
@@ -77,8 +77,9 @@ bool Application::start(void)
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
 
+    GestSceneManager::getSingleton()->setSceneManager(this->sceneMgr);
 	//init meshLoader
-	new MeshLoader(this->sceneMgr);
+	new MeshLoader();
 
 	//init viewportLoader
 	new ViewportLoader(this->listenerWindow);
@@ -91,11 +92,12 @@ bool Application::start(void)
 
 	// init the input manager and create the listeners
 	this->initListeners();
-	
+
     //initialise cegui
     Menus * menus= new Menus(this->listenerMouse, this->listenerKeyboard);
+
     menus->affiche_btn_exit();
-	
+
     // create the scene
 	this->initScene();
 
@@ -117,9 +119,10 @@ void Application::update(void*)
 	//this->getGestCamera()->getCamera()->moveRelative( Ogre::Vector3(this->_translateX, 0.0f, this->_translateZ) );
 	//this->listenerMouse->capture();
 	//this->listenerKeyboard->capture(NULL);
-	
+
     this->getGestShip()->updateShips();
 	this->getGestGroupAsteroids()->updateGroupsAsteroids();
+	Utils::log(GestSceneManager::getCamCount());
 
 }
 void Application::updateStats(void*)
@@ -257,11 +260,11 @@ void Application::initListeners(void)
 
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::onKeyPressed, this);
-	
+
 
 	player2 = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player2->signalKeyPressed.add(&Application::onKeyPressed, this);
-    
+
 	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
 	player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_S);
 	player2->setKeyControl(PlayerControls::LEFT, OIS::KC_Q);
@@ -360,17 +363,17 @@ void Application::initScene(void)
 	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
     //ship->setOrientation(5, 5, 5, 5);
-    
+
 	ShipPlayer * ship2 = new ShipPlayer(this->player2);
     ship2->setPosition(-130,0,0);
     ship2->touched();
-    
+
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,0);
     ship3->touched();
-    
+
     gestShip->addShip(ship);
-    gestShip->addShip(ship2);
+ //   gestShip->addShip(ship2);
     gestShip->addShip(ship3);
 
 	gestGroupAsteroids = new GestGroupAsteroids();
@@ -389,6 +392,9 @@ void Application::initScene(void)
 	group2->addAsteroid(asteroid3);
 	gestGroupAsteroids->addGroupAsteroids(group1);
 	gestGroupAsteroids->addGroupAsteroids(group2);
+
+
+
 
 /*
     Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);

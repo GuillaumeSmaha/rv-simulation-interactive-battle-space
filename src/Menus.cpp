@@ -14,22 +14,23 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl)
 
     //charge un scheme
     CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
- 
+
     //enregistre les signaux sur la souris
 	mouseControl->signalMousePressed.add(&Menus::mousePressed, this);
 	mouseControl->signalMouseReleased.add(&Menus::mouseReleased, this);
 	mouseControl->signalMouseMoved.add(&Menus::mouseMoved, this);
-    
+
     //enregistre les signaux sur le clavier
     keyControl->signalKeyPressed.add(&Menus::keyPressed, this);
     keyControl->signalKeyReleased.add(&Menus::keyReleased, this);
 
     afficher_souris();
+
 }
 
 Menus::~Menus()
 {
-    
+
 }
 
 void Menus::keyPressed(const OIS::KeyEvent &evt)
@@ -68,13 +69,13 @@ CEGUI::MouseButton Menus::convertButton(OIS::MouseButtonID evt)
     {
     case OIS::MB_Left:
         return CEGUI::LeftButton;
- 
+
     case OIS::MB_Right:
         return CEGUI::RightButton;
- 
+
     case OIS::MB_Middle:
         return CEGUI::MiddleButton;
- 
+
     default:
         return CEGUI::LeftButton;
     }
@@ -94,7 +95,8 @@ void Menus::affiche_btn_exit(void)
     std::cout<<"quit name: "<<quit->getName()<<std::endl;
     quit->setText("Quit");
     quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05,0)));
-
+    //quit->
     sheet->addChildWindow(quit);
     CEGUI::System::getSingleton().setGUISheet(sheet);
+   // this->menusRenderer->setRenderingEnabled(false);
 }
