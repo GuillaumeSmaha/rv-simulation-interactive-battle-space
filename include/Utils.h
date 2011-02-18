@@ -88,6 +88,10 @@ class Utils
 		{
 		    Utils::log(Utils::toString(text));
 		}
+		static void log(const char* text)
+		{
+			log(Ogre::String(text));
+		}
 		/*!
 		* \brief Affiche un nombre de log sur la console
 		* \param text Nombre à afficher
