@@ -19,29 +19,76 @@
 class GroupAsteroid
 {
     private:
+		/*!
+		 * \brief Liste des asteroid du groupe
+		 */
         std::vector<Asteroid *> lstGroupAsteroid;
-		Ogre::Quaternion angleRotation; //angle de rotation de l'asteroid par rapport au centre
-		Ogre::Vector3 centreRotation; //centre de la rotation
-		Ogre::Real rotationSpeed; //vitesse de rotation de l'asteroid
+		/*!
+		 * \brief Angle de rotation de l'asteroid par rapport au centre
+		 */
+		Ogre::Quaternion angleRotation;
+		/*!
+		 * \brief Centre de la rotation
+		 */
+		Ogre::Vector3 centreRotation;
+		/*!
+		 * \brief Vitesse de rotation de l'asteroid
+		 */
+		Ogre::Real rotationSpeed;
 
     public:
+		/*!
+		 * \brief Construction
+		 */
         GroupAsteroid();
+		/*!
+		 * \brief Destructeur
+		 */
         ~GroupAsteroid();
-
-		//getter et setter de l'angle de rotation, le centre de rotation et la vitesse de rotation
+		/*!
+		 * \brief Setter de l'angle de rotation du groupe d'asteroids
+		 * \param angleRotation quaternion contenant l'angle
+		 */
 		void setAngleRotation(Ogre::Quaternion);
+		/*!
+		 * \brief Getter de l'angle de rotation du groupe d'asteroids
+		 */
 		Ogre::Quaternion getAngleRotation(void);
+		/*!
+		 * \brief Setter du centre de rotation du groupe d'asteroids
+		 * \param vec coordonnées du centre de rotation
+		 */
 		void setCentreRotation(Ogre::Vector3);
+		/*!
+		 * \brief Getter du centre de rotation du groupe d'asteroids
+		 */
 		Ogre::Vector3 getCentreRotation(void);
+		/*!
+		 * \brief Setter de la vitesse de rotation du groupe d'asteroids
+		 * \param rotationSpeed vitesse de rotataion
+		 */
 		void setRotationSpeed(Ogre::Real);
+		/*!
+		 *  \brief Getter de la vitesse de rotation du groupe d'asteroids
+		 */
 		Ogre::Real getRotationSpeed(void);
-        
+		/*!
+		 * \brief Ajoute un asteroid au groupe
+		 * \param asteroid Pointeur sur l'asteroid
+		*/     
 		void addAsteroid(Asteroid * asteroid);
+		/*!
+		 * \brief Récupère la liste des asteroids du groupe
+		 * \return Liste des asteroids du groupe
+		*/
         std::vector<Asteroid> getAllGroupAsteroids();
-        /*permet de mettre à jour la position de tous les asteroids du groupe
-        */
+		/*!
+		 * \brief Met à jour la position de tous les asteroids du groupe
+		*/
         void updateGroupAsteroids();
-
+		/*!
+		 * \brief Supprime tous les asteroids du groupe
+		*/
         void deleteAllGroupAsteroids();
 };
 #endif // __GROUPASTEROID_H__

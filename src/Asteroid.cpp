@@ -2,9 +2,10 @@
 
 using namespace Ogre;
 
-Asteroid::Asteroid(void) : speed(0), rotationSpeed(0)
+Asteroid::Asteroid(void) : speed(0), rotationSpeed(2)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID);
+	this->getNode()->setOrientation(1, 2, 2, 1);
     this->getNode()->setPosition(0, 0, 0);
 }
 
@@ -78,11 +79,14 @@ void Asteroid::moveRelative(const Ogre::Vector3 &vec)
 
 void Asteroid::updatePosition(void)
 {
-	Vector3 position = this->getPosition();
 	if (this->rotationSpeed != 0) 
 	{
-		this->setSpeed(this->getSpeed()+this->rotationSpeed);
-		this->rotationSpeed = 0;
+		this->setOrientation(
+			Ogre::Real(this->getOrientation()[0]*this->rotationSpeed),
+			Ogre::Real(this->getOrientation()[1]*this->rotationSpeed),
+			Ogre::Real(this->getOrientation()[2]*this->rotationSpeed),
+			this->getOrientation()[3]
+			);
 	}
 	if (this->speed != 0) 
 	{

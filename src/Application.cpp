@@ -379,7 +379,7 @@ void Application::initScene(void)
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,0);
     ship3->touched();
-    Utils::logFile("test");
+//    Utils::logFile("test");
 //    GestShip::getS
     GestShip::getSingleton()->addShip(ship);
     //gestShip->addShip(ship2);
