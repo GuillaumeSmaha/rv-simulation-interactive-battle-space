@@ -395,6 +395,7 @@ void Application::initScene(void)
 	asteroid1->setPosition(-100,100,-100);
 	asteroid2->setPosition(100,-100,100);
 	asteroid3->setPosition(1000,-100,100);
+
 	group1->addAsteroid(asteroid1);
 	group1->addAsteroid(asteroid2);
 	group2->addAsteroid(asteroid3);

@@ -2,10 +2,14 @@
 
 using namespace Ogre;
 
-Asteroid::Asteroid(void) : speed(0), rotationSpeed(2)
+int q1=1;
+int toggle=0;
+
+Asteroid::Asteroid(void) : speed(0), rotationSpeed(0.1)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID);
-	this->getNode()->setOrientation(1, 2, 2, 1);
+	this->getNode()->setOrientation(0.5, 2, 2, 1);
+	this->getNode()->setScale(10,10,10);
     this->getNode()->setPosition(0, 0, 0);
 }
 
@@ -79,14 +83,36 @@ void Asteroid::moveRelative(const Ogre::Vector3 &vec)
 
 void Asteroid::updatePosition(void)
 {
-	if (this->rotationSpeed != 0) 
+	if (this->getRotationSpeed() >0 && this->getRotationSpeed() <1)  
 	{
-		this->setOrientation(
-			Ogre::Real(this->getOrientation()[0]*this->rotationSpeed),
-			Ogre::Real(this->getOrientation()[1]*this->rotationSpeed),
-			Ogre::Real(this->getOrientation()[2]*this->rotationSpeed),
-			this->getOrientation()[3]
-			);
+		Ogre::Real quat1= Ogre::Real(this->getOrientation()[0]+q1*this->getRotationSpeed()/10);
+		Ogre::Real quat2= Ogre::Real(this->getOrientation()[1]);
+		Ogre::Real quat3= Ogre::Real(this->getOrientation()[2]);
+		Ogre::Real quat4= Ogre::Real(this->getOrientation()[3]);
+		//Utils::log(Ogre::Real(this->getOrientation()[3]));
+		if (quat1>1 && toggle==0)
+		{
+			toggle=1;
+			q1=-1;
+			quat1=1;
+			quat2=-quat2;
+			quat3=-quat3;
+			quat4=-quat4;
+			Utils::log("quat1:");
+			Utils::log(quat1);
+		}
+		if (quat1<0.01 && toggle==1)
+		{
+			toggle=0;
+			q1=1;
+			quat1=0;
+			quat2=-quat2;
+			quat3=-quat3;
+			quat4=-quat4;
+			Utils::log("quat1:");
+			Utils::log(quat1);
+		}
+		this->setOrientation(quat1, quat2, quat3, quat4);
 	}
 	if (this->speed != 0) 
 	{
