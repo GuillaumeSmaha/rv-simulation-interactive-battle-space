@@ -3,9 +3,9 @@ float4x4 view_proj_matrix;
 
 struct VS_OUTPUT
 {
-   float4 Pos    : POSITION;
-   float3 Norm   : TEXCOORD1;
-   float2 Tex    : TEXCOORD2;
+   float4 Pos   : POSITION;
+   float3 Norm  : TEXCOORD0;
+   float2 Tex   : TEXCOORD4;
 };
 
 VS_OUTPUT main( 
@@ -19,11 +19,12 @@ VS_OUTPUT main(
 	Out.Pos = mul( view_proj_matrix, inPos ); 
 
 	// Transform the input normal to view space:
-	Out.Norm = mul( world_matrix, inNorm );
-
+	//Out.Norm = normalize( mul( world_matrix, inNorm ) );
+	Out.Norm = -normalize( mul( world_matrix, inNorm ) );
+	
 	// Propagate texture coordinate for the object:
 	Out.Tex = inTex;
-
+	
 	return Out;
 }
 

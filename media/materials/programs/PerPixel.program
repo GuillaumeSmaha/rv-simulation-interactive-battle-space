@@ -1,0 +1,60 @@
+vertex_program PerPixelVS_HLSL hlsl
+{
+	source PerPixelVS.hlsl
+	entry_point main
+	target vs_2_0
+	default_params
+	{
+		param_named_auto world_matrix world_matrix
+		param_named_auto view_proj_matrix worldviewproj_matrix
+	}
+}
+
+fragment_program PerPixelPS_HLSL hlsl
+{
+	source PerPixelPS.hlsl
+	entry_point main
+	target ps_2_0
+	default_params
+	{
+		param_named_auto ambient ambient_light_colour 0
+		param_named_auto diffuse light_diffuse_colour 0
+		param_named_auto specular light_specular_colour 0
+		param_named_auto view_direction view_direction
+		param_named_auto light_direction light_direction 0
+	}
+}
+
+vertex_program PerPixelVS_GLSL glsl
+{
+	source PerPixelVS.glsl
+	default_params
+	{
+		param_named_auto world_matrix world_matrix
+		param_named_auto view_proj_matrix worldviewproj_matrix
+	}
+}
+
+fragment_program PerPixelPS_GLSL glsl
+{
+	source PerPixelPS.glsl
+	default_params
+	{
+		param_named_auto ambient ambient_light_colour 0
+		param_named_auto diffuse light_diffuse_colour 0
+		param_named_auto specular light_specular_colour 0
+		param_named_auto view_direction view_direction
+		param_named_auto light_direction light_direction 0		
+	}
+}
+
+vertex_program PerPixelVS unified
+{
+	delegate PerPixelVS_HLSL
+	delegate PerPixelVS_GLSL
+}
+fragment_program PerPixelPS unified
+{
+	delegate PerPixelPS_HLSL
+	delegate PerPixelPS_GLSL
+}
