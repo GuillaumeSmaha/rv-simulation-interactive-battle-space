@@ -70,6 +70,6 @@ class GestGroupAsteroids : public ObjectRoot
 		 * \param centreRotation coordonnées du centre de la rotation
 		 * \param rotationSpeed vitesse de la rotation
 		*/
-		void GestGroupAsteroids::createGroup(int nb, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::Vector3 centreRotation, Ogre::Real rotationSpeed);
+		void createGroup(int nb, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::Vector3 centreRotation, Ogre::Real rotationSpeed);
 };
 #endif // __GESTGROUPASTEROIDS_H__

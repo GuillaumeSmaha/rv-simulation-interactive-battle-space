@@ -1,0 +1,23 @@
+particle_system explosionTemplate
+{
+	material        	explosionMaterial  // The material for the particles
+	particle_width  	50                 // The width of the particle
+	particle_height 	50                 // The height of the particle
+	cull_each       	true
+	quota           	1
+	billboard_type  	point
+	sorted			true
+ 
+	emitter Point
+	{
+	   angle           180
+	   duration	   1    // This controls the duration of the emitter in seconds (1 second)
+    	   emission_rate   1    // This controls how many particles are emitted per second - just 1
+    	   time_to_live    1   	// Each particle lives this many seconds - just 1 second
+	}
+ 
+   	affector ColourFader
+   	{
+   		alpha -1        // Each second the alpha value is changed by this amount - so in one second our alpha goes from 1 to 0
+   	}
+}

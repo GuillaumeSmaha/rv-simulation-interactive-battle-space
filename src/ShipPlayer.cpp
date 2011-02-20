@@ -158,6 +158,9 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
     Quaternion orientation;
     switch(key)
 	{
+		case PlayerControls::SHOOT1 :
+            this->exploded();
+            break;
 		case PlayerControls::ACCELERATION :
             this->accelerate(1);
             break;

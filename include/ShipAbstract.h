@@ -83,6 +83,10 @@ class ShipAbstract : public ObjectRoot
 		*/
 		void touched(void);
 		/*!
+		 * \brief Applique une texture blessé au vaisseau
+		*/
+		void exploded(void);
+		/*!
 		 * \brief Définit les particules des réacteurs
 		*/
 		void defineParticules(void);
