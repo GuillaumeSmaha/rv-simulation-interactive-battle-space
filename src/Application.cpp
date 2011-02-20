@@ -47,7 +47,6 @@ Application::~Application(void)
 
 	GestSceneManager::destroy();
 	//delete this->gestGroupAsteroids;
-
 	delete this->player;
 	delete this->player2;
 
@@ -105,9 +104,8 @@ bool Application::start(void)
 	this->initListeners();
 
     //initialise cegui
-    Menus * menus= new Menus(this->listenerMouse, this->listenerKeyboard);
+    Menus * menus= new Menus(this->listenerMouse, this->listenerKeyboard, this->player2, this);
 
-    menus->affiche_btn_exit();
 
     // create the scene
 	this->initScene();

@@ -1,7 +1,9 @@
 #include "Menus.h"
 
-Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl)
+Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, PlayerControls * pControl, Application * app)
 {
+    this->app= app;
+
     //démarre le menusRenderer
     menusRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 
@@ -13,7 +15,7 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl)
     CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
 
     //charge un scheme
-    CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
+    CEGUI::SchemeManager::getSingleton().create("SleekSpace.scheme");
 
     //enregistre les signaux sur la souris
 	mouseControl->signalMousePressed.add(&Menus::mousePressed, this);
@@ -24,8 +26,12 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl)
     keyControl->signalKeyPressed.add(&Menus::keyPressed, this);
     keyControl->signalKeyReleased.add(&Menus::keyReleased, this);
 
-    afficher_souris();
+    //enregistre les signaux sur PlayerControls (même si réagit uniquement à l'appui sur la touche permettant d'ouvrir le menus
+    pControl->signalKeyPressed.add(&Menus::actionFromPlayer, this);
+    this->menu_open=false;   
 
+    creer_souris();
+    creer_btn_exit();
 }
 
 Menus::~Menus()
@@ -38,6 +44,40 @@ void Menus::keyPressed(const OIS::KeyEvent &evt)
     CEGUI::System &sys = CEGUI::System::getSingleton();
     sys.injectKeyDown(evt.key);
     sys.injectChar(evt.text);
+}
+
+
+void Menus::actionFromPlayer(PlayerControls::Controls key)
+{
+	switch(key)
+	{
+		case PlayerControls::OPEN_MENU:
+            if(!this->menu_open)
+            {
+                std::cout<<"ouvrir"<<std::endl;
+                afficher_menus();
+                this->menu_open=true;
+            }
+            else
+            {
+                std::cout<<"fermer"<<std::endl;
+                cacher_menus();
+                this->menu_open=false;
+            }
+			break;
+	}
+}
+
+void Menus::afficher_menus()
+{
+    afficher_souris();
+    afficher_btn_exit();
+}
+
+void Menus::cacher_menus()
+{
+    cacher_souris();
+    cacher_btn_exit();
 }
 
 void Menus::keyReleased(const OIS::KeyEvent &evt)
@@ -81,22 +121,50 @@ CEGUI::MouseButton Menus::convertButton(OIS::MouseButtonID evt)
     }
 }
 
-void Menus::afficher_souris(void)
+void Menus::creer_souris(void)
 {
-    CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
+    CEGUI::System::getSingleton().setDefaultMouseCursor("SleekSpace", "MouseArrow");
     CEGUI::MouseCursor::getSingleton().setImage(CEGUI::System::getSingleton().getDefaultMouseCursor());
+    CEGUI::MouseCursor::getSingleton().hide();
 }
 
-void Menus::affiche_btn_exit(void)
+void Menus::afficher_souris(void)
+{
+    CEGUI::MouseCursor::getSingleton().show();
+}
+
+void Menus::cacher_souris(void)
+{
+    CEGUI::MouseCursor::getSingleton().hide();
+}
+
+
+void Menus::creer_btn_exit(void)
 {
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    CEGUI::Window * sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
-    CEGUI::Window * quit = wmgr.createWindow("TaharezLook/Button", "CEGUIDemo/QuitButton");
-    std::cout<<"quit name: "<<quit->getName()<<std::endl;
+    mainWdw = wmgr.createWindow("DefaultWindow", "SpaceShip/Sheet");
+    CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/QuitButton");
     quit->setText("Quit");
     quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05,0)));
-    //quit->
-    sheet->addChildWindow(quit);
-    CEGUI::System::getSingleton().setGUISheet(sheet);
-   // this->menusRenderer->setRenderingEnabled(false);
+    mainWdw->addChildWindow(quit);
+    CEGUI::System::getSingleton().setGUISheet(mainWdw);
+    quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicExit, this));
+    mainWdw->hide();
 }
+
+void Menus::cacher_btn_exit(void)
+{
+    mainWdw->hide();
+}
+
+void Menus::afficher_btn_exit(void)
+{
+    mainWdw->show();
+}
+
+bool Menus::clicExit(const CEGUI::EventArgs & evt){
+    this->app->killApplication();
+    return true;
+}
+
+

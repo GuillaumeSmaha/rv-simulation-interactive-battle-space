@@ -18,6 +18,8 @@ PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 	this->setKeyControl(PlayerControls::UP, OIS::KC_H);
 	this->setKeyControl(PlayerControls::DOWN, OIS::KC_N);
 	
+	this->setKeyControl(PlayerControls::OPEN_MENU, OIS::KC_F10);
+    
     keyboard->signalKeyPressed.add(&PlayerControls::keyboardPressed, this);
     keyboard->signalKeyReleased.add(&PlayerControls::keyboardReleased, this);
     mouse->signalMouseMoved.add(&PlayerControls::mouseMoved, this);
