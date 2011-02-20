@@ -76,23 +76,6 @@ void Utils::logFile(Ogre::String text)
 	}
 }
 
-Ogre::Real Utils::radianToDegre (Ogre::Real angleRadian) {
-	//Angle en degré = 180 * (angle en radian) / pi
-	if (angleRadian==0)
-	{
-		return 0.0;
-	}
-	else
-	{
-		return 180*angleRadian/PI;
-	}
-}
-
-Ogre::Radian Utils::degreToRadian (Ogre::Real angleDegre) {
-	//Angle en radian = pi * (angle en degré) / 180
-	return Ogre::Radian(PI*angleDegre/180);
-}
-
 Ogre::String Utils::toString( float Value )
 {
 	std::ostringstream oss;
