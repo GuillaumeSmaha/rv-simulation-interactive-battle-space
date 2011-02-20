@@ -382,40 +382,20 @@ void Application::initScene(void)
     GestShip::getSingleton()->addShip(ship);
     //gestShip->addShip(ship2);
     GestShip::getSingleton()->addShip(ship3);
-    Utils::log("test2");
+    //Utils::log("test2");
 
+	//coordonnée du centre de la ceinture d'asteroids
 	Vector3 vec;
 	vec[0]=0;
 	vec[1]=0;
 	vec[2]=0;
+	//création de la ceinture d'asteroids
 	GestGroupAsteroids::getSingleton()->createGroup(40,Ogre::Radian(0.01),100,vec,0.01);
-	/*
-	GroupAsteroid *group1 = new GroupAsteroid();
-	GroupAsteroid *group2 = new GroupAsteroid();
-	Asteroid *asteroid1 = new Asteroid();
-	Asteroid *asteroid2 = new Asteroid();
-	Asteroid *asteroid3 = new Asteroid();
-	asteroid1->setPosition(-100,100,-100);
-	asteroid2->setPosition(100,-100,100);
-	asteroid3->setPosition(1000,-100,100);
 
-	group1->addAsteroid(asteroid1);
-	group1->addAsteroid(asteroid2);
-	group2->addAsteroid(asteroid3);
-	GestGroupAsteroids::getSingleton()->addGroupAsteroids(group1);
-	GestGroupAsteroids::getSingleton()->addGroupAsteroids(group2);
-	*/
+	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestGroupAsteroids::updateGroupsAsteroids,GestGroupAsteroids::getSingleton());
-    //this->getGestGroupAsteroids()->updateGroupsAsteroids();
 
-
-/*
-    Ogre::Entity * asteroid = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true);
-	asteroid->getParentSceneNode()->setPosition(13,13,15);
-	asteroid->getParentSceneNode()->setScale(35,35,35);
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID, true)->getParentSceneNode()->setPosition(300,-300,-300);
-*/
 
 
 //Temporaire :
