@@ -12,6 +12,8 @@
 #include <sstream>
 #include <iostream>
 
+#define PI (3.141592653589793)
+
 /*!
  * \class Utils
  * \brief A tools class
@@ -41,6 +43,7 @@ class Utils
 		* \return An int between min and max (inclusive)
 		*/
 		static int randRangeInt(int min, int max);
+
 		/*!
 		 * \brief Returns an unique int
 		 * \return unique int
@@ -120,6 +123,18 @@ class Utils
         {
             Utils::logFile(Utils::toString<T>(Value));
         }
+		/*!
+		* \brief Convertit un angle en radian en degré
+		* \param AngleRadian angle en radian à convertir
+		* \return Angle en degré
+		*/
+		static Ogre::Real Utils::radianToDegre (Ogre::Real angleRadian);
+		/*!
+		* \brief Convertit un angle en degré en radian
+		* \param AngleRadian angle en degré à convertir
+		* \return Angle en radian
+		*/
+		static Ogre::Radian Utils::degreToRadian (Ogre::Real angleDegre);
 		/*!
 		* \brief Transforme une valeur quelconque en une chaine de caractère.
 		* \param Value valeur à chainer

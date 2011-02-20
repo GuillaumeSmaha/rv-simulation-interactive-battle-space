@@ -73,7 +73,7 @@ void ShipAbstract::updatePosition(void)
     this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
     this->goUp(this->getPitchSpeed());
 
-    //on réduit chacune des accélération
+    //on réduit chacune des accélérations
     this->setAcceleration(0);
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));

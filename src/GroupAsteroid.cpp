@@ -11,11 +11,11 @@ GroupAsteroid::~GroupAsteroid()
 {
 }
 
-void GroupAsteroid::setAngleRotation(Ogre::Quaternion angleRotation) 
+void GroupAsteroid::setAngleRotation(Ogre::Radian angleRotation) 
 {
 	this->angleRotation=angleRotation;
 }
-Ogre::Quaternion GroupAsteroid::getAngleRotation(void) 
+Ogre::Radian GroupAsteroid::getAngleRotation(void) 
 {
 	return this->angleRotation;
 }
@@ -40,7 +40,6 @@ void GroupAsteroid::addAsteroid(Asteroid * asteroid)
 {
     lstGroupAsteroid.push_back(asteroid);
 }
-
 
 void GroupAsteroid::updateGroupAsteroids()
 {

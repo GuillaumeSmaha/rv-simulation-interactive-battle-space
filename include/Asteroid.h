@@ -112,6 +112,11 @@ class Asteroid
 		 * \param vec Déplacement de l'objet selon le vecteur v
 		*/
 		void moveRelative(const Ogre::Vector3 &vec);
+		/*!
+         * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
+         * \param angle un angle en radian
+        */
+		void Asteroid::rotateRelative(const Ogre::Radian angle);
         /*!
 		 *  \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
 		 */

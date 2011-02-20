@@ -363,7 +363,7 @@ void Application::initScene(void)
 
 	gestPlanet->addPlanet(planet1);
 	gestPlanet->addPlanet(planet2);
-     GestShip::getSingleton();
+    GestShip::getSingleton();
 
 
 	ShipPlayer * ship = new ShipPlayer(this->player);
@@ -384,9 +384,14 @@ void Application::initScene(void)
     GestShip::getSingleton()->addShip(ship3);
     Utils::log("test2");
 
+	Vector3 vec;
+	vec[0]=0;
+	vec[1]=0;
+	vec[2]=0;
+	GestGroupAsteroids::getSingleton()->createGroup(40,Ogre::Radian(0.01),100,vec,0.01);
+	/*
 	GroupAsteroid *group1 = new GroupAsteroid();
 	GroupAsteroid *group2 = new GroupAsteroid();
-
 	Asteroid *asteroid1 = new Asteroid();
 	Asteroid *asteroid2 = new Asteroid();
 	Asteroid *asteroid3 = new Asteroid();
@@ -399,6 +404,7 @@ void Application::initScene(void)
 	group2->addAsteroid(asteroid3);
 	GestGroupAsteroids::getSingleton()->addGroupAsteroids(group1);
 	GestGroupAsteroids::getSingleton()->addGroupAsteroids(group2);
+	*/
     this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestGroupAsteroids::updateGroupsAsteroids,GestGroupAsteroids::getSingleton());
     //this->getGestGroupAsteroids()->updateGroupsAsteroids();

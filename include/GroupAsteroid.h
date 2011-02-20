@@ -26,7 +26,7 @@ class GroupAsteroid
 		/*!
 		 * \brief Angle de rotation de l'asteroid par rapport au centre
 		 */
-		Ogre::Quaternion angleRotation;
+		Ogre::Radian angleRotation;
 		/*!
 		 * \brief Centre de la rotation
 		 */
@@ -49,11 +49,11 @@ class GroupAsteroid
 		 * \brief Setter de l'angle de rotation du groupe d'asteroids
 		 * \param angleRotation quaternion contenant l'angle
 		 */
-		void setAngleRotation(Ogre::Quaternion);
+		void setAngleRotation(Ogre::Radian);
 		/*!
 		 * \brief Getter de l'angle de rotation du groupe d'asteroids
 		 */
-		Ogre::Quaternion getAngleRotation(void);
+		Ogre::Radian getAngleRotation(void);
 		/*!
 		 * \brief Setter du centre de rotation du groupe d'asteroids
 		 * \param vec coordonnées du centre de rotation

@@ -62,5 +62,14 @@ class GestGroupAsteroids : public ObjectRoot
 		 * \brief Supprime tous les groupes d'asteroids du gestionnaire
 		*/
         void deleteAllGroupsAsteroids();
+		/*!
+		 * \brief Crée un groupe d'asteroids
+		 * \param nb Nombre d'asteroids de ce groupe (multiple de 4!!!)
+		 * \param angleRotation angle de rotation autour de l'axe
+		 * \param rayon distances des asteroids autour de l'axe
+		 * \param centreRotation coordonnées du centre de la rotation
+		 * \param rotationSpeed vitesse de la rotation
+		*/
+		void GestGroupAsteroids::createGroup(int nb, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::Vector3 centreRotation, Ogre::Real rotationSpeed);
 };
 #endif // __GESTGROUPASTEROIDS_H__
