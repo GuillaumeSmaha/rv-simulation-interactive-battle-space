@@ -1,42 +1,4 @@
-vertex_program explodeVertexProgramHLSL hlsl
-{
-	source explode.hlsl
-	entry_point main_vp
-	target vs_2_0
-}
- 
-vertex_program explodeVertexProgramCG cg
-{
-	source explode.cg
-	entry_point main_vp
-	profile vs_2_0 arbvp2
-}
- 
-vertex_program explodeVertexProgram unified
-{
-	delegate explodeVertexProgramHLSL
-	delegate explodeVertexProgramCG
-}
- 
-fragment_program explodeFragmentProgramHLSL hlsl
-{
-	source explode.hlsl
-	entry_point main_fp
-	target ps_2_0
-}
- 
-fragment_program explodeFragmentProgramCG cg
-{
-	source explode.cg
-	entry_point main_fp
-	profile ps_2_0 arbfp2
-}
- 
-fragment_program explodeFragmentProgram unified
-{
-	delegate explodeFragmentProgramHLSL
-	delegate explodeVertexProgramCG
-}
+
  
 material explosionMaterial
 {
@@ -48,19 +10,17 @@ material explosionMaterial
 			scene_blend add
 			depth_write off
  
-			vertex_program_ref explodeVertexProgram
-			{
-				param_named_auto worldViewProj worldviewproj_matrix
-			}
+			vertex_program_ref explodeVS {}
  
-			fragment_program_ref explodeFragmentProgram
-			{
-			}
+			fragment_program_ref explodePS {}
  
 			// texture unit 0 - our volume texture
 			texture_unit
 			{
+				texture_alias baseMap
 				texture explode.dds 3d
+				tex_coord_set 0
+				//tex_address_mode border
 				tex_address_mode clamp
 			}
 		}

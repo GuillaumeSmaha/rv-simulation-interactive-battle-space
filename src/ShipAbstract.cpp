@@ -22,13 +22,13 @@ void ShipAbstract::touched(void)
 
 void ShipAbstract::exploded(void)
 {
-   Ogre::ParticleSystem* particleSystem = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem("explosions", "explosionTemplate");
+   Ogre::ParticleSystem* particleSystem = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem("explosions"+Utils::toString(Utils::unique()), "explosionTemplate");
  
 	// fast forward 1 second  to the point where the particle has been emitted
 	particleSystem->fastForward(1.0);
 	 
 	// attach the particle system to a scene node
-    this->getNode()->createChildSceneNode(Vector3(0.0, 0.0, 0.0))->attachObject(particleSystem);
+    this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
 }
 
 void ShipAbstract::defineParticules(void)
