@@ -51,8 +51,7 @@ class Menus: public ObjectRoot
 		*/
 		~Menus();
 
-
-
+    private:
         /*!
          * \brief Permet de récupérer appuis sur touche dans cegui
         */
@@ -96,23 +95,43 @@ class Menus: public ObjectRoot
         void actionFromPlayer(PlayerControls::Controls key);
         
         /*!
-         * \brief
+         * \brief Lance l'affichage des différents éléments du menus lors de l'activation de celui ci
          */
         void afficher_menus();
+
+        /*!
+         * \brief Retire le menus lorsque l'on le quitte.
+         */
         void cacher_menus();
         
         /*!
-         * \brief affiche un bouton permettant de quitter
+         * \brief Crée le menus principal
          */
         void creer_main_window(void);
+
+        /*!
+         * \brief Affiche le menus principal
+         */
         void afficher_main_window(void);
+
+        /*!
+         * \brief Cache le menus principal
+         */
         void cacher_main_window(void);
 
 		/*!
 		* \brief Permet d'afficher un curseur de souris
 		*/
 		void creer_souris(void);
+
+        /*!
+         * \brief Affiche la souris
+         */
 		void afficher_souris(void);
+
+        /*!
+         * \brief cache la souris
+        */
 		void cacher_souris(void);
 
 		/*!
@@ -125,9 +144,27 @@ class Menus: public ObjectRoot
 		*/
         bool clicAbout(const CEGUI::EventArgs & evt);
 
-
+        /*!
+		* \brief Permet de créer une fentre de menus générique
+		*/
         CEGUI::Window * create_std_window(std::string name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu);
+
+        /*!
+		* \brief Permet de supprimer une fenetre (appeler par create_std_window, ne devrait pas être utilisé ailleurs).
+		*/
         bool destroyWindow(const CEGUI::EventArgs & evt);
+
+        /*!
+		* \brief Permet de supprimer les intéractions du jeux en cours (actions des touches, défilement...)
+		*/
+        void suspendre_jeux();
+        
+        /*!
+		* \brief Permet de reprendre le jeux en cours
+		*/
+        void redemarrer_jeux();
+
+
 };
 
 #endif //__MENUS_H__

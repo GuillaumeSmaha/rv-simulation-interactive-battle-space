@@ -20,11 +20,14 @@ PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 	
 	this->setKeyControl(PlayerControls::OPEN_MENU, OIS::KC_F10);
     
-    keyboard->signalKeyPressed.add(&PlayerControls::keyboardPressed, this);
-    keyboard->signalKeyReleased.add(&PlayerControls::keyboardReleased, this);
-    mouse->signalMouseMoved.add(&PlayerControls::mouseMoved, this);
-    mouse->signalMousePressed.add(&PlayerControls::mousePressed, this);
-    mouse->signalMouseReleased.add(&PlayerControls::mouseReleased, this);
+    this->keyboard=keyboard;
+    this->mouse=mouse;
+
+    this->keyboard->signalKeyPressed.add(&PlayerControls::keyboardPressed, this);
+    this->keyboard->signalKeyReleased.add(&PlayerControls::keyboardReleased, this);
+    this->mouse->signalMouseMoved.add(&PlayerControls::mouseMoved, this);
+    this->mouse->signalMousePressed.add(&PlayerControls::mousePressed, this);
+    this->mouse->signalMouseReleased.add(&PlayerControls::mouseReleased, this);
 }
 
 PlayerControls::~PlayerControls()
@@ -181,3 +184,22 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::MouseBu
 	
 	return key;
 }
+
+void PlayerControls::suspendre_ecoute()
+{
+    this->keyboard->signalKeyPressed.remove(&PlayerControls::keyboardPressed, this);
+    this->keyboard->signalKeyReleased.remove(&PlayerControls::keyboardReleased, this);
+    this->mouse->signalMousePressed.remove(&PlayerControls::mousePressed, this);
+    this->mouse->signalMouseMoved.remove(&PlayerControls::mouseMoved, this);
+    this->mouse->signalMouseReleased.remove(&PlayerControls::mouseReleased, this);
+}
+
+void PlayerControls::reprendre_ecoute()
+{
+    this->keyboard->signalKeyPressed.add(&PlayerControls::keyboardPressed, this);
+    this->keyboard->signalKeyReleased.add(&PlayerControls::keyboardReleased, this);
+    this->mouse->signalMouseMoved.add(&PlayerControls::mouseMoved, this);
+    this->mouse->signalMousePressed.add(&PlayerControls::mousePressed, this);
+    this->mouse->signalMouseReleased.add(&PlayerControls::mouseReleased, this);
+}
+

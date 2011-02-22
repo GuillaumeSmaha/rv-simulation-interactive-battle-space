@@ -50,6 +50,10 @@ class PlayerControls: public ObjectRoot
 		 */
 		static int maxOISMouseControl;
 
+        ListenerKeyboard * keyboard;
+        ListenerMouse * mouse;
+
+
 	private:
          /*!
 		 * \brief Lie une touche à un contrôle (déplacement, tir). 
@@ -75,6 +79,17 @@ class PlayerControls: public ObjectRoot
 		 */
         Signal<Ogre::Vector3> signalMouseMoved;
 	
+        /*!
+         * \brief Permet d'arréter de réagir aux listeners 
+         * Utile lorsque le menu est activé.
+        */
+        void suspendre_ecoute();
+        /*!
+         * \brief Permet de rependre l'écoute des listeneurs
+         * Appelé aprés que le menu ai été fermé.
+        */
+        void reprendre_ecoute();
+
     public:
         /*!
          * \brief Constructor

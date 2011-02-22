@@ -53,6 +53,7 @@ void Menus::keyPressed(const OIS::KeyEvent &evt)
     CEGUI::System &sys = CEGUI::System::getSingleton();
     sys.injectKeyDown(evt.key);
     sys.injectChar(evt.text);
+
 }
 
 
@@ -64,6 +65,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             if(!this->menu_open)
             {
                 std::cout<<"ouvrir"<<std::endl;
+                suspendre_jeux();
                 afficher_menus();
                 this->menu_open=true;
             }
@@ -71,6 +73,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             {
                 std::cout<<"fermer"<<std::endl;
                 cacher_menus();
+                redemarrer_jeux();
                 this->menu_open=false;
             }
 			break;
@@ -221,7 +224,6 @@ CEGUI::Window * Menus::create_std_window(std::string name, float posX, float pos
     while(i<nbEl)
     {
         tmp_contenu=contenu[i];
-        std::cout<<"i: "<<i<<std::endl;
         menuBackground->addChildWindow(tmp_contenu);
         i++;
     }
@@ -241,6 +243,10 @@ CEGUI::Window * Menus::create_std_window(std::string name, float posX, float pos
 }
 bool Menus::destroyWindow(const CEGUI::EventArgs & evt)
 {
+    if(mainWdw==(static_cast<const WindowEventArgs&>(evt).window->getParent()->getParent()))
+    {
+        actionFromPlayer(PlayerControls::OPEN_MENU);
+    }
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     wmgr.destroyWindow((static_cast<const WindowEventArgs&>(evt)).window->getParent()->getParent());
     return true;
@@ -271,4 +277,15 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt)
 
     
     return true;
+}
+
+
+void Menus::suspendre_jeux()
+{
+    this->app->suspendre_jeux();
+}
+
+void Menus::redemarrer_jeux()
+{
+    this->app->redemarrer_jeux();
 }

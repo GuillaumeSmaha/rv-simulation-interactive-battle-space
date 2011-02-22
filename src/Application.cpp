@@ -420,6 +420,8 @@ void Application::initScene(void)
 
 //------------------------------------------------------------------------------
 
+
+
 int main(void)
 {
 	Application appli;
@@ -432,4 +434,15 @@ int main(void)
 	}
 
 	return 0;
+}
+
+
+void Application::suspendre_jeux()
+{
+    this->player->suspendre_ecoute();
+}
+
+void Application::redemarrer_jeux()
+{
+    this->player->reprendre_ecoute();
 }

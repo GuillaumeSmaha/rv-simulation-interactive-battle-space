@@ -218,6 +218,9 @@ class Application : public ObjectRoot
 			this->shutDown = shutdown;
 		}
 
+        void suspendre_jeux();
+        void redemarrer_jeux();
+
 
 	private:
 		/*!
@@ -240,6 +243,7 @@ class Application : public ObjectRoot
          * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)
          */
         void onKeyPressed(PlayerControls::Controls key);
+
 };
 
 #endif // __APPLICATION_H__
