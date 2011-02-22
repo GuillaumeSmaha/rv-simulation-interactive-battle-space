@@ -8,6 +8,7 @@ ListenerTime::ListenerTime(unsigned long seuil, ListenerFrame * listenerFrame)
     this->started=false;
     this->timer = new Timer();
     listenerFrame->signalFrameEnded.add(&ListenerTime::watchTime, this);
+    paused = false;
 }
 
 ListenerTime::~ListenerTime()
@@ -28,7 +29,15 @@ void ListenerTime::watchTime(void * useless)
     if(this->timer->getMilliseconds()>seuil)
     {
         //emit dispatch
-        this->signalTimerElapsed.dispatch();
+        if(!paused)
+        {
+                this->signalTimerElapsed.dispatch();
+        }
         this->timer->reset();
     }
 }
+void ListenerTime::pause(bool pausing)
+{
+    this->paused = pausing;
+}
+

@@ -13,6 +13,7 @@
 #include "ListenerKeyboard.h"
 #include "PlayerControls.h"
 #include "Application.h"
+#include "Signal.h"
 //#include <CEGUIOgreRenderer.h>
 
 //déclaration avancé pour permettre la compilation
@@ -20,7 +21,7 @@ class Application;
 
 /*!
 * \class Menus
-* \brief Classe gérant les menus du jeux 
+* \brief Classe gérant les menus du jeux
 */
 class Menus: public ObjectRoot
 {
@@ -29,19 +30,23 @@ class Menus: public ObjectRoot
 		* \brief le renderer de cegui pour ogre
 		*/
 		CEGUI::OgreRenderer * menusRenderer;
-        
+
         /*!
         * \brief pointeur sur l'application globale pour intéragir avec celle ci
         */
         Application * app;
-        
+
         /*!
         * \brief fenetre principale de l'application
         */
         CEGUI::Window * mainWdw;
-        
+
         bool menu_open;
 	public:
+         /*!
+        * \brief Dispatché quand mis en pause ou reprise
+        */
+        Signal<bool> signalPaused;
 		/*!
 		* \brief constructeur
 		*/
@@ -56,7 +61,7 @@ class Menus: public ObjectRoot
          * \brief Permet de récupérer appuis sur touche dans cegui
         */
         void keyPressed(const OIS::KeyEvent &evt);
-        
+
         /*!
          * \brief Permet de récupérer les relachements d'une touche dans cegui
         */
@@ -91,9 +96,9 @@ class Menus: public ObjectRoot
 		/*!
 		* \brief Réagis aux actions de player, en particulier pour gérer l'ouverture/fermeture du menus
 		*/
-		
+
         void actionFromPlayer(PlayerControls::Controls key);
-        
+
         /*!
          * \brief Lance l'affichage des différents éléments du menus lors de l'activation de celui ci
          */
@@ -103,7 +108,7 @@ class Menus: public ObjectRoot
          * \brief Retire le menus lorsque l'on le quitte.
          */
         void cacher_menus();
-        
+
         /*!
          * \brief Crée le menus principal
          */
@@ -138,7 +143,7 @@ class Menus: public ObjectRoot
 		* \brief Action appelé lors de l'appui sur le bouton exit
 		*/
         bool clicExit(const CEGUI::EventArgs & evt);
- 		
+
         /*!
 		* \brief Action appelé lors de l'appui sur le bouton about
 		*/

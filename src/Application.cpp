@@ -108,7 +108,7 @@ bool Application::start(void)
 
     //initialise cegui
     menus= new Menus(this->listenerMouse, this->listenerKeyboard, this->player2, this);
-
+    menus->signalPaused.add(&ListenerTime::pause, this->listenerTime);
 
     // create the scene
 	this->initScene();

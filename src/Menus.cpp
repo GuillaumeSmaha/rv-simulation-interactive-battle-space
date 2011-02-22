@@ -32,7 +32,7 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, Player
 
     //enregistre les signaux sur PlayerControls (même si réagit uniquement à l'appui sur la touche permettant d'ouvrir le menus
     pControl->signalKeyPressed.add(&Menus::actionFromPlayer, this);
-    this->menu_open=false;   
+    this->menu_open=false;
 
     creer_souris();
     creer_main_window();
@@ -68,6 +68,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
                 suspendre_jeux();
                 afficher_menus();
                 this->menu_open=true;
+
             }
             else
             {
@@ -84,12 +85,14 @@ void Menus::afficher_menus()
 {
     afficher_souris();
     afficher_main_window();
+    signalPaused.dispatch(true);
 }
 
 void Menus::cacher_menus()
 {
     cacher_souris();
     cacher_main_window();
+    signalPaused.dispatch(false);
 }
 
 void Menus::keyReleased(const OIS::KeyEvent &evt)
@@ -218,7 +221,7 @@ CEGUI::Window * Menus::create_std_window(std::string name, float posX, float pos
     CEGUI::Window * menuBackground = wmgr.createWindow("TaharezLook/StaticImage", "Background"+name);
     menuBackground->setSize(CEGUI::UVector2(CEGUI::UDim(largeur, 0), CEGUI::UDim(hauteur,0)));
     menuBackground->setPosition(CEGUI::UVector2(CEGUI::UDim(posX,0.0),CEGUI::UDim((posY+0.05),0.0)));
-    
+
     CEGUI::Window * tmp_contenu;
     int i=0;
     while(i<nbEl)
@@ -249,6 +252,7 @@ bool Menus::destroyWindow(const CEGUI::EventArgs & evt)
     }
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     wmgr.destroyWindow((static_cast<const WindowEventArgs&>(evt)).window->getParent()->getParent());
+    signalPaused.dispatch(false);
     return true;
 }
 
@@ -275,7 +279,7 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt)
 
     this->mainWdw->addChildWindow(nouvWdw);
 
-    
+
     return true;
 }
 

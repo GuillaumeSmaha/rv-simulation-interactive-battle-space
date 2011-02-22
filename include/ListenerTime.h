@@ -9,11 +9,10 @@
 #include "ObjectRoot.h"
 #include <Ogre.h>
 #include "ListenerFrame.h"
-
 /*!
  * \class ListenerTime
  * \brief Classe envoyant des signaux à temps régulier, utile pour gérer le vaiseaux.
- * 
+ *
  * Ecoute le frameListener, à chaque frame, regarde le temps écoulé depuis son dernier signal et si le temps est supérieur à un seuil, lance un signal
  */
 class ListenerTime : public ObjectRoot
@@ -32,11 +31,15 @@ class ListenerTime : public ObjectRoot
          * \brief Le timer en lui même
          */
         Ogre::Timer * timer;
+        /*!
+         * \brief Pause
+         */
+         bool paused;
 
 
     public:
-
-    Signal<void*> signalTimerElapsed;
+    void pause(bool pausing);
+    Signal<void *> signalTimerElapsed;
     ListenerTime(long unsigned int seuil, ListenerFrame * listenerFrame);
     ~ListenerTime();
     void watchTime(void *);
