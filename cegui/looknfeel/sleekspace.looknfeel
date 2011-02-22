@@ -11,7 +11,7 @@
         <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <PropertyDefinition name="HoverTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <PropertyDefinition name="PushedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-
+        <PropertyDefinition name="NormalImage" initialValue="" redrawOnWrite="true" />
         <ImagerySection name="label">
             <TextComponent>
                 <Area>
@@ -449,7 +449,7 @@
     ***************************************************
     -->
     <WidgetLook name="SleekSpace/Titlebar">
-        <Property name="CaptionColour" value="FFFFFFFF" />
+        <PropertyDefinition name="CaptionColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
         <ImagerySection name="main">
             <ImageryComponent>
                 <Area>
@@ -2203,6 +2203,11 @@
         <StateImagery name="DisabledFrame">
             <Layer>
                 <Section look="SleekSpace/StaticShared" section="frame" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="WithFrameEnabledBackground">
+            <Layer>
+                <Section look="SleekSpace/StaticShared" section="background" />
             </Layer>
         </StateImagery>
         <StateImagery name="EnabledBackground">

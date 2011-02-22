@@ -133,7 +133,7 @@
 	<FalagardMapping
 		WindowType="SleekSpace/TabPane"
 		TargetType="DefaultWindow"
-		Renderer="Falagard/TabPane"
+		Renderer="Falagard/Default"
 		LookNFeel="SleekSpace/TabPane"
 		/>
 	<FalagardMapping

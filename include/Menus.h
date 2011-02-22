@@ -38,7 +38,7 @@ class Menus: public ObjectRoot
         * \brief fenetre principale de l'application
         */
         CEGUI::Window * mainWdw;
-       
+        
         bool menu_open;
 	public:
 		/*!
@@ -101,9 +101,9 @@ class Menus: public ObjectRoot
         /*!
          * \brief affiche un bouton permettant de quitter
          */
-        void creer_btn_exit(void);
-        void afficher_btn_exit(void);
-        void cacher_btn_exit(void);
+        void creer_main_window(void);
+        void afficher_main_window(void);
+        void cacher_main_window(void);
 
 		/*!
 		* \brief Permet d'afficher un curseur de souris
@@ -112,7 +112,15 @@ class Menus: public ObjectRoot
 		void afficher_souris(void);
 		void cacher_souris(void);
 
+		/*!
+		* \brief Action appelé lors de l'appui sur le bouton exit
+		*/
         bool clicExit(const CEGUI::EventArgs & evt);
+ 		
+        /*!
+		* \brief Action appelé lors de l'appui sur le bouton about
+		*/
+        bool clicAbout(const CEGUI::EventArgs & evt);
 
 };
 
