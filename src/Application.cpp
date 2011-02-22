@@ -16,6 +16,7 @@ Application::Application(void)
 	this->pluginsCfg = "plugins.cfg";
 #endif
 
+    this->menus=NULL;
     //this->gestShip= NULL;
 
 	this->shutDown = false;
@@ -46,6 +47,8 @@ Application::~Application(void)
 	GestSceneManager::getSingleton()->deleteAll();
 
 	GestSceneManager::destroy();
+
+    delete this->menus;
 	//delete this->gestGroupAsteroids;
 	delete this->player;
 	delete this->player2;
@@ -104,7 +107,7 @@ bool Application::start(void)
 	this->initListeners();
 
     //initialise cegui
-    Menus * menus= new Menus(this->listenerMouse, this->listenerKeyboard, this->player2, this);
+    menus= new Menus(this->listenerMouse, this->listenerKeyboard, this->player2, this);
 
 
     // create the scene

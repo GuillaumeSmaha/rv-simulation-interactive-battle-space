@@ -6,6 +6,7 @@
 #define __MENUS_H__
 
 #include <Ogre.h>
+#include <string>
 #include <CEGUI.h>
 #include <RendererModules/Ogre/CEGUIOgreRenderer.h>
 #include "ListenerMouse.h"
@@ -49,6 +50,8 @@ class Menus: public ObjectRoot
 		* \brief destructeur
 		*/
 		~Menus();
+
+
 
         /*!
          * \brief Permet de récupérer appuis sur touche dans cegui
@@ -122,6 +125,9 @@ class Menus: public ObjectRoot
 		*/
         bool clicAbout(const CEGUI::EventArgs & evt);
 
+
+        CEGUI::Window * create_std_window(std::string name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu);
+        bool destroyWindow(const CEGUI::EventArgs & evt);
 };
 
 #endif //__MENUS_H__

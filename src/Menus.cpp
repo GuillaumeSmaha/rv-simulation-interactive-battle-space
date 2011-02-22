@@ -1,5 +1,6 @@
 #include "Menus.h"
 
+
 using namespace CEGUI;
 
 Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, PlayerControls * pControl, Application * app)
@@ -39,7 +40,12 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, Player
 
 Menus::~Menus()
 {
-
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+    wmgr.destroyAllWindows();
+    this->menusRenderer->destroyAllGeometryBuffers ();
+    this->menusRenderer->destroyAllTextureTargets ();
+    this->menusRenderer->destroyAllTextures ();
+    CEGUI::OgreRenderer::destroySystem ();
 }
 
 void Menus::keyPressed(const OIS::KeyEvent &evt)
@@ -146,47 +152,37 @@ void Menus::creer_main_window(void)
 {
 
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    this->mainWdw = wmgr.createWindow("DefaultWindow", "SpaceShip/Sheet");
-
-
-    //First the Titlebar
-    CEGUI::Window * titlebar= wmgr.createWindow("TaharezLook/Titlebar", "titlebar");
-    titlebar->setText("combat de l'espace");
-    titlebar->setSize(CEGUI::UVector2(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.05,0)));
-    titlebar->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.25,0)));
-    this->mainWdw->addChildWindow(titlebar);
-
-    //The background
-    CEGUI::Window * menuBackground = wmgr.createWindow("TaharezLook/StaticImage", "Background");
-    menuBackground->setSize(CEGUI::UVector2(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.10,0)));
-    menuBackground->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1,0.0),CEGUI::UDim(0.3,0.0)));
-    this->mainWdw->addChildWindow(menuBackground);
 
     //the Quit button
-    CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/AboutButton");
+    CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/QuitButton");
     quit->setText("Quit");
     quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.3,0)));
     quit->setPosition( UVector2( UDim( 0.2, 0.0f ), UDim( 0.32, 0.0f) ) );
-    menuBackground->addChildWindow(quit);
+    //menuBackground->addChildWindow(quit);
     quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicExit, this));
 
     //the About button
-    CEGUI::Window * about = wmgr.createWindow("SleekSpace/Button", "SpaceShip/QuitButton");
+    CEGUI::Window * about = wmgr.createWindow("SleekSpace/Button", "SpaceShip/AboutButton");
     about->setText("A propos");
     about->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.3,0)));
     about->setPosition( UVector2( UDim( 0.45, 0.0f ), UDim( 0.32, 0.0f) ) );
-    menuBackground->addChildWindow(about);
+    //menuBackground->addChildWindow(about);
     about->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicAbout, this));
 
+    CEGUI::Window * tblWin[2];
+    tblWin[0]=quit;
+    tblWin[1]=about;
+
+    this->mainWdw=create_std_window("Combat de vaiseaux", 0.1, 0.05, 0.8, 0.1,2, tblWin);
+
     CEGUI::System::getSingleton().setGUISheet(this->mainWdw);
-    mainWdw->hide();
+    this->mainWdw->hide();
 }
 
 //void Menus::creer_background(void)
 //{
 
 //}
-
 
 void Menus::cacher_main_window(void)
 {
@@ -196,36 +192,65 @@ void Menus::cacher_main_window(void)
 void Menus::afficher_main_window(void)
 {
     mainWdw->show();
-}
-
+};
 bool Menus::clicExit(const CEGUI::EventArgs & evt){
     this->app->killApplication();
     return true;
 }
 
-bool Menus::clicAbout(const CEGUI::EventArgs & evt){
+CEGUI::Window * Menus::create_std_window(std::string name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu)
+{
     //création de la nouvelle fenetre
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    CEGUI::Window * aboutWdw= wmgr.createWindow("DefaultWindow", "SpaceShip/AboutSheet");
+    CEGUI::Window * Wdw= wmgr.createWindow("DefaultWindow", "SpaceShip/"+name+"main");
 
     //Titlebar
-    CEGUI::Window * titlebar= wmgr.createWindow("TaharezLook/Titlebar", "titlebarAbout");
-    titlebar->setText("A propos");
-    titlebar->setSize(CEGUI::UVector2(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.05,0)));
-    titlebar->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1, 0), CEGUI::UDim(0.5,0)));
-    aboutWdw->addChildWindow(titlebar);
+    CEGUI::Window * titlebar= wmgr.createWindow("TaharezLook/Titlebar", "SpaceShip/titlebar"+name);
+    titlebar->setText(name);
+    titlebar->setSize(CEGUI::UVector2(CEGUI::UDim(largeur, 0), CEGUI::UDim(0.05,0)));
+    titlebar->setPosition(CEGUI::UVector2(CEGUI::UDim(posX, 0), CEGUI::UDim(posY,0)));
+    Wdw->addChildWindow(titlebar);
 
     //création du background
-    CEGUI::Window * menuBackground = wmgr.createWindow("TaharezLook/StaticImage", "AboutBackground");
-    menuBackground->setSize(CEGUI::UVector2(CEGUI::UDim(0.8, 0), CEGUI::UDim(0.10,0)));
-    menuBackground->setPosition(CEGUI::UVector2(CEGUI::UDim(0.1,0.0),CEGUI::UDim(0.55,0.0)));
-    aboutWdw->addChildWindow(menuBackground);
+    CEGUI::Window * menuBackground = wmgr.createWindow("TaharezLook/StaticImage", "Background"+name);
+    menuBackground->setSize(CEGUI::UVector2(CEGUI::UDim(largeur, 0), CEGUI::UDim(hauteur,0)));
+    menuBackground->setPosition(CEGUI::UVector2(CEGUI::UDim(posX,0.0),CEGUI::UDim((posY+0.05),0.0)));
     
-    CEGUI::Window * aboutScrollPane= wmgr.createWindow("TaharezLook/ScrollablePane", "AboutScroll");
-    aboutScrollPane->setSize(CEGUI::UVector2(CEGUI::UDim(1.0,0), CEGUI::UDim(1.0,0)));
-    menuBackground->addChildWindow(aboutScrollPane);
-    
+    CEGUI::Window * tmp_contenu;
+    int i=0;
+    while(i<nbEl)
+    {
+        tmp_contenu=contenu[i];
+        std::cout<<"i: "<<i<<std::endl;
+        menuBackground->addChildWindow(tmp_contenu);
+        i++;
+    }
 
+    //on ajoute un close bouton à chaque fenetre
+    CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/close"+name);
+    quit->setText("Fermer");
+    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.2,0)));
+    quit->setPosition( UVector2( UDim( 0.8, 0.0f ), UDim( 0.7, 0.0f) ) );
+    //menuBackground->addChildWindow(quit);
+    quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::destroyWindow, this));
+    menuBackground->addChildWindow(quit);
+    Wdw->addChildWindow(menuBackground);
+    return Wdw;
+
+
+}
+bool Menus::destroyWindow(const CEGUI::EventArgs & evt)
+{
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+    wmgr.destroyWindow((static_cast<const WindowEventArgs&>(evt)).window->getParent()->getParent());
+    return true;
+}
+
+
+bool Menus::clicAbout(const CEGUI::EventArgs & evt)
+{
+
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     //création du texte
     CEGUI::Window * textAbout= wmgr.createWindow("TaharezLook/StaticText", "AboutText");
     textAbout->setText("Jeux créé par :\n \
@@ -237,13 +262,12 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt){
        [colour='FFFF0000'] Pascal Burdin [colour='FFFFFFFF'],\n \
        [colour='FFFF0000'] Ting Shuo WANG [colour='FFFFFFFF'],\n \
         ");
-     
+    textAbout->setProperty( "VertScrollbar", "True" );
+    //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
+    CEGUI::Window * nouvWdw= create_std_window("A propos", 0.1, 0.5, 0.8, 0.2, 1, &textAbout);
 
-//textAbout->setText("This is just some text that shows how nicely [colour='FFFF0000']CEGUI \
-can format strings.[colour='FF00FF00'] and this is just colour [colour='FF0000FF'] formatting!");
-    aboutScrollPane->addChildWindow(textAbout);
 
-    this->mainWdw->addChildWindow(aboutWdw);
+    this->mainWdw->addChildWindow(nouvWdw);
 
     
     return true;

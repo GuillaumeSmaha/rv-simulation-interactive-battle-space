@@ -36,6 +36,7 @@ class ListenerMouse;
 class ListenerKeyboard;
 class ListenerFrame;
 
+class Menus;
 
 /*!
 * \class Application
@@ -104,6 +105,12 @@ class Application : public ObjectRoot
 		* \brief Listener pour les événements time
 		*/
 		ListenerTime * listenerTime;
+        
+        /*!
+        * Gere le menus du jeux
+        */
+        Menus * menus;
+
         /*!
         * Gere les controles claviers / souris utisable par le joueur
         */
