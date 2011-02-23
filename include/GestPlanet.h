@@ -1,5 +1,9 @@
+#ifndef __GESTPLANET_H__
+#define __GESTPLANET_H__
+
 #include <Ogre.h>
 #include "Planet.h"
+#include "ObjectRoot.h"
 
 /*!
 *  \file GestPlanet.h
@@ -12,16 +16,61 @@
 * En particulier, on renvoit vers elle les traitements communs à tous les planètes (mise à jour de la position après une frame si on a besoin après). 
 */
 
-class GestPlanet
+class GestPlanet : public ObjectRoot
 {
     private:
+		/*!
+		 * \brief Liste des planètes
+		 */
         std::vector<Planet *> lstPlanet;
 
-    public:
+		/*!
+		 *  \brief Instance de GestPlanet pour le singleton
+		 */
+		static GestPlanet * _instance ;
+
+		/*!
+		 * \brief Construction
+		*/
         GestPlanet();
+
+    public:
+		/*!
+		 *  \brief Retourne une instance du singleton
+		 */
+		static GestPlanet * getSingleton(void);
+
+		/*!
+         * \brief Detruit le singleton
+         */
+        static void destroy();
+
+		/*!
+		 * \brief Destructeur
+		 */
         ~GestPlanet();
+
+		/*!
+		 * \brief Ajoute une planète au gestionnaire
+		 * \param planet Planète à ajouter
+		 */
         void addPlanet(Planet * planet);
+
+		/*!
+		 * \brief Récupère la liste des planètes
+		 * \return La liste des planètes
+		 */
         std::vector<Planet> getAllPlanet();
-        void updatePlanet();
+
+		/*!
+		 * \brief Effectue la mise à jour des planètes
+		 */
+        void updatePlanet(void *);
+
+		/*!
+		 * \brief Supprime les planètes du gestionnaire
+		 */
         void deleteAllPlanet();
 };
+
+#endif // __GESTPLANET_H__

@@ -1,0 +1,102 @@
+
+// Expand a range-compressed vector (used with normal maps)
+float3 expand(float3 v)
+{
+	return (v - 0.5) * 2;
+}
+
+
+void emissive_ambient_vp( float4 position : POSITION,
+						  float2 uv1	  : TEXCOORD0,
+
+						  out float4 oPosition : POSITION,
+						  out float2 oUv1	   : TEXCOORD0,
+
+						  uniform float4x4 worldViewProj
+						  )
+{
+	oPosition = mul(worldViewProj, position);
+	oUv1 = uv1;
+}
+
+void emissive_ambient_fp(   float2 uv1      : TEXCOORD0,
+
+                            out float4 colourout	: COLOR,
+
+                            uniform float4 ambient,
+
+                            uniform sampler2D   ambientcol : register(s0),
+                            uniform sampler2D   emissivecol : register(s1)
+                        )
+{
+    float4 amb = tex2D(ambientcol, uv1);
+    colourout = (amb * ambient) + tex2D(emissivecol, uv1);
+}
+
+// This program is exactly the same as the specular-only VP.
+void diffuse_and_specular_PPL_vp(
+                                float4 position : POSITION,
+			 	                float3 normal	: NORMAL,
+			 	                float2 uv1		: TEXCOORD0,
+			 	                float3 tangent  : TANGENT0,
+
+			 	                out float4 oPosition    : POSITION,
+			 	                out float2 oUv1			: TEXCOORD0,
+			                    out float3 oTSlightPos  : TEXCOORD1,
+			                    out float3 oTSeyePos    : TEXCOORD2,
+
+				                uniform float4 lightPosition, // object space
+			 	                uniform float3 eyePosition,   // object space
+			 	                uniform float4x4 worldViewProj
+			 	                )
+{
+	// calculate output position
+	oPosition = mul(worldViewProj, position);
+
+	// pass the main uvs straight through unchanged
+	oUv1 = uv1;
+
+	// Calculate the binormal (NB we assume both normal and tangent are already normalised)
+	// NB looks like nvidia cross params are BACKWARDS to what you'd expect
+	// this equates to NxT, not TxN
+	float3 binormal = cross(tangent, normal);
+	
+	// Form a rotation matrix out of the vectors
+	float3x3 rotation = float3x3(tangent, binormal, normal);
+
+	// Transform the light vector according to this matrix
+	oTSlightPos = mul(rotation, lightPosition.xyz - position.xyz);
+    oTSeyePos = mul(rotation, eyePosition - position.xyz);
+}
+
+void diffuse_and_specular_PPL_fp(
+                                    float2 uv1			: TEXCOORD0,
+			                        float3 TSlightPos   : TEXCOORD1,
+			                        float3 TSeyePos     : TEXCOORD2,
+
+			                        out float4 colour	: COLOR,
+
+                                    uniform float4 lightDiffuse,
+			                        uniform float4 lightSpecular,
+			                        uniform float exponent,
+
+			                        uniform sampler2D   normalMap : register(s0),
+			                        uniform sampler2D   diffuseCol : register(s1),
+			                        uniform sampler2D   specularCol : register(s2)
+			                    )
+{
+	// Calculate half-angle in tangent space
+	float3 lightVec = normalize(TSlightPos);
+	float3 eyeDir = normalize(TSeyePos);
+	float3 halfAngle = normalize(eyeDir + lightVec);
+
+	// Get bump map vector, expand from range-compressed
+	float3 bumpVec = expand(tex2D(normalMap, uv1).xyz);
+
+	float specFactor = pow( dot(bumpVec, halfAngle), exponent );
+
+	float4 materialDiffuse = tex2D(diffuseCol, uv1);
+    float4 materialSpecular = tex2D(specularCol, uv1);
+	colour =   (materialDiffuse * lightDiffuse * dot(bumpVec, lightVec))
+	         + (materialSpecular * (lightSpecular * specFactor));
+}

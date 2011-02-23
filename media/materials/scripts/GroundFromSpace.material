@@ -1,0 +1,36 @@
+material GroundFromSpace
+{
+	technique
+	{
+		pass
+		{
+			vertex_program_ref GroundFromSpaceVS
+			{
+
+				param_named fvInvWavelengths float3 0 0 0
+				param_named fCameraHeightSqr float 0
+				param_named fInnerRadius float 0
+				param_named fOuterRadius float 0
+				param_named fOuterRadiusSqr float 0
+				param_named fKr4PI float 0
+				param_named fKm4PI float 0
+				param_named fKrESun float 0
+				param_named fKmESun float 0
+				param_named fScale float 0
+				param_named fScaleOverScaleDepth float 0
+			}
+	
+			fragment_program_ref GroundFromSpacePS
+			{
+				param_named fExposure float 0
+			}
+
+			texture_unit
+			{
+				texture Earth.jpg
+			}
+		
+		}
+	}
+	
+}

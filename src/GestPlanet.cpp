@@ -2,12 +2,30 @@
 
 using namespace std;
 
-GestPlanet::GestPlanet(){
-   lstPlanet.clear();
+GestPlanet* GestPlanet::_instance = NULL;
+
+GestPlanet* GestPlanet::getSingleton(void)
+{
+	if (_instance == NULL)
+	{
+		_instance = new GestPlanet();
+	}
+	return _instance;
+}
+
+
+GestPlanet::GestPlanet()
+{
+	if (_instance == NULL)
+	{
+		//lstPlanet.clear();
+		_instance = this;
+	}
 }
 
 GestPlanet::~GestPlanet()
 {
+	lstPlanet.clear();
 }
 
 void GestPlanet::addPlanet(Planet * planet)
@@ -16,12 +34,12 @@ void GestPlanet::addPlanet(Planet * planet)
 }
 
 
-void GestPlanet::updatePlanet()
+void GestPlanet::updatePlanet(void *)
 {
     vector<Planet *>::iterator itPlanet;
     for(itPlanet=lstPlanet.begin(); itPlanet<lstPlanet.end();itPlanet++)
 	{
-        (*itPlanet)->updatePosition();
+		(*itPlanet)->update();
 	}
 }
 
@@ -31,5 +49,13 @@ void GestPlanet::deleteAllPlanet()
     for(itPlanet=lstPlanet.begin(); itPlanet<lstPlanet.end();itPlanet++)
 	{
         delete (*itPlanet);
+    }
+}
+
+void GestPlanet::destroy()
+{
+    if(_instance != NULL)
+    {
+        delete _instance;
     }
 }

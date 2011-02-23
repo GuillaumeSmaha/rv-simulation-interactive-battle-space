@@ -1,23 +1,12 @@
-import * from "PerPixel.material"
+import * from "PPL.material"
+import * from "PPL_Atmo.material"
 
-material planet5 : PerPixel
+material planet5 : PPL
 {
 	set_texture_alias Texture planet5.jpg
-	/*
-	technique
-	{
-		pass
-		{
-			texture_unit
-			{
-				texture planet5.jpg
-			}
-			texture_unit
-			{
-				// TODO: gérer le bump mapping
-				texture planet5bump.jpg
-			}			
-		}
-	}
-	*/
+}
+
+material planet5_Atmo : PPL_Atmo
+{
+	set_texture_alias Texture planet5.jpg
 }

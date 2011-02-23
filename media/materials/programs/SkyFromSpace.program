@@ -1,0 +1,59 @@
+vertex_program SkyFromSpaceVS_HLSL hlsl
+{
+	source SkyFromSpace.hlsl
+	entry_point vs_main
+	target vs_2_0
+
+	default_params
+	{
+		param_named_auto matWorldViewProjection worldviewproj_matrix
+		param_named_auto fvCameraPos camera_position_object_space
+		param_named_auto fvLightDir light_direction_object_space 0
+	}
+}
+
+
+fragment_program SkyFromSpacePS_HLSL hlsl
+{
+	source SkyFromSpace.hlsl
+	entry_point ps_main
+	target ps_2_0
+	
+	default_params
+	{
+		param_named_auto fvLightDir light_direction_object_space 0
+	}
+}
+
+vertex_program SkyFromSpaceVS_GLSL glsl
+{
+	source SkyFromSpaceVS.glsl
+
+	default_params
+	{
+		param_named_auto matWorldViewProjection worldviewproj_matrix
+		param_named_auto fvCameraPos camera_position_object_space
+		param_named_auto fvLightDir light_direction_object_space 0
+	}
+}
+
+fragment_program SkyFromSpacePS_GLSL glsl
+{
+	source SkyFromSpacePS.glsl
+	
+	default_params
+	{
+		param_named_auto fvLightDir light_direction_object_space 0
+	}
+}
+
+vertex_program SkyFromSpaceVS unified
+{
+	delegate SkyFromSpaceVS_HLSL
+	delegate SkyFromSpaceVS_GLSL
+}
+fragment_program SkyFromSpacePS unified
+{
+	delegate SkyFromSpacePS_HLSL
+	delegate SkyFromSpacePS_GLSL
+}

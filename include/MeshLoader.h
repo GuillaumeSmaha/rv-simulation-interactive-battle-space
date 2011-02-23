@@ -113,7 +113,28 @@ class MeshLoader
 		 * \return Une entity correspondante dont le nom est passé en paramètre et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
 		 */
 		Ogre::Entity * getNodedEntity(MeshLoader::MeshType meshType, Ogre::String nodeName, Ogre::String meshName,  bool random = false);
-         /*!
+         
+		/*!
+		* \brief Renvoie un simple noeud correspondant à un type de mesh.
+		* (Utile pour gérer la création de l'Entity séparemment pour ensuite l'attacher au noeud correspondant)
+		* \param meshType Correspond au mesh à créer
+		* \param nodeName Nom du node
+		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'entity)
+		*/
+		Ogre::SceneNode* getNode(MeshLoader::MeshType meshType, Ogre::String nodeName);
+
+		/*!
+		* \brief Renvoie un simple noeud correspondant à un type de mesh.
+		* (Utile pour gérer la création de l'Entity séparemment pour ensuite l'attacher au noeud correspondant)
+		* \param meshType Correspond au mesh à créer
+		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'entity)
+		*/
+		Ogre::SceneNode* getNode(MeshLoader::MeshType meshType)
+		{
+			return getNode(meshType, "node"+Utils::toString(Utils::unique()));
+		}
+		
+		/*!
 		 * \brief Retourne le graphe de scène
 		 * \return Le graphe de scène
          */
@@ -127,6 +148,15 @@ class MeshLoader
          * \param meshType Correspondant au material
          */
 		void setMaterial(Ogre::Entity * entity, MeshLoader::MeshType meshType);
+
+		/*!
+		* \brief Permet de créer une sphère de manière optimisée
+		* \param strName Nom de l'objet à créer (très important pour ensuite récupérer l'entity)
+		* \param radius Rayon de la sphère à créer
+		* \param nRings Nombre d'anneaux de la sphère (128 permet d'avoir une qualité suffisante pour des gros objets)
+		* \param nSegments Nombre de segments par anneau (128 est bon aussi)
+		*/
+		void createSphere(const std::string& strName, const float radius, const int nRings = 64, const int nSegments = 64);
 };
 
 #endif // __MESH_LOADER_H__

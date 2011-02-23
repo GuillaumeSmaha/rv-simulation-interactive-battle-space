@@ -1,0 +1,16 @@
+import * from "PPL.material"
+import * from "PPL_Atmo.material"
+
+material planet2 : PPL
+{
+	set_texture_alias Texture Moon.jpg
+	set_texture_alias NormalMap MoonNormal.jpg
+	set_texture_alias SpecularMap MoonSpec.jpg
+}
+
+material planet2_Atmo : PPL_Atmo
+{
+	set_texture_alias Texture Moon.jpg
+	set_texture_alias NormalMap MoonNormal.jpg
+	set_texture_alias SpecularMap MoonSpec.jpg
+}

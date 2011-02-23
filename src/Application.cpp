@@ -37,8 +37,10 @@ Application::~Application(void)
 //    gestShip->deleteAllShips();
 //    delete this->gestShip;
 
-	gestPlanet->deleteAllPlanet();
-	delete this->gestPlanet;
+	GestPlanet::getSingleton()->deleteAllPlanet();
+	GestPlanet::destroy();
+	//gestPlanet->deleteAllPlanet();
+	//delete this->gestPlanet;
 
 	//gestGroupAsteroids->deleteAllGroupsAsteroids();
 	GestGroupAsteroids::getSingleton()->deleteAllGroupsAsteroids();
@@ -354,18 +356,19 @@ void Application::initScene(void)
 
 //	this->sceneMgr->getSceneNode("GroupeDecors")->createChildSceneNode("vsx2ssss")->attachObject(sphere);
 	//shete
-	gestPlanet = new GestPlanet();
+	//gestPlanet = new GestPlanet();
 
-	Planet *planet1 = new Planet();
-	planet1->setPosition(2500.0, 300.0, 12500.0);
-	planet1->setScale(150.0, 150.0, 150.0);
+	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
+	Planet *planet1 = new Planet(10000, true);
+	planet1->setPosition(2500.0, 300.0, 22500.0);
+	//planet1->setScale(150.0, 150.0, 150.0);
 
-	Planet *planet2 = new Planet(2);
-	planet2->setPosition(25000.0, 900.0, 300.0);
-	planet2->setScale(200.0, 200.0, 200.0);
+	Planet *planet2 = new Planet(2500, 2, false);
+	planet2->setPosition(20000.0, 900.0, 15000.0);
+	//planet2->setScale(200.0, 200.0, 200.0);
 
-	gestPlanet->addPlanet(planet1);
-	gestPlanet->addPlanet(planet2);
+	GestPlanet::getSingleton()->addPlanet(planet1);
+	GestPlanet::getSingleton()->addPlanet(planet2);
     GestShip::getSingleton();
 
 
@@ -393,21 +396,22 @@ void Application::initScene(void)
 	vec[1]=0;
 	vec[2]=0;
 	//création de la ceinture d'asteroids
-	GestGroupAsteroids::getSingleton()->createGroup(40,Ogre::Radian(0.01),100,vec,0.01);
+	GestGroupAsteroids::getSingleton()->createGroup(20,Ogre::Radian(0.01),100,vec,0.01);
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestGroupAsteroids::updateGroupsAsteroids,GestGroupAsteroids::getSingleton());
 
-
+	// A faire dans listenerFrame car listenerTime trop lent !!
+	this->listenerFrame->signalFrameEnded.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
 
 //Temporaire :
     // Set ambient light
     //this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
 	this->sceneMgr->setAmbientLight(Ogre::ColourValue::Black);
     // Create a light
-    Ogre::Light* l = this->sceneMgr->createLight("MainLight");
-	l->setType(Ogre::Light::LT_DIRECTIONAL);
+    Ogre::Light* l = this->sceneMgr->createLight("Sun");
+	l->setType(Ogre::Light::LT_POINT);
 	l->setDiffuseColour(1.0, 1.0, 1.0);
 	l->setSpecularColour(1.0, 1.0, 1.0);
     //l->setPosition(320,480,500);

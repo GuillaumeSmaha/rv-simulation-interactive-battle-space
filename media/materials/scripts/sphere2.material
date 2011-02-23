@@ -1,6 +1,6 @@
-import * from "PerPixel.material"
+import * from "PPL.material"
 
-material planet2 : PerPixel
+material planet2test : PPL
 {
 	set_texture_alias Texture planet2.jpg
 	/*

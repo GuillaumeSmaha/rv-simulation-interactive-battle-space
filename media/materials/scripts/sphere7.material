@@ -1,18 +1,12 @@
-import * from "PerPixel.material"
+import * from "PPL.material"
+import * from "PPL_Atmo.material"
 
-material planet7 : PerPixel
+material planet7 : PPL
 {
 	set_texture_alias Texture planet7.jpg
-	/*
-	technique
-	{
-		pass
-		{
-			texture_unit
-			{
-				texture planet7.jpg
-			}
-		}
-	}
-	*/
+}
+
+material planet7_Atmo : PPL_Atmo
+{
+	set_texture_alias Texture planet7.jpg
 }

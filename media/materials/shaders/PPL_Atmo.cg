@@ -1,0 +1,214 @@
+
+#define PI 3.14159f
+#define nSamples 3
+#define fSamples ((float)nSamples)
+
+#define fInvScaleDepth (1.0f / 0.25)
+#define fScaleDepth 0.25
+
+// Returns the near intersection point of a line and a sphere
+float getNearIntersection(float3 v3Pos, float3 v3Ray, float fDistance2, float fRadius2)
+{
+	float B = 2.0 * dot(v3Pos, v3Ray);
+	float C = fDistance2 - fRadius2;
+	float fDet = max(0.0, B*B - 4.0 * C);
+	return 0.5 * (-B - sqrt(fDet));
+}
+
+// The scale equation calculated by Vernier's Graphical Analysis
+float scale(float fCos)
+{
+	float x = 1.0 - fCos;
+	return fScaleDepth * exp(-0.00287 + x*(0.459 + x*(3.83 + x*(-6.80 + x*5.25))));
+}
+
+// Expand a range-compressed vector (used with normal maps)
+float3 expand(float3 v)
+{
+	return (v - 0.5) * 2;
+}
+
+
+void emissive_ambient_vp( float4 position : POSITION,
+						  float2 uv1	  : TEXCOORD0,
+
+						  out float4 oPosition : POSITION,
+						  out float2 oUv1	   : TEXCOORD0,
+
+						  uniform float4x4 worldViewProj
+						  )
+{
+	oPosition = mul(worldViewProj, position);
+	oUv1 = uv1;
+}
+
+void emissive_ambient_fp(   float2 uv1      : TEXCOORD0,
+
+                            out float4 colourout	: COLOR,
+
+                            uniform float4 ambient,
+
+                            uniform sampler2D   ambientcol : register(s0),
+                            uniform sampler2D   emissivecol : register(s1)
+                        )
+{
+    float4 amb = tex2D(ambientcol, uv1);
+    colourout = (amb * ambient) + tex2D(emissivecol, uv1);
+}
+
+// This program is exactly the same as the specular-only VP.
+void diffuse_and_specular_PPL_vp(
+                                float4 position : POSITION,
+			 	                float3 normal	: NORMAL,
+			 	                float2 uv1		: TEXCOORD0,
+			 	                float3 tangent  : TANGENT0,
+
+			 	                out float4 oPosition    	: POSITION,
+			 	                out float2 oUv1				: TEXCOORD0,
+			                    out float3 oTSlightPos  	: TEXCOORD1,
+			                    out float3 oTSeyePos    	: TEXCOORD2,
+								out float4 oRayleighColor	: TEXCOORD3,
+								out float4 oMieColor		: TEXCOORD4,
+
+				                uniform float4 lightPosition, // object space
+								uniform float4 lightDirection, //object space
+			 	                uniform float3 eyePosition,   // object space
+			 	                uniform float4x4 worldViewProj,
+								
+								uniform float3 fvInvWavelengths,
+								uniform float fCameraHeightSqr,
+								uniform float fInnerRadius,
+								uniform float fOuterRadius,
+								uniform float fOuterRadiusSqr,
+								uniform float fKr4PI,
+								uniform float fKm4PI,
+								uniform float fKrESun,
+								uniform float fKmESun,
+								uniform float fScale,
+								uniform float fScaleOverScaleDepth
+			 	                )
+{
+	// calculate output position
+	oPosition = mul(worldViewProj, position);
+
+	// pass the main uvs straight through unchanged
+	oUv1 = uv1;
+
+	// Calculate the binormal (NB we assume both normal and tangent are already normalised)
+	// NB looks like nvidia cross params are BACKWARDS to what you'd expect
+	// this equates to NxT, not TxN
+	float3 binormal = cross(tangent, normal);
+	
+	// Form a rotation matrix out of the vectors
+	float3x3 rotation = float3x3(tangent, binormal, normal);
+
+	// Transform the light vector according to this matrix
+	oTSlightPos = mul(rotation, lightPosition.xyz - position.xyz);
+    oTSeyePos = mul(rotation, eyePosition - position.xyz);
+	
+	
+	/* Atmosphere */
+	
+	float3 fvPos = position.xyz;
+	float3 fvRay = fvPos - eyePosition;
+	
+	fvPos = normalize(fvPos);
+	float fFar = length(fvRay);
+	fvRay /= fFar;
+	
+	// Calculate the closest intersection of the ray with the outer atmosphere (which is the near point of the ray passing through the atmosphere)
+	float fNear = getNearIntersection(eyePosition, fvRay, fCameraHeightSqr, fOuterRadiusSqr);
+	
+	// Calculate the ray's starting position, then calculate its scattering offset
+	float3 fvStart = eyePosition + fvRay * fNear;
+	fFar -= fNear;
+	float fDepth = exp((fInnerRadius - fOuterRadius) * fInvScaleDepth);
+	float fCameraAngle = dot(-fvRay, fvPos) / fFar;
+	float fLightAngle = dot(lightDirection.xyz, fvPos) / fFar;
+	float fCameraScale = scale(fCameraAngle);
+	float fLightScale = scale(fLightAngle);
+	float fCameraOffset = fDepth * fCameraScale;
+	float fTemp = (fLightScale + fCameraScale);
+	
+	float fSampleLength = fFar / fSamples;
+	float fScaledLength = fSampleLength * fScale;
+	float3 fvSampleRay = fvRay * fSampleLength;
+	float3 fvSamplePoint = fvStart + fvSampleRay * 0.5;
+	
+	// Now loop through the sample rays
+	float3 fvFrontColor = float3(0.0, 0.0, 0.0);
+	float3 fvAttenuate;
+	for(int i=0; i<nSamples; i++)
+	{
+		float fHeight = length(fvSamplePoint);
+		float fSampleDepth = exp(fScaleOverScaleDepth * (fInnerRadius - fHeight));
+		float fScatter = fSampleDepth * fTemp - fCameraOffset;
+		fvAttenuate = exp(-fScatter * (fvInvWavelengths * fKr4PI + fKm4PI));
+		fvFrontColor += fvAttenuate * (fSampleDepth * fScaledLength);
+		fvSamplePoint += fvSampleRay;
+	}
+	
+	oRayleighColor = float4(fvFrontColor * (fvInvWavelengths * fKrESun + fKmESun), 1.0);
+	oMieColor = float4(fvAttenuate, 1.0);
+}
+
+void diffuse_and_specular_PPL_fp(
+                                    float2 uv1			: TEXCOORD0,
+			                        float3 TSlightPos   : TEXCOORD1,
+			                        float3 TSeyePos     : TEXCOORD2,
+									float4 rayleighColor: TEXCOORD3,
+									float4 mieColor		: TEXCOORD4,
+
+			                        out float4 colour	: COLOR,
+
+                                    uniform float4 lightDiffuse,
+			                        uniform float4 lightSpecular,
+			                        uniform float exponent,
+									uniform float fExposure,
+
+			                        uniform sampler2D   normalMap : register(s0),
+			                        uniform sampler2D   diffuseCol : register(s1),
+			                        uniform sampler2D   specularCol : register(s2)
+			                    )
+{
+	// Calculate half-angle in tangent space
+	float3 lightVec = normalize(TSlightPos);
+	float3 eyeDir = normalize(TSeyePos);
+	float3 halfAngle = normalize(eyeDir + lightVec);
+
+	// Get bump map vector, expand from range-compressed
+	float3 bumpVec = expand(tex2D(normalMap, uv1).xyz);
+
+	float specFactor = pow( dot(bumpVec, halfAngle), exponent );
+
+	float4 materialDiffuse = tex2D(diffuseCol, uv1);
+	
+	//float4 atmoColor = 1 - exp(-fExposure * ((AmbientColor + DiffuseColor) * (fvRayleighColor + texColor * fvMieColor) + SpecularColor));
+	
+    float4 materialSpecular = tex2D(specularCol, uv1);
+	
+	float4 atmoColor = 1 - exp(-fExposure * (rayleighColor + materialDiffuse * mieColor));
+	
+	//colour =   (materialDiffuse * lightDiffuse * dot(bumpVec, lightVec))
+	//         + (materialSpecular * (lightSpecular * specFactor));
+	colour =   (atmoColor * lightDiffuse * dot(bumpVec, lightVec))
+	         + (materialSpecular * (lightSpecular * specFactor));
+	//colour =   	 (1 - exp(-fExposure * (rayleighColor + materialDiffuse * mieColor)));
+	//colour =   	 exp(-fExposure * materialDiffuse);
+			 
+	//colour = 1 - exp(-fExposure * (rayleighColor + materialDiffuse * mieColor));
+	
+	//return 1 - exp(-fExposure * ((AmbientColor + DiffuseColor) * (fvRayleighColor + texColor * fvMieColor) + SpecularColor));
+	
+	/*
+	float4 atmoColor = (rayleighColor + materialDiffuse * mieColor);
+	
+	colour = 1 - exp(
+						-fExposure * 
+						(
+							  (lightDiffuse * atmoColor * dot(bumpVec, lightVec)) 
+							+ (materialSpecular * (lightSpecular * specFactor))
+						)
+					);
+	*/
+}

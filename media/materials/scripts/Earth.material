@@ -1,0 +1,16 @@
+import * from "PPL_Atmo.material"
+import * from "PPL.material"
+
+material planet1 : PPL
+{
+	set_texture_alias Texture Earth.png
+	set_texture_alias NormalMap EarthNormal.dds
+	set_texture_alias SpecularMap EarthSpec.jpg
+}
+
+material planet1_Atmo : PPL_Atmo
+{
+	set_texture_alias Texture Earth.png
+	set_texture_alias NormalMap EarthNormal.dds
+	set_texture_alias SpecularMap EarthSpec.jpg
+}

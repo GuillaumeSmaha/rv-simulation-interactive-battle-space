@@ -1,0 +1,70 @@
+vertex_program GroundFromSpaceVS_HLSL hlsl
+{
+	source GroundFromSpace.hlsl
+	entry_point vs_main
+	target vs_2_0
+
+	default_params
+	{
+		param_named_auto matWorldViewProjection worldviewproj_matrix
+		param_named_auto worldMatrix world_matrix
+		param_named_auto fvCameraPos camera_position_object_space
+		param_named_auto fvLightDir light_direction_object_space 0
+	}
+}
+
+
+fragment_program GroundFromSpacePS_HLSL hlsl
+{
+	source GroundFromSpace.hlsl
+	entry_point ps_main
+	target ps_2_0
+	
+	default_params
+	{
+		param_named_auto ambient ambient_light_colour 0
+		param_named_auto diffuse light_diffuse_colour 0
+		param_named_auto specular light_specular_colour 0
+		param_named_auto viewDirection view_direction
+		param_named_auto lightDirection light_direction_object_space 0
+	}
+}
+
+vertex_program GroundFromSpaceVS_GLSL glsl
+{
+	source GroundFromSpaceVS.glsl
+
+	default_params
+	{
+		param_named_auto matWorldViewProjection worldviewproj_matrix
+		param_named_auto worldMatrix world_matrix
+		param_named_auto fvCameraPos camera_position_object_space
+		param_named_auto fvLightPos light_position_object_space 0
+	}
+}
+
+
+fragment_program GroundFromSpacePS_GLSL glsl
+{
+	source GroundFromSpacePS.glsl
+	
+	default_params
+	{
+		param_named_auto ambient ambient_light_colour 0
+		param_named_auto diffuse light_diffuse_colour 0
+		param_named_auto specular light_specular_colour 0
+		param_named_auto viewDirection view_direction
+		param_named_auto lightDirection light_direction_object_space 0
+	}
+}
+
+vertex_program GroundFromSpaceVS unified
+{
+	delegate GroundFromSpaceVS_HLSL
+	delegate GroundFromSpaceVS_GLSL
+}
+fragment_program GroundFromSpacePS unified
+{
+	delegate GroundFromSpacePS_HLSL
+	delegate GroundFromSpacePS_GLSL
+}
