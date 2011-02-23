@@ -5,6 +5,7 @@ using namespace Ogre;
 ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 {
 	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
+	pControl->signalMouseMoved.add(&ShipPlayer::mouseMoved, this);
 
 	this->typeCamera = CameraFixeAbstract::CAMERA_NULL;
 	this->gestCamera = NULL;
@@ -168,17 +169,28 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
             this->accelerate(-1);
             break;
         case PlayerControls::LEFT :
-            this->rollAccelerate(Ogre::Radian(0.001));
+            this->rollAccelerate(Ogre::Radian(-0.001));
             break;
         case PlayerControls::RIGHT :
-            this->rollAccelerate(Ogre::Radian(-0.001));
+            this->rollAccelerate(Ogre::Radian(0.001));
             break;
         case PlayerControls::UP :
             this->pitchAccelerate(Ogre::Radian(0.001));
             break;
-            case PlayerControls::DOWN :
+        case PlayerControls::DOWN :
             this->pitchAccelerate(Ogre::Radian(-0.001));
 		default:
 			break;
 	}
+}
+
+void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
+{
+	// TODO: Amélioreeeeeeeeeeeeeer =)
+
+	Quaternion rotation(Degree(-mouseVec[0] / 40.0), Vector3::UNIT_Y);
+
+	this->pitchAccelerate(Ogre::Radian(-mouseVec[1] / 8000.0));
+	this->rollAccelerate(Ogre::Radian(mouseVec[0] / 3000.0));
+	this->getNode()->rotate(rotation);
 }

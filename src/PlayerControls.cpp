@@ -1,5 +1,7 @@
 #include "PlayerControls.h"
 
+#include "Utils.h"
+
 int PlayerControls::maxOISKeyControl = 0xED+1;
 int PlayerControls::maxOISMouseControl = 7;
 

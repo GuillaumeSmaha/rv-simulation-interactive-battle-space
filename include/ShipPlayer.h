@@ -78,10 +78,14 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 		void changeCamera(CameraFixeAbstract::CameraType type);
 
         /*!
-         * \brief permet de réagir aux évènement sur le clavier et la souris en utilisant PlayerControls
+         * \brief permet de réagir aux évènement sur le clavier en utilisant PlayerControls
          */
         void keyPressed(PlayerControls::Controls key);
 
+		/*!
+         * \brief permet de réagir aux évènement sur la souris en utilisant PlayerControls
+         */
+        void mouseMoved(Ogre::Vector3 mouseVec);
 
         //getter/setter
 
