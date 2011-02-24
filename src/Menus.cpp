@@ -249,10 +249,13 @@ bool Menus::destroyWindow(const CEGUI::EventArgs & evt)
     if(mainWdw==(static_cast<const WindowEventArgs&>(evt).window->getParent()->getParent()))
     {
         actionFromPlayer(PlayerControls::OPEN_MENU);
+        signalPaused.dispatch(false);
     }
-    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    wmgr.destroyWindow((static_cast<const WindowEventArgs&>(evt)).window->getParent()->getParent());
-    signalPaused.dispatch(false);
+    else
+    {
+        CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+        wmgr.destroyWindow((static_cast<const WindowEventArgs&>(evt)).window->getParent()->getParent());
+    }
     return true;
 }
 
