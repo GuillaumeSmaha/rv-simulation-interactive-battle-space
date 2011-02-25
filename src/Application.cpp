@@ -1,4 +1,6 @@
 #include "Application.h"
+#include "HDRLogic.h"
+#include "ViewportLoader.h"
 
 using namespace Ogre;
 
@@ -120,6 +122,14 @@ bool Application::start(void)
 
 	// On affiche l'overlay
 	showDebugOverlay(true);
+
+	/* Tests de HDR en cours :)
+	std::vector<Viewport *> viewports = ViewportLoader::getSingleton()->getListViewport();
+	
+	Ogre::CompositorManager::getSingleton().registerCompositorLogic("HDR", new HDRLogic);
+	Ogre::CompositorManager::getSingleton().addCompositor(viewports[0], "HDR", 0);
+	Ogre::CompositorManager::getSingleton().setCompositorEnabled(viewports[0], "HDR", true);
+	*/
 
 	// start the scene rendering (main loop)
 	this->root->startRendering();

@@ -1,7 +1,5 @@
 #include "ListenerMouse.h"
 
-#include "Utils.h"
-
 ListenerMouse::ListenerMouse(OIS::InputManager * inputManager)
 {
 	this->inputManager = inputManager;
@@ -25,7 +23,6 @@ bool ListenerMouse::mouseMoved(const OIS::MouseEvent &evt)
 //	float mRotateSpeed = 0.1f;
 //	this->app->getGestCamera()->getCamera()->yaw(Ogre::Degree(-evt.state.X.rel * mRotateSpeed));
 //	this->app->getGestCamera()->getCamera()->pitch(Ogre::Degree(-evt.state.Y.rel * mRotateSpeed));
-	Utils::log("coinnnn");
 	this->signalMouseMoved.dispatch(Ogre::Vector3(evt.state.X.rel, evt.state.Y.rel, evt.state.Y.rel));
 
 	return true;

@@ -38,6 +38,10 @@ class ShipAbstract : public ObjectRoot
 		*/
 		Ogre::Real speed;
 		/*!
+		 * \brief Vitesse de translation du vaisseau
+		 */
+		Ogre::Real translateSpeed;
+		/*!
 		 * \brief Vitesse de rotation du vaisseau
 		*/
 		Ogre::Radian rollSpeed;
@@ -46,9 +50,17 @@ class ShipAbstract : public ObjectRoot
 		*/
 		Ogre::Radian pitchSpeed;
 		/*!
+		 * \brief Vitesse de rotation (yaw) du vaisseau
+		 */
+		Ogre::Radian yawSpeed;
+		/*!
 		 * \brief Accélération du vaisseau
 		*/
 		Ogre::Real acceleration;
+		/*!
+		 * \brief Accélération de la translation du vaisseau
+		 */
+		Ogre::Real translateAcceleration;
 		/*!
          * \brief Accelération de la rotation du vaiseau
         */
@@ -57,6 +69,10 @@ class ShipAbstract : public ObjectRoot
          * \brief Accelération de l'inclinaison du vaiseau
         */
         Ogre::Radian pitchAcceleration;
+		/*!
+		 * \brief Accélération de la rotation latérale du vaisseau
+		 */
+		Ogre::Radian yawAcceleration;
 
 	public:
         /*!
@@ -118,10 +134,16 @@ class ShipAbstract : public ObjectRoot
 		void moveRelative(const Ogre::Vector3 &vec);
 
         /*!
-         * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
+         * \brief Rotation autour de l'axe direction de l'objet, permet donc de tourner
          * \param w un angle en radian
         */
-		void rotateRelative(const Ogre::Radian w);
+		void rotateRollRelative(const Ogre::Radian w);
+
+		/*!
+         * \brief Rotation autour de la normale à la direction de l'objet, permet donc de tourner
+         * \param w un angle en radian
+        */
+		void rotateYawRelative(const Ogre::Radian w);
 
         /*!
          * \brief Permet d'incliner le vaiseau vers le haut (angle positif) ou vers le bas (angle négatif)
@@ -136,6 +158,12 @@ class ShipAbstract : public ObjectRoot
         */
         void accelerate(const Ogre::Real coefAcceleration);
 
+		/*!
+         * \brief Permet d'augmenter diminuer l'accélération de la translation en fonction de ce qu'elle était avant
+         * \param coefAcceleration Coefficient d'accélération
+        */
+        void translateAccelerate(const Ogre::Real coefAcceleration);
+
         /*!
          * \brief Permet d'augmenter diminuer l'accélération de la rotation en fonction de ce qu'elle était avant
          * \param coefAcceleration Coefficient d'accélération
@@ -148,6 +176,11 @@ class ShipAbstract : public ObjectRoot
         */
         void rollAccelerate(const Ogre::Radian coefAcceleration);
 
+		/*!
+         * \brief Permet d'augmenter diminuer l'accélération de l'inclinaison en fonction de ce qu'elle était avant
+         * \param coefAcceleration Coefficient d'accélération
+        */
+        void yawAccelerate(const Ogre::Radian coefAcceleration);
 
         //Getter/Setter
 
@@ -203,6 +236,23 @@ class ShipAbstract : public ObjectRoot
 		}
 
 		/*!
+		 * \brief [Getter] Récupère la vitesse de translation du vaisseau
+		 * \return Vitesse du vaisseau
+		*/
+        Ogre::Real getTranslateSpeed(void)
+		{
+			return this->translateSpeed;
+		}
+		/*!
+		 * \brief [Setter] Définit la vitesse de translation du vaisseau
+		 * \param speed Vitesse du vaisseau
+		*/
+		void setTranslateSpeed(const Ogre::Real translateSpeed)
+		{
+			this->translateSpeed = translateSpeed;
+		}
+
+		/*!
 		 * \brief [Getter] Récupère de rotation la vitesse du vaisseau
 		 * \return Vitesse de rotation du vaisseau
 		*/
@@ -237,6 +287,23 @@ class ShipAbstract : public ObjectRoot
 		}
 
 		/*!
+		 * \brief [Getter] Récupère de rotation la vitesse du vaisseau
+		 * \return Vitesse de rotation latérale du vaisseau
+		*/
+        Ogre::Radian getYawSpeed(void)
+		{
+			return this->yawSpeed;
+		}
+		/*!
+		 * \brief [Setter] Définit la vitesse de rotation latérale du vaisseau
+		 * \param pitchSpeed Vitesse de rotation du vaisseau
+		*/
+		void setYawSpeed(const Ogre::Radian yawSpeed)
+		{
+			this->yawSpeed = yawSpeed;
+		}
+
+		/*!
 		 * \brief [Getter] Récupère l'accélération du vaisseau
 		 * \return Accélération du vaisseau
 		*/
@@ -251,6 +318,23 @@ class ShipAbstract : public ObjectRoot
 		void setAcceleration(const Ogre::Real acceleration)
 		{
 			this->acceleration = acceleration;
+		}
+
+		/*!
+		 * \brief [Getter] Récupère l'accélération de translation du vaisseau
+		 * \return Accélération du vaisseau
+		*/
+		Ogre::Real getTranslateAcceleration(void)
+		{
+			return this->translateAcceleration;
+		}
+		/*!
+		 * \brief [Setter] Définit l'accélération de translation du vaisseau
+		 * \param acceleration Accélération du vaisseau
+		*/
+		void setTranslateAcceleration(const Ogre::Real translateAcceleration)
+		{
+			this->translateAcceleration = translateAcceleration;
 		}
 
 		/*!
@@ -285,6 +369,23 @@ class ShipAbstract : public ObjectRoot
 		void setPitchAcceleration(const Ogre::Radian pitchAcceleration)
 		{
 			this->pitchAcceleration = pitchAcceleration;
+		}
+
+		/*!
+		 * \brief [Getter] Récupère l'accélération de rotation latérale du vaisseau
+		 * \return Accélération de rotation du vaisseau
+		*/
+		Ogre::Radian getYawAcceleration(void)
+		{
+			return this->yawAcceleration;
+		}
+		/*!
+		 * \brief [Setter] Définit l'accélération de rotation latérale du vaisseau
+		 * \param pitchAcceleration Accélération de rotation du vaisseau
+		*/
+		void setYawAcceleration(const Ogre::Radian yawAcceleration)
+		{
+			this->yawAcceleration = yawAcceleration;
 		}
 
 		/*!

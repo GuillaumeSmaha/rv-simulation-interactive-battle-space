@@ -34,12 +34,17 @@ void ShipPlayer::updatePosition(void)
 	Vector3 position = this->getPosition();
     //calcule des nouvelles vitesses et positions
     this->setSpeed(this->getSpeed()+this->getAcceleration());
-	if (this->getSpeed() != 0)
-	{
-		this->moveRelative(0.0, 0.0, this->getSpeed());
-	}
+	this->setTranslateSpeed(this->getTranslateSpeed()+this->getTranslateAcceleration());
+	//if (this->getSpeed() != 0)
+	//{
+		//this->moveRelative(0.0, 0.0, this->getSpeed());
+	this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
+	//}
     this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
-    this->rotateRelative(this->getRollSpeed());
+    this->rotateRollRelative(this->getRollSpeed());
+
+	this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
+    this->rotateYawRelative(this->getYawSpeed());
 
     this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
     this->goUp(this->getPitchSpeed());
@@ -57,31 +62,59 @@ void ShipPlayer::updatePosition(void)
 		if(this->getAcceleration() > 0)
 			this->setAcceleration(0);
 	}
+
+	if(this->getTranslateAcceleration() > 0)
+    {
+		this->setTranslateAcceleration(this->getTranslateAcceleration()-1);
+		if(this->getTranslateAcceleration() < 0)
+			this->setTranslateAcceleration(0);
+	}
+    else if(this->getTranslateAcceleration() < 0)
+    {
+		this->setTranslateAcceleration(this->getTranslateAcceleration()+1);
+		if(this->getTranslateAcceleration() > 0)
+			this->setTranslateAcceleration(0);
+	}
     this->setPitchAcceleration(Ogre::Radian(0));
+	this->setYawAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
 
 	//on reduit la vitesse de rotation
     if(this->getRollSpeed() > Ogre::Radian(0))
     {
-		this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.00001));
+		this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001));
 		if(this->getRollSpeed() < Ogre::Radian(0))
 			this->setRollSpeed(Ogre::Radian(0));
 	}
     else if(this->getRollSpeed() < Ogre::Radian(0))
     {
-		this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.00001));
+		this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.001));
 		if(this->getRollSpeed() > Ogre::Radian(0))
 			this->setRollSpeed(Ogre::Radian(0));
 	}
+
+	if(this->getYawSpeed() > Ogre::Radian(0))
+    {
+		this->setYawSpeed(this->getYawSpeed()-Ogre::Radian(0.001));
+		if(this->getYawSpeed() < Ogre::Radian(0))
+			this->setYawSpeed(Ogre::Radian(0));
+	}
+    else if(this->getYawSpeed() < Ogre::Radian(0))
+    {
+		this->setYawSpeed(this->getYawSpeed()+Ogre::Radian(0.001));
+		if(this->getYawSpeed() > Ogre::Radian(0))
+			this->setYawSpeed(Ogre::Radian(0));
+	}
+
     if(this->getPitchSpeed() > Ogre::Radian(0))
     {
-		this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.00001));
+		this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.001));
 		if(this->getPitchSpeed() < Ogre::Radian(0))
 			this->setPitchSpeed(Ogre::Radian(0));
 	}
     else if(this->getPitchSpeed() < Ogre::Radian(0))
     {
-		this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.00001));
+		this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.001));
 		if(this->getPitchSpeed() > Ogre::Radian(0))
 			this->setPitchSpeed(Ogre::Radian(0));
 	}
@@ -169,10 +202,12 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
             this->accelerate(-1);
             break;
         case PlayerControls::LEFT :
-            this->rollAccelerate(Ogre::Radian(-0.001));
+            this->rollAccelerate(Ogre::Radian(-0.02));
+			this->translateAccelerate(0.1);
             break;
         case PlayerControls::RIGHT :
-            this->rollAccelerate(Ogre::Radian(0.001));
+            this->rollAccelerate(Ogre::Radian(0.02));
+			this->translateAccelerate(-0.1);
             break;
         case PlayerControls::UP :
             this->pitchAccelerate(Ogre::Radian(0.001));
@@ -188,9 +223,12 @@ void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 {
 	// TODO: Amélioreeeeeeeeeeeeeer =)
 
-	Quaternion rotation(Degree(-mouseVec[0] / 40.0), Vector3::UNIT_Y);
+	//Quaternion rotation(Degree(-mouseVec[0] / 40.0), Vector3::UNIT_Y);
 
-	this->pitchAccelerate(Ogre::Radian(-mouseVec[1] / 8000.0));
-	this->rollAccelerate(Ogre::Radian(mouseVec[0] / 3000.0));
-	this->getNode()->rotate(rotation);
+	this->pitchAccelerate(Ogre::Radian(mouseVec[1] / 8000.0));
+	this->yawAccelerate(Ogre::Radian(-mouseVec[0] / 8000.0));
+	//this->rollAccelerate(Ogre::Radian(mouseVec[0] / 3000.0));
+	//this->getNode()->rotate(rotation);
+	//this->getNode()->yaw(Radian(-mouseVec[0] / 2000.0));
+	//this->getNode()->translate(-mouseVec[0] / 10.0, 0, 0);
 }

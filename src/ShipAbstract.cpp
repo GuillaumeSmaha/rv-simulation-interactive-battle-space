@@ -2,7 +2,10 @@
 
 using namespace Ogre;
 
-ShipAbstract::ShipAbstract(void) : shipLife(100), speed(0), rollSpeed(0), pitchSpeed(0), acceleration(0), rollAcceleration(0), pitchAcceleration(0)
+ShipAbstract::ShipAbstract(void) 
+	: shipLife(100), 
+	  speed(0), translateSpeed(0), rollSpeed(0), yawSpeed(0), pitchSpeed(0), 
+	  acceleration(0), translateAcceleration(0), rollAcceleration(0), yawAcceleration(0), pitchAcceleration(0)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
@@ -74,20 +77,28 @@ void ShipAbstract::updatePosition(void)
 	Vector3 position = this->getPosition();
     //calcule des nouvelles vitesses et positions
     this->setSpeed(this->getSpeed()+this->getAcceleration());
-	if (this->getSpeed() != 0)
-	{
-		this->moveRelative(0.0, 0.0, this->getSpeed());
-	}
+	this->setTranslateSpeed(this->getTranslateSpeed() + this->getTranslateAcceleration());
+	//if (this->getSpeed() != 0)
+	//{
+		//this->moveRelative(0.0, 0.0, this->getSpeed());
+	this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
+	//}
+
     this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
-    this->rotateRelative(this->getRollSpeed());
+    this->rotateRollRelative(this->getRollSpeed());
+
+	this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
+    this->rotateYawRelative(this->getYawSpeed());
 
     this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
     this->goUp(this->getPitchSpeed());
 
     //on réduit chacune des accélérations
     this->setAcceleration(0);
+	this->setTranslateAcceleration(0);
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
+	this->setYawAcceleration(Ogre::Radian(0));
 }
 
 
@@ -104,9 +115,14 @@ void ShipAbstract::moveRelative(const Ogre::Vector3 &vec)
 	this->setPosition(pos[0], pos[1], pos[2]);
 }
 
-void ShipAbstract::rotateRelative(const Ogre::Radian w)
+void ShipAbstract::rotateRollRelative(const Ogre::Radian w)
 {
     this->entity->getParentNode()->roll(w);
+}
+
+void ShipAbstract::rotateYawRelative(const Ogre::Radian w)
+{
+    this->entity->getParentNode()->yaw(w);
 }
 
 void ShipAbstract::goUp(const Ogre::Radian w)
@@ -116,19 +132,28 @@ void ShipAbstract::goUp(const Ogre::Radian w)
 
 void ShipAbstract::accelerate(const Ogre::Real coefAcceleration)
 {
-    this->acceleration +=coefAcceleration;
+    this->acceleration += coefAcceleration;
+}
+
+void ShipAbstract::translateAccelerate(const Ogre::Real coefAcceleration)
+{
+	this->translateAcceleration += coefAcceleration;
 }
 
 void ShipAbstract::rollAccelerate(const Ogre::Radian coefAcceleration)
 {
-    this->rollAcceleration +=coefAcceleration;
+    this->rollAcceleration += coefAcceleration;
 }
 
 void ShipAbstract::pitchAccelerate(const Ogre::Radian coefAcceleration)
 {
-    this->pitchAcceleration +=coefAcceleration;
+    this->pitchAcceleration += coefAcceleration;
 }
 
+void ShipAbstract::yawAccelerate(const Ogre::Radian coefAcceleration)
+{
+    this->yawAcceleration += coefAcceleration;
+}
 
 
 //Getter-Setter
