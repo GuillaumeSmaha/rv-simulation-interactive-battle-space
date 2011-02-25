@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "HDRLogic.h"
+//#include "HDRLogic.h"
 #include "ViewportLoader.h"
 
 using namespace Ogre;
