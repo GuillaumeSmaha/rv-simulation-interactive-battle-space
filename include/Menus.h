@@ -14,6 +14,7 @@
 #include "PlayerControls.h"
 #include "Application.h"
 #include "Signal.h"
+#include "Utils.h"
 //#include <CEGUIOgreRenderer.h>
 
 //déclaration avancé pour permettre la compilation
@@ -145,9 +146,19 @@ class Menus: public ObjectRoot
         bool clicExit(const CEGUI::EventArgs & evt);
 
         /*!
+		* \brief Action appelé lors de l'appui sur le bouton restart
+		*/
+        bool clicRestart(const CEGUI::EventArgs & evt);
+       
+         /*!
 		* \brief Action appelé lors de l'appui sur le bouton about
 		*/
         bool clicAbout(const CEGUI::EventArgs & evt);
+
+        /*!
+		* \brief Action appelé lors de l'appui sur le bouton scenario
+		*/
+        bool clicScenario(const CEGUI::EventArgs & evt);
 
         /*!
 		* \brief Permet de créer une fentre de menus générique

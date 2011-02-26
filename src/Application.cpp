@@ -304,6 +304,51 @@ void Application::onKeyPressed(PlayerControls::Controls key)
 	}
 }
 
+void Application::restartScene(void)
+{
+    GestPlanet::getSingleton()->deleteAllPlanet();
+    GestShip::getSingleton()->deleteAllShips();
+    //GestGroupAsteroids::getSingleton()->deleteAllGroupsAsteroids();
+   
+//	Planet *planet1 = new Planet(10000, true);
+//	planet1->setPosition(2500.0, 300.0, 22500.0);
+//	//planet1->setScale(150.0, 150.0, 150.0);
+//
+//	Planet *planet2 = new Planet(2500, 2, false);
+//	planet2->setPosition(20000.0, 900.0, 15000.0);
+//	//planet2->setScale(200.0, 200.0, 200.0);
+//
+//	GestPlanet::getSingleton()->addPlanet(planet1);
+//	GestPlanet::getSingleton()->addPlanet(planet2);
+//
+//   	ShipPlayer * ship = new ShipPlayer(this->player);
+//    ship->setPosition(-50,-50,-50);
+//    //ship->setOrientation(5, 5, 5, 5);
+//
+//	/*ShipPlayer * ship2 = new ShipPlayer(this->player2);
+//    ship2->setPosition(-130,0,0);
+//    ship2->touched();*/
+//
+//    ShipIA * ship3 = new ShipIA();
+//    ship3->setPosition(130,0,0);
+//    ship3->touched();
+////    Utils::logFile("test");
+////    GestShip::getS
+//    GestShip::getSingleton()->addShip(ship);
+//    //gestShip->addShip(ship2);
+//    GestShip::getSingleton()->addShip(ship3);
+//    //Utils::log("test2");
+//
+//    //coordonnée du centre de la ceinture d'asteroids
+//	Vector3 vec;
+//	vec[0]=0;
+//	vec[1]=0;
+//	vec[2]=0;
+//	//création de la ceinture d'asteroids
+//	GestGroupAsteroids::getSingleton()->createGroup(20,Ogre::Radian(0.01),100,vec,0.01);
+//
+
+}
 
 void Application::initSceneGraph(void)
 {
@@ -354,9 +399,12 @@ void Application::initScene(void)
 	//planet->getParentSceneNode()->setPosition(1300,1300,15300);
 	//planet->getParentSceneNode()->setScale(35,35,35);
 
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,300,300);
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(300,-300,-300);
-	MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true)->getParentSceneNode()->setPosition(-300,300,300);
+	Ogre::Entity * uplanet1=MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true);
+    uplanet1->getParentSceneNode()->setPosition(300,300,300);
+	Ogre::Entity * uplanet2=MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true);
+    uplanet2->getParentSceneNode()->setPosition(300,-300,-300);
+	Ogre::Entity * uplanet3=MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET, true);
+    uplanet3->getParentSceneNode()->setPosition(-300,300,300);
 
 		//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET3)->getParentSceneNode()->setScale(10,10,10);
 	//MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET)->getParentSceneNode()->setScale(10,10,10);

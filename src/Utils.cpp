@@ -94,3 +94,23 @@ Ogre::String Utils::toString( int * Value)
 {
 	return Utils::toString(*Value);
 }
+
+
+Ogre::String Utils::read_file(char *path)
+{
+    Ogre::String res;
+    std::ifstream fichier(path, std::ios::in);
+    if(fichier)  // si l'ouverture a réussi
+    { 
+        std::string ligne;
+        while(getline(fichier, ligne))  // tant que l'on peut mettre la ligne dans "contenu"
+        {
+                res= res+(ligne+"\n");
+        }
+            fichier.close();
+            return res; 
+    }
+    else  // sinon
+        return NULL;
+
+}

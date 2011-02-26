@@ -11,7 +11,7 @@
 #include <OgreQuaternion.h>
 #include <sstream>
 #include <iostream>
-
+#include <fstream>
 #define PI (3.141592653589793)
 
 /*!
@@ -152,6 +152,12 @@ class Utils
 		* \param Value valeur à chainer
 		*/
 		static Ogre::String toString( int * Value );
+
+        /*!
+		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractères
+		* \param le chemin du fichier à lire
+		*/
+        static Ogre::String read_file(char *path);
 };
 
 

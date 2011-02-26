@@ -221,6 +221,12 @@ class Application : public ObjectRoot
         void suspendre_jeux();
         void redemarrer_jeux();
 
+    	/*!
+		*  \brief Permet de redemarrer sur une scene initiale sans tout recharger
+		*/
+		void restartScene(void);
+
+
 
 	private:
 		/*!
@@ -231,14 +237,16 @@ class Application : public ObjectRoot
 		*  \brief Initialise l'écoute de l'entrée clavier et souris
 		*/
 		void initListeners(void);
-		/*!
-		*  \brief Initialise le graphe de scène
-		*/
-		void initSceneGraph(void);
-		/*!
+	
+    	/*!
 		*  \brief Initialise la scène
 		*/
 		void initScene(void);
+
+    	/*!
+		*  \brief Initialise le graphe de scène
+		*/
+		void initSceneGraph(void);
         /*!
          * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)
          */

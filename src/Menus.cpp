@@ -162,24 +162,44 @@ void Menus::creer_main_window(void)
     //the Quit button
     CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/QuitButton");
     quit->setText("Quit");
-    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.3,0)));
-    quit->setPosition( UVector2( UDim( 0.2, 0.0f ), UDim( 0.32, 0.0f) ) );
+    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.3,0)));
+    quit->setPosition( UVector2( UDim( 0.05, 0.0f ), UDim( 0.32, 0.0f) ) );
     //menuBackground->addChildWindow(quit);
     quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicExit, this));
+
+    //the restart button
+    CEGUI::Window * restart = wmgr.createWindow("SleekSpace/Button", "SpaceShip/restart");
+    restart->setText("Redemarrer");
+    restart->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.3,0)));
+    restart->setPosition( UVector2( UDim( 0.25, 0.0f ), UDim( 0.32, 0.0f) ) );
+    //menuBackground->addChildWindow(restart);
+    restart->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicRestart, this));
+
+
 
     //the About button
     CEGUI::Window * about = wmgr.createWindow("SleekSpace/Button", "SpaceShip/AboutButton");
     about->setText("A propos");
-    about->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.3,0)));
+    about->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.3,0)));
     about->setPosition( UVector2( UDim( 0.45, 0.0f ), UDim( 0.32, 0.0f) ) );
-    //menuBackground->addChildWindow(about);
     about->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicAbout, this));
+
+    //the scenario button
+    CEGUI::Window *scenario = wmgr.createWindow("SleekSpace/Button", "SpaceShip/ScenarioButton");
+    scenario->setText("Scenario");
+    scenario->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.3,0)));
+    scenario->setPosition( UVector2( UDim( 0.65, 0.0f ), UDim( 0.32, 0.0f) ) );
+    scenario->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::clicScenario, this));
+
+
 
     CEGUI::Window * tblWin[2];
     tblWin[0]=quit;
-    tblWin[1]=about;
+    tblWin[1]=restart;
+    tblWin[2]=about;
+    tblWin[3]=scenario;
 
-    this->mainWdw=create_std_window("Combat de vaiseaux", 0.1, 0.05, 0.8, 0.1,2, tblWin);
+    this->mainWdw=create_std_window("Combat de vaiseaux", 0.1, 0.05, 0.8, 0.1,4, tblWin);
 
     CEGUI::System::getSingleton().setGUISheet(this->mainWdw);
     this->mainWdw->hide();
@@ -199,8 +219,17 @@ void Menus::afficher_main_window(void)
 {
     mainWdw->show();
 };
-bool Menus::clicExit(const CEGUI::EventArgs & evt){
+bool Menus::clicExit(const CEGUI::EventArgs & evt)
+{
     this->app->killApplication();
+    return true;
+}
+
+bool Menus::clicRestart(const CEGUI::EventArgs & evt)
+{
+    //permet de refermer proprement la fenetre
+    actionFromPlayer(PlayerControls::OPEN_MENU);
+    this->app->restartScene();
     return true;
 }
 
@@ -266,22 +295,29 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt)
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     //création du texte
     CEGUI::Window * textAbout= wmgr.createWindow("TaharezLook/StaticText", "AboutText");
-    textAbout->setText("Jeux créé par :\n \
-       [colour='FFFF0000'] Guillaume Smaha [colour='FFFFFFFF'],\n \
-       [colour='FFFF0000'] Pierre Vittet [colour='FFFFFFFF'],\n \
-       [colour='FFFF0000'] Jérémy Dubois [colour='FFFFFFFF'],\n \
-       [colour='FFFF0000'] Dimitry Bourreau [colour='FFFFFFFF'],\n \
-       [colour='FFFF0000'] Nicolas Fontenit [colour='FFFFFFFF'],\n \
-       [colour='FFFF0000'] Pascal Burdin [colour='FFFFFFFF'],\n \
-       [colour='FFFF0000'] Ting Shuo WANG [colour='FFFFFFFF'],\n \
-        ");
+    Ogre::String txt= Utils::read_file((char *)"./txt_menus/about.txt");
+    textAbout->setText(txt);
     textAbout->setProperty( "VertScrollbar", "True" );
     //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
     CEGUI::Window * nouvWdw= create_std_window("A propos", 0.1, 0.5, 0.8, 0.2, 1, &textAbout);
 
-
     this->mainWdw->addChildWindow(nouvWdw);
 
+    return true;
+}
+
+bool Menus::clicScenario(const CEGUI::EventArgs & evt)
+{
+
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+    //création du texte
+    CEGUI::Window * textScen= wmgr.createWindow("TaharezLook/StaticText", "TextScen");
+    Ogre::String txt= Utils::read_file((char *)"./txt_menus/scenario.txt");
+    textScen->setText(txt);
+    textScen->setProperty( "VertScrollbar", "True" );
+    //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
+    CEGUI::Window * nouvWdw= create_std_window("Scenario", 0.1, 0.5, 0.8, 0.2, 1, &textScen);
+    this->mainWdw->addChildWindow(nouvWdw);
 
     return true;
 }
