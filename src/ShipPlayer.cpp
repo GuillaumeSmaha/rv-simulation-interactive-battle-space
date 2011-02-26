@@ -5,6 +5,7 @@ using namespace Ogre;
 ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 {
 	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
+	pControl->signalKeyReleased.add(&ShipPlayer::keyReleased, this);
 	pControl->signalMouseMoved.add(&ShipPlayer::mouseMoved, this);
 
 	this->typeCamera = CameraFixeAbstract::CAMERA_NULL;
@@ -21,6 +22,14 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
 	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
+
+    accelerationPressed=false;
+    brakePressed=false;
+    leftPressed=false;
+    rightPressed=false;
+    upPressed=false;
+    downPressed=false;
+
 }
 
 ShipPlayer::~ShipPlayer(void)
@@ -31,6 +40,9 @@ ShipPlayer::~ShipPlayer(void)
 
 void ShipPlayer::updatePosition(void)
 {
+
+    update_differente_acceleration();
+
 	Vector3 position = this->getPosition();
     //calcule des nouvelles vitesses et positions
     this->setSpeed(this->getSpeed()+this->getAcceleration());
@@ -186,6 +198,39 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 	}
 }
 
+
+void ShipPlayer::update_differente_acceleration()
+{
+    if(accelerationPressed)
+    {
+        this->accelerate(0.2);
+    }
+    if(brakePressed)
+    {
+        this->accelerate(-0.4);
+    }
+    if(leftPressed)
+    {
+        this->rollAccelerate(Ogre::Radian(-0.006));
+	    this->translateAccelerate(0.005);
+    }
+    if(rightPressed)
+    {
+        this->rollAccelerate(Ogre::Radian(0.006));
+        this->translateAccelerate(-0.005);
+    }
+    if(upPressed)
+    {
+        this->pitchAccelerate(Ogre::Radian(0.003));
+    }
+    if(downPressed)
+    {
+        this->pitchAccelerate(Ogre::Radian(-0.003));
+    }
+
+}
+
+
 void ShipPlayer::keyPressed(PlayerControls::Controls key)
 {
     Quaternion r(Degree(90), Vector3::UNIT_X);
@@ -196,28 +241,57 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
             this->exploded();
             break;
 		case PlayerControls::ACCELERATION :
-            this->accelerate(1);
+            accelerationPressed=true;
             break;
         case PlayerControls::BRAKE:
-            this->accelerate(-1);
+            brakePressed=true;
             break;
         case PlayerControls::LEFT :
-            this->rollAccelerate(Ogre::Radian(-0.02));
-			this->translateAccelerate(0.1);
+            leftPressed=true;
             break;
         case PlayerControls::RIGHT :
-            this->rollAccelerate(Ogre::Radian(0.02));
-			this->translateAccelerate(-0.1);
+            rightPressed=true;
             break;
         case PlayerControls::UP :
-            this->pitchAccelerate(Ogre::Radian(0.001));
+            upPressed=true;
             break;
         case PlayerControls::DOWN :
-            this->pitchAccelerate(Ogre::Radian(-0.001));
+            downPressed=true;
 		default:
 			break;
 	}
 }
+
+void ShipPlayer::keyReleased(PlayerControls::Controls key)
+{
+    Quaternion r(Degree(90), Vector3::UNIT_X);
+    Quaternion orientation;
+    switch(key)
+	{
+		case PlayerControls::ACCELERATION :
+            accelerationPressed=false;
+            break;
+        case PlayerControls::BRAKE:
+            brakePressed=false;
+            break;
+        case PlayerControls::LEFT :
+            leftPressed=false;
+            break;
+        case PlayerControls::RIGHT :
+            rightPressed=false;
+            break;
+        case PlayerControls::UP :
+            upPressed=false;
+            break;
+        case PlayerControls::DOWN :
+            downPressed=false;
+            break;
+		default:
+			break;
+	}
+}
+
+
 
 void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 {

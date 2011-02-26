@@ -49,6 +49,15 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 		*  \brief Id du viewport
 		*/
 		int idViewport;
+
+        bool accelerationPressed;
+        bool brakePressed;
+        bool leftPressed;
+        bool rightPressed;
+        bool upPressed;
+        bool downPressed;
+
+
 	public:
 		/*!
 		 * \brief Construction
@@ -77,15 +86,6 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 		*/
 		void changeCamera(CameraFixeAbstract::CameraType type);
 
-        /*!
-         * \brief permet de réagir aux évènement sur le clavier en utilisant PlayerControls
-         */
-        void keyPressed(PlayerControls::Controls key);
-
-		/*!
-         * \brief permet de réagir aux évènement sur la souris en utilisant PlayerControls
-         */
-        void mouseMoved(Ogre::Vector3 mouseVec);
 
         //getter/setter
 
@@ -114,6 +114,24 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 		{
 			return this->nodeCameraExterieureFixe;
 		}
+
+    private:
+        /*!
+         * \brief permet de réagir aux évènement sur le clavier en utilisant PlayerControls
+         */
+        void keyPressed(PlayerControls::Controls key);
+
+
+
+        void keyReleased(PlayerControls::Controls key);
+
+		/*!
+         * \brief permet de réagir aux évènement sur la souris en utilisant PlayerControls
+         */
+        void mouseMoved(Ogre::Vector3 mouseVec);
+
+        void update_differente_acceleration(void);
+
 };
 
 #endif // __SHIP_PLAYER_H__

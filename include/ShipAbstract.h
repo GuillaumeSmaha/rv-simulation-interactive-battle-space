@@ -232,7 +232,13 @@ class ShipAbstract : public ObjectRoot
 		*/
 		void setSpeed(const Ogre::Real speed)
 		{
-			this->speed = speed;
+            if(speed<0)
+            {
+                this->speed=0;
+                this->setAcceleration(0);
+            }
+            else
+			    this->speed = speed;
 		}
 
 		/*!
