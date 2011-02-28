@@ -65,7 +65,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             if(!this->menu_open)
             {
                 std::cout<<"ouvrir"<<std::endl;
-                suspendre_jeux();
+                //suspendre_jeux();
                 afficher_menus();
                 this->menu_open=true;
 
@@ -74,7 +74,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             {
                 std::cout<<"fermer"<<std::endl;
                 cacher_menus();
-                redemarrer_jeux();
+                //redemarrer_jeux();
                 this->menu_open=false;
             }
 			break;
@@ -193,7 +193,7 @@ void Menus::creer_main_window(void)
 
 
 
-    CEGUI::Window * tblWin[2];
+    CEGUI::Window * tblWin[4];
     tblWin[0]=quit;
     tblWin[1]=restart;
     tblWin[2]=about;
