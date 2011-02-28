@@ -17,18 +17,18 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 	this->nodeCameraExterieureFixe = this->getNode()->createChildSceneNode("cameraExterieurFixe"+Utils::toString(Utils::unique()));
 
 
-	this->nodeCameraTarget->setPosition(0, 15, 60);
-	this->nodeCameraFirstPerson->setPosition(0, 15, 30);
+	this->nodeCameraTarget->setPosition(0, 15, 200);
+	this->nodeCameraFirstPerson->setPosition(0, 30, 50);
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
 	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 
-    accelerationPressed=false;
-    brakePressed=false;
-    leftPressed=false;
-    rightPressed=false;
-    upPressed=false;
-    downPressed=false;
+    accelerationPressed = false;
+    brakePressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    upPressed = false;
+    downPressed = false;
 
 }
 
@@ -153,6 +153,7 @@ void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 
 			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
+				this->gestCamera->getCamera()->setNearClipDistance(100);
 				break;
 
 			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
@@ -182,6 +183,7 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 
 			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
+				this->gestCamera->getCamera()->setNearClipDistance(100);
 				break;
 
 			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
@@ -196,6 +198,26 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
         GestSceneManager::remCamera(tmpGestCamera);
 		delete tmpGestCamera;
 	}
+}
+
+void ShipPlayer::switchNextCamera(void)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_NULL)
+		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
+	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FISRT_PERSON)
+		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
+	else if(this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
+		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
+}
+
+void ShipPlayer::switchPrevCamera(void)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_NULL)
+		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
+	else if(this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
+		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
+	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FISRT_PERSON)
+		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 }
 
 
@@ -241,22 +263,22 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
             this->exploded();
             break;
 		case PlayerControls::ACCELERATION :
-            accelerationPressed=true;
+            accelerationPressed = true;
             break;
         case PlayerControls::BRAKE:
-            brakePressed=true;
+            brakePressed = true;
             break;
         case PlayerControls::LEFT :
-            leftPressed=true;
+            leftPressed = true;
             break;
         case PlayerControls::RIGHT :
-            rightPressed=true;
+            rightPressed = true;
             break;
         case PlayerControls::UP :
-            upPressed=true;
+            upPressed = true;
             break;
         case PlayerControls::DOWN :
-            downPressed=true;
+            downPressed = true;
 		default:
 			break;
 	}
@@ -269,22 +291,25 @@ void ShipPlayer::keyReleased(PlayerControls::Controls key)
     switch(key)
 	{
 		case PlayerControls::ACCELERATION :
-            accelerationPressed=false;
+            accelerationPressed = false;
             break;
         case PlayerControls::BRAKE:
-            brakePressed=false;
+            brakePressed = false;
             break;
         case PlayerControls::LEFT :
-            leftPressed=false;
+            leftPressed = false;
             break;
         case PlayerControls::RIGHT :
-            rightPressed=false;
+            rightPressed = false;
             break;
         case PlayerControls::UP :
-            upPressed=false;
+            upPressed = false;
             break;
         case PlayerControls::DOWN :
-            downPressed=false;
+            downPressed = false;
+            break;
+        case PlayerControls::SWITCH_NEXT_CAMERA :
+            this->switchNextCamera();
             break;
 		default:
 			break;

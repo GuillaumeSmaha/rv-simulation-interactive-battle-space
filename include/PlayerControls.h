@@ -35,10 +35,12 @@ class PlayerControls: public ObjectRoot
 			BRAKE = 4,
 			LEFT = 5,
 			RIGHT = 6,
-            UP =7,
-            DOWN =8,
-            OPEN_MENU=9,
-			QUIT = 10
+            UP = 7,
+            DOWN = 8,
+            OPEN_MENU= 9,
+			QUIT = 10,
+            SWITCH_NEXT_CAMERA = 11,
+            SWITCH_PREV_CAMERA = 12
 		};
 		
          /*!

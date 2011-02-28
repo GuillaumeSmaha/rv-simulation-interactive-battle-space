@@ -21,9 +21,11 @@ PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 	this->setKeyControl(PlayerControls::DOWN, OIS::KC_N);
 	
 	this->setKeyControl(PlayerControls::OPEN_MENU, OIS::KC_F10);
+	
+	this->setKeyControl(PlayerControls::SWITCH_NEXT_CAMERA, OIS::KC_COLON); // :
     
-    this->keyboard=keyboard;
-    this->mouse=mouse;
+    this->keyboard = keyboard;
+    this->mouse = mouse;
 
     this->keyboard->signalKeyPressed.add(&PlayerControls::keyboardPressed, this);
     this->keyboard->signalKeyReleased.add(&PlayerControls::keyboardReleased, this);
@@ -117,47 +119,6 @@ void PlayerControls::mouseReleased(OIS::MouseButtonID evt)
 
 PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::KeyEvent &evt)
 {
-    /*PlayerControls::Controls key;
-	switch(evt.key)
-	{
-		case OIS::KC_ESCAPE :
-            key = PlayerControls::QUIT;
-			break;
-
-		case OIS::KC_UP :
-		case OIS::KC_Z :
-            key = PlayerControls::ACCELERATION;
-			break;
-
-		case OIS::KC_DOWN :
-		case OIS::KC_S :
-            key = PlayerControls::BRAKE;
-            break;
-
-		case OIS::KC_LEFT :
-		case OIS::KC_Q :
-            key = PlayerControls::LEFT;
-			break;
-
-		case OIS::KC_RIGHT :
-		case OIS::KC_D :
-            key = PlayerControls::RIGHT;
-			break;
-	    case OIS::KC_H :
-            key = PlayerControls::UP;
-			break;
-	    case OIS::KC_N :
-            key = PlayerControls::DOWN;
-			break;
-
-		default:
-			key = PlayerControls::NONE;
-			break;
-	}
-	
-	return key;
-	*/
-	
 	PlayerControls::Controls key = this->listKeyControl[evt.key];
 	
 	return key;
@@ -166,22 +127,6 @@ PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::KeyEven
 
 PlayerControls::Controls PlayerControls::OISEventToControlKey(const OIS::MouseButtonID evt)
 {
-    /*PlayerControls::Controls key;
-    
-	switch(evt)
-	{
-		case OIS::MB_Left :
-            key = PlayerControls::SHOOT1;
-			break;
-		case OIS::MB_Right :
-            key = PlayerControls::SHOOT2;
-			break;
-		default:
-			key = PlayerControls::NONE;
-			break;
-	}
-	return key;*/
-	
 	PlayerControls::Controls key = this->listMouseControl[evt];
 	
 	return key;

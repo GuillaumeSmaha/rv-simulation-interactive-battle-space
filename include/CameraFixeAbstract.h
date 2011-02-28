@@ -30,6 +30,7 @@ class CameraFixeAbstract {
 			/// Caméra Extérieure fixe attachée à un noeud
 			CAMERA_EXTERIEURE_FIXE = 3
 		};
+		static const int CameraTypeCount = 3;
 	
 	public:		 
 		/*!

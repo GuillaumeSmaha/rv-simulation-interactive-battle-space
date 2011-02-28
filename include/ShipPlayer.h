@@ -22,7 +22,7 @@
 *   Comporte un attribut Ogre::entity qui correspond à un unique mesh déplacable
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
 */
-class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
+class ShipPlayer : public ShipAbstract
 {
 	private:
        	/*!
@@ -50,11 +50,29 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 		*/
 		int idViewport;
 
+		/*!
+		*  \brief Indique si la touche d'accélération est appuyée
+		*/
         bool accelerationPressed;
+		/*!
+		*  \brief Indique si la touche de freinage est appuyée
+		*/
         bool brakePressed;
+		/*!
+		*  \brief Indique si la touche gauche est appuyée
+		*/
         bool leftPressed;
+		/*!
+		*  \brief Indique si la touche droite est appuyée
+		*/
         bool rightPressed;
+		/*!
+		*  \brief Indique si la touche haut est appuyée
+		*/
         bool upPressed;
+		/*!
+		*  \brief Indique si la touche bas est appuyée
+		*/
         bool downPressed;
 
 
@@ -85,6 +103,15 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
 		 * \param type Type de caméra
 		*/
 		void changeCamera(CameraFixeAbstract::CameraType type);
+
+		/*!
+		 * \brief Change de caméra par la suivante
+		*/
+		void switchNextCamera(void);
+		/*!
+		 * \brief Change de caméra par la précédente
+		*/
+		void switchPrevCamera(void);
 
 
         //getter/setter
@@ -119,18 +146,22 @@ class ShipPlayer : /*public ObjectRoot, */public ShipAbstract
         /*!
          * \brief permet de réagir aux évènement sur le clavier en utilisant PlayerControls
          */
+        void update_differente_acceleration(void);
+        /*!
+         * \brief Permet de réagir aux évènement sur le clavier en utilisant PlayerControls
+         * \param key Touche du clavier
+         */
         void keyPressed(PlayerControls::Controls key);
-
-
-
+        /*!
+         * \brief Permet de réagir aux évènement sur le clavier en utilisant PlayerControls
+         * \param key Touche du clavier
+         */
         void keyReleased(PlayerControls::Controls key);
-
 		/*!
-         * \brief permet de réagir aux évènement sur la souris en utilisant PlayerControls
+         * \brief Permet de réagir aux évènement sur la souris en utilisant PlayerControls
+         * \param mouseVec Mouvement de la souris
          */
         void mouseMoved(Ogre::Vector3 mouseVec);
-
-        void update_differente_acceleration(void);
 
 };
 
