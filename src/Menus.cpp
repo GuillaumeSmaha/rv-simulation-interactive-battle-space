@@ -294,8 +294,10 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt)
 
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     //création du texte
+    std::string file = SOURCE_DIR;
+    file.append("/txt_menus/about.txt");
     CEGUI::Window * textAbout= wmgr.createWindow("TaharezLook/StaticText", "AboutText");
-    Ogre::String txt= Utils::read_file((char *)"./txt_menus/about.txt");
+    Ogre::String txt = Utils::read_file(file.c_str());
     textAbout->setText(txt);
     textAbout->setProperty( "VertScrollbar", "True" );
     //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
@@ -311,8 +313,10 @@ bool Menus::clicScenario(const CEGUI::EventArgs & evt)
 
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     //création du texte
+    std::string file = SOURCE_DIR;
+    file.append("/txt_menus/scenario.txt");
     CEGUI::Window * textScen= wmgr.createWindow("TaharezLook/StaticText", "TextScen");
-    Ogre::String txt= Utils::read_file((char *)"./txt_menus/scenario.txt");
+    Ogre::String txt = Utils::read_file(file.c_str());
     textScen->setText(txt);
     textScen->setProperty( "VertScrollbar", "True" );
     //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));

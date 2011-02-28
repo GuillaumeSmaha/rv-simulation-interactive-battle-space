@@ -155,9 +155,18 @@ class Utils
 
         /*!
 		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractères
-		* \param le chemin du fichier à lire
+		* \param path Le chemin du fichier à lire
 		*/
-        static Ogre::String read_file(char *path);
+        static Ogre::String read_file(const char * path)
+        {
+			return Utils::read_file((char *)path);
+		}
+
+        /*!
+		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractères
+		* \param path Le chemin du fichier à lire
+		*/
+        static Ogre::String read_file(char * path);
 };
 
 

@@ -9,6 +9,7 @@
 #include <string>
 #include <CEGUI.h>
 #include <RendererModules/Ogre/CEGUIOgreRenderer.h>
+#include "config.h"
 #include "ListenerMouse.h"
 #include "ListenerKeyboard.h"
 #include "PlayerControls.h"

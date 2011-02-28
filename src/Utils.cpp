@@ -96,7 +96,7 @@ Ogre::String Utils::toString( int * Value)
 }
 
 
-Ogre::String Utils::read_file(char *path)
+Ogre::String Utils::read_file(char * path)
 {
     Ogre::String res;
     std::ifstream fichier(path, std::ios::in);
@@ -112,5 +112,4 @@ Ogre::String Utils::read_file(char *path)
     }
     else  // sinon
         return NULL;
-
 }
