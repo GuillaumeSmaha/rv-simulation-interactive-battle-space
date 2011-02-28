@@ -1,0 +1,15 @@
+material jaugeVide
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture JaugeVide.png
+				scale 1 1
+			}
+		}
+	}
+}

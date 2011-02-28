@@ -1,0 +1,15 @@
+material jaugePleine
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture JaugePleine.png
+				scale 1 1
+			}
+		}
+	}
+}
