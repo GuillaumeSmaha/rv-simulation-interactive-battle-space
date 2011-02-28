@@ -1,13 +1,13 @@
+/*!
+*  \file GroupAsteroid.h
+*  \brief Ce fichier contient la déclaration de la classe GestAsteroid. C'est la classe qui gère l'ensemble des asteroids
+*/
 #ifndef __GROUPASTEROID_H__
 #define __GROUPASTEROID_H__
 
 #include <Ogre.h>
 #include "Asteroid.h"
 
-/*!
-*  \file GroupAsteroid.h
-*  \brief Ce fichier contient la déclaration de la classe GestAsteroid. C'est la classe qui gère l'ensemble des asteroids
-*/
 
 /*!
 * \class GroupAsteroid

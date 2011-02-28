@@ -1,3 +1,7 @@
+/*!
+*  \file GestPlanet.h
+*  \brief Ce fichier contient la déclaration de la classe GestPlanet. C'est la classe qui gère l'ensemble des planètes.
+*/
 #ifndef __GESTPLANET_H__
 #define __GESTPLANET_H__
 
@@ -5,10 +9,6 @@
 #include "Planet.h"
 #include "ObjectRoot.h"
 
-/*!
-*  \file GestPlanet.h
-*  \brief Ce fichier contient la déclaration de la classe GestPlanet. C'est la classe qui gère l'ensemble des planètes.
-*/
 
 /*!
 * \class GestPlanet

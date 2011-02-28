@@ -19,6 +19,12 @@ macro(copyFilesFilter srcDir destDir filterExclude)
 	file(COPY "${srcDir}" DESTINATION "${destDir}" REGEX "${filterExclude}" EXCLUDE)
 endmacro(copyFilesFilter)
 
+#Copie par contenu de dossier
+macro(copyInFilesFilter srcDir destDir filterExclude) 
+	make_directory(${destDir})
+	file(COPY "${srcDir}" DESTINATION "${destDir}" REGEX "${filterExclude}" EXCLUDE)
+endmacro(copyInFilesFilter)
+
 
 #Ecrie un fichier de plugins
 macro(writePluginFile destDir isDebug)

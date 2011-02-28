@@ -1,3 +1,7 @@
+/*!
+*  \file  Asteroid.h
+*  \brief Ce fichier contient la déclaration de la classe Asteroid. C'est la classe qui gère les asteroids individuellements
+*/
 #ifndef __ASTEROID_H__
 #define __ASTEROID_H__
 
@@ -5,10 +9,6 @@
 #include "MeshLoader.h"
 #include "Utils.h"
 
-/*!
-*  \file  Asteroid.h
-*  \brief Ce fichier contient la déclaration de la classe Asteroid. C'est la classe qui gère les asteroids individuellements
-*/
 
 /*!
 * \class Asteroid
