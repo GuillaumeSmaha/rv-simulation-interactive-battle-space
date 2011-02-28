@@ -432,7 +432,6 @@ void Application::initScene(void)
 
 	ShipPlayer * ship = new ShipPlayer(this->player);
     ship->setPosition(-50,-50,-50);
-    ship->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
     //ship->setOrientation(5, 5, 5, 5);
 
 	/*ShipPlayer * ship2 = new ShipPlayer(this->player2);

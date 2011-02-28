@@ -2,8 +2,8 @@
 
 #include "Utils.h"
 
-int PlayerControls::maxOISKeyControl = 0xED+1;
-int PlayerControls::maxOISMouseControl = 7;
+//~ int PlayerControls::maxOISKeyControl = 0xED+1;
+//~ int PlayerControls::maxOISMouseControl = 7;
 
 PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 {    
@@ -22,7 +22,7 @@ PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 	
 	this->setKeyControl(PlayerControls::OPEN_MENU, OIS::KC_F10);
 	
-	this->setKeyControl(PlayerControls::SWITCH_NEXT_CAMERA, OIS::KC_COLON); // :
+	this->setKeyControl(PlayerControls::SWITCH_NEXT_CAMERA, OIS::KC_M); // :
     
     this->keyboard = keyboard;
     this->mouse = mouse;

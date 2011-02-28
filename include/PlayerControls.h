@@ -46,11 +46,11 @@ class PlayerControls: public ObjectRoot
          /*!
 		 * \brief Nombre maximum de touche clavier dans OIS
 		 */
-		static int maxOISKeyControl;
+		const static int maxOISKeyControl = 0xED+1;
          /*!
 		 * \brief Nombre maximum de touche souris dans OIS
 		 */
-		static int maxOISMouseControl;
+		const static int maxOISMouseControl = 7;
 
         ListenerKeyboard * keyboard;
         ListenerMouse * mouse;

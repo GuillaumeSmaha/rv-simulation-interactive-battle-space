@@ -18,7 +18,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 
 
 	this->nodeCameraTarget->setPosition(0, 15, 200);
-	this->nodeCameraFirstPerson->setPosition(0, 30, 50);
+	this->nodeCameraFirstPerson->setPosition(0, 30, 30);
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
 	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
@@ -144,16 +144,18 @@ void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 	if(this->gestCamera == NULL && type != CameraFixeAbstract::CAMERA_NULL)
 	{
 		this->typeCamera = type;
+		this->getEntity()->setVisible(true);
 
 		switch(this->typeCamera)
 		{
+			case CameraFixeAbstract::CAMERA_NULL :
 			case CameraFixeAbstract::CAMERA_FIXE :
 				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()));
 				break;
 
 			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
-				this->gestCamera->getCamera()->setNearClipDistance(100);
+				this->getEntity()->setVisible(false);
 				break;
 
 			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
@@ -174,16 +176,18 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 	{
 		this->typeCamera = type;
 		CameraFixeAbstract * tmpGestCamera = this->gestCamera;
+		this->getEntity()->setVisible(true);
 
 		switch(this->typeCamera)
 		{
+			case CameraFixeAbstract::CAMERA_NULL :
 			case CameraFixeAbstract::CAMERA_FIXE :
 				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()));
 				break;
 
 			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
-				this->gestCamera->getCamera()->setNearClipDistance(100);
+				this->getEntity()->setVisible(false);
 				break;
 
 			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
