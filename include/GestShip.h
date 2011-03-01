@@ -81,6 +81,11 @@ class GestShip : public ObjectRoot
 		 * \brief Supprime tous les vaisseaux du gestionnaire
 		*/
         void deleteAllShips();
+
+		/*!
+		 * \brief Pour tous les vaiseaux, les replace à leur position initiale
+		*/
+        void resetPosAllShips(void);
 };
 
 
