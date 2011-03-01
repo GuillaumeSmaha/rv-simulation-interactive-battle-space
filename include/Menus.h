@@ -38,6 +38,10 @@ class Menus: public ObjectRoot
         */
         Application * app;
 
+        ListenerMouse * mouseControl;
+        ListenerKeyboard * keyControl;
+        PlayerControls * pControl;
+
         /*!
         * \brief fenetre principale de l'application
         */

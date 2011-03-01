@@ -4,6 +4,8 @@ using namespace Ogre;
 
 ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 {
+
+    this->playerControl=pControl;
 	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
 	pControl->signalKeyReleased.add(&ShipPlayer::keyReleased, this);
 	pControl->signalMouseMoved.add(&ShipPlayer::mouseMoved, this);
@@ -34,6 +36,10 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
 
 ShipPlayer::~ShipPlayer(void)
 {
+	this->playerControl->signalKeyPressed.remove(&ShipPlayer::keyPressed, this);
+	this->playerControl->signalKeyReleased.remove(&ShipPlayer::keyReleased, this);
+	this->playerControl->signalMouseMoved.remove(&ShipPlayer::mouseMoved, this);
+
     GestSceneManager::remCamera(this->gestCamera);
 	delete this->gestCamera;
 }

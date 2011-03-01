@@ -7,6 +7,10 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, Player
 {
     this->app= app;
 
+    this->mouseControl=mouseControl;
+    this->keyControl=keyControl;
+    this->pControl=pControl;
+
     //démarre le menusRenderer
     menusRenderer = &CEGUI::OgreRenderer::bootstrapSystem();
 
@@ -40,12 +44,23 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, Player
 
 Menus::~Menus()
 {
+	mouseControl->signalMousePressed.remove(&Menus::mousePressed, this);
+	mouseControl->signalMouseReleased.remove(&Menus::mouseReleased, this);
+	mouseControl->signalMouseMoved.remove(&Menus::mouseMoved, this);
+
+    keyControl->signalKeyPressed.remove(&Menus::keyPressed, this);
+    keyControl->signalKeyReleased.remove(&Menus::keyReleased, this);
+
+    pControl->signalKeyPressed.remove(&Menus::actionFromPlayer, this);
+
     CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
     wmgr.destroyAllWindows();
     this->menusRenderer->destroyAllGeometryBuffers ();
     this->menusRenderer->destroyAllTextureTargets ();
     this->menusRenderer->destroyAllTextures ();
     CEGUI::OgreRenderer::destroySystem ();
+
+
 }
 
 void Menus::keyPressed(const OIS::KeyEvent &evt)
@@ -64,7 +79,6 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
 		case PlayerControls::OPEN_MENU:
             if(!this->menu_open)
             {
-                std::cout<<"ouvrir"<<std::endl;
                 //suspendre_jeux();
                 afficher_menus();
                 this->menu_open=true;
@@ -72,7 +86,6 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             }
             else
             {
-                std::cout<<"fermer"<<std::endl;
                 cacher_menus();
                 //redemarrer_jeux();
                 this->menu_open=false;
@@ -228,8 +241,9 @@ bool Menus::clicExit(const CEGUI::EventArgs & evt)
 bool Menus::clicRestart(const CEGUI::EventArgs & evt)
 {
     //permet de refermer proprement la fenetre
-    actionFromPlayer(PlayerControls::OPEN_MENU);
+      
     this->app->restartScene();
+    actionFromPlayer(PlayerControls::OPEN_MENU);
     return true;
 }
 

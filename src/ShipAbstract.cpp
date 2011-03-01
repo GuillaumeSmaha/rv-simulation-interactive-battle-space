@@ -5,7 +5,7 @@ using namespace Ogre;
 ShipAbstract::ShipAbstract(void) 
 	: shipLife(100), 
 	  speed(0), translateSpeed(0), rollSpeed(0), yawSpeed(0), pitchSpeed(0), 
-	  acceleration(0), translateAcceleration(0), rollAcceleration(0), yawAcceleration(0), pitchAcceleration(0)
+	  acceleration(0), translateAcceleration(0), rollAcceleration(0), yawAcceleration(0), pitchAcceleration(0) , firstPos(true), firstDir(true)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
     this->getNode()->setPosition(0, 0, 0);
@@ -168,11 +168,21 @@ Quaternion ShipAbstract::getOrientation(void)
 
 void ShipAbstract::setOrientation(const Ogre::Quaternion &q)
 {
+    if(firstDir)
+    {
+        dirInit=q;
+        firstDir=false;
+    }
 	this->getNode()->setOrientation(q);
 }
 
 void ShipAbstract::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a) 
 {
+    if(firstDir)
+    {
+        dirInit=Quaternion(x,y,z,a);
+        firstDir=false;
+    }
 	this->getNode()->setOrientation(x, y, z, a);
 }
 
@@ -184,11 +194,39 @@ Ogre::Vector3 ShipAbstract::getPosition(void)
 
 void ShipAbstract::setPosition(const Ogre::Vector3 &v)
 {
+    if(firstPos)
+    {
+        posInit=v;
+        firstPos=false;
+    }
     this->getNode()->setPosition(v);
 }
 
 void ShipAbstract::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
 {
+    if(firstPos)
+    {
+        posInit[0]=x;
+        posInit[1]=y;
+        posInit[2]=z;
+        firstPos=false;
+    }
     this->getNode()->setPosition(x, y, z);
+}
+
+void ShipAbstract::reset()
+{
+    setSpeed(0);
+    setAcceleration(0);
+    setTranslateSpeed(0);
+    setTranslateAcceleration(0);
+    setRollSpeed(Ogre::Radian(0));
+    setRollAcceleration(Ogre::Radian(0));
+    setPitchSpeed(Ogre::Radian(0));
+    setPitchAcceleration(Ogre::Radian(0));
+    setYawSpeed(Ogre::Radian(0));
+    setYawAcceleration(Ogre::Radian(0));
+    setPosition(posInit);
+    setOrientation(dirInit);
 }
 

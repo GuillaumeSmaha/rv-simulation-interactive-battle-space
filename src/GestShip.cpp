@@ -71,3 +71,13 @@ void GestShip::destroy()
         delete _instance;
     }
 }
+
+void GestShip::resetPosAllShips()
+{
+    vector<ShipAbstract *>::iterator itShip;
+    for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)
+    {
+        (*itShip)->reset();
+    }
+}
+

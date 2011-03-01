@@ -74,6 +74,10 @@ class ShipPlayer : public ShipAbstract
 		*  \brief Indique si la touche bas est appuyée
 		*/
         bool downPressed;
+        /*!
+         * \brief Controleur de vaiseau
+        */
+        PlayerControls * playerControl; 
 
 
 	public:

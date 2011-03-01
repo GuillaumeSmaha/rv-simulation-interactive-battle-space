@@ -74,6 +74,24 @@ class ShipAbstract : public ObjectRoot
 		 */
 		Ogre::Radian yawAcceleration;
 
+        /*!
+         * \brief Position à la création du vaiseau, permet de revenir à la position initiale
+        */
+        Ogre::Vector3 posInit;
+
+        /*!
+         * \brief vrai si la premiere fois que l'on regle la position
+        */
+        bool firstPos;
+        bool firstDir;
+
+        /*!
+         * \brief direction à la création du vaiseau, permet de revenir à la direction initiale
+        */
+        Ogre::Quaternion dirInit;
+
+
+
 	public:
         /*!
 		 * \brief Dispatche un signal lorsque le vaisseau est détruit Signal(ShipAbstract*)
@@ -429,6 +447,12 @@ class ShipAbstract : public ObjectRoot
 		 * \param y Position de l'objet en y
 		 * \param z Position de l'objet en z
 		*/
+
+        /*!
+         * \brief met la vitesse à zero, place en position initial, place dans la direction initiale
+        */
+        void reset();
+
 		void setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
 
 		/*!

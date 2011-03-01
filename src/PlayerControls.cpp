@@ -36,7 +36,11 @@ PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 
 PlayerControls::~PlayerControls()
 {
-    //dtor
+    this->keyboard->signalKeyPressed.remove(&PlayerControls::keyboardPressed, this);
+    this->keyboard->signalKeyReleased.remove(&PlayerControls::keyboardReleased, this);
+    this->mouse->signalMouseMoved.remove(&PlayerControls::mouseMoved, this);
+    this->mouse->signalMousePressed.remove(&PlayerControls::mousePressed, this);
+    this->mouse->signalMouseReleased.remove(&PlayerControls::mouseReleased, this);
 }
 
 void PlayerControls::resetControls(void)
