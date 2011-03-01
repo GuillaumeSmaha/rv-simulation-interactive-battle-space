@@ -94,7 +94,7 @@ class ShipAbstract : public ObjectRoot
 
 	public:
 
-        static const Ogre::Real MAXSPEED=100;
+        static Ogre::Real MAXSPEED;
         /*!
 		 * \brief Dispatche un signal lorsque le vaisseau est détruit Signal(ShipAbstract*)
 		 */

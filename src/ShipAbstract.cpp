@@ -2,6 +2,8 @@
 
 using namespace Ogre;
 
+Ogre::Real ShipAbstract::MAXSPEED = 100;
+
 ShipAbstract::ShipAbstract(void) 
 	: shipLife(100), 
 	  speed(0), translateSpeed(0), rollSpeed(0), yawSpeed(0), pitchSpeed(0), 
