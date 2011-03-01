@@ -122,6 +122,12 @@ class Planet
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		void setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		
+		/*!
+		 * \brief Getter du radius de la planete
+		 * \return radius Rayon de la planète.
+		 */
+		Ogre::Real getMInnerRadius();
+
 		// Envoi des paramètres modifiés aux shaders
 		void update();
 

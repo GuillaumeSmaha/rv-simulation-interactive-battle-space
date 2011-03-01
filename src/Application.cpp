@@ -349,6 +349,7 @@ void Application::initScene(void)
 
 
 
+
 	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
 	Planet *planet1 = new Planet(10000, true);
 	planet1->setPosition(2500.0, 300.0, 22500.0);
@@ -381,13 +382,8 @@ void Application::initScene(void)
     GestShip::getSingleton()->addShip(ship3);
     //Utils::log("test2");
 
-	//coordonnée du centre de la ceinture d'asteroids
-	Vector3 vec;
-	vec[0]=0;
-	vec[1]=0;
-	vec[2]=0;
 	//création de la ceinture d'asteroids
-	GestGroupAsteroids::getSingleton()->createGroup(20,Ogre::Radian(0.01),100,vec,0.01);
+	GestGroupAsteroids::getSingleton()->createGroup(32,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(),0.01);
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());

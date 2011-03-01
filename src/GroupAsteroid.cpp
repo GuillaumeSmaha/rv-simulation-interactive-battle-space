@@ -2,9 +2,10 @@
 
 using namespace std;
 
-GroupAsteroid::GroupAsteroid()
+GroupAsteroid::GroupAsteroid(): rotationSpeed(0.001)
 {
-   lstGroupAsteroid.clear();
+	this->node = GestSceneManager::getSingleton()->getSceneManager()->createSceneNode("GroupAsteroids"+Utils::toString(Utils::unique()));
+    lstGroupAsteroid.clear();
 }
 
 GroupAsteroid::~GroupAsteroid()
@@ -29,7 +30,7 @@ Ogre::Vector3 GroupAsteroid::getCentreRotation(void)
 }
 void GroupAsteroid::setRotationSpeed(Ogre::Real rotationSpeed)
 {
-	this->rotationSpeed=rotationSpeed;
+	this->rotationSpeed = rotationSpeed;
 }
 Ogre::Real GroupAsteroid::getRotationSpeed(void) 
 {
@@ -38,11 +39,24 @@ Ogre::Real GroupAsteroid::getRotationSpeed(void)
 
 void GroupAsteroid::addAsteroid(Asteroid * asteroid)
 {
+	Ogre::SceneNode *nodeAsteroid;
+	//node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
+	//node = node->createChildSceneNode(nodeName);
+	nodeAsteroid = asteroid->getNode();
+	if (nodeAsteroid->getParentSceneNode()!=NULL)
+	{
+		nodeAsteroid->getParentSceneNode()->removeChild(nodeAsteroid);
+	}
+	this->node->addChild(nodeAsteroid);
     lstGroupAsteroid.push_back(asteroid);
 }
-
-void GroupAsteroid::updateGroupAsteroids()
+void GroupAsteroid::rotateRelative(const Ogre::Radian angle)
 {
+    this->getNodeGroupAsteroid()->roll(angle);
+}
+void GroupAsteroid::updateGroupAsteroids(void)
+{
+	this->rotateRelative(Ogre::Radian(this->getRotationSpeed()));
     vector<Asteroid *>::iterator itAsteroid;
     for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid<lstGroupAsteroid.end();itAsteroid++)
 	{
@@ -50,13 +64,24 @@ void GroupAsteroid::updateGroupAsteroids()
     }
 }
 
-void GroupAsteroid::deleteAllGroupAsteroids()
+void GroupAsteroid::deleteAllGroupAsteroids(void)
 {
     vector<Asteroid*>::iterator itAsteroid;
     for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid<lstGroupAsteroid.end();itAsteroid++)
 	{
         delete (*itAsteroid);
     }
+	this->node->removeAllChildren(); //	>removeAndDestroyAllChildren();
+}
+
+void GroupAsteroid::setNodeGroupAsteroid(Ogre::SceneNode* node)
+{
+	this->node = node;
+}
+
+Ogre::SceneNode* GroupAsteroid::getNodeGroupAsteroid(void)
+{
+	return this->node;
 }
 
 

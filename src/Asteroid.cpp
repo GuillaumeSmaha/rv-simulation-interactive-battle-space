@@ -11,7 +11,7 @@ Asteroid::Asteroid(void) : speed(0), rotationSpeed(0.01)
 	quat[3] = (Utils::randRangeInt(1,10))/10.0;//randomiser
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID);
 	this->getNode()->setOrientation(quat);
-	this->getNode()->setScale(10,10,10);
+	this->getNode()->setScale(100,100,100);
     this->getNode()->setPosition(0, 0, 0);
 }
 
@@ -46,6 +46,7 @@ Ogre::Real Asteroid::getRotationSpeed(void)
 {
 	return this->rotationSpeed;
 }
+
 void Asteroid::setRotationSpeed (Ogre::Real rotationSpeed) 
 {
 	this->rotationSpeed = rotationSpeed;

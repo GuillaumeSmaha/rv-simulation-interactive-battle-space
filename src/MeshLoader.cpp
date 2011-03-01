@@ -164,7 +164,7 @@ void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type)
 		entity->setMaterialName("planet"+Utils::toString(type-PLANET+1));
 		break;
 	case ASTEROID:
-		entity->setMaterialName("asteroid"+Utils::toString(type-ASTEROID+1));
+		entity->setMaterialName("asteroid1");
 		break;
 	}
 }

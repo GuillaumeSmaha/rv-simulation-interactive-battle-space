@@ -56,32 +56,41 @@ void GestGroupAsteroids::destroy()
     }
 }
 
-void GestGroupAsteroids::createGroup(int nb, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::Vector3 centreRotation, Ogre::Real rotationSpeed) 
+void GestGroupAsteroids::createGroup(int nb, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed) 
 {
-	int x;
-	int y;
-	Asteroid *asteroid1;	
+	Ogre::Real x;
+	Ogre::Real y;
+	rayon = 2 * rayon;
+	//rayon = 12;
+	Asteroid *asteroid1;
+	Ogre::Vector3 vec;
+	vec[0] = 0;
+	vec[1] = 0;
+	vec[2] = 0;
+	
 	GroupAsteroid * groupAsteroid = new GroupAsteroid();
+	groupAsteroid->setNodeGroupAsteroid(planet->createChildSceneNode("GroupAsteroids"+Utils::toString(Utils::unique())));
 	for (x = rayon; x > 0; x=x-rayon/(nb/4)) //le 4 car on crée les asteroids 4 par 4
 	{
 		asteroid1 = new Asteroid();
-	//normaliser le nb par rapport au x -> le rayon
+		//normaliser le nb par rapport au x -> le rayon
 		//(x - a)² + (y - b)² = r²
 		//	Ou (a,b) sont les coordonnées du centre et r est le rayon. 
 		//  tous les couples (x,y) qui vérifient l'équation sont des points du cercle.
 		//-> si x fixé par le for :
 		// on fait 4 asteroids à la fois:
-		y =  Ogre::Math::Sqrt(rayon*rayon-x*x-centreRotation[0]*centreRotation[0]+2*x*centreRotation[0]);
-		asteroid1->setPosition(centreRotation[0]+x,centreRotation[1]+y,centreRotation[2]);
+
+		y =  Ogre::Math::Sqrt(rayon*rayon-x*x-vec[0]*vec[0]+2*x*vec[0]);
+		asteroid1->setPosition(vec[0]+x,vec[1]+y,vec[2]);
 		groupAsteroid->addAsteroid(asteroid1);
 		asteroid1 = new Asteroid();
-		asteroid1->setPosition(centreRotation[0]-x,centreRotation[1]+y,centreRotation[2]);
+		asteroid1->setPosition(vec[0]-x,vec[1]+y,vec[2]);
 		groupAsteroid->addAsteroid(asteroid1);
 		asteroid1 = new Asteroid();
-		asteroid1->setPosition(centreRotation[0]+x,centreRotation[1]-y,centreRotation[2]);
+		asteroid1->setPosition(vec[0]+x,vec[1]-y,vec[2]);
 		groupAsteroid->addAsteroid(asteroid1);
 		asteroid1 = new Asteroid();
-		asteroid1->setPosition(centreRotation[0]-x,centreRotation[1]-y,centreRotation[2]);
+		asteroid1->setPosition(vec[0]-x,vec[1]-y,vec[2]);
 		groupAsteroid->addAsteroid(asteroid1);
 	}
 	GestGroupAsteroids::getSingleton()->addGroupAsteroids(groupAsteroid);

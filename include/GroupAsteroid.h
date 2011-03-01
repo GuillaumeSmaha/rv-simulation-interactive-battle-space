@@ -7,6 +7,7 @@
 
 #include <Ogre.h>
 #include "Asteroid.h"
+#include "GestSceneManager.h"
 
 
 /*!
@@ -35,6 +36,10 @@ class GroupAsteroid
 		 * \brief Vitesse de rotation de l'asteroid
 		 */
 		Ogre::Real rotationSpeed;
+		/*!
+		 * \brief Noeud du groupe
+		 */
+		Ogre::SceneNode* node;		
 
     public:
 		/*!
@@ -83,12 +88,27 @@ class GroupAsteroid
 		*/
         std::vector<Asteroid> getAllGroupAsteroids();
 		/*!
+         * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
+         * \param angle un angle en radian
+        */
+		void GroupAsteroid::rotateRelative(const Ogre::Radian angle);
+		/*!
 		 * \brief Met à jour la position de tous les asteroids du groupe
 		*/
-        void updateGroupAsteroids();
+        void updateGroupAsteroids(void);
 		/*!
 		 * \brief Supprime tous les asteroids du groupe
 		*/
-        void deleteAllGroupAsteroids();
+        void deleteAllGroupAsteroids(void);
+		/*!
+		 * \brief Set le node
+		 * \param le node
+		*/
+		void setNodeGroupAsteroid(Ogre::SceneNode* node);
+		/*!
+		 * \brief Retourne le node
+		 * \return Node
+		*/
+        Ogre::SceneNode* getNodeGroupAsteroid(void);
 };
 #endif // __GROUPASTEROID_H__

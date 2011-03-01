@@ -147,6 +147,11 @@ void Planet::updatePosition(void)
 {
 }
 
+Ogre::Real Planet::getMInnerRadius()
+{
+	return this->mInnerRadius;
+}
+
 void Planet::update()
 {
 	// Mise à jour de la position de la planète
