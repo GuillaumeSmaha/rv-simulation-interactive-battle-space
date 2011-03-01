@@ -10,6 +10,14 @@ ShipAbstract::ShipAbstract(void)
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), yawAcceleration(0), pitchAcceleration(0) , firstPos(true), firstDir(true)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
+
+	// Calcul des tangentes (si pas présentes dans le mesh)
+	unsigned short src, dest;
+	if (!this->entity->getMesh()->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
+	{
+		this->entity->getMesh()->buildTangentVectors(VES_TANGENT, src, dest);
+	}
+
     this->getNode()->setPosition(0, 0, 0);
     
     this->defineParticules();

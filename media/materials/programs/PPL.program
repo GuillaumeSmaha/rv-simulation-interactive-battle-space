@@ -3,7 +3,7 @@ vertex_program PPL/emissive_ambient_vp cg
 	source PPL.cg
 
 	entry_point emissive_ambient_vp
-	profiles vs_1_1 arbvp1 
+	profiles vs_2_0 arbvp1 
 }
 
 fragment_program PPL/emissive_ambient_fp cg
@@ -19,7 +19,7 @@ vertex_program PPL/diffuse_and_specular_PPL_vp cg
 	source PPL.cg
 
 	entry_point diffuse_and_specular_PPL_vp
-	profiles vs_1_1 arbvp1 
+	profiles vs_2_0 arbvp1 
 }
 
 fragment_program PPL/diffuse_and_specular_PPL_fp cg
