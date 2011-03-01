@@ -9,6 +9,7 @@
 #include <Ogre.h>
 #include "GroupAsteroid.h"
 #include "ObjectRoot.h"
+#include "Utils.h"
 
 /*!
 * \class GestGroupAsteroids
@@ -64,11 +65,12 @@ class GestGroupAsteroids : public ObjectRoot
 		/*!
 		 * \brief Crée un groupe d'asteroids
 		 * \param nb Nombre d'asteroids de ce groupe (multiple de 4!!!)
+		 * \param degreLiberte degre de liberte autour de l'axe de rotation (distance d'écart tolérée)
 		 * \param angleRotation angle de rotation autour de l'axe
 		 * \param rayon distances des asteroids autour de l'axe
 		 * \param centreRotation coordonnées du centre de la rotation
 		 * \param rotationSpeed vitesse de la rotation
 		*/
-		void createGroup(int nb, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed);
+		void createGroup(int nb, int degreLiberte, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed);
 };
 #endif // __GESTGROUPASTEROIDS_H__

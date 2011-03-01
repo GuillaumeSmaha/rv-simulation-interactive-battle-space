@@ -2,7 +2,7 @@
 
 using namespace Ogre;
 
-Asteroid::Asteroid(void) : speed(0), rotationSpeed(0.01)
+Asteroid::Asteroid(void) : speed(0), rotationSpeed(Utils::randRangeInt(-1,1)/100.0)
 {
 	Ogre::Quaternion quat;
 	quat[0] = 1;//Ogre::Real(Utils::degreToRadian(0.01));
