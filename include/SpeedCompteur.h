@@ -11,7 +11,7 @@
 #include "ListenerTime.h"
 
 /*!
-* \class Compteur
+* \class SpeedCompteur
 * \brief Classe Permet d'afficher pour un joueur un compteur de vitesse
 */
 class SpeedCompteur : public ObjectRoot
@@ -27,17 +27,6 @@ private:
      * \brief le vaiseau auquel est lié le compteur
     */
     ShipAbstract * ship;
-
-    /*!
-     * \brief le rectangle exterieur du compteur
-    */
-    Ogre::Rectangle2D * rectangleExt;
-
-    /*!
-     * \brief le rectangle intérieur du compteur
-    */
-    Ogre::Rectangle2D * rectangleInt;
-
     /*!
      * \brief La fonction appelé régulièrement pour mettre à jour la vitesse
     */

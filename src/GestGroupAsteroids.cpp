@@ -69,6 +69,8 @@ void GestGroupAsteroids::createGroup(int nb, Ogre::Radian angleRotation, Ogre::R
 	vec[2] = 0;
 	
 	GroupAsteroid * groupAsteroid = new GroupAsteroid();
+	groupAsteroid->setRotationSpeed(rotationSpeed);
+
 	groupAsteroid->setNodeGroupAsteroid(planet->createChildSceneNode("GroupAsteroids"+Utils::toString(Utils::unique())));
 	for (x = rayon; x > 0; x=x-rayon/(nb/4)) //le 4 car on crée les asteroids 4 par 4
 	{

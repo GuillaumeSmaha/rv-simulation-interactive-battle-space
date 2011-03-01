@@ -79,7 +79,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
 		case PlayerControls::OPEN_MENU:
             if(!this->menu_open)
             {
-                //suspendre_jeux();
+                suspendre_jeux();
                 afficher_menus();
                 this->menu_open=true;
 
@@ -87,7 +87,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             else
             {
                 cacher_menus();
-                //redemarrer_jeux();
+                redemarrer_jeux();
                 this->menu_open=false;
             }
 			break;

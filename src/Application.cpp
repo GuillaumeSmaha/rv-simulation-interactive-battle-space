@@ -383,7 +383,7 @@ void Application::initScene(void)
     //Utils::log("test2");
 
 	//création de la ceinture d'asteroids
-	GestGroupAsteroids::getSingleton()->createGroup(32,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(),0.01);
+	GestGroupAsteroids::getSingleton()->createGroup(32,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.05);
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());
