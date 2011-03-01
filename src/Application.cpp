@@ -57,7 +57,7 @@ Application::~Application(void)
     delete this->menus;
 	//delete this->gestGroupAsteroids;
 	delete this->player;
-	delete this->player2;
+	//delete this->player2;
 
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
