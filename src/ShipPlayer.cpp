@@ -2,7 +2,7 @@
 
 using namespace Ogre;
 
-ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
+ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) : ShipAbstract()
 {
 
     this->playerControl=pControl;
@@ -31,7 +31,8 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl) : ShipAbstract()
     rightPressed = false;
     upPressed = false;
     downPressed = false;
-
+    speedCompteur= new SpeedCompteur(this, listenerTime);
+    
 }
 
 ShipPlayer::~ShipPlayer(void)

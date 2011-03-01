@@ -5,7 +5,6 @@
 #ifndef __LISTENER_TIME_H__
 #define __LISTENER_TIME_H__
 
-#include "Signal.h"
 #include "ObjectRoot.h"
 #include <Ogre.h>
 #include "ListenerFrame.h"

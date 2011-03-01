@@ -16,6 +16,8 @@
 #include "PlayerControls.h"
 #include "GestSceneManager.h"
 #include "GestSound.h"
+#include "SpeedCompteur.h"
+#include "ListenerTime.h"
 
 /*!
 * \class ShipPlayer
@@ -79,13 +81,17 @@ class ShipPlayer : public ShipAbstract
          * \brief Controleur de vaiseau
         */
         PlayerControls * playerControl; 
+        /*!
+         * \brief Compteur de vitesse associé au vaisseau
+        */
+        SpeedCompteur * speedCompteur;
 
 
 	public:
 		/*!
 		 * \brief Construction
 		*/
-		ShipPlayer(PlayerControls * pControl);
+		ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime);
 		/*!
 		 * \brief Destructeur
 		*/

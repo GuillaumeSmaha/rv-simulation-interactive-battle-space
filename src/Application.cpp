@@ -364,7 +364,7 @@ void Application::initScene(void)
     GestShip::getSingleton();
 
 
-	ShipPlayer * ship = new ShipPlayer(this->player);
+	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
     ship->setPosition(-50,-50,-50);
     //ship->setOrientation(5, 5, 5, 5);
 
