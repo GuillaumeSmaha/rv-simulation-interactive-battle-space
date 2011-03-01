@@ -10,5 +10,6 @@ reg add "HKEY_USER LOCAL\Environment" /v OGREBULLET_HOME /t REG_SZ /d "%dir%\ogr
 reg add "HKEY_USER LOCAL\Environment" /v OGG_HOME /t REG_SZ /d "%dir%\ogg"
 reg add "HKEY_USER LOCAL\Environment" /v VORBIS_HOME /t REG_SZ /d "%dir%\vorbis"
 reg add "HKEY_USER LOCAL\Environment" /v OGREAL_HOME /t REG_SZ /d "%dir%\ogreal"
+reg add "HKEY_USER LOCAL\Environment" /v OPENAL_SDK /t REG_SZ /d "%dir%\openal"
  
  
