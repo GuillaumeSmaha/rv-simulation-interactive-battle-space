@@ -15,6 +15,7 @@
 #include "ViewportLoader.h"
 #include "PlayerControls.h"
 #include "GestSceneManager.h"
+#include "GestSound.h"
 
 /*!
 * \class ShipPlayer

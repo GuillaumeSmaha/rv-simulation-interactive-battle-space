@@ -51,6 +51,8 @@ Application::~Application(void)
 	GestSceneManager::getSingleton()->deleteAll();
 
 	GestSceneManager::destroy();
+	
+	GestSound::destroy();
 
     delete this->menus;
 	//delete this->gestGroupAsteroids;
@@ -89,7 +91,8 @@ bool Application::start(void)
 	// initialise the system, create the default rendering window
 	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
 	//this->window = this->root->initialise(true, "Combat spatial");
-
+	
+	GestSound::getSingleton();
 
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);

@@ -14,6 +14,7 @@
 #include "ListenerWindow.h"
 #include "ListenerFrame.h"
 #include "ListenerTime.h"
+#include "GestSound.h"
 #include "nodeName.h"
 #include "ShipAbstract.h"
 #include "ShipIA.h"

@@ -134,7 +134,6 @@ macro(writeResourceFile destDir isDebug)
 	
 	file(WRITE ${FILE_DEST} "[General]\n")
 	file(APPEND ${FILE_DEST} "FileSystem=${CMAKE_SOURCE_DIR}/media\n")
-	file(APPEND ${FILE_DEST} "FileSystem=${CMAKE_SOURCE_DIR}/media/ogre\n")	
 	file(APPEND ${FILE_DEST} "Zip=${CMAKE_SOURCE_DIR}/media/packs/OgreCore.zip\n")
 	file(APPEND ${FILE_DEST} "[Popular]\n")
 	file(APPEND ${FILE_DEST} "FileSystem=${CMAKE_SOURCE_DIR}/media/materials/scripts\n")

@@ -20,6 +20,10 @@ FIND_PACKAGE( OGRE REQUIRED )
 FIND_PACKAGE( CEGUI REQUIRED )
 FIND_PACKAGE( BULLET REQUIRED )
 FIND_PACKAGE( OGREBULLET REQUIRED )
+FIND_PACKAGE( OGG REQUIRED )
+FIND_PACKAGE( VORBIS REQUIRED )
+FIND_PACKAGE( OPENAL REQUIRED )
+FIND_PACKAGE( OGREAL REQUIRED )
 
  
 IF (NOT "${OGRE_VERSION_NAME}" STREQUAL "Cthugha")
@@ -52,6 +56,9 @@ IF(WIN32)
 		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIDirect3D11Renderer_d.dll" "${CMAKE_BINARY_DIR}/Debug/")
 		copyFilesFilter(${BULLET_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
 		copyFilesFilter(${OGREBULLET_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+		copyFilesFilter(${OGG_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+		copyFilesFilter(${VORBIS_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+		copyFilesFilter(${OGREAL_BINARY_DIR_DBG} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
 		
 		writeResourceFile("${CMAKE_BINARY_DIR}/Release/" 0)
 		writePluginFile("${CMAKE_BINARY_DIR}/Release/" 0)
@@ -66,27 +73,9 @@ IF(WIN32)
 		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIDirect3D11Renderer.dll" "${CMAKE_BINARY_DIR}/Release/")
 		copyFilesFilter(${BULLET_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
 		copyFilesFilter(${OGREBULLET_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
-	ELSE (NOT MINGW)
-		copyInFilesFilter(${OGRE_PLUGIN_DIR_DBG} "${CMAKE_BINARY_DIR}" "(.exe)|(.cfg)|(.pdb)")
-		copyInFilesFilter(${OGRE_PLUGIN_DIR_REL} "${CMAKE_BINARY_DIR}" "(.exe)|(.cfg)|(.pdb)")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIBase_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIOgreRenderer_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIExpatParser_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIFalagardWRBase_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIOpenGLRenderer_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIDirect3D9Renderer_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIDirect3D10Renderer_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_DBG}/CEGUIDirect3D11Renderer_d.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIBase.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIOgreRenderer.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIExpatParser.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIFalagardWRBase.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIOpenGLRenderer.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIDirect3D9Renderer.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIDirect3D10Renderer.dll" "${CMAKE_BINARY_DIR}/")
-		copyFile("${CEGUI_BINARY_DIR_REL}/CEGUIDirect3D11Renderer.dll" "${CMAKE_BINARY_DIR}/")
-		copyInFilesFilter(${BULLET_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}" "(.exe)|(.cfg)|(.pdb)")
-		copyInFilesFilter(${OGREBULLET_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}" "(.exe)|(.cfg)|(.pdb)")
+		copyFilesFilter(${OGG_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+		copyFilesFilter(${VORBIS_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
+		copyFilesFilter(${OGREAL_BINARY_DIR_REL} "${CMAKE_BINARY_DIR}/" "(.exe)|(.cfg)|(.pdb)")
 	ENDIF (NOT MINGW)
 ENDIF(WIN32)
 
@@ -105,6 +94,10 @@ include_directories(
 	${CEGUI_OgreRenderer_INCLUDE_DIRS}
 	${BULLET_INCLUDE_DIR}
 	${OGREBULLET_INCLUDE_DIR}
+	${OPENAL_INCLUDE_DIR}
+	${OGG_INCLUDE_DIR}
+	${VORBIS_INCLUDE_DIR}
+	${OGREAL_INCLUDE_DIR}
 	${CMAKE_SOURCE_DIR}/include
 	${CMAKE_BINARY_DIR}/include
 )
@@ -137,6 +130,10 @@ target_link_libraries(
 	${BULLET_LIBRARIES}
 	${BULLET_ConvexDecomposition_LIBRARIES}
 	${OGREBULLET_LIBRARIES}
+	${OPENAL_LIBRARY}
+	${OGG_LIBRARIES}
+	${VORBIS_LIBRARIES}
+	${OGREAL_LIBRARIES}
 )
 
 #Générateur de documentation

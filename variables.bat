@@ -4,8 +4,11 @@ echo Placez ce fichier dans un repertoire contenant les repertoires racines de o
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v OIS_HOME /t REG_SZ /d "%dir%\ogre"
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v OGRE_HOME /t REG_SZ /d "%dir%\ogre"
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v CEGUI_ROOT /t REG_SZ /d "%dir%\cegui"
-reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v BOOST_ROOT /t REG_SZ /d "%dir%\ogre\boost_1_42"
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v BOOST_ROOT /t REG_SZ /d "%dir%\ogre\boost_1_44"
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v BULLET_ROOT /t REG_SZ /d "%dir%\bullet"
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v OGREBULLET_HOME /t REG_SZ /d "%dir%\ogrebullet"
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v OGG_HOME /t REG_SZ /d "%dir%\ogg"
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v VORBIS_HOME /t REG_SZ /d "%dir%\vorbis"
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager\Environment" /v OGREAL_HOME /t REG_SZ /d "%dir%\ogreal"
  
  

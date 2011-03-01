@@ -271,6 +271,7 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
 	{
 		case PlayerControls::SHOOT1 :
             this->exploded();
+            GestSound::getSingleton()->play(GestSound::SOUND_SHOOT);
             break;
 		case PlayerControls::ACCELERATION :
             accelerationPressed = true;
