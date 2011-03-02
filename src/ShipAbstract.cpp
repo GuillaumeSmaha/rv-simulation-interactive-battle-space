@@ -6,8 +6,9 @@ Ogre::Real ShipAbstract::MAXSPEED = 100;
 
 ShipAbstract::ShipAbstract(void) 
 	: shipLife(100), 
-	  speed(0), translateSpeed(0), rollSpeed(0), yawSpeed(0), pitchSpeed(0), 
-	  acceleration(0), translateAcceleration(0), rollAcceleration(0), yawAcceleration(0), pitchAcceleration(0) , firstPos(true), firstDir(true)
+	  speed(0), translateSpeed(0), rollSpeed(0), pitchSpeed(0), yawSpeed(0), 
+	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
+	  firstPos(true), firstDir(true)
 {
     this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
 
@@ -25,7 +26,7 @@ ShipAbstract::ShipAbstract(void)
 
 ShipAbstract::~ShipAbstract(void)
 {
-
+	this->signalDestruction.dispatch();
 }
 
 void ShipAbstract::touched(void)
@@ -35,7 +36,7 @@ void ShipAbstract::touched(void)
 
 void ShipAbstract::exploded(void)
 {
-   Ogre::ParticleSystem* particleSystem = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem("explosions"+Utils::toString(Utils::unique()), "explosionTemplate");
+   Ogre::ParticleSystem * particleSystem = GestSceneManager::getSceneManager()->createParticleSystem("explosions"+Utils::toString(Utils::unique()), "explosionTemplate");
  
 	// fast forward 1 second  to the point where the particle has been emitted
 	particleSystem->fastForward(1.0);
@@ -43,6 +44,14 @@ void ShipAbstract::exploded(void)
 	// attach the particle system to a scene node
     this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
 }
+
+
+void ShipAbstract::shootLaser(void)
+{
+	GestLaser::getSingleton()->create(this->getNode()->_getDerivedPosition(), this->getNode()->_getDerivedOrientation());
+	//~ GestLaser::getSingleton()->create(this->getNode()->getPosition(), this->getNode()->getOrientation());
+}
+
 
 void ShipAbstract::defineParticules(void)
 {
@@ -60,8 +69,8 @@ void ShipAbstract::defineParticules(void)
 		emitter->setTimeToLive(0.5);
 		emitter->setEmissionRate(25);
 		emitter->setParticleVelocity(5);
-		emitter->setDirection(Vector3::NEGATIVE_UNIT_Z);
-		emitter->setColour(ColourValue::White, ColourValue::Red);
+		emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
+		emitter->setColour(Ogre::ColourValue::White, Ogre::ColourValue::Red);
 		emitter->setPosition(Ogre::Vector3(i == 0 ? 5.7 : -18, 0, 0));
 	}
     this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);

@@ -34,12 +34,21 @@ class Menus: public ObjectRoot
 		CEGUI::OgreRenderer * menusRenderer;
 
         /*!
-        * \brief pointeur sur l'application globale pour intéragir avec celle ci
+        * \brief Pointeur sur l'application globale pour intéragir avec celle ci
         */
         Application * app;
 
-        ListenerMouse * mouseControl;
+         /*!
+		 * \brief Pointeur sur le controleur du clavier
+		 */
         ListenerKeyboard * keyControl;
+         /*!
+		 * \brief Pointeur sur le controleur de la souris
+		 */
+        ListenerMouse * mouseControl;
+         /*!
+		 * \brief Pointeur sur le controleur du joueur
+		 */
         PlayerControls * pControl;
 
         /*!
@@ -47,6 +56,9 @@ class Menus: public ObjectRoot
         */
         CEGUI::Window * mainWdw;
 
+         /*!
+		 * \brief Indique si le menu est ouvert
+		 */
         bool menu_open;
 	public:
          /*!

@@ -3,8 +3,8 @@
 *  \file GestGroupAsteroids.h
 *  \brief Ce fichier contient la déclaration de la classe GestGroupAsteroids. C'est la classe qui gère l'ensemble des groupes d'asteroids
 */
-#ifndef __GESTGROUPASTEROIDS_H__
-#define __GESTGROUPASTEROIDS_H__
+#ifndef __GEST_GROUP_ASTEROIDS_H__
+#define __GEST_GROUP_ASTEROIDS_H__
 
 #include <Ogre.h>
 #include "GroupAsteroid.h"
@@ -23,11 +23,22 @@ class GestGroupAsteroids : public ObjectRoot
 		* \brief Liste des groupes d'asteroids
 		*/
         std::vector<GroupAsteroid *> lstGroupAsteroids;
-        GestGroupAsteroids();
-        static GestGroupAsteroids * _instance;
-    public:
+        
+		/*!
+		* \brief Instance du singleton
+		*/
+        static GestGroupAsteroids * _instance;        
+        
+       private:
 		/*!
 		 * \brief Construction
+		*/
+        GestGroupAsteroids();
+        
+    public:
+		/*!
+		 * \brief Récupère le pointeur sur le singleton
+		 * \return Instance du singleton
 		*/
         static GestGroupAsteroids * getSingleton(void);
 		/*!
@@ -55,9 +66,11 @@ class GestGroupAsteroids : public ObjectRoot
         {
             updateGroupsAsteroids(NULL);
         }
-        /*permet de mettre à jour la position de tous les groupes d'asteroids
+		/*!
+         * \brief Permet de mettre à jour la position de tous les groupes d'asteroids
+         * \param useless NULL
         */
-        void updateGroupsAsteroids(void*);
+        void updateGroupsAsteroids(void * useless);
 		/*!
 		 * \brief Supprime tous les groupes d'asteroids du gestionnaire
 		*/
@@ -65,12 +78,12 @@ class GestGroupAsteroids : public ObjectRoot
 		/*!
 		 * \brief Crée un groupe d'asteroids
 		 * \param nb Nombre d'asteroids de ce groupe (multiple de 4!!!)
-		 * \param degreLiberte degre de liberte autour de l'axe de rotation (distance d'écart tolérée)
-		 * \param angleRotation angle de rotation autour de l'axe
-		 * \param rayon distances des asteroids autour de l'axe
-		 * \param centreRotation coordonnées du centre de la rotation
-		 * \param rotationSpeed vitesse de la rotation
+		 * \param degreLiberte Degre de liberte autour de l'axe de rotation (distance d'écart tolérée)
+		 * \param angleRotation Angle de rotation autour de l'axe
+		 * \param rayon Distances des asteroids autour de l'axe
+		 * \param planet Noeud de la planète
+		 * \param rotationSpeed Vitesse de la rotation
 		*/
-		void createGroup(int nb, int degreLiberte, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed);
+		void createGroup(int nb, int degreLiberte, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode * planet, Ogre::Real rotationSpeed);
 };
-#endif // __GESTGROUPASTEROIDS_H__
+#endif // __GEST_GROUP_ASTEROIDS_H__

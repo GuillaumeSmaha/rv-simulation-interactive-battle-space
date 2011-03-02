@@ -2,8 +2,8 @@
 *  \file GestPlanet.h
 *  \brief Ce fichier contient la déclaration de la classe GestPlanet. C'est la classe qui gère l'ensemble des planètes.
 */
-#ifndef __GESTPLANET_H__
-#define __GESTPLANET_H__
+#ifndef __GEST_PLANET_H__
+#define __GEST_PLANET_H__
 
 #include <Ogre.h>
 #include "Planet.h"
@@ -73,4 +73,4 @@ class GestPlanet : public ObjectRoot
         void deleteAllPlanet();
 };
 
-#endif // __GESTPLANET_H__
+#endif // __GEST_PLANET_H__

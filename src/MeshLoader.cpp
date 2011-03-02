@@ -40,104 +40,129 @@ MeshLoader::~MeshLoader(void)
 	//this->sceneMgr = NULL;
 }
 
-Ogre::Entity* MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name, bool random)
+Ogre::Entity * MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name, bool random)
 {
-	Ogre::Entity *entity;
+	Ogre::Entity * entity;
 	switch(type)
 	{
-	case SHIP:
-		entity = this->sceneMgr->createEntity(name, "razor.mesh");
-		break;
-	case SHIP_TOUCHED:
-		entity = this->sceneMgr->createEntity(name, "razor.mesh");
-		break;
-	case PLANET:
-	case PLANET2:
-	case PLANET3:
-	case PLANET4:
-	case PLANET5:
-	case PLANET6:
-	case PLANET7:
-	case PLANET8:
-	case PLANET9:
-		entity = sceneMgr->createEntity(name, "Prefab_Sphere");
-		if(random)
-		{
-			type = (MeshLoader::MeshType)((int)PLANET + Utils::randRangeInt(0,7));
-		}
-		break;
-	case ASTEROID:
-		entity = this->sceneMgr->createEntity(name, "asteroid.mesh");
-		if(random)
-		{
-			type = (MeshLoader::MeshType)((int)ASTEROID + Utils::randRangeInt(0,1));
-		}
-		break;
+		case SHIP:
+			entity = this->sceneMgr->createEntity(name, "razor.mesh");
+			break;
+		case SHIP_TOUCHED:
+			entity = this->sceneMgr->createEntity(name, "razor.mesh");
+			break;
+		case PLANET:
+		case PLANET2:
+		case PLANET3:
+		case PLANET4:
+		case PLANET5:
+		case PLANET6:
+		case PLANET7:
+		case PLANET8:
+		case PLANET9:
+			entity = sceneMgr->createEntity(name, "Prefab_Sphere");
+			if(random)
+			{
+				type = (MeshLoader::MeshType)((int)PLANET + Utils::randRangeInt(0,7));
+			}
+			break;
+		case ASTEROID:
+			entity = this->sceneMgr->createEntity(name, "asteroid.mesh");
+			if(random)
+			{
+				type = (MeshLoader::MeshType)((int)ASTEROID + Utils::randRangeInt(0,1));
+			}
+			break;
+		case MISSILE:
+			entity = this->sceneMgr->createEntity(name, "missile.mesh");
+			break;
+			
+		default:
+			Utils::log("@Ogre::Entity * MeshLoader::getEntity(MeshLoader::MeshType type, Ogre::String name, bool random) : type inconnu");
+			break;
 	}
+	
 	MeshLoader::setMaterial(entity, type);
 	return entity;
 }
 
-Ogre::Entity* MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random)
+Ogre::Entity * MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random)
 {
-	Ogre::SceneNode *node;
-	Ogre::Entity *entity = getEntity(type, meshName, random);
+	Ogre::SceneNode * node;
+	Ogre::Entity * entity = getEntity(type, meshName, random);
 	switch(type)
 	{
-	case SHIP:
-	case SHIP_TOUCHED:
-		node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
-		node = node->createChildSceneNode(nodeName);
-		node->attachObject(entity);
-		break;
-	case PLANET:
-	case PLANET2:
-	case PLANET3:
-	case PLANET4:
-	case PLANET5:
-	case PLANET6:
-	case PLANET7:
-	case PLANET8:
-	case PLANET9:
-		node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
-		node = node->createChildSceneNode(nodeName);
-		node->attachObject(entity);
-		break;
-	case ASTEROID:
-		node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
-		node = node->createChildSceneNode(nodeName);
-		node->attachObject(entity);
-		break;
+		case SHIP:
+		case SHIP_TOUCHED:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
+			node = node->createChildSceneNode(nodeName);
+			node->attachObject(entity);
+			break;
+		case PLANET:
+		case PLANET2:
+		case PLANET3:
+		case PLANET4:
+		case PLANET5:
+		case PLANET6:
+		case PLANET7:
+		case PLANET8:
+		case PLANET9:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
+			node = node->createChildSceneNode(nodeName);
+			node->attachObject(entity);
+			break;
+		case ASTEROID:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
+			node = node->createChildSceneNode(nodeName);
+			node->attachObject(entity);
+			break;
+		case MISSILE:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_MISSILES);
+			node = node->createChildSceneNode(nodeName);
+			node->attachObject(entity);
+			break;
+			
+		default:
+			Utils::log("@Ogre::Entity * MeshLoader::getNodedEntity(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random) : type inconnu");
+			break;
 	}
 	return entity;
 }
 
-Ogre::SceneNode* MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String nodeName)
+Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String nodeName)
 {
-	Ogre::SceneNode *node;
+	Ogre::SceneNode * node;
 	switch(type)
 	{
-	case SHIP:
-	case SHIP_TOUCHED:
-		node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
-		node = node->createChildSceneNode(nodeName);
-		break;
-	case PLANET:
-	case PLANET2:
-	case PLANET3:
-	case PLANET4:
-	case PLANET5:
-	case PLANET6:
-	case PLANET7:
-	case PLANET8:
-	case PLANET9:
-		node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
-		node = node->createChildSceneNode(nodeName);
-		break;
-	case ASTEROID:
-		node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
-		node = node->createChildSceneNode(nodeName);
-		break;
+		case SHIP:
+		case SHIP_TOUCHED:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
+			node = node->createChildSceneNode(nodeName);
+			break;
+		case PLANET:
+		case PLANET2:
+		case PLANET3:
+		case PLANET4:
+		case PLANET5:
+		case PLANET6:
+		case PLANET7:
+		case PLANET8:
+		case PLANET9:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
+			node = node->createChildSceneNode(nodeName);
+			break;
+		case ASTEROID:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
+			node = node->createChildSceneNode(nodeName);
+			break;
+		case MISSILE:
+			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_MISSILES);
+			node = node->createChildSceneNode(nodeName);
+			break;
+			
+		default:
+			Utils::log("@Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String nodeName) : type inconnu");
+			break;
 	}
 	return node;
 }
@@ -146,26 +171,32 @@ void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type)
 {
 	switch(type)
 	{
-	case SHIP:
-		entity->setMaterialName("razor");
-		break;
-	case SHIP_TOUCHED:
-		entity->setMaterialName("razor2");
-		break;
-	case PLANET :
-	case PLANET2:
-	case PLANET3:
-	case PLANET4:
-	case PLANET5:
-	case PLANET6:
-	case PLANET7:
-	case PLANET8:
-	case PLANET9:
-		entity->setMaterialName("planet"+Utils::toString(type-PLANET+1));
-		break;
-	case ASTEROID:
-		entity->setMaterialName("asteroid1");
-		break;
+		case SHIP:
+			entity->setMaterialName("razor");
+			break;
+		case SHIP_TOUCHED:
+			entity->setMaterialName("razor2");
+			break;
+		case PLANET :
+		case PLANET2:
+		case PLANET3:
+		case PLANET4:
+		case PLANET5:
+		case PLANET6:
+		case PLANET7:
+		case PLANET8:
+		case PLANET9:
+			entity->setMaterialName("planet"+Utils::toString(type-PLANET+1));
+			break;
+		case ASTEROID:
+			entity->setMaterialName("asteroid1");
+		case MISSILE:
+			entity->setMaterialName("missile");
+			break;
+			
+		default:
+			Utils::log("@void MeshLoader::setMaterial(Ogre::Entity * entity, MeshLoader::MeshType type) : type inconnu");
+			break;
 	}
 }
 

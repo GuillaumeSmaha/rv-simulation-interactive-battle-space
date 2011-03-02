@@ -2,10 +2,12 @@
 *  \file  GestSceneManager.h
 *  \brief Ce fichier contient la déclaration de la classe GestSceneManager.
 */
-#ifndef GESTSCENEMANAGER_H
-#define GESTSCENEMANAGER_H
+#ifndef __GEST_SCENE_MANAGER_H__
+#define __GEST_SCENE_MANAGER_H__
+
 #include <Ogre.h>
 #include "CameraFixeAbstract.h"
+
 /*!
  * \class GestSceneManager
  *  \brief Gère le SceneManager et les Cameras
@@ -43,6 +45,9 @@ class GestSceneManager
          */
         static void destroy();
 
+        /*!
+         * \brief Détruit les caméras
+         */
         void deleteAll();
         /*!
 		 *  \brief Rajoute une caméra à la liste
@@ -62,7 +67,7 @@ class GestSceneManager
 		 *  \param id ID de la caméra à récupérer
 		 *  \return Instance de la caméra
 		 */
-        CameraFixeAbstract * getCam(int id);
+        CameraFixeAbstract * getCam(unsigned int id);
         /*!
 		 *  \brief [Static] Récupère l'instance d'une caméra (nonsafe)
 		 *  \param id ID de la caméra à récupérer
@@ -119,4 +124,4 @@ class GestSceneManager
     protected:
 };
 
-#endif // GESTSCENEMANAGER_H
+#endif // __GEST_SCENE_MANAGER_H__

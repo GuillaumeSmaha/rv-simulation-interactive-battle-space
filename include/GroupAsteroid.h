@@ -2,8 +2,8 @@
 *  \file GroupAsteroid.h
 *  \brief Ce fichier contient la déclaration de la classe GestAsteroid. C'est la classe qui gère l'ensemble des asteroids
 */
-#ifndef __GROUPASTEROID_H__
-#define __GROUPASTEROID_H__
+#ifndef __GROUP_ASTEROID_H__
+#define __GROUP_ASTEROID_H__
 
 #include <Ogre.h>
 #include "Asteroid.h"
@@ -51,45 +51,13 @@ class GroupAsteroid
 		 */
         ~GroupAsteroid();
 		/*!
-		 * \brief Setter de l'angle de rotation du groupe d'asteroids
-		 * \param angleRotation quaternion contenant l'angle
-		 */
-		void setAngleRotation(Ogre::Radian);
-		/*!
-		 * \brief Getter de l'angle de rotation du groupe d'asteroids
-		 */
-		Ogre::Radian getAngleRotation(void);
-		/*!
-		 * \brief Setter du centre de rotation du groupe d'asteroids
-		 * \param vec coordonnées du centre de rotation
-		 */
-		void setCentreRotation(Ogre::Vector3);
-		/*!
-		 * \brief Getter du centre de rotation du groupe d'asteroids
-		 */
-		Ogre::Vector3 getCentreRotation(void);
-		/*!
-		 * \brief Setter de la vitesse de rotation du groupe d'asteroids
-		 * \param rotationSpeed vitesse de rotataion
-		 */
-		void setRotationSpeed(Ogre::Real);
-		/*!
-		 *  \brief Getter de la vitesse de rotation du groupe d'asteroids
-		 */
-		Ogre::Real getRotationSpeed(void);
-		/*!
 		 * \brief Ajoute un asteroid au groupe
 		 * \param asteroid Pointeur sur l'asteroid
 		*/     
 		void addAsteroid(Asteroid * asteroid);
 		/*!
-		 * \brief Récupère la liste des asteroids du groupe
-		 * \return Liste des asteroids du groupe
-		*/
-        std::vector<Asteroid> getAllGroupAsteroids();
-		/*!
          * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
-         * \param angle un angle en radian
+         * \param angle Angle en radian
         */
 		void rotateRelative(const Ogre::Radian angle);
 		/*!
@@ -100,15 +68,51 @@ class GroupAsteroid
 		 * \brief Supprime tous les asteroids du groupe
 		*/
         void deleteAllGroupAsteroids(void);
+        
+        
+        //Getter/setter
+        
 		/*!
-		 * \brief Set le node
-		 * \param le node
+		 * \brief [Getter] Récupère la liste des asteroids du groupe
+		 * \return Liste des asteroids du groupe
 		*/
-		void setNodeGroupAsteroid(Ogre::SceneNode* node);
+        std::vector<Asteroid *> getAllGroupAsteroids();
 		/*!
-		 * \brief Retourne le node
-		 * \return Node
+		 * \brief [Setter] Angle de rotation du groupe d'asteroids
+		 * \param angleRotation quaternion contenant l'angle
+		 */
+		void setAngleRotation(Ogre::Radian angleRotation);
+		/*!
+		 * \brief [Getter] Angle de rotation du groupe d'asteroids
+		 */
+		Ogre::Radian getAngleRotation(void);
+		/*!
+		 * \brief [Setter] Centre de rotation du groupe d'asteroids
+		 * \param coord Coordonnées du centre de rotation
+		 */
+		void setCentreRotation(Ogre::Vector3 &coord);
+		/*!
+		 * \brief [Getter] Centre de rotation du groupe d'asteroids
+		 */
+		Ogre::Vector3 getCentreRotation(void);
+		/*!
+		 * \brief [Setter] Vitesse de rotation du groupe d'asteroids
+		 * \param rotationSpeed vitesse de rotataion
+		 */
+		void setRotationSpeed(Ogre::Real rotationSpeed);
+		/*!
+		 *  \brief [Getter] Vitesse de rotation du groupe d'asteroids
+		 */
+		Ogre::Real getRotationSpeed(void);
+		/*!
+		 * \brief [Setter] Définit le noeud du groupe d'astéroides
+		 * \param node Le noeud du groupe d'astéroides
 		*/
-        Ogre::SceneNode* getNodeGroupAsteroid(void);
+		void setNodeGroupAsteroid(Ogre::SceneNode * node);
+		/*!
+		 * \brief [Getter] Retourne le noeud du groupe d'astéroides
+		 * \return Le noeud du groupe d'astéroides
+		*/
+        Ogre::SceneNode * getNodeGroupAsteroid(void);
 };
-#endif // __GROUPASTEROID_H__
+#endif // __GROUP_ASTEROID_H__

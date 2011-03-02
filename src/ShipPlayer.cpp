@@ -271,8 +271,11 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
     switch(key)
 	{
 		case PlayerControls::SHOOT1 :
-            this->exploded();
+            this->shootLaser();
             GestSound::getSingleton()->play(GestSound::SOUND_SHOOT);
+            break;
+		case PlayerControls::SHOOT2 :
+            this->exploded();
             break;
 		case PlayerControls::ACCELERATION :
             accelerationPressed = true;

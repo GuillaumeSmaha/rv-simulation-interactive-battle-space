@@ -16,11 +16,11 @@ ListenerWindow::~ListenerWindow()
 
 void ListenerWindow::windowResized(Ogre::RenderWindow * rw)
 {
-	unsigned int width, height, depth;
+	/*unsigned int width, height, depth;
 	int left, top;
 
 	// Adjust mouse clipping area
-	/*
+	
 	rw->getMetrics(width, height, depth, left, top);
 	const OIS::MouseState &ms = this->mouse->getMouseState();
 	ms.width = width;

@@ -4,7 +4,7 @@ using namespace Ogre;
 
 int Planet::planetNumber = 0;
 
-Planet::Planet(void) : type(MeshLoader::PLANET), mInnerRadius(1000), hasAtmosphere(false)
+Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
 {
 	//this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET);
     //this->getNode()->setPosition(150, 100, -100);
@@ -19,8 +19,7 @@ Planet::Planet(void) : type(MeshLoader::PLANET), mInnerRadius(1000), hasAtmosphe
 
 }
 
-Planet::Planet(Ogre::Real radius, bool hasAtmo)
-	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
+Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
 	if (this->hasAtmosphere)
 	{
@@ -55,8 +54,7 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)
 	this->setMaterialGroundFromSpace(planetMaterialName);
 }
 
-Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)
-	: mInnerRadius(radius), type(_type), hasAtmosphere(hasAtmo)
+Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
 	if (this->hasAtmosphere)
 	{
@@ -114,42 +112,6 @@ Planet::~Planet(void)
 	}
 
 	scnMgr->destroySceneNode(planetNode->getName());
-}
-
-void Planet::createSpheres(const Ogre::String& innerName, const Ogre::String& outerName)
-{
-	SceneManager* scnMgr = GestSceneManager::getSingleton()->getSceneManager();
-
-	MeshLoader::getSingleton()->createSphere(innerName, mInnerRadius, 128, 128);
-	innerSphere = scnMgr->createEntity(innerName + "_Ent", innerName);
-	planetNode->attachObject(innerSphere);
-
-	
-	if (hasAtmosphere)
-	{
-		MeshLoader::getSingleton()->createSphere(outerName, mOuterRadius, 128, 128);
-		outerSphere = scnMgr->createEntity(outerName + "_Ent", outerName);
-		planetNode->attachObject(outerSphere);
-	}
-}
-
-void Planet::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
-{
-    this->getNode()->setPosition(x, y, z);
-}
-
-void Planet::setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z)
-{
-	this->getNode()->setScale(x, y, z);
-}
-
-void Planet::updatePosition(void)
-{
-}
-
-Ogre::Real Planet::getMInnerRadius()
-{
-	return this->mInnerRadius;
 }
 
 void Planet::update()
@@ -218,6 +180,45 @@ void Planet::update()
 			pParams = pPass->getFragmentProgramParameters();
 			pParams->setNamedConstant("fExposure",mExposure);
 		}
+	}
+}
+
+void Planet::updatePosition(void)
+{
+}
+
+
+//Getter/Setter
+
+
+void Planet::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
+{
+    this->getNode()->setPosition(x, y, z);
+}
+
+void Planet::setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z)
+{
+	this->getNode()->setScale(x, y, z);
+}
+
+
+//Private method
+
+
+void Planet::createSpheres(const Ogre::String& innerName, const Ogre::String& outerName)
+{
+	SceneManager* scnMgr = GestSceneManager::getSingleton()->getSceneManager();
+
+	MeshLoader::getSingleton()->createSphere(innerName, mInnerRadius, 128, 128);
+	innerSphere = scnMgr->createEntity(innerName + "_Ent", innerName);
+	planetNode->attachObject(innerSphere);
+
+	
+	if (hasAtmosphere)
+	{
+		MeshLoader::getSingleton()->createSphere(outerName, mOuterRadius, 128, 128);
+		outerSphere = scnMgr->createEntity(outerName + "_Ent", outerName);
+		planetNode->attachObject(outerSphere);
 	}
 }
 

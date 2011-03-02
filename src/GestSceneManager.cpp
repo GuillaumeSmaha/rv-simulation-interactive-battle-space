@@ -1,4 +1,5 @@
 #include "GestSceneManager.h"
+
 GestSceneManager* GestSceneManager::_instance = NULL;
 
 
@@ -10,6 +11,7 @@ GestSceneManager * GestSceneManager::getSingleton(void)
     }
 	return _instance;
 }
+
 GestSceneManager::GestSceneManager()
 {
     if(_instance == NULL)
@@ -29,13 +31,14 @@ GestSceneManager::~GestSceneManager()
     _listCameras.clear();
 
 }
+
 void GestSceneManager::addCam(CameraFixeAbstract * camera)
 {
 
     this->_listCameras.push_back(camera);
 }
 
-CameraFixeAbstract * GestSceneManager::getCam(int id)
+CameraFixeAbstract * GestSceneManager::getCam(unsigned int id)
 {
 
     if(id > _listCameras.size())
@@ -57,8 +60,7 @@ void GestSceneManager::setSceneManager(Ogre::SceneManager * sceneManager)
 
 void GestSceneManager::remCam(CameraFixeAbstract * cam)
 {
-   int i;
-   for(i=0; i<_listCameras.size(); i++)
+   for(unsigned int i = 0; i < _listCameras.size() ; i++)
    {
        if(_listCameras[i]==cam)
        {
@@ -67,6 +69,7 @@ void GestSceneManager::remCam(CameraFixeAbstract * cam)
        }
    }
 }
+
 int GestSceneManager::getCount()
 {
    return _listCameras.size();
@@ -79,6 +82,7 @@ void GestSceneManager::destroy()
         delete _instance;
     }
 }
+
 void GestSceneManager::deleteAll()
 {
     _listCameras.clear();

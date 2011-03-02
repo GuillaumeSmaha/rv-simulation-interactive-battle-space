@@ -12,6 +12,8 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+
+/// Valeur de PI : 3.141592653589793
 #define PI (3.141592653589793)
 
 /*!
@@ -57,9 +59,8 @@ class Utils
 		static void log(Ogre::String text);
 		/*!
 		* \brief Affiche un message de log sur la console (type générique)
-		* \param text Texte à afficher
+		* \param Value Valeur à afficher
 		*/
-
 		template <typename T>
         static Ogre::String log( const T & Value )
         {
@@ -91,6 +92,10 @@ class Utils
 		{
 		    Utils::log(Utils::toString(text));
 		}
+		/*!
+		* \brief Affiche un message de log sur la console
+		* \param text Texte à afficher
+		*/
 		static void log(const char* text)
 		{
 			log(Ogre::String(text));
@@ -116,7 +121,7 @@ class Utils
 		static void logFile(Ogre::String text);
         /*!
 		* \brief Enregistre un message de log dans le fichier de sortie
-		* \param text Texte à afficher
+		* \param Value Valeur à afficher
 		*/
         template <typename T>
         static void logFile( const T & Value )

@@ -1,5 +1,5 @@
 #include "GestShip.h"
-#include "Utils.h"
+
 using namespace std;
 
 GestShip* GestShip::_instance = NULL;
@@ -34,18 +34,17 @@ void GestShip::addShip(ShipAbstract * ship)
 
 void GestShip::remShip(ShipAbstract * ship)
 {
-   int i;
-   for(i=0; i<lstShip.size(); i++)
-   {
-       if(lstShip[i]==ship)
-       {
-           lstShip.erase(lstShip.begin()+i);
-           break;
-       }
-   }
-
+	for(unsigned int i = 0 ; i < lstShip.size() ; i++)
+	{
+		if(lstShip[i]==ship)
+		{
+			lstShip.erase(lstShip.begin()+i);
+			break;
+		}
+	}
 }
-void GestShip::updateShips(void*)
+
+void GestShip::updateShips(void *)
 {
     vector<ShipAbstract *>::iterator itShip;
     for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)

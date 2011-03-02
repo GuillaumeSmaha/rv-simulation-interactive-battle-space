@@ -2,13 +2,10 @@
 *  \file GestSound.h
 *  \brief Ce fichier contient la déclaration de la classe GestSound. C'est la classe qui gère le son
 */
-#ifndef __GESTSOUND_H__
-#define __GESTSOUND_H__
+#ifndef __GEST_SOUND_H__
+#define __GEST_SOUND_H__
 
 #include <OgreAL.h>
-//~ #include <boost/thread/thread.hpp>
-//~ #include <boost/thread.hpp>
-//~ #include <boost/bind.hpp>
 #include "config.h"
 #include "ObjectRoot.h"
 
@@ -66,4 +63,4 @@ class GestSound : public ObjectRoot
 };
 
 
-#endif // __GESTSOUND_H__
+#endif // __GEST_SOUND_H__

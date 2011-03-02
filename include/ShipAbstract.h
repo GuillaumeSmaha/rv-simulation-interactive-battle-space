@@ -6,11 +6,13 @@
 #define __SHIP_ABSTRACT_H__
 
 #include <Ogre.h>
-#include "CameraFixeTarget.h"
 #include "MeshLoader.h"
 #include "Utils.h"
-#include "Signal.h"
 #include "ObjectRoot.h"
+#include "Signal.h"
+#include "CameraFixeTarget.h"
+#include "GestSceneManager.h"
+#include "GestLaser.h"
 /*!
 * \class ShipAbstract
 * \brief Classe gérant les vaiseaux individuellements
@@ -83,8 +85,10 @@ class ShipAbstract : public ObjectRoot
          * \brief vrai si la premiere fois que l'on regle la position
         */
         bool firstPos;
+        /*!
+         * \brief vrai si la premiere fois que l'on regle la direction
+        */
         bool firstDir;
-
         /*!
          * \brief direction à la création du vaiseau, permet de revenir à la direction initiale
         */
@@ -94,11 +98,14 @@ class ShipAbstract : public ObjectRoot
 
 	public:
 
+        /*!
+		 * \brief Vitesse maximale du vaisseau
+		 */
         static Ogre::Real MAXSPEED;
         /*!
 		 * \brief Dispatche un signal lorsque le vaisseau est détruit Signal(ShipAbstract*)
 		 */
-		 Signal<ShipAbstract*> signalDestruction;
+		 Signal<ShipAbstract *> signalDestruction;
 		/*!
 		 * \brief Construction
 		*/
@@ -122,6 +129,10 @@ class ShipAbstract : public ObjectRoot
 		 * \brief Applique une texture blessé au vaisseau
 		*/
 		void exploded(void);
+		/*!
+		 * \brief Applique une texture blessé au vaisseau
+		*/
+		void shootLaser(void);
 		/*!
 		 * \brief Définit les particules des réacteurs
 		*/
@@ -279,7 +290,7 @@ class ShipAbstract : public ObjectRoot
 		}
 		/*!
 		 * \brief [Setter] Définit la vitesse de translation du vaisseau
-		 * \param speed Vitesse du vaisseau
+		 * \param translateSpeed Vitesse du vaisseau
 		*/
 		void setTranslateSpeed(const Ogre::Real translateSpeed)
 		{
@@ -330,7 +341,7 @@ class ShipAbstract : public ObjectRoot
 		}
 		/*!
 		 * \brief [Setter] Définit la vitesse de rotation latérale du vaisseau
-		 * \param pitchSpeed Vitesse de rotation du vaisseau
+		 * \param yawSpeed Vitesse de rotation du vaisseau
 		*/
 		void setYawSpeed(const Ogre::Radian yawSpeed)
 		{
@@ -364,7 +375,7 @@ class ShipAbstract : public ObjectRoot
 		}
 		/*!
 		 * \brief [Setter] Définit l'accélération de translation du vaisseau
-		 * \param acceleration Accélération du vaisseau
+		 * \param translateAcceleration Accélération du vaisseau
 		*/
 		void setTranslateAcceleration(const Ogre::Real translateAcceleration)
 		{
@@ -415,7 +426,7 @@ class ShipAbstract : public ObjectRoot
 		}
 		/*!
 		 * \brief [Setter] Définit l'accélération de rotation latérale du vaisseau
-		 * \param pitchAcceleration Accélération de rotation du vaisseau
+		 * \param yawAcceleration Accélération de rotation du vaisseau
 		*/
 		void setYawAcceleration(const Ogre::Radian yawAcceleration)
 		{
@@ -457,13 +468,12 @@ class ShipAbstract : public ObjectRoot
 		 * \param y Position de l'objet en y
 		 * \param z Position de l'objet en z
 		*/
+		void setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
 
         /*!
          * \brief met la vitesse à zero, place en position initial, place dans la direction initiale
         */
         void reset();
-
-		void setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
 
 		/*!
 		 * \brief [Getter] Récupère le nom du noeud

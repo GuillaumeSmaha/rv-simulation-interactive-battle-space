@@ -7,30 +7,31 @@
 
 #include <Ogre.h>
 #include <OISInputManager.h>
+#include "nodeName.h"
 #include "ObjectRoot.h"
-#include "PlayerControls.h"
+#include "Utils.h"
+#include "Signal.h"
 #include "ListenerKeyboard.h"
 #include "ListenerMouse.h"
 #include "ListenerWindow.h"
 #include "ListenerFrame.h"
 #include "ListenerTime.h"
+#include "MeshLoader.h"
+#include "GestSceneManager.h"
 #include "GestSound.h"
-#include "nodeName.h"
+#include "GestShip.h"
+#include "GestLaser.h"
+#include "GestPlanet.h"
+#include "GestGroupAsteroids.h"
+#include "ViewportLoader.h"
+#include "Menus.h"
+#include "PlayerControls.h"
 #include "ShipAbstract.h"
 #include "ShipIA.h"
 #include "ShipPlayer.h"
-#include "GestShip.h"
+#include "Planet.h"
 #include "Asteroid.h"
 #include "GroupAsteroid.h"
-#include "GestGroupAsteroids.h"
-#include "Utils.h"
-#include "MeshLoader.h"
-#include "ViewportLoader.h"
-#include "Signal.h"
-#include "Planet.h"
-#include "GestPlanet.h"
-#include "GestSceneManager.h"
-#include "Menus.h"
 
 class ListenerWindow;
 class ListenerMouse;
@@ -127,9 +128,17 @@ class Application : public ObjectRoot
 
 	public: //TODO : faire des fonctions pour ca
 
-		/* Pour la gestion des stats */
+    	/*!
+		*  \brief Seuil jusqu'au prochain affichage des stats
+		*/
 		Ogre::Real timeUntilNextToggle;
+    	/*!
+		*  \brief Définit si on affiche les stats
+		*/
 		bool isStatsOn;
+    	/*!
+		*  \brief Définit si on arrête le jeu
+		*/
 		bool shutDown;
 
 
@@ -219,9 +228,14 @@ class Application : public ObjectRoot
 			this->shutDown = shutdown;
 		}
 
+    	/*!
+		*  \brief Permet de suspendre le jeu
+		*/
         void suspendre_jeux();
+    	/*!
+		*  \brief Permet de redemarrer le jeu
+		*/
         void redemarrer_jeux();
-
     	/*!
 		*  \brief Permet de redemarrer sur une scene initiale sans tout recharger
 		*/

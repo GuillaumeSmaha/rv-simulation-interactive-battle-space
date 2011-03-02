@@ -35,7 +35,8 @@ class MeshLoader
 			PLANET7 = 11,
 			PLANET8 = 12,
 			PLANET9 = 13,
-			ASTEROID = 14
+			ASTEROID = 14,
+			MISSILE = 15
 		} ;
 
 	private:

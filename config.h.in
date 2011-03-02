@@ -24,6 +24,6 @@
 	/*!
 	 **  \brief Chemin des sources
 	 **/
-	#define PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}"
+	#cmakedefine PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}"
 
 #endif

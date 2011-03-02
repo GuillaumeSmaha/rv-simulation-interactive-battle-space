@@ -81,15 +81,18 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
             {
                 suspendre_jeux();
                 afficher_menus();
-                this->menu_open=true;
+                this->menu_open = true;
 
             }
             else
             {
                 cacher_menus();
                 redemarrer_jeux();
-                this->menu_open=false;
+                this->menu_open = false;
             }
+			break;
+			
+		default:
 			break;
 	}
 }
@@ -135,17 +138,17 @@ CEGUI::MouseButton Menus::convertButton(OIS::MouseButtonID evt)
 {
     switch (evt)
     {
-    case OIS::MB_Left:
-        return CEGUI::LeftButton;
+		case OIS::MB_Left:
+			return CEGUI::LeftButton;
 
-    case OIS::MB_Right:
-        return CEGUI::RightButton;
+		case OIS::MB_Right:
+			return CEGUI::RightButton;
 
-    case OIS::MB_Middle:
-        return CEGUI::MiddleButton;
+		case OIS::MB_Middle:
+			return CEGUI::MiddleButton;
 
-    default:
-        return CEGUI::LeftButton;
+		default:
+			return CEGUI::LeftButton;
     }
 }
 

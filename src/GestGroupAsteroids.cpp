@@ -24,13 +24,14 @@ GestGroupAsteroids * GestGroupAsteroids::getSingleton(void)
     }
     return _instance;
 }
+
 void GestGroupAsteroids::addGroupAsteroids(GroupAsteroid * groupAsteroid)
 {
     lstGroupAsteroids.push_back(groupAsteroid);
 }
 
 
-void GestGroupAsteroids::updateGroupsAsteroids(void*)
+void GestGroupAsteroids::updateGroupsAsteroids(void * useless)
 {
     vector<GroupAsteroid *>::iterator itGroupAsteroid;
     for(itGroupAsteroid=lstGroupAsteroids.begin(); itGroupAsteroid<lstGroupAsteroids.end();itGroupAsteroid++)

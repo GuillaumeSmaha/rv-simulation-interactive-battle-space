@@ -2,12 +2,13 @@
 *  \file GestShip.h
 *  \brief Ce fichier contient la déclaration de la classe GestShip. C'est la classe qui gère l'ensemble des vaiseaux
 */
-#ifndef __GESTSHIP_H__
-#define __GESTSHIP_H__
+#ifndef __GEST_SHIP_H__
+#define __GEST_SHIP_H__
 
 #include <Ogre.h>
 #include "ShipAbstract.h"
 #include "ObjectRoot.h"
+#include "Utils.h"
 
 /*!
 * \class GestShip
@@ -89,4 +90,4 @@ class GestShip : public ObjectRoot
 };
 
 
-#endif // __GESTSHIP_H__
+#endif // __GEST_SHIP_H__

@@ -16,14 +16,19 @@
  */
 class ListenerTime : public ObjectRoot
 {
+	public:	
+        /*!
+         * \brief Signal pour le timer
+         */
+		Signal<void *> signalTimerElapsed;
 
     private:
         /*!
-         * \brief seuil auquel on dispatch un signal
+         * \brief Seuil auquel on dispatch un signal
          */
         unsigned long seuil;
         /*!
-         * \brief permet de vérifier que le timer tourne déja ou pas
+         * \brief Permet de vérifier que le timer tourne déja ou pas
          */
         bool started;
          /*!
@@ -31,17 +36,34 @@ class ListenerTime : public ObjectRoot
          */
         Ogre::Timer * timer;
         /*!
-         * \brief Pause
+         * \brief Indique si la pause est active
          */
          bool paused;
 
 
     public:
-    void pause(bool pausing);
-    Signal<void *> signalTimerElapsed;
-    ListenerTime(long unsigned int seuil, ListenerFrame * listenerFrame);
-    ~ListenerTime();
-    void watchTime(void *);
+        /*!
+         * \brief Constructeur
+         * \param seuil Seuil pour faire la mise à jour de la frame
+         * \param listenerFrame Pointeur sur le controleur de frame
+         */
+		ListenerTime(unsigned long seuil, ListenerFrame * listenerFrame);
+        /*!
+         * \brief Destructeur
+         */
+		~ListenerTime();
+		
+        /*!
+         * \brief Méthode appelé pour la mise à jour de la frame régulée
+         * \param useless NULL
+         */
+		void watchTime(void * useless);
+		
+        /*!
+         * \brief Change l'état de la pause
+         * \param pausing Etat de la pause
+         */
+		void pause(bool pausing);
 
 };
 

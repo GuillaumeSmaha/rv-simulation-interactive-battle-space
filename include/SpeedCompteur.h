@@ -18,13 +18,21 @@ class SpeedCompteur : public ObjectRoot
 {
 
 public:
+    /*!
+     * \brief Constructeur
+     * \param ship Le vaisseau contenant la vitesse de celui-ci
+     * \param listenerTime Pointeur sur le controleur de frame régulé
+    */
     SpeedCompteur(ShipAbstract * ship, ListenerTime * listenerTime);
+    /*!
+     * \brief Destructeur
+    */
     ~SpeedCompteur();
 
 
 private:
     /*!
-     * \brief le vaiseau auquel est lié le compteur
+     * \brief Le vaiseau auquel est lié le compteur
     */
     ShipAbstract * ship;
     /*!

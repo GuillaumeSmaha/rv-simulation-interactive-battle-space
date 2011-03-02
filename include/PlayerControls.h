@@ -52,7 +52,13 @@ class PlayerControls: public ObjectRoot
 		 */
 		const static int maxOISMouseControl = 7;
 
+         /*!
+		 * \brief Pointeur sur le controleur du clavier
+		 */
         ListenerKeyboard * keyboard;
+         /*!
+		 * \brief Pointeur sur le controleur de la souris
+		 */
         ListenerMouse * mouse;
 
 

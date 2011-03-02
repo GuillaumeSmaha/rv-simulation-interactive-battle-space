@@ -93,6 +93,7 @@ bool Application::start(void)
 	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
 	//this->window = this->root->initialise(true, "Combat spatial");
 	
+	//create Sound singleton
 	GestSound::getSingleton();
 
 	// get the generic SceneManager
@@ -107,6 +108,12 @@ bool Application::start(void)
 
 	// Initialisation des ressources
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	
+	//create Ship singleton
+    GestShip::getSingleton();
+	
+	//create Laser singleton
+	GestLaser::getSingleton();
 
 	// create the scene graph
 	this->initSceneGraph();
@@ -274,14 +281,6 @@ void Application::initListeners(void)
     this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
 	this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
 
-	//Test * t = new Test(4);
-	//t->add(this->listenerFrame, this->listenerMouse);
-
-   // this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
-
-    // capture value of each device
-    //this->app->getListenerMouse()->getMouse()->capture();
-	//this->app->getListenerKeyboard()->getKeyboard()->capture();
 
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::onKeyPressed, this);
@@ -296,6 +295,9 @@ void Application::onKeyPressed(PlayerControls::Controls key)
 		case PlayerControls::QUIT :
 			this->killApplication();
 			break;
+			
+		default:
+			break;
 	}
 }
 
@@ -307,38 +309,20 @@ void Application::restartScene(void)
 void Application::initSceneGraph(void)
 {
 	//Groupes Vaisseaux
-	Ogre::SceneNode * GroupeVaisseaux = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
-	//a definir qqpart, ptre dans Ship
-	/*
-		//Vaisseau 1
-		Ogre::SceneNode * GroupeVaisseaux_Vaisseau1 = GroupeVaisseaux->createChildSceneNode("GroupeVaisseaux_Vaisseau1");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Reacteur = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Reacteur");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Corps = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Corps");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Arme = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Arme");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera_FirstPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera_FirstPerson");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera_ThirdPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ThirdPerson");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau1_Camera_ExtFixe = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau1_Camera_ExtFixe");
-		//Vaisseau 2
-		Ogre::SceneNode * GroupeVaisseaux_Vaisseau2 = GroupeVaisseaux->createChildSceneNode("GroupeVaisseaux_Vaisseau2");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Reacteur = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Reacteur");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Corps = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Corps");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Arme = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Arme");
-			Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera = GroupeVaisseaux_Vaisseau1->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_FirstPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_FirstPerson");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ThirdPerson = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ThirdPerson");
-				Ogre::SceneNode * GroupeVaisseaux_Vaisseau2_Camera_ExtFixe = GroupeVaisseaux_Vaisseau1_Camera->createChildSceneNode("GroupeVaisseaux_Vaisseau2_Camera_ExtFixe");
-	*/
+	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 
 	//Groupe décor
 	Ogre::SceneNode * GroupeDecors = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_DECOR);
 		//Groupe planetes
-		Ogre::SceneNode * GroupeDecors_GroupePlanete = GroupeDecors->createChildSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
+		GroupeDecors->createChildSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES);
 		//Groupe soleils
-		Ogre::SceneNode * GroupeDecors_GroupeSoleil = GroupeDecors->createChildSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_SOLEILS);
+		GroupeDecors->createChildSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_SOLEILS);
 
 	//Ensemble de groupes d'astéroides
-	Ogre::SceneNode * EnsembleGroupesAsteroides = this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
+	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
+		
+	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_LASERS);
+	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_MISSILES);
 }
 
 
@@ -362,7 +346,6 @@ void Application::initScene(void)
 
 	GestPlanet::getSingleton()->addPlanet(planet1);
 	GestPlanet::getSingleton()->addPlanet(planet2);
-    GestShip::getSingleton();
 
 
 	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
@@ -387,11 +370,12 @@ void Application::initScene(void)
 	GestGroupAsteroids::getSingleton()->createGroup(32,100,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.05);
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
-    this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips,GestShip::getSingleton());
-    this->listenerTime->signalTimerElapsed.add(&GestGroupAsteroids::updateGroupsAsteroids,GestGroupAsteroids::getSingleton());
+    this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips, GestShip::getSingleton());
+    this->listenerTime->signalTimerElapsed.add(&GestLaser::updateLasers, GestLaser::getSingleton());
+    this->listenerTime->signalTimerElapsed.add(&GestGroupAsteroids::updateGroupsAsteroids, GestGroupAsteroids::getSingleton());
 
 	// A faire dans listenerFrame car listenerTime trop lent !!
-	this->listenerFrame->signalFrameEnded.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
+	this->listenerFrame->signalFrameEnded.add(&GestPlanet::updatePlanet, GestPlanet::getSingleton());
 
 //Temporaire :
     // Set ambient light
