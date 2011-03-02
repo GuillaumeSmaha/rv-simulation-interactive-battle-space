@@ -2,6 +2,9 @@
 
 using namespace std;
 
+Ogre::Real GestLaser::speedLaserBase = 0.1;
+Ogre::Real GestLaser::timeLife = 1000.0;
+
 GestLaser * GestLaser::_instance = NULL;
 
 GestLaser * GestLaser::getSingleton(void)

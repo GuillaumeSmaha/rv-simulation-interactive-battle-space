@@ -24,11 +24,11 @@ class GestLaser : public ObjectRoot
 		/*!
 		 *  \brief Vitesse du laser
 		 */
-		const static Ogre::Real speedLaserBase = 0.1;
+		static Ogre::Real speedLaserBase;
 		/*!
 		 *  \brief Temps de vie du laser en milliseconde
 		 */
-		const static Ogre::Real timeLife = 1000.0;
+		static Ogre::Real timeLife;
 	
 	private:
 		/*!
