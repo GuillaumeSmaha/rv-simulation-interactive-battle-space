@@ -93,7 +93,6 @@ void ShipAbstract::updatePosition(void)
 {
     std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
     std::cout<<"acceleration"<<this->getRollAcceleration()<<std::endl;
-	Vector3 position = this->getPosition();
     //calcule des nouvelles vitesses et positions
     this->setSpeed(this->getSpeed()+this->getAcceleration());
 	this->setTranslateSpeed(this->getTranslateSpeed() + this->getTranslateAcceleration());

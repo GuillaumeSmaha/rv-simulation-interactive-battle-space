@@ -50,7 +50,6 @@ void ShipPlayer::updatePosition(void)
 
     update_differente_acceleration();
 
-	Vector3 position = this->getPosition();
     //calcule des nouvelles vitesses et positions
     this->setSpeed(this->getSpeed()+this->getAcceleration());
 	this->setTranslateSpeed(this->getTranslateSpeed()+this->getTranslateAcceleration());

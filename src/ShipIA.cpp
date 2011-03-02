@@ -14,7 +14,6 @@ ShipIA::~ShipIA(void)
 
 void ShipIA::updatePosition(void)
 {
-	Vector3 position = this->getPosition();
 	if (this->getAcceleration() != 0) 
 	{
 		this->setSpeed(this->getSpeed()+this->getAcceleration());
