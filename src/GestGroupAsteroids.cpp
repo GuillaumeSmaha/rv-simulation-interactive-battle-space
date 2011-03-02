@@ -69,15 +69,15 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angl
 	groupAsteroid->setRotationSpeed(rotationSpeed);
 
 	groupAsteroid->setNodeGroupAsteroid(planet->createChildSceneNode("GroupAsteroids"+Utils::toString(Utils::unique())));
-	for (x = rayon; x > 0; x=x-rayon/(nb/4)) //le 4 car on crée les asteroids 4 par 4
+	for (x = rayon; x > 0; x=x-rayon/(nb/4)) //le 4 car on crÃ©e les asteroids 4 par 4
 	{
 		asteroid1 = new Asteroid();
 		//normaliser le nb par rapport au x -> le rayon
-		//(x - a)² + (y - b)² = r²
-		//	Ou (a,b) sont les coordonnées du centre et r est le rayon. 
-		//  tous les couples (x,y) qui vérifient l'équation sont des points du cercle.
-		//-> si x fixé par le for :
-		// on fait 4 asteroids à la fois:
+		//(x - a)Â² + (y - b)Â² = rÂ²
+		//	Ou (a,b) sont les coordonnÃ©es du centre et r est le rayon. 
+		//  tous les couples (x,y) qui vÃ©rifient l'Ã©quation sont des points du cercle.
+		//-> si x fixÃ© par le for :
+		// on fait 4 asteroids Ã  la fois:
 
 		y =  Ogre::Math::Sqrt(rayon*rayon-x*x)+Utils::randRangeInt(-degreLiberte,degreLiberte);
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));

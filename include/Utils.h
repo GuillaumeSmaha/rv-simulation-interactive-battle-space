@@ -54,12 +54,12 @@ class Utils
 
 		/*!
 		* \brief Affiche un message de log sur la console
-		* \param text Texte à afficher
+		* \param text Texte Ã  afficher
 		*/
 		static void log(Ogre::String text);
 		/*!
-		* \brief Affiche un message de log sur la console (type générique)
-		* \param Value Valeur à afficher
+		* \brief Affiche un message de log sur la console (type gÃ©nÃ©rique)
+		* \param Value Valeur Ã  afficher
 		*/
 		template <typename T>
         static Ogre::String log( const T & Value )
@@ -69,7 +69,7 @@ class Utils
 
 		/*!
 		* \brief Affiche un message de log sur la console
-		* \param text Texte à afficher
+		* \param text Texte Ã  afficher
 		*/
 		static void log(int text)
 		{
@@ -77,7 +77,7 @@ class Utils
 		}
 		/*!
 		* \brief Affiche un message de log sur la console
-		* \param text Texte à afficher
+		* \param text Texte Ã  afficher
 		*/
 		static void log(int * text)
 		{
@@ -86,7 +86,7 @@ class Utils
 
 		/*!
 		* \brief Affiche un message de log sur la console
-		* \param text Texte à afficher
+		* \param text Texte Ã  afficher
 		*/
 		static void log(void * text)
 		{
@@ -94,7 +94,7 @@ class Utils
 		}
 		/*!
 		* \brief Affiche un message de log sur la console
-		* \param text Texte à afficher
+		* \param text Texte Ã  afficher
 		*/
 		static void log(const char* text)
 		{
@@ -102,7 +102,7 @@ class Utils
 		}
 		/*!
 		* \brief Affiche un nombre de log sur la console
-		* \param text Nombre à afficher
+		* \param text Nombre Ã  afficher
 		*/
         static void log(float text)
 		{
@@ -116,12 +116,12 @@ class Utils
 		static void logFileInit(Ogre::String file);
 		/*!
 		* \brief Enregistre un message de log dans le fichier de sortie
-		* \param text Texte à afficher
+		* \param text Texte Ã  afficher
 		*/
 		static void logFile(Ogre::String text);
         /*!
 		* \brief Enregistre un message de log dans le fichier de sortie
-		* \param Value Valeur à afficher
+		* \param Value Valeur Ã  afficher
 		*/
         template <typename T>
         static void logFile( const T & Value )
@@ -129,38 +129,38 @@ class Utils
             Utils::logFile(Utils::toString<T>(Value));
         }
 		/*!
-		* \brief Transforme une valeur quelconque en une chaine de caractère.
-		* \param Value valeur à chainer
+		* \brief Transforme une valeur quelconque en une chaine de caractÃ¨re.
+		* \param Value valeur Ã  chainer
 		*/
 		template <typename T>
        static Ogre::String toString( const T & Value )
         {
-            // utiliser un flux de sortie pour créer la chaîne
+            // utiliser un flux de sortie pour crÃ©er la chaÃ®ne
             std::ostringstream oss;
-            // écrire la valeur dans le flux
+            // Ã©crire la valeur dans le flux
             oss << Value;
             // renvoyer une string
             return oss.str();
         }
 		/*!
-		* \brief Transforme un nombre en une chaine de caractère.
-		* \param Value nombre à chainer
+		* \brief Transforme un nombre en une chaine de caractÃ¨re.
+		* \param Value nombre Ã  chainer
 		*/
         static Ogre::String toString( float Value );
 		/*!
-		* \brief Transforme un entier en une chaine de caractère.
-		* \param Value valeur à chainer
+		* \brief Transforme un entier en une chaine de caractÃ¨re.
+		* \param Value valeur Ã  chainer
 		*/
 		static Ogre::String toString( int Value );
         /*!
-		* \brief Transforme un pointeur d'entier en une chaine de caractère.
-		* \param Value valeur à chainer
+		* \brief Transforme un pointeur d'entier en une chaine de caractÃ¨re.
+		* \param Value valeur Ã  chainer
 		*/
 		static Ogre::String toString( int * Value );
 
         /*!
-		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractères
-		* \param path Le chemin du fichier à lire
+		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractÃ¨res
+		* \param path Le chemin du fichier Ã  lire
 		*/
         static Ogre::String read_file(const char * path)
         {
@@ -168,8 +168,8 @@ class Utils
 		}
 
         /*!
-		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractères
-		* \param path Le chemin du fichier à lire
+		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractÃ¨res
+		* \param path Le chemin du fichier Ã  lire
 		*/
         static Ogre::String read_file(char * path);
 };

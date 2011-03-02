@@ -116,10 +116,10 @@ Planet::~Planet(void)
 
 void Planet::update()
 {
-	// Mise à jour de la position de la planète
+	// Mise Ã  jour de la position de la planÃ¨te
 	updatePosition();
 
-	// Mise à jour nécessaire seulement si une atmosphère est présente
+	// Mise Ã  jour nÃ©cessaire seulement si une atmosphÃ¨re est prÃ©sente
 	if (this->hasAtmosphere == false)
 	{
 		return;
@@ -127,7 +127,7 @@ void Planet::update()
 
 	GestSceneManager* scnMgr = GestSceneManager::getSingleton();
 
-	// On met à jour l'affichage de la planète pour toutes les caméras
+	// On met Ã  jour l'affichage de la planÃ¨te pour toutes les camÃ©ras
 	for (int i = 0; i < scnMgr->getCamCount(); i++)
 	{
 		Camera* currentCamera = scnMgr->getCamera(i)->getCamera();

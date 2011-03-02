@@ -1,6 +1,6 @@
 /*!
 *  \file GestPlanet.h
-*  \brief Ce fichier contient la déclaration de la classe GestPlanet. C'est la classe qui gère l'ensemble des planètes.
+*  \brief Ce fichier contient la dÃ©claration de la classe GestPlanet. C'est la classe qui gÃ¨re l'ensemble des planÃ¨tes.
 */
 #ifndef __GEST_PLANET_H__
 #define __GEST_PLANET_H__
@@ -12,15 +12,15 @@
 
 /*!
 * \class GestPlanet
-* \brief Classe gérant l'ensemble des planètes via un std::vecteur.
-* En particulier, on renvoit vers elle les traitements communs à tous les planètes (mise à jour de la position après une frame si on a besoin après). 
+* \brief Classe gÃ©rant l'ensemble des planÃ¨tes via un std::vecteur.
+* En particulier, on renvoit vers elle les traitements communs Ã  tous les planÃ¨tes (mise Ã  jour de la position aprÃ¨s une frame si on a besoin aprÃ¨s). 
 */
 
 class GestPlanet : public ObjectRoot
 {
     private:
 		/*!
-		 * \brief Liste des planètes
+		 * \brief Liste des planÃ¨tes
 		 */
         std::vector<Planet *> lstPlanet;
 
@@ -51,24 +51,24 @@ class GestPlanet : public ObjectRoot
         ~GestPlanet();
 
 		/*!
-		 * \brief Ajoute une planète au gestionnaire
-		 * \param planet Planète à ajouter
+		 * \brief Ajoute une planÃ¨te au gestionnaire
+		 * \param planet PlanÃ¨te Ã  ajouter
 		 */
         void addPlanet(Planet * planet);
 
 		/*!
-		 * \brief Récupère la liste des planètes
-		 * \return La liste des planètes
+		 * \brief RÃ©cupÃ¨re la liste des planÃ¨tes
+		 * \return La liste des planÃ¨tes
 		 */
         std::vector<Planet> getAllPlanet();
 
 		/*!
-		 * \brief Effectue la mise à jour des planètes
+		 * \brief Effectue la mise Ã  jour des planÃ¨tes
 		 */
         void updatePlanet(void *);
 
 		/*!
-		 * \brief Supprime les planètes du gestionnaire
+		 * \brief Supprime les planÃ¨tes du gestionnaire
 		 */
         void deleteAllPlanet();
 };

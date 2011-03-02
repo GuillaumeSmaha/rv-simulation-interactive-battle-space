@@ -1,6 +1,6 @@
 /*!
 *  \file  Planet.h
-*  \brief Ce fichier contient la déclaration de la classe Planet.
+*  \brief Ce fichier contient la dÃ©claration de la classe Planet.
 */
 #ifndef __PLANET_H__
 #define __PLANET_H__
@@ -11,32 +11,32 @@
 
 /*!
 * \class Planet
-* \brief Classe gérant les planètes
+* \brief Classe gÃ©rant les planÃ¨tes
 */
 class Planet
 {
 	private:
 		/*!
-		* \brief Compteur de planètes
+		* \brief Compteur de planÃ¨tes
 		*/
 		static int planetNumber;
 
 		/*!
-		* \brief Sphère interne de la planète (sol)
+		* \brief SphÃ¨re interne de la planÃ¨te (sol)
 		*/
 		Ogre::Entity * innerSphere;
 		/*!
-		* \brief Sphère externe (atmosphère, si activée)
+		* \brief SphÃ¨re externe (atmosphÃ¨re, si activÃ©e)
 		*/
 		Ogre::Entity * outerSphere;
 
 		/*!
-		* \brief Node de la planète
+		* \brief Node de la planÃ¨te
 		*/
 		Ogre::SceneNode* planetNode;
 
 		/*!
-		* \brief Type de planète qui correspond les modèles de mesh
+		* \brief Type de planÃ¨te qui correspond les modÃ¨les de mesh
 		*/
 		Ogre::int16 type;
 		
@@ -55,7 +55,7 @@ class Planet
 		*/
 
 		/*!
-		* \brief Indique si la planète possède une atmosphère ou pas
+		* \brief Indique si la planÃ¨te possÃ¨de une atmosphÃ¨re ou pas
 		*/
 		bool hasAtmosphere;
 
@@ -64,74 +64,74 @@ class Planet
 		*/
 		Ogre::MaterialPtr mGroundFromSpace;
 		/*!
-		* \brief Material de l'atmosphère
+		* \brief Material de l'atmosphÃ¨re
 		*/
 		Ogre::MaterialPtr mSkyFromSpace;
 
 		/*!
-		* \brief Paramètres du shader "atmosphère"
+		* \brief ParamÃ¨tres du shader "atmosphÃ¨re"
 			voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html
-			pour le détail des paramètres =)
+			pour le dÃ©tail des paramÃ¨tres =)
 		*/
 		Ogre::Vector3 mWaveLengths;
 		
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Vector3 mInvWaveLengthsPow4;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mInnerRadius;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mInnerRadiusSqr;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mOuterRadius;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mOuterRadiusSqr;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mKr;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mKm;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mKr4PI;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mKm4PI;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mESun;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mKrESun;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mKmESun;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mScale;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mScaleDepth;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mScaleOverScaleDepth;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mDepth;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mG;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mG2;
-		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
+		///brief ParamÃ¨tres du shader "atmosphÃ¨re"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le dÃ©tail des paramÃ¨tres =)
 		Ogre::Real mExposure;
 		
 	public:
 		/*!
-		 * \brief Constructeur par défaut de Planet
+		 * \brief Constructeur par dÃ©faut de Planet
 		 */
 		Planet(void);
 
 		/*!
-		 * \brief Constructeur d'une planète d'un certain rayon et du type par défaut (Terre).
-		 * \param radius Rayon de la planète.
-		 * \param hasAtmosphere Indique si la planète possède une atmosphère ou non
+		 * \brief Constructeur d'une planÃ¨te d'un certain rayon et du type par dÃ©faut (Terre).
+		 * \param radius Rayon de la planÃ¨te.
+		 * \param hasAtmosphere Indique si la planÃ¨te possÃ¨de une atmosphÃ¨re ou non
 		 */
 		Planet(Ogre::Real radius, bool hasAtmosphere = false);
 
 		/*!
-		 * \brief Constructeur d'une planète d'un certain rayon et d'un certain type.
-		 * \param radius Rayon de la planète.
-		 * \param type Type de la planète (voir MeshLoader)
-		 * \param hasAtmosphere Indique si la planète possède une atmosphère ou non
+		 * \brief Constructeur d'une planÃ¨te d'un certain rayon et d'un certain type.
+		 * \param radius Rayon de la planÃ¨te.
+		 * \param type Type de la planÃ¨te (voir MeshLoader)
+		 * \param hasAtmosphere Indique si la planÃ¨te possÃ¨de une atmosphÃ¨re ou non
 		 */
 		Planet(Ogre::Real radius, Ogre::int16 type, bool hasAtmosphere = false);
 
@@ -141,12 +141,12 @@ class Planet
 		~Planet();
 
 		/*!
-		* \brief Envoi des paramètres modifiés aux shaders
+		* \brief Envoi des paramÃ¨tres modifiÃ©s aux shaders
 		 */
 		void update();
 
 		/*!
-		* \brief Mise à jour de la position de la planète
+		* \brief Mise Ã  jour de la position de la planÃ¨te
 		*/
 		void updatePosition(void);
 		
@@ -154,14 +154,14 @@ class Planet
 		//Getter/setter
 		
 		/*!
-		* \brief [Setter] Configure la position de planète par rapport au noeud de groupe de planètes
+		* \brief [Setter] Configure la position de planÃ¨te par rapport au noeud de groupe de planÃ¨tes
 		* \param x Position en X
 		* \param y Position en Y
 		* \param z Position en Z
 		*/
 		void setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 		/*!
-		* \brief [Setter] Configure le redimmensionnement de planète par rapport au noeud de groupe de planètes
+		* \brief [Setter] Configure le redimmensionnement de planÃ¨te par rapport au noeud de groupe de planÃ¨tes
 		* \param x Dimension en X
 		* \param y Dimension en Y
 		* \param z Dimension en Z
@@ -170,7 +170,7 @@ class Planet
 		
 		/*!
 		 * \brief [Getter] Radius de la planete
-		 * \return radius Rayon de la planète.
+		 * \return radius Rayon de la planÃ¨te.
 		 */
 		Ogre::Real getMInnerRadius()
 		{
@@ -179,7 +179,7 @@ class Planet
 
 
 		/*!
-		 * \brief [Getter] Récupère le nom du noeud
+		 * \brief [Getter] RÃ©cupÃ¨re le nom du noeud
 		 * \return Nom du noeud
 		*/
 		Ogre::String getName(void)
@@ -188,7 +188,7 @@ class Planet
 		}
 		
 		/*!
-		 * \brief [Getter] Récupère un pointeur sur le noeud content le mesh
+		 * \brief [Getter] RÃ©cupÃ¨re un pointeur sur le noeud content le mesh
 		 * \return Nom du noeud
 		*/
 		Ogre::SceneNode * getNode(void)
@@ -197,7 +197,7 @@ class Planet
 		}
 		
 		/*!
-		 * \brief [Getter] Récupère un pointeur sur le mesh
+		 * \brief [Getter] RÃ©cupÃ¨re un pointeur sur le mesh
 		 * \return Nom du noeud
 		*/
 		Ogre::Entity * getEntity(void)
@@ -209,19 +209,19 @@ class Planet
 	private:
 
 		/*!
-		* \brief Permet de créer la/les sphère(s) représentant la planète (2 sphères si atmosphère)
-		* \param innerName Nom d'entré
+		* \brief Permet de crÃ©er la/les sphÃ¨re(s) reprÃ©sentant la planÃ¨te (2 sphÃ¨res si atmosphÃ¨re)
+		* \param innerName Nom d'entrÃ©
 		* \param outerName Nom de sortie
 		*/
 		void createSpheres(const Ogre::String& innerName, const Ogre::String& outerName = "");
 
 		/*!
-		* \brief Mise à jour des calculs des paramètres du shader
+		* \brief Mise Ã  jour des calculs des paramÃ¨tres du shader
 		*/
 		void updateCalculations();
 
 		/*!
-		* \brief Permet de régler le material à utiliser pour le sol
+		* \brief Permet de rÃ©gler le material Ã  utiliser pour le sol
 		*/
 		void setMaterialGroundFromSpace(const Ogre::String& name)
 		{
@@ -230,7 +230,7 @@ class Planet
 		}
 
 		/*!
-		* \brief Permet de régler le material à utiliser pour l'atmosphère
+		* \brief Permet de rÃ©gler le material Ã  utiliser pour l'atmosphÃ¨re
 		*/
 		void setMaterialSkyFromSpace(const Ogre::String& name)
 		{
