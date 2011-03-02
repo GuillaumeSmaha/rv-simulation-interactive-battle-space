@@ -3,58 +3,40 @@
 using namespace std;
 
 
-Laser::Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation) : position(position), orientation(orientation)
+Laser::Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation, const Ogre::ColourValue &color) : position(position), orientation(orientation)
 {
 	this->timerLife = new Ogre::Timer();
+		
+    this->particule = (Ogre::ParticleSystem *)MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::LASER);
+	this->particule->getEmitter(0)->setColour(color);
+    
+	this->getNode()->_setDerivedPosition(position);
+	this->getNode()->_setDerivedOrientation(orientation);
 	
-    //~ this->billboardChain = GestSceneManager::getSceneManager()->createBillboardChain("laser"+Utils::toString(Utils::unique()));
-	//~ this->billboardChain->setMaterialName("laser");
-	//~ this->billboardChain->setMaxChainElements(1000);
-	this->node = GestSceneManager::getSceneManager()->getSceneNode(NODE_NAME_GROUPE_LASERS)->createChildSceneNode("laserNode"+Utils::toString(Utils::unique()));
-	
-	this->node->_setDerivedPosition(position);
-	this->node->_setDerivedOrientation(orientation);
-	
-	
-    Ogre::ParticleSystem* thrusters = GestSceneManager::getSceneManager()->createParticleSystem(25);
-    thrusters->setMaterialName("Reactor");
-    thrusters->setDefaultDimensions(25, 25);
-
-// Création de 2 émetteurs pour le système de particules
-	Ogre::ParticleEmitter * emitter = thrusters->addEmitter("Point");
-
-	// set the emitter properties
-	emitter->setAngle(Ogre::Degree(3));
-	emitter->setTimeToLive(0.5);
-	emitter->setEmissionRate(25);
-	emitter->setParticleVelocity(5);
-	emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
-	emitter->setColour(Ogre::ColourValue::White, Ogre::ColourValue::Red);
-	emitter->setPosition(Ogre::Vector3(5.7, 0, 0));
-	
-	
-	this->billboardChain = thrusters;
-	this->node->attachObject(this->billboardChain);
 	
 }
 
 Laser::~Laser()
 {
+	this->signalDestruction.dispatch(this);
     delete this->timerLife;
-    this->signalDestruction.dispatch();
+	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::LASER, this->getEntity());
 }
 
 void Laser::updatePosition(void)
 {
+	this->moveRelative(0.0, 0.0, GestLaser::speedLaserBase);
+}
+
+bool Laser::isAlive()
+{
     
-    //~ if(this->timerLife->getMilliseconds() > GestLaser::timeLife)
-    //~ {
-        //~ delete this;
-    //~ }
-    //~ else
-    //~ {
-		this->moveRelative(0.0, 0.0, GestLaser::speedLaserBase);
-	//~ }    
+    if(this->timerLife->getMilliseconds() > GestLaser::timeLife)
+    {
+		return false;
+    }
+    
+    return true;
 }
 
 

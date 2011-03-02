@@ -9,7 +9,7 @@ Asteroid::Asteroid(void) : speed(0), rotationSpeed(Utils::randRangeInt(-1,1)/100
 	quat[1] = (Utils::randRangeInt(1,10))/10.0;//randomiser
 	quat[2] = (Utils::randRangeInt(1,10))/10.0;//randomiser
 	quat[3] = (Utils::randRangeInt(1,10))/10.0;//randomiser
-    this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::ASTEROID);
+    this->entity = (Ogre::Entity *)MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::ASTEROID);
 	this->getNode()->setOrientation(quat);
 	this->getNode()->setScale(100,100,100);
     this->getNode()->setPosition(0, 0, 0);
@@ -17,7 +17,7 @@ Asteroid::Asteroid(void) : speed(0), rotationSpeed(Utils::randRangeInt(-1,1)/100
 
 Asteroid::~Asteroid(void)
 {
-
+	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::ASTEROID, this->getEntity());
 }
 
 Quaternion Asteroid::getOrientation(void) 

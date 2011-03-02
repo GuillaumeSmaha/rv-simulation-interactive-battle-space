@@ -126,7 +126,7 @@ class Asteroid
 		 */
 		Ogre::String getName(void)
 		{
-			return entity->getName();
+			return this->entity->getName();
 		}
         /*!
 		 *  \brief Retourne le noeud parent de l'entité

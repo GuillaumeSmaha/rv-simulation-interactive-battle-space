@@ -10,13 +10,32 @@ ShipAbstract::ShipAbstract(void)
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
 	  firstPos(true), firstDir(true)
 {
-    this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::SHIP);
+    this->entity = (Ogre::Entity *)MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP);
 
 	// Calcul des tangentes (si pas présentes dans le mesh)
 	unsigned short src, dest;
 	if (!this->entity->getMesh()->suggestTangentVectorBuildParams(VES_TANGENT, src, dest))
 	{
 		this->entity->getMesh()->buildTangentVectors(VES_TANGENT, src, dest);
+	}
+	
+	switch(Utils::randRangeInt(0, 2))
+	{
+		case 0 :
+			this->colorLaser = Ogre::ColourValue::Blue;
+			break;
+			
+		case 1 :
+			this->colorLaser = Ogre::ColourValue::Green;
+			break;
+			
+		case 2 :
+			this->colorLaser = Ogre::ColourValue::Red;
+			break;
+		
+		default:
+			this->colorLaser = Ogre::ColourValue::Red;
+			break;
 	}
 
     this->getNode()->setPosition(0, 0, 0);
@@ -26,7 +45,8 @@ ShipAbstract::ShipAbstract(void)
 
 ShipAbstract::~ShipAbstract(void)
 {
-	this->signalDestruction.dispatch();
+	this->signalDestruction.dispatch(this);
+	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::SHIP, this->getEntity());
 }
 
 void ShipAbstract::touched(void)
@@ -48,8 +68,7 @@ void ShipAbstract::exploded(void)
 
 void ShipAbstract::shootLaser(void)
 {
-	GestLaser::getSingleton()->create(this->getNode()->_getDerivedPosition(), this->getNode()->_getDerivedOrientation());
-	//~ GestLaser::getSingleton()->create(this->getNode()->getPosition(), this->getNode()->getOrientation());
+	GestLaser::getSingleton()->create(this->getNode()->_getDerivedPosition(), this->getNode()->_getDerivedOrientation(), this->getColorLaser());
 }
 
 

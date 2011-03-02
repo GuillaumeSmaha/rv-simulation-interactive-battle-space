@@ -45,9 +45,10 @@ class GestLaser : public ObjectRoot
          * \brief Ajoute un laser
          * \param position Position initiale du laser
          * \param orientation Orientation du laser
+         * \param color La couleur du laser émis
          * \return Le laser crée
          */
-        Laser * create(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation);        
+        Laser * create(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation, const Ogre::ColourValue &color);        
 		/*!
 		 * \brief Ajoute un laser au gestionnaire
 		 * \param laser Pointeur sur le laser

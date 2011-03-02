@@ -6,7 +6,7 @@ int Planet::planetNumber = 0;
 
 Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
 {
-	//this->entity = MeshLoader::getSingleton()->getNodedEntity(MeshLoader::PLANET);
+	//this->entity = MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::PLANET);
     //this->getNode()->setPosition(150, 100, -100);
 
 	//updateCalculations();
@@ -100,9 +100,8 @@ Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type)
 
 Planet::~Planet(void)
 {
-	planetNode->detachAllObjects();
 
-	SceneManager* scnMgr = GestSceneManager::getSingleton()->getSceneManager();
+	SceneManager * scnMgr = GestSceneManager::getSingleton()->getSceneManager();
 
 	scnMgr->destroyEntity(innerSphere);
 
@@ -110,8 +109,8 @@ Planet::~Planet(void)
 	{
 		scnMgr->destroyEntity(outerSphere);
 	}
-
-	scnMgr->destroySceneNode(planetNode->getName());
+	
+	scnMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES)->removeAndDestroyChild(planetNode->getName());
 }
 
 void Planet::update()

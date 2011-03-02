@@ -28,6 +28,10 @@ class ShipAbstract : public ObjectRoot
 		*/
 		Ogre::Entity * entity;
 		/*!
+		 * \brief Couleur des lasers
+		*/
+		Ogre::ColourValue colorLaser;
+		/*!
 		 * \brief Santé du vaisseau
 		*/
 		int shipLife;
@@ -214,6 +218,23 @@ class ShipAbstract : public ObjectRoot
         void yawAccelerate(const Ogre::Radian coefAcceleration);
 
         //Getter/Setter
+
+		/*!
+		 * \brief [Getter] Récupère la couleur des lasers
+		 * \return Couleur des lasers
+		*/
+		Ogre::ColourValue getColorLaser()
+		{
+			return this->colorLaser;
+		}
+		/*!
+		 * \brief [Setter] Définit la couleur des lasers
+		 * \param colorLaser Couleur des lasers
+		*/
+		void setColorLaser(const Ogre::ColourValue &colorLaser)
+		{
+			this->colorLaser = colorLaser;
+		}
 
 		/*!
 		 * \brief [Getter] Récupère la vie du vaisseau

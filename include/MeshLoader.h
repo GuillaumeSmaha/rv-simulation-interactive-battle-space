@@ -36,7 +36,9 @@ class MeshLoader
 			PLANET8 = 12,
 			PLANET9 = 13,
 			ASTEROID = 14,
-			MISSILE = 15
+			MISSILE = 15,
+			LASER = 16,
+			SHIP_REACTOR = 17
 		} ;
 
 	private:
@@ -52,6 +54,7 @@ class MeshLoader
 		 * \brief Constructor
          */
 		MeshLoader();
+		
 	public:
         /*!
 		 *  \brief Retourne une instance du singleton
@@ -67,68 +70,75 @@ class MeshLoader
 		 */
         static bool deleteMeshLoader(void);
         /*!
-		 * \brief Retourne un Ogre::Entity correspondant au type de mesh transmis
+		 * \brief Retourne un Ogre::MovableObject correspondant au type de mesh transmis
 		 * \param meshType Correspond au mesh à créer
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
-		 * \return Une entity correspondante dont le nom est de la forme "object[0-9]+"
+		 * \return Une object correspondante dont le nom est de la forme "object[0-9]+"
 		 */
-		Ogre::Entity * getEntity(MeshLoader::MeshType meshType, bool random = false)
+		Ogre::MovableObject * getMovableObject(MeshLoader::MeshType meshType, bool random = false)
 		{
-			return getEntity(meshType, "object"+Utils::toString(Utils::unique()), random);
+			return getMovableObject(meshType, "object"+Utils::toString(Utils::unique()), random);
 		}
         /*!
-		 * \brief Retourne un Ogre::Entity correspondant au type de mesh transmis
+		 * \brief Retourne un Ogre::MovableObject correspondant au type de mesh transmis
 		 * \param meshType Correspond au mesh à créer
-         * \param name Nom de l'entity
+         * \param name Nom de l'object
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
-		 * \return Une entity correspondante
+		 * \return Une object correspondante
 		 */
-		Ogre::Entity * getEntity(MeshLoader::MeshType meshType, Ogre::String name,  bool random = false);
+		Ogre::MovableObject * getMovableObject(MeshLoader::MeshType meshType, Ogre::String name,  bool random = false);
         /*!
-		 * \brief Retourne un Ogre::Entity correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
+		 * \brief Retourne un Ogre::MovableObject correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
 		 * \param meshType Correspond au mesh à créer
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
-		 * \return Une entity correspondante dont le nom est de la forme "object[0-9]+" et attachée au node dont le nom est de la forme "node[0-9]+" lui même rattaché au graphe en fonction du type de mesh
+		 * \return Une object correspondante dont le nom est de la forme "object[0-9]+" et attachée au node dont le nom est de la forme "node[0-9]+" lui même rattaché au graphe en fonction du type de mesh
 		 */
-		Ogre::Entity * getNodedEntity(MeshLoader::MeshType meshType, bool random = false)
+		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, bool random = false)
 		{
-			return getNodedEntity(meshType, "node"+Utils::toString(Utils::unique()), random);
+			return getNodedMovableObject(meshType, "node"+Utils::toString(Utils::unique()), random);
 		}
         /*!
-		 * \brief Retourne un Ogre::Entity correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
+		 * \brief Retourne un Ogre::MovableObject correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
 		 * \param meshType Correspond au mesh à créer
          * \param nodeName Nom du node
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
-		 * \return Une entity correspondante dont le nom est de la forme "object[0-9]+" et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
+		 * \return Une object correspondante dont le nom est de la forme "object[0-9]+" et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
 		 */
-		Ogre::Entity * getNodedEntity(MeshLoader::MeshType meshType, Ogre::String nodeName, bool random = false)
+		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, Ogre::String nodeName, bool random = false)
 		{
-			return getNodedEntity(meshType, nodeName, "objet"+Utils::toString(Utils::unique()), random);
+			return getNodedMovableObject(meshType, nodeName, "objet"+Utils::toString(Utils::unique()), random);
 		}
         /*!
-		 * \brief Retourne un Ogre::Entity correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
+		 * \brief Retourne un Ogre::MovableObject correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
 		 * \param meshType Correspond au mesh à créer
          * \param nodeName Nom du node
-         * \param meshName Nom de l'entity
+         * \param meshName Nom de l'object
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
-		 * \return Une entity correspondante dont le nom est passé en paramètre et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
+		 * \return Une object correspondante dont le nom est passé en paramètre et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
 		 */
-		Ogre::Entity * getNodedEntity(MeshLoader::MeshType meshType, Ogre::String nodeName, Ogre::String meshName,  bool random = false);
+		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, Ogre::String nodeName, Ogre::String meshName,  bool random = false);
+		
+        /*!
+		 * \brief Supprime un noeud et l'entité du noeud
+		 * \param type Correspond au mesh à supprimer
+		 * \param object Objet/Entité/Particule à supprimer
+		 */
+		void deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object);
          
 		/*!
 		* \brief Renvoie un simple noeud correspondant à un type de mesh.
-		* (Utile pour gérer la création de l'Entity séparemment pour ensuite l'attacher au noeud correspondant)
+		* (Utile pour gérer la création de le MovableObject séparemment pour ensuite l'attacher au noeud correspondant)
 		* \param meshType Correspond au mesh à créer
 		* \param nodeName Nom du node
-		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'entity)
+		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'object)
 		*/
 		Ogre::SceneNode* getNode(MeshLoader::MeshType meshType, Ogre::String nodeName);
 
 		/*!
 		* \brief Renvoie un simple noeud correspondant à un type de mesh.
-		* (Utile pour gérer la création de l'Entity séparemment pour ensuite l'attacher au noeud correspondant)
+		* (Utile pour gérer la création de le MovableObject séparemment pour ensuite l'attacher au noeud correspondant)
 		* \param meshType Correspond au mesh à créer
-		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'entity)
+		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'object)
 		*/
 		Ogre::SceneNode* getNode(MeshLoader::MeshType meshType)
 		{
@@ -145,14 +155,14 @@ class MeshLoader
 		}
         /*!
 		 * \brief Permet de modifier le material pour l'affichage d'un mesh
-         * \param entity dont on veut changer le material d'affichage
+         * \param object dont on veut changer le material d'affichage
          * \param meshType Correspondant au material
          */
-		void setMaterial(Ogre::Entity * entity, MeshLoader::MeshType meshType);
+		void setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType meshType);
 
 		/*!
 		* \brief Permet de créer une sphère de manière optimisée
-		* \param strName Nom de l'objet à créer (très important pour ensuite récupérer l'entity)
+		* \param strName Nom de l'objet à créer (très important pour ensuite récupérer l'object)
 		* \param radius Rayon de la sphère à créer
 		* \param nRings Nombre d'anneaux de la sphère (128 permet d'avoir une qualité suffisante pour des gros objets)
 		* \param nSegments Nombre de segments par anneau (128 est bon aussi)

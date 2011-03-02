@@ -12,6 +12,7 @@
 #include "ObjectRoot.h"
 #include "Signal.h"
 #include "GestSceneManager.h"
+#include "MeshLoader.h"
 #include "GestLaser.h"
 
 class GestLaser;
@@ -42,19 +43,18 @@ class Laser : public ObjectRoot
          */
         Ogre::Timer * timerLife;
          /*!
-         * \brief Noeud du laser
-         */
-        Ogre::SceneNode * node;
-         /*!
          * \brief Objet à dessiner
          */
-        Ogre::MovableObject * billboardChain;
+        Ogre::ParticleSystem * particule;
 
     public:
 		/*!
 		 * \brief Constructeur
+         * \param position Position initiale du laser
+         * \param orientation Orientation du laser
+         * \param color La couleur du laser émis
 		*/
-        Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation);
+        Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation, const Ogre::ColourValue &color);
 		/*!
 		 * \brief Destructeur
 		*/
@@ -64,6 +64,12 @@ class Laser : public ObjectRoot
          * \brief Detruit le singleton
          */
         void updatePosition(void);
+		
+		/*!
+		 * \brief Indique si le laser est en vie ou non
+		 * \return Vrai s'il est actif
+		*/
+		bool isAlive();
         
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel du monde
@@ -131,16 +137,13 @@ class Laser : public ObjectRoot
 		*/
 		void setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
 		
-		
-		
-
 		/*!
 		 * \brief [Getter] Récupère le nom du noeud
 		 * \return Nom du noeud
 		*/
 		Ogre::String getName(void)
 		{
-			return this->billboardChain->getName();
+			return this->particule->getParentSceneNode()->getName();
 		}
 		/*!
 		 * \brief [Getter] Récupère un pointeur sur le noeud content le mesh
@@ -148,15 +151,15 @@ class Laser : public ObjectRoot
 		*/
 		Ogre::SceneNode * getNode(void)
 		{
-			return this->billboardChain->getParentSceneNode();
+			return this->particule->getParentSceneNode();
 		}
 		/*!
-		 * \brief [Getter] Récupère un pointeur sur le billboardChain
+		 * \brief [Getter] Récupère un pointeur sur le particule
 		 * \return Nom du noeud
 		*/
 		Ogre::MovableObject * getEntity(void)
 		{
-			return this->billboardChain;
+			return this->particule;
 		}
 };
 

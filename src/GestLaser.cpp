@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Ogre::Real GestLaser::speedLaserBase = 0.1;
-Ogre::Real GestLaser::timeLife = 1000.0;
+Ogre::Real GestLaser::speedLaserBase = 250.0;
+Ogre::Real GestLaser::timeLife = 5000.0;
 
 GestLaser * GestLaser::_instance = NULL;
 
@@ -29,9 +29,9 @@ GestLaser::~GestLaser()
     this->listLasers.clear();
 }
 
-Laser * GestLaser::create(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation)
+Laser * GestLaser::create(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation, const Ogre::ColourValue &color)
 {
-	Laser * laser = new Laser(position, orientation);
+	Laser * laser = new Laser(position, orientation, color);
 	
     this->add(laser);
     
@@ -59,9 +59,17 @@ void GestLaser::remove(Laser * laser)
 void GestLaser::updateLasers(void *)
 {
     vector<Laser *>::iterator itLaser;
+    
     for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
     {
-        (*itLaser)->updatePosition();
+		if((*itLaser)->isAlive())
+		{
+			(*itLaser)->updatePosition();
+		}
+		else
+		{
+			delete (*itLaser);
+		}
     }
 }
 
