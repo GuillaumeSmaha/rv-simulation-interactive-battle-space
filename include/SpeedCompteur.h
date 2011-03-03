@@ -6,6 +6,7 @@
 #define __SPEED_COMPTEUR_H__
 
 #include <Ogre.h>
+#include "Utils.h"
 #include "ObjectRoot.h"
 #include "ShipAbstract.h"
 #include "ListenerTime.h"
@@ -17,6 +18,19 @@
 class SpeedCompteur : public ObjectRoot
 {
 
+
+
+private:
+    /*!
+     * \brief Le vaiseau auquel est lié le compteur
+    */
+    ShipAbstract * ship;
+    /*!
+     * \brief Nom de l'objet de la jauge
+    */
+    Ogre::String panelJaugeName;
+    
+    
 public:
     /*!
      * \brief Constructeur
@@ -31,10 +45,6 @@ public:
 
 
 private:
-    /*!
-     * \brief Le vaiseau auquel est lié le compteur
-    */
-    ShipAbstract * ship;
     /*!
      * \brief La fonction appelé régulièrement pour mettre à jour la vitesse
     */

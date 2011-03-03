@@ -19,8 +19,7 @@ Application::Application(void)
 	this->pluginsCfg = "plugins.cfg";
 #endif
 
-    this->menus=NULL;
-    //this->gestShip= NULL;
+    this->menus = NULL;
 
 	this->shutDown = false;
 
@@ -34,18 +33,15 @@ Application::Application(void)
 Application::~Application(void)
 {
 
+    GestLaser::getSingleton()->deleteAll();
+    GestLaser::destroy();
+
     GestShip::getSingleton()->deleteAllShips();
     GestShip::destroy();
 
-//    gestShip->deleteAllShips();
-//    delete this->gestShip;
-
 	GestPlanet::getSingleton()->deleteAllPlanet();
 	GestPlanet::destroy();
-	//gestPlanet->deleteAllPlanet();
-	//delete this->gestPlanet;
 
-	//gestGroupAsteroids->deleteAllGroupsAsteroids();
 	GestGroupAsteroids::getSingleton()->deleteAllGroupsAsteroids();
 	GestGroupAsteroids::destroy();
 
@@ -56,9 +52,8 @@ Application::~Application(void)
 	GestSound::destroy();
 
     delete this->menus;
-	//delete this->gestGroupAsteroids;
 	delete this->player;
-	//delete this->player2;
+	delete this->player2;
 
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
@@ -68,7 +63,7 @@ Application::~Application(void)
 	ViewportLoader::deleteViewportLoader();
 	MeshLoader::deleteMeshLoader();
 
-	//delete this->listenerWindow;
+	delete this->listenerWindow;
 
     delete this->root;
 }
@@ -91,7 +86,6 @@ bool Application::start(void)
 
 	// initialise the system, create the default rendering window
 	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
-	//this->window = this->root->initialise(true, "Combat spatial");
 	
 	//create Sound singleton
 	GestSound::getSingleton();
@@ -99,10 +93,9 @@ bool Application::start(void)
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
 
+	//create SceneManager singleton
     GestSceneManager::getSingleton()->setSceneManager(this->sceneMgr);
-	//init meshLoader
-	//new MeshLoader();
-
+	
 	//init viewportLoader
 	new ViewportLoader(this->listenerWindow);
 
@@ -147,12 +140,28 @@ bool Application::start(void)
 
 	return true;
 }
-void Application::update(void*)
+
+void Application::update(void *)
 {
 
 
 }
-void Application::updateStats(void*)
+
+//------------------------------------------------------------------------------
+
+void Application::killApplication()
+{
+	this->setShutDown(true);
+	this->listenerFrame->shutdown();
+}
+
+void Application::killInputManager(void *)
+{
+	OIS::InputManager::destroyInputSystem(this->inputManager);
+	this->inputManager = 0;
+}
+
+void Application::updateStats(void *)
 {
 	static String currFps = "Current FPS: ";
 	static String avgFps = "Average FPS: ";
@@ -188,8 +197,6 @@ void Application::updateStats(void*)
 	catch(...) { /* ignore */ }
 }
 
-//------------------------------------------------------------------------------
-
 void Application::showDebugOverlay(bool show)
 {
 	if (debugOverlay)
@@ -201,17 +208,21 @@ void Application::showDebugOverlay(bool show)
 	}
 }
 
-void Application::killApplication()
+void Application::suspendre_jeux()
 {
-	this->setShutDown(true);
-	this->listenerFrame->shutdown();
+    this->player->suspendre_ecoute();
+    this->player2->suspendre_ecoute();
 }
 
-void Application::killInputManager(void*)
+void Application::redemarrer_jeux()
 {
-	OIS::InputManager::destroyInputSystem(this->inputManager);
-	this->inputManager = 0;
-	//this->listenerFrame->shutdown();
+    this->player->reprendre_ecoute();
+    this->player2->reprendre_ecoute();
+}
+
+void Application::restartScene(void)
+{
+    GestShip::getSingleton()->resetPosAllShips();
 }
 
 //------------------------------------------------------------------------------
@@ -239,11 +250,6 @@ void Application::loadRessources(void)
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
 		}
 	}
-
-	/* Fait dans le start() sinon plantage car il faut laisser du temps aux
-	 * ressources de se charger.
-	 */
-	//Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 
@@ -289,26 +295,10 @@ void Application::initListeners(void)
 
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::onKeyPressed, this);
+	player2 = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
+	player2->signalKeyPressed.add(&Application::onKeyPressed, this);
 
 
-}
-
-void Application::onKeyPressed(PlayerControls::Controls key)
-{
-	switch(key)
-	{
-		case PlayerControls::QUIT :
-			this->killApplication();
-			break;
-			
-		default:
-			break;
-	}
-}
-
-void Application::restartScene(void)
-{
-    GestShip::getSingleton()->resetPosAllShips();
 }
 
 void Application::initSceneGraph(void)
@@ -326,19 +316,18 @@ void Application::initSceneGraph(void)
 	//Ensemble de groupes d'astéroides
 	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
 		
+	//Groupe lasers
 	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_LASERS);
+	
+	//Groupe missiles
 	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_MISSILES);
 }
 
 
 void Application::initScene(void)
 {
-
-// Mise en place du SkyBox "Etoiles"
+	// Mise en place du SkyBox "Etoiles"
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
-
-
-
 
 	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
 	Planet *planet1 = new Planet(10000, true);
@@ -356,23 +345,23 @@ void Application::initScene(void)
 	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
     ship->setPosition(-50,-50,-50);
     //ship->setOrientation(5, 5, 5, 5);
+	GestShip::getSingleton()->addShip(ship);
 
-	/*ShipPlayer * ship2 = new ShipPlayer(this->player2);
+/*
+	ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
     ship2->setPosition(-130,0,0);
-    ship2->touched();*/
+    ship2->touched();
+    GestShip::getSingleton()->addShip(ship2);
+*/
 
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,0);
     ship3->touched();
-//    Utils::logFile("test");
-//    GestShip::getS
-    GestShip::getSingleton()->addShip(ship);
-    //gestShip->addShip(ship2);
     GestShip::getSingleton()->addShip(ship3);
-    //Utils::log("test2");
 
 	//création de la ceinture d'asteroids
 	GestGroupAsteroids::getSingleton()->createGroup(32,100,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.05);
+
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
     this->listenerTime->signalTimerElapsed.add(&GestShip::updateShips, GestShip::getSingleton());
@@ -381,6 +370,8 @@ void Application::initScene(void)
 
 	// A faire dans listenerFrame car listenerTime trop lent !!
 	this->listenerFrame->signalFrameEnded.add(&GestPlanet::updatePlanet, GestPlanet::getSingleton());
+
+
 
 //Temporaire :
     // Set ambient light
@@ -399,6 +390,19 @@ void Application::initScene(void)
 	nodeLight1->attachObject(l);
 }
 
+void Application::onKeyPressed(PlayerControls::Controls key)
+{
+	switch(key)
+	{
+		case PlayerControls::QUIT :
+			this->killApplication();
+			break;
+			
+		default:
+			break;
+	}
+}
+
 //------------------------------------------------------------------------------
 
 
@@ -415,15 +419,4 @@ int main(void)
 	}
 
 	return 0;
-}
-
-
-void Application::suspendre_jeux()
-{
-    this->player->suspendre_ecoute();
-}
-
-void Application::redemarrer_jeux()
-{
-    this->player->reprendre_ecoute();
 }

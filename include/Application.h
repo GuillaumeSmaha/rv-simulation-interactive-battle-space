@@ -161,15 +161,7 @@ class Application : public ObjectRoot
         /*!
 		* \brief Mise à jour générale
 		*/
-		void update(void*);
-		/*!
-		* \brief Mise à jour des stats (FPS, etc...)
-		*/
-		void updateStats(void*);
-		/*!
-		* \brief Affiche l'overlay des stats
-		*/
-		void showDebugOverlay(bool);
+		void update(void *);
 		/*!
 		*  \brief Ferme l'application
 		*/
@@ -178,6 +170,32 @@ class Application : public ObjectRoot
 		*  \brief Tue le gestionnaire d'événements
 		*/
 		void killInputManager(void*);
+		
+		/*!
+		* \brief Mise à jour des stats (FPS, etc...)
+		*/
+		void updateStats(void *);
+		/*!
+		* \brief Affiche l'overlay des stats
+		*/
+		void showDebugOverlay(bool);
+
+    	/*!
+		*  \brief Permet de suspendre le jeu
+		*/
+        void suspendre_jeux();
+    	/*!
+		*  \brief Permet de redemarrer le jeu
+		*/
+        void redemarrer_jeux();
+    	/*!
+		*  \brief Permet de redemarrer sur une scene initiale sans tout recharger
+		*/
+		void restartScene(void);
+		
+		
+		//Getter/Setter
+		
 		/*!
 		*  \brief [Getter] Capteur d'événements
 		*/
@@ -228,40 +246,26 @@ class Application : public ObjectRoot
 			this->shutDown = shutdown;
 		}
 
-    	/*!
-		*  \brief Permet de suspendre le jeu
-		*/
-        void suspendre_jeux();
-    	/*!
-		*  \brief Permet de redemarrer le jeu
-		*/
-        void redemarrer_jeux();
-    	/*!
-		*  \brief Permet de redemarrer sur une scene initiale sans tout recharger
-		*/
-		void restartScene(void);
-
-
 
 	private:
 		/*!
 		*  \brief Charge les ressources listées dans resources.cfg
 		*/
 		void loadRessources(void);
+		
 		/*!
 		*  \brief Initialise l'écoute de l'entrée clavier et souris
 		*/
 		void initListeners(void);
-	
-    	/*!
-		*  \brief Initialise la scène
-		*/
-		void initScene(void);
-
     	/*!
 		*  \brief Initialise le graphe de scène
 		*/
 		void initSceneGraph(void);
+    	/*!
+		*  \brief Initialise la scène
+		*/
+		void initScene(void);
+		
         /*!
          * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)
          */
