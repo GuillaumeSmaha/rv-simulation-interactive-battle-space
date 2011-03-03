@@ -9,6 +9,8 @@
 #include <OgreWindowEventUtilities.h>
 #include "Utils.h"
 #include "Signal.h"
+#include "OISMouse.h"
+#include "ListenerMouse.h"
 
 
 /*!
@@ -22,6 +24,10 @@ class ListenerWindow :  public ObjectRoot, public Ogre::WindowEventListener
 		 *  \brief Dispatche un signal lorsque la souris bouge Signal(Ogre::Vector3(X, Y, Z)))
 		 */
         Ogre::RenderWindow * renderWindow;
+         /*!
+		 * \brief Pointeur sur le controleur de la souris
+		 */
+        ListenerMouse * mouseControl;
 		
 
 	public:
@@ -45,6 +51,14 @@ class ListenerWindow :  public ObjectRoot, public Ogre::WindowEventListener
 		Ogre::RenderWindow * getRenderWindow()
 		{
 			return this->renderWindow;
+		}
+		/*!
+		 * \brief [Setter] Définit le pointeur
+		 * \return window Le pointeur sur le capteur d'événements de la souris
+		 */
+		void setMouseControl(ListenerMouse * mouseControl)
+		{
+			this->mouseControl = mouseControl;
 		}
 		/*!
 		 * \brief [Setter] Définit le pointeur

@@ -19,7 +19,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
 	this->nodeCameraExterieureFixe = this->getNode()->createChildSceneNode("cameraExterieurFixe"+Utils::toString(Utils::unique()));
 
 
-	this->nodeCameraTarget->setPosition(0, 15, 200);
+	this->nodeCameraTarget->setPosition(0, 30, 200);
 	this->nodeCameraFirstPerson->setPosition(0, 30, 30);
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
@@ -100,39 +100,39 @@ void ShipPlayer::updatePosition(void)
 	//on reduit la vitesse de rotation
     if(this->getRollSpeed() > Ogre::Radian(0))
     {
-		this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001));
+		this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
 		if(this->getRollSpeed() < Ogre::Radian(0))
 			this->setRollSpeed(Ogre::Radian(0));
 	}
     else if(this->getRollSpeed() < Ogre::Radian(0))
     {
-		this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.001));
+		this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
 		if(this->getRollSpeed() > Ogre::Radian(0))
 			this->setRollSpeed(Ogre::Radian(0));
 	}
 
 	if(this->getYawSpeed() > Ogre::Radian(0))
     {
-		this->setYawSpeed(this->getYawSpeed()-Ogre::Radian(0.001));
+		this->setYawSpeed(this->getYawSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
 		if(this->getYawSpeed() < Ogre::Radian(0))
 			this->setYawSpeed(Ogre::Radian(0));
 	}
     else if(this->getYawSpeed() < Ogre::Radian(0))
     {
-		this->setYawSpeed(this->getYawSpeed()+Ogre::Radian(0.001));
+		this->setYawSpeed(this->getYawSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
 		if(this->getYawSpeed() > Ogre::Radian(0))
 			this->setYawSpeed(Ogre::Radian(0));
 	}
 
     if(this->getPitchSpeed() > Ogre::Radian(0))
     {
-		this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.001));
+		this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
 		if(this->getPitchSpeed() < Ogre::Radian(0))
 			this->setPitchSpeed(Ogre::Radian(0));
 	}
     else if(this->getPitchSpeed() < Ogre::Radian(0))
     {
-		this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.001));
+		this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
 		if(this->getPitchSpeed() > Ogre::Radian(0))
 			this->setPitchSpeed(Ogre::Radian(0));
 	}
@@ -340,6 +340,7 @@ void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 
 	this->pitchAccelerate(Ogre::Radian(mouseVec[1] / 8000.0));
 	this->yawAccelerate(Ogre::Radian(-mouseVec[0] / 8000.0));
+		
 	//this->rollAccelerate(Ogre::Radian(mouseVec[0] / 3000.0));
 	//this->getNode()->rotate(rotation);
 	//this->getNode()->yaw(Radian(-mouseVec[0] / 2000.0));

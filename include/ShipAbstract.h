@@ -216,6 +216,37 @@ class ShipAbstract : public ObjectRoot
          * \param coefAcceleration Coefficient d'accélération
         */
         void yawAccelerate(const Ogre::Radian coefAcceleration);
+                
+		
+		/*!
+		 * \brief Calcule le facteur de rotation en fonction de la vitesse
+		 * \param method Methode de calcul sélectionnée :
+		 * 		method = 1 : Logarithme
+		 * 		method = 2 : x^3
+		 * \return Le facteur calculé
+		*/
+		Ogre::Real getFactorRotation(int method = 1)
+		{
+			Ogre::Real factor;
+			Ogre::Real ratio = this->getSpeed()/ShipAbstract::MAXSPEED;
+			if(method == 2)
+			{
+				factor = ratio*ratio*ratio;
+			}
+			else
+			{
+				if(ratio < 0.01)
+				{
+					factor = 0.0;
+				}
+				else
+				{	
+					factor = (log10(ratio)+2.0)/2.0;
+				}
+			}
+			
+			return factor;
+		}
 
         //Getter/Setter
 
@@ -291,9 +322,9 @@ class ShipAbstract : public ObjectRoot
             }
             else
             {
-                 if(speed>MAXSPEED)
+                 if(speed > MAXSPEED)
                 {
-                    this->speed=MAXSPEED;
+                    this->speed = MAXSPEED;
                     this->setAcceleration(0);
                 }
                 else
@@ -332,7 +363,12 @@ class ShipAbstract : public ObjectRoot
 		*/
 		void setRollSpeed(const Ogre::Radian rollSpeed)
 		{
-			this->rollSpeed = rollSpeed;
+			if(rollSpeed.valueRadians() > 0.3)
+				this->rollSpeed = Ogre::Radian(0.3);
+			else if(rollSpeed.valueRadians() < -0.3)
+				this->rollSpeed = Ogre::Radian(-0.3);
+			else
+				this->rollSpeed = rollSpeed;
 		}
 
 		/*!
@@ -349,7 +385,12 @@ class ShipAbstract : public ObjectRoot
 		*/
 		void setPitchSpeed(const Ogre::Radian pitchSpeed)
 		{
-			this->pitchSpeed = pitchSpeed;
+			if(pitchSpeed.valueRadians() > 0.3)
+				this->pitchSpeed = Ogre::Radian(0.3);
+			else if(pitchSpeed.valueRadians() < -0.3)
+				this->pitchSpeed = Ogre::Radian(-0.3);
+			else
+				this->pitchSpeed = pitchSpeed;
 		}
 
 		/*!
@@ -366,7 +407,12 @@ class ShipAbstract : public ObjectRoot
 		*/
 		void setYawSpeed(const Ogre::Radian yawSpeed)
 		{
-			this->yawSpeed = yawSpeed;
+			if(yawSpeed.valueRadians() > 0.3)
+				this->yawSpeed = Ogre::Radian(0.3);
+			else if(yawSpeed.valueRadians() < -0.3)
+				this->yawSpeed = Ogre::Radian(-0.3);
+			else
+				this->yawSpeed = yawSpeed;
 		}
 
 		/*!

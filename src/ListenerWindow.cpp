@@ -2,6 +2,7 @@
 
 ListenerWindow::ListenerWindow(Ogre::Root * root, Ogre::String nameWindow)
 {
+	this->mouseControl = NULL;
 	this->renderWindow = root->initialise(true, nameWindow);
 	Ogre::WindowEventUtilities::addWindowEventListener(this->renderWindow, this);
 	this->windowResized(this->renderWindow);
@@ -16,17 +17,17 @@ ListenerWindow::~ListenerWindow()
 
 void ListenerWindow::windowResized(Ogre::RenderWindow * rw)
 {
-	/*unsigned int width, height, depth;
-	int left, top;
+	if(this->mouseControl != NULL)
+	{
+		unsigned int width, height, depth;
+		int left, top;
 
-	// Adjust mouse clipping area
-	
-	rw->getMetrics(width, height, depth, left, top);
-	const OIS::MouseState &ms = this->mouse->getMouseState();
-	ms.width = width;
-	ms.height = height;*/
-	
-
+		// Adjust mouse clipping area		
+		rw->getMetrics(width, height, depth, left, top);
+		const OIS::MouseState &ms = this->mouseControl->getMouse()->getMouseState();
+		ms.width = width;
+		ms.height = height;
+	}
 }
 
 void ListenerWindow::windowClosed(Ogre::RenderWindow * rw)

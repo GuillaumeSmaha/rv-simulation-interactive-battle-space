@@ -275,6 +275,11 @@ void Application::initListeners(void)
 
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
+	
+	
+	this->listenerWindow->setMouseControl(this->listenerMouse);
+	this->listenerWindow->windowResized(this->listenerWindow->getRenderWindow());
+	
 
     //this->listenerTime->signalTimerElapsed.add(&ListenerMouse::capture, this->listenerMouse);
     //this->listenerTime->signalTimerElapsed.add(&ListenerKeyboard::capture, this->listenerKeyboard);

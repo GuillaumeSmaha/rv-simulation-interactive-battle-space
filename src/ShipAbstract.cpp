@@ -174,22 +174,25 @@ void ShipAbstract::accelerate(const Ogre::Real coefAcceleration)
 
 void ShipAbstract::translateAccelerate(const Ogre::Real coefAcceleration)
 {
-	this->translateAcceleration += coefAcceleration;
+	if(coefAcceleration > 0.0)
+		this->translateAcceleration += coefAcceleration*this->getFactorRotation();
+	else
+		this->translateAcceleration += coefAcceleration;
 }
 
 void ShipAbstract::rollAccelerate(const Ogre::Radian coefAcceleration)
 {
-    this->rollAcceleration += coefAcceleration;
+    this->rollAcceleration += Ogre::Radian(coefAcceleration.valueRadians()*this->getFactorRotation());
 }
 
 void ShipAbstract::pitchAccelerate(const Ogre::Radian coefAcceleration)
 {
-    this->pitchAcceleration += coefAcceleration;
+    this->pitchAcceleration += Ogre::Radian(coefAcceleration.valueRadians()*this->getFactorRotation());
 }
 
 void ShipAbstract::yawAccelerate(const Ogre::Radian coefAcceleration)
 {
-    this->yawAcceleration += coefAcceleration;
+    this->yawAcceleration += Ogre::Radian(coefAcceleration.valueRadians()*this->getFactorRotation());
 }
 
 
