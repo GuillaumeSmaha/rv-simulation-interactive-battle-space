@@ -62,14 +62,14 @@ void GestLaser::updateLasers(void *)
     
     for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
     {
-		if((*itLaser)->isAlive())
-		{
-			(*itLaser)->updatePosition();
-		}
-		else
+		if(!(*itLaser)->isAlive())
 		{
 			delete (*itLaser);
 		}
+    }
+    for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
+    {
+		(*itLaser)->updatePosition();
     }
 }
 
