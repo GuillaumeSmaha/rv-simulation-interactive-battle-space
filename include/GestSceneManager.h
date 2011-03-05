@@ -121,6 +121,8 @@ class GestSceneManager
         {
             return getSingleton()->getCount();
         }
+        static bool  projectSizeAndPos(Ogre::Camera* cam,const Ogre::Vector3& pos,const Ogre::Real rad,Ogre::Real& x,Ogre::Real& y,Ogre::Real& cx,Ogre::Real& cy);
+        static bool getScreenspaceCoords(Ogre::MovableObject* object, Ogre::Camera* camera, Ogre::Vector2& result);
     protected:
 };
 

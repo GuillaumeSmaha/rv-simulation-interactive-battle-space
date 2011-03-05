@@ -87,3 +87,59 @@ void GestSceneManager::deleteAll()
 {
     _listCameras.clear();
 }
+
+bool  GestSceneManager::projectSizeAndPos(Ogre::Camera* cam,const Ogre::Vector3& pos,const Ogre::Real rad,Ogre::Real& x,Ogre::Real& y,Ogre::Real& cx,Ogre::Real& cy) {
+    Ogre::Vector3 eyeSpacePos = cam->getViewMatrix(true) * pos;
+    // z < 0 means in front of cam
+    if (eyeSpacePos.z < 0) {
+        // calculate projected pos
+        Ogre::Vector3 screenSpacePos = cam->getProjectionMatrix() * eyeSpacePos;
+        x = screenSpacePos.x;
+        y = screenSpacePos.y;
+        // calculate projected size
+        Ogre::Vector3 spheresize(rad, rad, eyeSpacePos.z);
+        spheresize = cam->getProjectionMatrix() * spheresize;
+        cx = spheresize.x;
+        cy = spheresize.y;
+        return true;
+    } else {
+        cx = 0;
+        cy = 0;
+        x = (-eyeSpacePos.x > 0) ? -1 : 1;
+        y = (-eyeSpacePos.y > 0) ? -1 : 1;
+        return false;
+    }
+}
+bool GestSceneManager::getScreenspaceCoords(Ogre::MovableObject* object, Ogre::Camera* camera, Ogre::Vector2& result)
+{
+   if(!object->isInScene())
+      return false;
+
+   const Ogre::AxisAlignedBox &AABB = object->getWorldBoundingBox(true);
+
+   /**
+   * If you need the point above the object instead of the center point:
+   * This snippet derives the average point between the top-most corners of the bounding box
+   * Ogre::Vector3 point = (AABB.getCorner(AxisAlignedBox::FAR_LEFT_TOP)
+   *    + AABB.getCorner(AxisAlignedBox::FAR_RIGHT_TOP)
+   *    + AABB.getCorner(AxisAlignedBox::NEAR_LEFT_TOP)
+   *    + AABB.getCorner(AxisAlignedBox::NEAR_RIGHT_TOP)) / 4;
+   */
+
+   // Get the center point of the object's bounding box
+   Ogre::Vector3 point = AABB.getCenter();
+
+   // Is the camera facing that point? If not, return false
+   Ogre::Plane cameraPlane = Ogre::Plane(Ogre::Vector3(camera->getDerivedOrientation().zAxis()), camera->getDerivedPosition());
+   if(cameraPlane.getSide(point) != Ogre::Plane::NEGATIVE_SIDE)
+      return false;
+
+   // Transform the 3D point into screen space
+   point = camera->getProjectionMatrix() * (camera->getViewMatrix() * point);
+
+   // Transform from coordinate space [-1, 1] to [0, 1] and update in-value
+   result.x = (point.x / 2) + 0.5f;
+   result.y = 1 - ((point.y / 2) + 0.5f);
+
+   return true;
+}
