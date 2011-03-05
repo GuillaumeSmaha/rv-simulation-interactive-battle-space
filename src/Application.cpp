@@ -48,7 +48,7 @@ Application::~Application(void)
 	GestSceneManager::getSingleton()->deleteAll();
 
 	GestSceneManager::destroy();
-	
+
 	GestSound::destroy();
 
     delete this->menus;
@@ -86,7 +86,7 @@ bool Application::start(void)
 
 	// initialise the system, create the default rendering window
 	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
-	
+
 	//create Sound singleton
 	GestSound::getSingleton();
 
@@ -95,16 +95,16 @@ bool Application::start(void)
 
 	//create SceneManager singleton
     GestSceneManager::getSingleton()->setSceneManager(this->sceneMgr);
-	
+
 	//init viewportLoader
 	new ViewportLoader(this->listenerWindow);
 
 	// Initialisation des ressources
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	
+
 	//create Ship singleton
     GestShip::getSingleton();
-	
+
 	//create Laser singleton
 	GestLaser::getSingleton();
 
@@ -129,7 +129,7 @@ bool Application::start(void)
 
 	/* Tests de HDR en cours :)
 	std::vector<Viewport *> viewports = ViewportLoader::getSingleton()->getListViewport();
-	
+
 	Ogre::CompositorManager::getSingleton().registerCompositorLogic("HDR", new HDRLogic);
 	Ogre::CompositorManager::getSingleton().addCompositor(viewports[0], "HDR", 0);
 	Ogre::CompositorManager::getSingleton().setCompositorEnabled(viewports[0], "HDR", true);
@@ -281,17 +281,16 @@ void Application::initListeners(void)
 
 	this->listenerMouse = new ListenerMouse(this->inputManager);
 	this->listenerKeyboard = new ListenerKeyboard(this->inputManager);
-	
-	
+
+
 	this->listenerWindow->setMouseControl(this->listenerMouse);
 	this->listenerWindow->windowResized(this->listenerWindow->getRenderWindow());
-	
+
 
     //this->listenerTime->signalTimerElapsed.add(&ListenerMouse::capture, this->listenerMouse);
     //this->listenerTime->signalTimerElapsed.add(&ListenerKeyboard::capture, this->listenerKeyboard);
     this->listenerFrame->signalFrameRendering.add(&ListenerMouse::capture, this->listenerMouse);
 	this->listenerFrame->signalFrameRendering.add(&ListenerKeyboard::capture, this->listenerKeyboard);
-
 
 	player = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player->signalKeyPressed.add(&Application::onKeyPressed, this);
@@ -315,10 +314,10 @@ void Application::initSceneGraph(void)
 
 	//Ensemble de groupes d'astéroides
 	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
-		
+
 	//Groupe lasers
 	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_LASERS);
-	
+
 	//Groupe missiles
 	this->sceneMgr->getRootSceneNode()->createChildSceneNode(NODE_NAME_GROUPE_MISSILES);
 }
@@ -355,10 +354,16 @@ void Application::initScene(void)
 */
 
     ShipIA * ship3 = new ShipIA();
-    ship3->setPosition(130,0,0);
+    ship3->setPosition(130,0,10000);
+//    ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
+    //ship3->getNode()->setScale(Ogre::Vector3(50,50,50));
     ship3->touched();
     GestShip::getSingleton()->addShip(ship3);
-
+    Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);
+    Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
+    bill->setMaterialName("test");
+   // bill->setColor(ColourValue::Red);
+    ship3->getNode()->attachObject(bill);
 	//création de la ceinture d'asteroids
 	GestGroupAsteroids::getSingleton()->createGroup(32,100,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.05);
 
@@ -397,7 +402,7 @@ void Application::onKeyPressed(PlayerControls::Controls key)
 		case PlayerControls::QUIT :
 			this->killApplication();
 			break;
-			
+
 		default:
 			break;
 	}

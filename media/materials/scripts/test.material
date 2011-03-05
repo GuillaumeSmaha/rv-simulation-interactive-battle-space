@@ -1,0 +1,17 @@
+// Light effects
+ material test
+ {
+   technique
+   {
+     pass
+     {
+       lighting off
+       //scene_blend add
+       depth_write on
+       texture_unit
+       {
+         texture planet.jpg
+       }
+     }
+   }
+ }
