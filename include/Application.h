@@ -40,6 +40,15 @@ class ListenerFrame;
 
 class Menus;
 
+//Tingshuo Debut
+enum QueryFlags
+{
+	ANY_QUERY_MASK = 1<<0,
+	SHIP_QUERY_MASK = 0x1,
+	PLANET_QUERY_MASK = 0x3
+};
+//Tingshuo Fin
+
 /*!
 * \class Application
 * \brief Class principale qui permet de démarrer le programme, d'afficher la fenêtre et de réagir aux évènements (ceux-ci sont ensuite dirigé vers les classes adaptés)

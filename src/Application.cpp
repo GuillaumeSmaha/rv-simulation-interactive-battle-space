@@ -1,9 +1,7 @@
 #include "Application.h"
 //#include "HDRLogic.h"
 #include "ViewportLoader.h"
-
 using namespace Ogre;
-
 
 
 Application::Application(void)
@@ -267,7 +265,7 @@ void Application::initListeners(void)
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
-    this->listenerFrame = new ListenerFrame(this->root);
+	this->listenerFrame = new ListenerFrame(this->root, this->sceneMgr);//Tingshuo
 
     this->listenerTime = new ListenerTime(25, this->listenerFrame);
 	//this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);
@@ -331,6 +329,19 @@ void Application::initScene(void)
 	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
 	Planet *planet1 = new Planet(10000, true);
 	planet1->setPosition(2500.0, 300.0, 22500.0);
+	
+	
+	//Tingshuo Debut
+	planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
+	planet1->getEntity()->setCastShadows(true);
+	const Ogre::Vector3 pos(2500.0, 300.0, 22500.0);
+	Ogre::Vector3 size = planet1->getEntity()->getBoundingBox().getSize();
+	size *= 0.60;
+	OgreBulletDynamics::RigidBody *body = this->listenerFrame->addSphere(planet1->getEntity(), planet1->getNode(), pos, Quaternion(0,0,0,1),
+		size.x, 1.0, 1.0, 0.0);
+	//Tingshuo Fin
+
+
 	//planet1->setScale(150.0, 150.0, 150.0);
 
 	Planet *planet2 = new Planet(2500, 2, false);
@@ -343,7 +354,17 @@ void Application::initScene(void)
 
 	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
     ship->setPosition(-50,-50,-50);
-    //ship->setOrientation(5, 5, 5, 5);
+    //Tingshuo Debut
+	ship->getEntity()->setQueryFlags(SHIP_QUERY_MASK);
+
+	ship->getEntity()->setCastShadows(true);
+	const Ogre::Vector3 pos_ship(-50,-50,-50);
+	Ogre::Vector3 size_ship = ship->getEntity()->getBoundingBox().getSize();
+	size_ship *= 0.48;
+	OgreBulletDynamics::RigidBody *body_ship = this->listenerFrame->addSphere(ship->getEntity(), ship->getNode(), pos_ship, Quaternion(0,0,0,1),
+		size_ship.x, 1.0, 1.0, 0.0);
+	//Tingshuo Fin
+	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
 
 /*
