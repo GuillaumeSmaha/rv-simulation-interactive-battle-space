@@ -21,14 +21,14 @@ void ShipIA::updatePosition(void)
         cy *= 600;
         sx = (sx + 1)* 400;
         sy = (sy + 1)* 300;
-        Utils::log("("+Utils::toString(sx)+";"+Utils::toString(sy)+")   =   "+""+"["+Utils::toString(cx)+";"+Utils::toString(cy)+"]"+":"+Utils::toString(this->getEntity()->getBoundingRadius()));
+        //Utils::log("("+Utils::toString(sx)+";"+Utils::toString(sy)+")   =   "+""+"["+Utils::toString(cx)+";"+Utils::toString(cy)+"]"+":"+Utils::toString(this->getEntity()->getBoundingRadius()));
         Ogre::Vector2 pos;
         //GestSceneManager::getScreenspaceCoords()
         GestSceneManager::getScreenspaceCoords(this->getEntity(), GestSceneManager::getCamera(0)->getCamera(),pos);
-        Utils::log("("+Utils::toString(pos.x*800)+";"+Utils::toString(pos.y*600)+")");
+       // Utils::log("("+Utils::toString(pos.x*800)+";"+Utils::toString(pos.y*600)+")");
     }else
     {
-        Utils::log("hidden("+Utils::toString(sx)+";"+Utils::toString(sy)+")   =   "+""+"["+Utils::toString(cx)+";"+Utils::toString(cy)+"]"+":"+Utils::toString(this->getEntity()->getBoundingRadius()));
+        //Utils::log("hidden("+Utils::toString(sx)+";"+Utils::toString(sy)+")   =   "+""+"["+Utils::toString(cx)+";"+Utils::toString(cy)+"]"+":"+Utils::toString(this->getEntity()->getBoundingRadius()));
 
     }
 	if (this->getAcceleration() != 0)
