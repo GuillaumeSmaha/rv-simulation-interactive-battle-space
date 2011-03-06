@@ -22,10 +22,9 @@ SpeedCompteur::SpeedCompteur(ShipAbstract * ship, ListenerTime * listenerTime)
     panelJauge->setMaterialName("jaugePleine");
 
 
-    Overlay* overlay = overlayManager.create("OverlayName"+Utils::toString(Utils::unique()));
+    overlay = overlayManager.create("OverlayName"+Utils::toString(Utils::unique()));
     overlay->add2D(panelCompteur);
     overlay->add2D(panelJauge);
-    overlay->show();
 
 
     listenerTime->signalTimerElapsed.add(&SpeedCompteur::miseAJour,this);
@@ -36,6 +35,12 @@ SpeedCompteur::~SpeedCompteur()
 
 }
 
+void SpeedCompteur::setViewport(Viewport * viewport)
+{
+    viewport->getTarget()->addListener(this);
+    viewport->setAutoUpdated(false);
+    this->viewport=viewport;
+}
 
 void SpeedCompteur::miseAJour(void * useless)
 {
@@ -47,4 +52,9 @@ void SpeedCompteur::miseAJour(void * useless)
     jauge->setDimensions(0.10, 0.13*coef);
 }
 
-
+void SpeedCompteur::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
+{
+        overlay->show();
+        viewport->update();
+        overlay->hide();
+}
