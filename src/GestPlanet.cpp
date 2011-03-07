@@ -45,10 +45,12 @@ void GestPlanet::updatePlanet(const Ogre::FrameEvent &evt)
 
 void GestPlanet::deleteAllPlanet()
 {
-    vector<Planet *>::iterator itPlanet;
-    for(itPlanet=lstPlanet.begin(); itPlanet<lstPlanet.end();itPlanet++)
+    vector<Planet *>::iterator itPlanet = lstPlanet.begin();
+    //for(itPlanet=lstPlanet.begin(); itPlanet<lstPlanet.end();itPlanet++)
+	while (itPlanet != lstPlanet.end())
 	{
-        delete (*itPlanet);
+        //delete (*itPlanet);
+		itPlanet = lstPlanet.erase(itPlanet);
     }
 }
 

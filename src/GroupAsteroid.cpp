@@ -43,10 +43,12 @@ void GroupAsteroid::updateGroupAsteroids(void)
 
 void GroupAsteroid::deleteAllGroupAsteroids(void)
 {
-    vector<Asteroid*>::iterator itAsteroid;
-    for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid<lstGroupAsteroid.end();itAsteroid++)
+	vector<Asteroid*>::iterator itAsteroid = lstGroupAsteroid.begin();
+    //for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid<lstGroupAsteroid.end();itAsteroid++)
+	while (itAsteroid != lstGroupAsteroid.end())
 	{
-        delete (*itAsteroid);
+        //delete (*itAsteroid);
+		itAsteroid = lstGroupAsteroid.erase(itAsteroid);
     }
 	this->node->removeAllChildren(); //	>removeAndDestroyAllChildren();
 }

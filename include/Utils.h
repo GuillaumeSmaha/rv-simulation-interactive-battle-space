@@ -14,7 +14,7 @@
 #include <fstream>
 
 /// Valeur de PI : 3.141592653589793
-#define PI M_PI
+#define PI Ogre::Math::PI
 
 /*!
  * \class Utils

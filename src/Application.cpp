@@ -63,7 +63,8 @@ Application::~Application(void)
 
 	delete this->listenerWindow;
     
-    delete this->root;
+	//this->root->destroySceneManager(this->sceneMgr);
+    //delete this->root;
 }
 
 //------------------------------------------------------------------------------

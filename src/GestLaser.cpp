@@ -58,27 +58,36 @@ void GestLaser::remove(Laser * laser)
 
 void GestLaser::updateLasers(void *)
 {
-    vector<Laser *>::iterator itLaser;
+    vector<Laser *>::iterator itLaser = listLasers.begin();
     
-    for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
+    //for(itLaser = this->listLasers.begin(); itLaser != this->listLasers.end() ; itLaser++)
+	while (itLaser != this->listLasers.end())
     {
 		if(!(*itLaser)->isAlive())
 		{
-			delete (*itLaser);
+			//delete (*itLaser); marche pas
+			itLaser = this->listLasers.erase(itLaser);
+		}
+		else
+		{
+			(*itLaser)->updatePosition();
+			itLaser++;
 		}
     }
-    for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
-    {
-		(*itLaser)->updatePosition();
-    }
+    //for(itLaser = this->listLasers.begin(); itLaser != this->listLasers.end() ; itLaser++)
+    //{
+		//(*itLaser)->updatePosition();
+    //}
 }
 
 void GestLaser::deleteAll()
 {
-    vector<Laser *>::iterator itLaser;
-    for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
+	vector<Laser *>::iterator itLaser = this->listLasers.begin();
+    //for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
+	while (itLaser != listLasers.end())
     {
-        delete (*itLaser);
+        //delete (*itLaser); marche pas =)
+		itLaser = this->listLasers.erase(itLaser); // incrémente automatiquement
     }
 }
 

@@ -79,7 +79,7 @@ void Menus::actionFromPlayer(PlayerControls::Controls key)
 		case PlayerControls::OPEN_MENU:
             if(!this->menu_open)
             {
-                suspendre_jeux();
+                //suspendre_jeux(); marcheuh paaaas
                 afficher_menus();
                 this->menu_open = true;
 
