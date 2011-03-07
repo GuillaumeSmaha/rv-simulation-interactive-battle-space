@@ -121,12 +121,13 @@ add_executable(
 )
 
 #Configuration de l'édition de liens
+if(WIN32)
 target_link_libraries(
 	rv-simulation-bataille
 	${OIS_LIBRARIES}
 	${OGRE_LIBRARIES}
 	${Boost_THREAD_LIBRARY}
-	${Boost_DTAE_TIME_LIBRARY}
+	${Boost_DATE_TIME_LIBRARY}
 	${CEGUI_LIBRARIES}
 	${CEGUI_OgreRenderer_LIBRARIES}
 	${BULLET_LIBRARIES}
@@ -137,6 +138,22 @@ target_link_libraries(
 	${VORBIS_LIBRARIES}
 	${OGREAL_LIBRARIES}
 )
+ELSE()
+target_link_libraries(
+	rv-simulation-bataille
+	${OIS_LIBRARIES}
+	${OGRE_LIBRARIES}
+	${CEGUI_LIBRARIES}
+	${CEGUI_OgreRenderer_LIBRARIES}
+	${BULLET_LIBRARIES}
+	${BULLET_ConvexDecomposition_LIBRARIES}
+	${OGREBULLET_LIBRARIES}
+	${OPENAL_LIBRARY}
+	${OGG_LIBRARIES}
+	${VORBIS_LIBRARIES}
+	${OGREAL_LIBRARIES}
+)
+ENDIF()
 
 #Générateur de documentation
 include(UseDoxygen OPTIONAL)
