@@ -38,6 +38,7 @@ if (WIN32)
     ${ENV_PROGRAMFILES}/ogrebullet
     ${ENV_PROGRAMFILES}/OGREBULLET
     C:/OGREBULLET-SDK
+	C:/lib/ogrebullet
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREBULLET_HOME]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREBULLET_DIR]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREBULLET_ROOT]

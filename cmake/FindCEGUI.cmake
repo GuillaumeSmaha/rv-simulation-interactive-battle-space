@@ -54,6 +54,7 @@ if (WIN32)
     ${ENV_PROGRAMFILES}/cegui
     ${ENV_PROGRAMFILES}/CEGUI
     C:/CEGUI-SDK
+    C:/lib/cegui
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;CEGUI_HOME]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;CEGUI_DIR]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;CEGUI_ROOT]

@@ -46,6 +46,7 @@ if (WIN32)
     ${ENV_PROGRAMFILES}/OgreAL
     ${ENV_PROGRAMFILES}/OGREAL
     C:/OGREAL-SDK
+	C:/lib/ogreal
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREAL_HOME]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREAL_DIR]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGREAL_ROOT]

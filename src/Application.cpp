@@ -295,7 +295,7 @@ void Application::initListeners(void)
 	player2 = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player2->signalKeyPressed.add(&Application::onKeyPressed, this);
 
-    this->listenerCollision= new ListenerCollision(sceneMgr, this->listenerFrame);
+    this->listenerCollision= new ListenerCollision(this->listenerFrame);
 
 }
 

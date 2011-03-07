@@ -40,6 +40,7 @@ if (WIN32)
     ${ENV_PROGRAMFILES}/vorbis
     ${ENV_PROGRAMFILES}/VORBIS
     C:/VORBIS-SDK
+    C:/lib/vorbis
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;VORBIS_HOME]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;VORBIS_DIR]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;VORBIS_ROOT]

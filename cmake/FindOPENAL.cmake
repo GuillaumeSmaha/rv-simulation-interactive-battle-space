@@ -75,6 +75,7 @@ FIND_PATH(OPENAL_INCLUDE_DIR al.h
   /opt/local # DarwinPorts
   /opt/csw # Blastwave
   /opt
+  C:/lib/openal
   [HKEY_LOCAL_MACHINE\\SOFTWARE\\Creative\ Labs\\OpenAL\ 1.1\ Software\ Development\ Kit\\1.00.0000;InstallDir]
   [HKEY_LOCAL_MACHINE\\SOFTWARE\\Creative\ Labs\\OpenAL\ 1.1\ Software\ Development\ Kit\\3.05;InstallDir]
 )
@@ -94,6 +95,7 @@ FIND_LIBRARY(OPENAL_LIBRARY
   /opt/local
   /opt/csw
   /opt
+  C:/lib/openal
   [HKEY_LOCAL_MACHINE\\SOFTWARE\\Creative\ Labs\\OpenAL\ 1.1\ Software\ Development\ Kit\\1.00.0000;InstallDir]
   [HKEY_LOCAL_MACHINE\\SOFTWARE\\Creative\ Labs\\OpenAL\ 1.1\ Software\ Development\ Kit\\3.05;InstallDir]
 )

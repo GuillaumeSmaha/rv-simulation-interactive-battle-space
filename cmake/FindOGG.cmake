@@ -31,6 +31,7 @@ if (WIN32)
     ${ENV_PROGRAMFILES}/ogg
     ${ENV_PROGRAMFILES}/OGG
     C:/OGG-SDK
+    C:/lib/ogg
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGG_HOME]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGG_DIR]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;OGG_ROOT]

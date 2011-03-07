@@ -108,6 +108,7 @@ if (WIN32)
   set(OGRE_PREFIX_GUESSES
     ${ENV_PROGRAMFILES}/OGRE
     C:/OgreSDK
+	C:/lib/ogre
   )
 elseif (UNIX)
   set(OGRE_PREFIX_GUESSES

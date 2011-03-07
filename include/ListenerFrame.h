@@ -33,7 +33,8 @@ class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
          /*!
          * \brief Dispatche le signal à chaque début d'image. 
          */
-        Signal<const Ogre::FrameEvent&> signalFrameStarted;       /*!
+        Signal<const Ogre::FrameEvent&> signalFrameStarted;
+        /*!
          * \brief Dispatche le signal à chaque fin d'image. 
          */
         Signal<const Ogre::FrameEvent&> signalFrameEnded;

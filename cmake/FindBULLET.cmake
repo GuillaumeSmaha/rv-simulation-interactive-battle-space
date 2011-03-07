@@ -30,6 +30,7 @@ if (WIN32)
   set(BULLET_PREFIX_GUESSES
     ${ENV_PROGRAMFILES}/bullet
     ${ENV_PROGRAMFILES}/BULLET
+    C:/lib/bullet
     C:/BULLET-SDK
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;BULLET_HOME]
     [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;BULLET_DIR]
