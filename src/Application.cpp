@@ -57,12 +57,12 @@ Application::~Application(void)
 	delete this->listenerKeyboard;
 	delete this->listenerTime;
 	delete this->listenerFrame;
-
+    delete this->listenerCollision;
 	ViewportLoader::deleteViewportLoader();
 	MeshLoader::deleteMeshLoader();
 
 	delete this->listenerWindow;
-
+    
     delete this->root;
 }
 
@@ -295,6 +295,7 @@ void Application::initListeners(void)
 	player2 = new PlayerControls(this->listenerMouse, this->listenerKeyboard);
 	player2->signalKeyPressed.add(&Application::onKeyPressed, this);
 
+    this->listenerCollision= new ListenerCollision(sceneMgr, this->listenerFrame);
 
 }
 
@@ -327,42 +328,48 @@ void Application::initScene(void)
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
 
 	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
-	Planet *planet1 = new Planet(10000, true);
-	planet1->setPosition(2500.0, 300.0, 22500.0);
+
+	Planet *planet1 = new Planet(10000,this->listenerCollision, true);
+	//planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
+    planet1->setPosition(2500.0, 300.0, 22500.0);
 	
 	
 	//Tingshuo Debut
-	planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
-	planet1->getEntity()->setCastShadows(true);
-	const Ogre::Vector3 pos(2500.0, 300.0, 22500.0);
-	Ogre::Vector3 size = planet1->getEntity()->getBoundingBox().getSize();
-	size *= 0.60;
-	OgreBulletDynamics::RigidBody *body = this->listenerFrame->addSphere(planet1->getEntity(), planet1->getNode(), pos, Quaternion(0,0,0,1),
-		size.x, 1.0, 1.0, 0.0);
+	//planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
+	//planet1->getEntity()->setCastShadows(true);
+	//const Ogre::Vector3 pos(2500.0, 300.0, 22500.0);
+	//Ogre::Vector3 size = planet1->getEntity()->getBoundingBox().getSize();
+	//size *= 0.60;
+	//OgreBulletDynamics::RigidBody *body = this->listenerFrame->addSphere(planet1->getEntity(), planet1->getNode(), pos, Quaternion(0,0,0,1),
+	//	size.x, 1.0, 1.0, 0.0);
 	//Tingshuo Fin
 
 
 	//planet1->setScale(150.0, 150.0, 150.0);
 
-	Planet *planet2 = new Planet(2500, 2, false);
+	Planet *planet2 = new Planet(2500, 2,this->listenerCollision , false);
 	planet2->setPosition(20000.0, 900.0, 15000.0);
 	//planet2->setScale(200.0, 200.0, 200.0);
+    
+    planet1->createCollisionObject(this->listenerCollision);
+    planet2->createCollisionObject(this->listenerCollision);
+
 
 	GestPlanet::getSingleton()->addPlanet(planet1);
 	GestPlanet::getSingleton()->addPlanet(planet2);
 
 
 	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
-    ship->setPosition(-50,-50,-50);
+    ship->setPosition(-500,-500,-500);
     //Tingshuo Debut
-	ship->getEntity()->setQueryFlags(SHIP_QUERY_MASK);
-
-	ship->getEntity()->setCastShadows(true);
-	const Ogre::Vector3 pos_ship(-50,-50,-50);
-	Ogre::Vector3 size_ship = ship->getEntity()->getBoundingBox().getSize();
-	size_ship *= 0.48;
-	OgreBulletDynamics::RigidBody *body_ship = this->listenerFrame->addSphere(ship->getEntity(), ship->getNode(), pos_ship, Quaternion(0,0,0,1),
-		size_ship.x, 1.0, 1.0, 0.0);
+//	ship->getEntity()->setQueryFlags(SHIP_QUERY_MASK);
+//
+//	ship->getEntity()->setCastShadows(true);
+//	const Ogre::Vector3 pos_ship(-50,-50,-50);
+//	Ogre::Vector3 size_ship = ship->getEntity()->getBoundingBox().getSize();
+//	size_ship *= 0.48;
+//	OgreBulletDynamics::RigidBody *body_ship = this->listenerFrame->addSphere(ship->getEntity(), ship->getNode(), pos_ship, Quaternion(0,0,0,1),
+//		size_ship.x, 1.0, 1.0, 0.0);
 	//Tingshuo Fin
 	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
@@ -414,6 +421,8 @@ void Application::initScene(void)
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
+
+
 }
 
 void Application::onKeyPressed(PlayerControls::Controls key)

@@ -16,7 +16,7 @@ ListenerTime::~ListenerTime()
 	delete this->timer;
 }
 
-void ListenerTime::watchTime(void * useless)
+void ListenerTime::watchTime(const Ogre::FrameEvent &evt)
 {
 	//si le starter n'a pas été démarré on le démarre
 	if(this->started == false)

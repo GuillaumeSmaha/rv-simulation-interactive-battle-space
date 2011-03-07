@@ -34,7 +34,7 @@ void GestPlanet::addPlanet(Planet * planet)
 }
 
 
-void GestPlanet::updatePlanet(void *)
+void GestPlanet::updatePlanet(const Ogre::FrameEvent &evt)
 {
     vector<Planet *>::iterator itPlanet;
     for(itPlanet=lstPlanet.begin(); itPlanet<lstPlanet.end();itPlanet++)

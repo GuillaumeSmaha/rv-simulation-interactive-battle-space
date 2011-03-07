@@ -65,7 +65,7 @@ class GestPlanet : public ObjectRoot
 		/*!
 		 * \brief Effectue la mise à jour des planètes
 		 */
-        void updatePlanet(void *);
+        void updatePlanet(const Ogre::FrameEvent &evt);
 
 		/*!
 		 * \brief Supprime les planètes du gestionnaire

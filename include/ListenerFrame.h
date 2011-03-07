@@ -23,14 +23,6 @@ class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
         /*!
          * \brief Indique si l'application est fermée
          */
-		//Tingshuo Debut
-		OgreBulletDynamics::DynamicsWorld *mWorld;	// OgreBullet World
- 		OgreBulletCollisions::DebugDrawer *debugDrawer;
- 		int mNumEntitiesInstanced;
- 
- 		std::deque<OgreBulletDynamics::RigidBody *>         mBodies;
- 		std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
-        //Tingshuo Fin
 		bool closed;
 		
 	public:
@@ -38,10 +30,13 @@ class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
          * \brief Dispatche le signal à chaque image. N'a aucun argument.
          */
         Signal<void*> signalFrameRendering;
-        /*!
-         * \brief Dispatche le signal à chaque fin d'image. N'a aucun argument.
+         /*!
+         * \brief Dispatche le signal à chaque début d'image. 
          */
-        Signal<void*> signalFrameEnded;
+        Signal<const Ogre::FrameEvent&> signalFrameStarted;       /*!
+         * \brief Dispatche le signal à chaque fin d'image. 
+         */
+        Signal<const Ogre::FrameEvent&> signalFrameEnded;
 		/*!
 		 * \brief Constructeur
 		 */
@@ -71,10 +66,10 @@ class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
         * \brief Appelée lorsque l'application est fermée
         */
         void shutdown(void*);
-		//Tingshuo Debut
-		OgreBulletDynamics::RigidBody* addSphere(const Ogre::Entity *entity, Ogre::SceneNode *node, const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Real radius, 
-			const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, const Ogre::Real bodyMass);
-		//Tingshuo Fin
+//		//Tingshuo Debut
+//		OgreBulletDynamics::RigidBody* addSphere(const Ogre::Entity *entity, Ogre::SceneNode *node, const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Real radius, 
+//			const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, const Ogre::Real bodyMass);
+//		//Tingshuo Fin
 };
 
 #endif //__LISTENER_FRAME_H__

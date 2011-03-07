@@ -57,7 +57,7 @@ class ListenerTime : public ObjectRoot
          * \brief Méthode appelé pour la mise à jour de la frame régulée
          * \param useless NULL
          */
-		void watchTime(void * useless);
+		void watchTime(const Ogre::FrameEvent &evt);
 		
         /*!
          * \brief Change l'état de la pause

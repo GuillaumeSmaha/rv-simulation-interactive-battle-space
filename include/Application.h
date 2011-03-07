@@ -16,6 +16,7 @@
 #include "ListenerWindow.h"
 #include "ListenerFrame.h"
 #include "ListenerTime.h"
+#include "ListenerCollision.h"
 #include "MeshLoader.h"
 #include "GestSceneManager.h"
 #include "GestSound.h"
@@ -116,7 +117,10 @@ class Application : public ObjectRoot
 		* \brief Listener pour les événements time
 		*/
 		ListenerTime * listenerTime;
-        
+         /*!
+		* \brief Listener sur les collisions
+		*/
+		ListenerCollision * listenerCollision;
         /*!
         * Gere le menus du jeux
         */

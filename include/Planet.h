@@ -8,6 +8,11 @@
 #include <Ogre.h>
 #include "MeshLoader.h"
 #include "Utils.h"
+#include "ListenerCollision.h"
+
+#include "OgreBulletDynamicsRigidBody.h"
+#include "Shapes/OgreBulletCollisionsSphereShape.h"
+#include <iostream>
 
 /*!
 * \class Planet
@@ -19,8 +24,9 @@ class Planet
 		/*!
 		* \brief Compteur de planètes
 		*/
-		static int planetNumber;
+		static int numberOfPlanet;
 
+        int planetNumber;
 		/*!
 		* \brief Sphère interne de la planète (sol)
 		*/
@@ -114,18 +120,22 @@ class Planet
 		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
 		Ogre::Real mExposure;
 		
+        //rajouté pour les collision avec ogreBullet
+        OgreBulletCollisions::SphereCollisionShape *sceneSphereShape;
+        OgreBulletDynamics::RigidBody *defaultBody;
+
 	public:
 		/*!
 		 * \brief Constructeur par défaut de Planet
 		 */
-		Planet(void);
+		Planet(ListenerCollision * listenerCollision);
 
 		/*!
 		 * \brief Constructeur d'une planète d'un certain rayon et du type par défaut (Terre).
 		 * \param radius Rayon de la planète.
 		 * \param hasAtmosphere Indique si la planète possède une atmosphère ou non
 		 */
-		Planet(Ogre::Real radius, bool hasAtmosphere = false);
+		Planet(Ogre::Real radius, ListenerCollision * listenerCollision, bool hasAtmosphere = false );
 
 		/*!
 		 * \brief Constructeur d'une planète d'un certain rayon et d'un certain type.
@@ -133,7 +143,7 @@ class Planet
 		 * \param type Type de la planète (voir MeshLoader)
 		 * \param hasAtmosphere Indique si la planète possède une atmosphère ou non
 		 */
-		Planet(Ogre::Real radius, Ogre::int16 type, bool hasAtmosphere = false);
+		Planet(Ogre::Real radius, Ogre::int16 type, ListenerCollision * listenerCollision, bool hasAtmosphere = false);
 
 		/*!
 		 * \brief Destructeur de Planet (sisi)
@@ -206,6 +216,7 @@ class Planet
 		}
 		
 		
+        void createCollisionObject(ListenerCollision * listenerCollision);
 	private:
 
 		/*!
@@ -214,6 +225,10 @@ class Planet
 		* \param outerName Nom de sortie
 		*/
 		void createSpheres(const Ogre::String& innerName, const Ogre::String& outerName = "");
+
+
+        void destroyCollisionObject();
+
 
 		/*!
 		* \brief Mise à jour des calculs des paramètres du shader

@@ -2,46 +2,11 @@
 
 ListenerFrame::ListenerFrame( Ogre::Root * root): closed(false)
 {
-	//Tingshuo Debut
-	mNumEntitiesInstanced = 0; // how many shapes are created
-    //Start Bullet
-    mWorld = new OgreBulletDynamics::DynamicsWorld(GestSceneManager::getSceneManager(), Ogre::AxisAlignedBox(Ogre::Vector3 (-1000000, -1000000, -1000000), Ogre::Vector3 (1000000,  1000000,  1000000)), Ogre::Vector3(0,-9.81,0));
-    //add Debug info display tool
-    debugDrawer = new OgreBulletCollisions::DebugDrawer();
-    debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
-    mWorld->setDebugDrawer(debugDrawer);
-    mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
-    Ogre::SceneNode *node_debugDrawer = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
-    node_debugDrawer->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
-	//Tingshuo Fin
-	root->addFrameListener(this);
+   	root->addFrameListener(this);
 }
 
 ListenerFrame::~ListenerFrame()
 {
-	//Tingshuo Debut
-	//OgreBullet physic delete - RigidBodies
-    std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.end();
-    while (mBodies.end() != itBody)
-    {   
-		OgreBulletDynamics::RigidBody * tmp = *itBody;
-        ++itBody;
-		delete tmp;
-    }   
-    //OgreBullet physic delete - Shapes
-    std::deque<OgreBulletCollisions::CollisionShape *>::iterator itShape = mShapes.begin();
-    while (mShapes.end() != itShape)
-    {   
-		OgreBulletCollisions::CollisionShape * tmp = *itShape;
-        ++itShape;
-		delete tmp;
-    }
-    mBodies.clear();
-    mShapes.clear();
-    delete mWorld->getDebugDrawer();
-    mWorld->setDebugDrawer(0);
-    delete mWorld;
-	//Tingshuo Fin
 }
 
 bool ListenerFrame::frameRenderingQueued(const Ogre::FrameEvent& evt)
@@ -62,41 +27,16 @@ void ListenerFrame::shutdown(void*)
 }
 
 //Tingshuo Debut
-bool ListenerFrame::frameStarted(const Ogre::FrameEvent& evt)
+bool ListenerFrame::frameStarted(const Ogre::FrameEvent &evt)
 {
-	bool ret = Ogre::FrameListener::frameStarted(evt);
-	mWorld->stepSimulation(evt.timeSinceLastFrame); 
-	return ret;
+	this->signalFrameStarted.dispatch(evt);
+    return true;
 }
 //Tingshuo Fin
 
-bool ListenerFrame::frameEnded(const Ogre::FrameEvent& evt)
+bool ListenerFrame::frameEnded(const Ogre::FrameEvent &evt)
 {
-	//this->app->updateStats();
-	//Tingshuo Debut
-	bool ret = Ogre::FrameListener::frameEnded(evt);
-	mWorld->stepSimulation(evt.timeSinceLastFrame); 
-	this->signalFrameEnded.dispatch();
-	return ret;
-	//Tingshuo Fin
+	this->signalFrameEnded.dispatch(evt);
+	return true;
 }
 
-//Tingshuo Debut
-OgreBulletDynamics::RigidBody* ListenerFrame::addSphere(const Ogre::Entity *entity, Ogre::SceneNode *node, const Ogre::Vector3 &pos, const Ogre::Quaternion &q, const Ogre::Real radius, 
-			const Ogre::Real bodyRestitution, const Ogre::Real bodyFriction, const Ogre::Real bodyMass)
-{
-	OgreBulletCollisions::SphereCollisionShape *sceneSphereShape = new OgreBulletCollisions::SphereCollisionShape(radius);
-
-    OgreBulletDynamics::RigidBody *defaultBody = new OgreBulletDynamics::RigidBody(
-        "defaultSphereRigid" + Ogre::StringConverter::toString(mNumEntitiesInstanced),
-        mWorld);
-
-    defaultBody->setShape (node,  sceneSphereShape, bodyRestitution, bodyFriction, bodyMass, pos, q);
-
-    mShapes.push_back(sceneSphereShape);
-    mBodies.push_back(defaultBody);
-    mNumEntitiesInstanced++;
-
-    return defaultBody;
-}
-//Tingshuo Fin

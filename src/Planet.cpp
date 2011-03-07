@@ -2,10 +2,11 @@
 
 using namespace Ogre;
 
-int Planet::planetNumber = 0;
+int Planet::numberOfPlanet = 0;
 
-Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
+Planet::Planet(ListenerCollision * listenerCollision) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
 {
+    
 	//this->entity = MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::PLANET);
     //this->getNode()->setPosition(150, 100, -100);
 
@@ -13,13 +14,14 @@ Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRad
 
 	this->planetNode = MeshLoader::getSingleton()->getNode(MeshLoader::PLANET);
 
-	createSpheres("Planet" + planetNumber++);
-
+	createSpheres("Planet" + numberOfPlanet);
+    planetNumber=numberOfPlanet;
+    numberOfPlanet++;
 	this->setMaterialGroundFromSpace("Earth");
 
 }
 
-Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
+Planet::Planet(Ogre::Real radius, ListenerCollision * listenerCollision, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
 	if (this->hasAtmosphere)
 	{
@@ -39,22 +41,26 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInner
 	Ogre::String planetMaterialName = "planet1";
 	if (this->hasAtmosphere)
 	{
-		createSpheres("Planet" + planetNumber, "Atmo" + planetNumber);
+		createSpheres("Planet" + numberOfPlanet, "Atmo" + numberOfPlanet);
 		planetMaterialName += "_Atmo";
 
 		this->setMaterialSkyFromSpace("SkyFromSpace");
 	}
 	else
 	{
-		createSpheres("Planet" + planetNumber);
-	}
-	planetNumber++;
+      createSpheres("Planet" + numberOfPlanet);
+  }
 
-	//Utils::log(planetMaterialName);
-	this->setMaterialGroundFromSpace(planetMaterialName);
+  planetNumber=numberOfPlanet;
+  numberOfPlanet++;
+
+  //Utils::log(planetMaterialName);
+  this->setMaterialGroundFromSpace(planetMaterialName);
+  
+
 }
 
-Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
+Planet::Planet(Ogre::Real radius, Ogre::int16 _type, ListenerCollision * listenerCollision, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
 	if (this->hasAtmosphere)
 	{
@@ -84,19 +90,21 @@ Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type)
 	Ogre::String planetMaterialName = "planet" + Ogre::StringConverter::toString(type);
 	if (this->hasAtmosphere)
 	{
-		createSpheres("Planet" + planetNumber, "Atmo" + planetNumber);
+		createSpheres("Planet" + numberOfPlanet, "Atmo" + planetNumber);
 		planetMaterialName += "_Atmo";
 
 		this->setMaterialSkyFromSpace("SkyFromSpace");
 	}
 	else
 	{
-		createSpheres("Planet" + planetNumber);
+		createSpheres("Planet" + numberOfPlanet);
 	}
-	planetNumber++;
+    planetNumber=numberOfPlanet;
+	numberOfPlanet++;
 
 	this->setMaterialGroundFromSpace(planetMaterialName);
-}
+
+    }
 
 Planet::~Planet(void)
 {
@@ -111,6 +119,9 @@ Planet::~Planet(void)
 	}
 	
 	scnMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES)->removeAndDestroyChild(planetNode->getName());
+    
+    //nettoie les pointeurs utilisé pour géré les collisions
+    //destroyCollisionObject();
 }
 
 void Planet::update()
@@ -193,6 +204,7 @@ void Planet::updatePosition(void)
 void Planet::setPosition(Ogre::Real x, Ogre::Real y, Ogre::Real z)
 {
     this->getNode()->setPosition(x, y, z);
+
 }
 
 void Planet::setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z)
@@ -244,4 +256,28 @@ void Planet::updateCalculations()
 	mScaleOverScaleDepth = mScale / mScaleDepth;
 
 	mG2 = mG * mG;
+}
+
+void Planet::createCollisionObject(ListenerCollision * listenerCollision)
+{
+    std::cout<<"createCol!!"<<this->planetNumber<<std::endl;
+    std::cout<<"pos"<<this->getNode()->getPosition()<<std::endl;
+    Ogre::Vector3 pos= this->getNode()->getPosition();
+	sceneSphereShape = new OgreBulletCollisions::SphereCollisionShape(mInnerRadius);
+
+    std::ostringstream rigidBodyString;
+    rigidBodyString<<"RigidPlanet"<<planetNumber;
+    defaultBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
+
+    defaultBody->setShape (this->getNode(),  sceneSphereShape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
+    this->getEntity()->setCastShadows(true);
+
+    //defaultBody->setPosition(pos[0], pos[1], pos[2]);
+
+    std::cout<<"pos"<<this->getNode()->getPosition()<<std::endl;
+}
+void Planet::destroyCollisionObject()
+{
+    delete sceneSphereShape;
+    delete defaultBody;
 }
