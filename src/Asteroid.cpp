@@ -4,6 +4,7 @@ using namespace Ogre;
 
 Asteroid::Asteroid(void) : speed(0), rotationSpeed(Utils::randRangeInt(-1,1)/100.0)
 {
+    this->typeMesh = MeshRoot::ASTEROID;
 	Ogre::Quaternion quat;
 	quat[0] = 1;//Ogre::Real(Utils::degreToRadian(0.01));
 	quat[1] = (Utils::randRangeInt(1,10))/10.0;//randomiser

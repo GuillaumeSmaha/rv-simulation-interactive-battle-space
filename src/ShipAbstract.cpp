@@ -10,6 +10,7 @@ ShipAbstract::ShipAbstract(void)
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
 	  firstPos(true), firstDir(true)
 {
+    this->typeMesh = MeshRoot::SHIP;
     this->entity = (Ogre::Entity *)MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP);
 
 	// Calcul des tangentes (si pas présentes dans le mesh)

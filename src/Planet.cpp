@@ -6,7 +6,7 @@ int Planet::numberOfPlanet = 0;
 
 Planet::Planet(ListenerCollision * listenerCollision) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
 {
-    
+    this->typeMesh = MeshRoot::PLANET;
 	//this->entity = MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::PLANET);
     //this->getNode()->setPosition(150, 100, -100);
 
@@ -263,13 +263,13 @@ void Planet::createCollisionObject(ListenerCollision * listenerCollision)
     std::cout<<"createCol!!"<<this->planetNumber<<std::endl;
     std::cout<<"pos"<<this->getNode()->getPosition()<<std::endl;
     Ogre::Vector3 pos= this->getNode()->getPosition();
-	sceneSphereShape = new OgreBulletCollisions::SphereCollisionShape(mInnerRadius);
+	this->shape = new OgreBulletCollisions::SphereCollisionShape(mInnerRadius);
 
     std::ostringstream rigidBodyString;
     rigidBodyString<<"RigidPlanet"<<planetNumber;
-    defaultBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
+    this->rigidBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
 
-    defaultBody->setShape (this->getNode(),  sceneSphereShape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
+    this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
     this->getEntity()->setCastShadows(true);
 
     //defaultBody->setPosition(pos[0], pos[1], pos[2]);
@@ -278,6 +278,4 @@ void Planet::createCollisionObject(ListenerCollision * listenerCollision)
 }
 void Planet::destroyCollisionObject()
 {
-    delete sceneSphereShape;
-    delete defaultBody;
 }

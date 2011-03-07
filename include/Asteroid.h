@@ -7,6 +7,7 @@
 
 #include <Ogre.h>
 #include "MeshLoader.h"
+#include "MeshRoot.h"
 #include "Utils.h"
 
 
@@ -17,7 +18,7 @@
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet).
 */
 
-class Asteroid
+class Asteroid : public MeshRoot
 {
 	private:
 		/*!

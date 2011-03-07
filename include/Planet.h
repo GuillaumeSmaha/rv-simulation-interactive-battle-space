@@ -7,18 +7,15 @@
 
 #include <Ogre.h>
 #include "MeshLoader.h"
+#include "MeshRoot.h"
 #include "Utils.h"
 #include "ListenerCollision.h"
-
-#include "OgreBulletDynamicsRigidBody.h"
-#include "Shapes/OgreBulletCollisionsSphereShape.h"
-#include <iostream>
 
 /*!
 * \class Planet
 * \brief Classe gérant les planètes
 */
-class Planet
+class Planet : public MeshRoot
 {
 	private:
 		/*!
@@ -121,8 +118,6 @@ class Planet
 		Ogre::Real mExposure;
 		
         //rajouté pour les collision avec ogreBullet
-        OgreBulletCollisions::SphereCollisionShape *sceneSphereShape;
-        OgreBulletDynamics::RigidBody *defaultBody;
 
 	public:
 		/*!
