@@ -125,6 +125,8 @@ target_link_libraries(
 	rv-simulation-bataille
 	${OIS_LIBRARIES}
 	${OGRE_LIBRARIES}
+	${Boost_thread_LIBRARY}
+	${Boost_datetime_LIBRARY}
 	${CEGUI_LIBRARIES}
 	${CEGUI_OgreRenderer_LIBRARIES}
 	${BULLET_LIBRARIES}
