@@ -5,15 +5,15 @@
 #ifndef __LISTENER_FRAME_H__
 #define __LISTENER_FRAME_H__
 
+#include <iostream>
+#include <Ogre.h>
 #include <OgreFrameListener.h>
+#include <OgreBulletDynamicsRigidBody.h>
+#include <Shapes/OgreBulletCollisionsSphereShape.h>
 #include "Signal.h"
 #include "ObjectRoot.h"
-#include <Ogre.h>
-//Tingshuo Debut
-#include "OgreBulletDynamicsRigidBody.h"
-#include "Shapes/OgreBulletCollisionsSphereShape.h"
-#include <iostream>
-//Tingshuo Fin
+#include "GestSceneManager.h"
+
 /*!
  * \class ListenerFrame
  * \brief Classe permettant de gérer les événements de la mise à jour du rendu.
@@ -32,6 +32,7 @@ class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
  		std::deque<OgreBulletCollisions::CollisionShape *>  mShapes;
         //Tingshuo Fin
 		bool closed;
+		
 	public:
         /*!
          * \brief Dispatche le signal à chaque image. N'a aucun argument.
@@ -44,7 +45,7 @@ class ListenerFrame : public ObjectRoot, public Ogre::FrameListener  {
 		/*!
 		 * \brief Constructeur
 		 */
-		ListenerFrame(Ogre::Root * root, Ogre::SceneManager * mSceneMgr);
+		ListenerFrame(Ogre::Root * root);
 		/*!
 		 * \brief Destructeur
 		 */

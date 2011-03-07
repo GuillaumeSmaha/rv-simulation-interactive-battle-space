@@ -55,8 +55,8 @@ Application::~Application(void)
 
 	delete this->listenerMouse;
 	delete this->listenerKeyboard;
-	delete this->listenerFrame;
 	delete this->listenerTime;
+	delete this->listenerFrame;
 
 	ViewportLoader::deleteViewportLoader();
 	MeshLoader::deleteMeshLoader();
@@ -265,7 +265,7 @@ void Application::initListeners(void)
 	pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
 	this->inputManager = OIS::InputManager::createInputSystem(pl);
-	this->listenerFrame = new ListenerFrame(this->root, this->sceneMgr);//Tingshuo
+	this->listenerFrame = new ListenerFrame(this->root);
 
     this->listenerTime = new ListenerTime(25, this->listenerFrame);
 	//this->listenerFrame->signalFrameEnded.add(&Application::updateStats, this);

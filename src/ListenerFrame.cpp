@@ -1,17 +1,17 @@
 #include "ListenerFrame.h"
 
-ListenerFrame::ListenerFrame( Ogre::Root * root, Ogre::SceneManager * mSceneMgr): closed(false)
+ListenerFrame::ListenerFrame( Ogre::Root * root): closed(false)
 {
 	//Tingshuo Debut
 	mNumEntitiesInstanced = 0; // how many shapes are created
     //Start Bullet
-    mWorld = new OgreBulletDynamics::DynamicsWorld(mSceneMgr, Ogre::AxisAlignedBox(Ogre::Vector3 (-1000000, -1000000, -1000000), Ogre::Vector3 (1000000,  1000000,  1000000)), Ogre::Vector3(0,-9.81,0));
+    mWorld = new OgreBulletDynamics::DynamicsWorld(GestSceneManager::getSceneManager(), Ogre::AxisAlignedBox(Ogre::Vector3 (-1000000, -1000000, -1000000), Ogre::Vector3 (1000000,  1000000,  1000000)), Ogre::Vector3(0,-9.81,0));
     //add Debug info display tool
     debugDrawer = new OgreBulletCollisions::DebugDrawer();
     debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
     mWorld->setDebugDrawer(debugDrawer);
     mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
-    Ogre::SceneNode *node_debugDrawer = mSceneMgr->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
+    Ogre::SceneNode *node_debugDrawer = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
     node_debugDrawer->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
 	//Tingshuo Fin
 	root->addFrameListener(this);
@@ -21,18 +21,20 @@ ListenerFrame::~ListenerFrame()
 {
 	//Tingshuo Debut
 	//OgreBullet physic delete - RigidBodies
-    std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.begin();
+    std::deque<OgreBulletDynamics::RigidBody *>::iterator itBody = mBodies.end();
     while (mBodies.end() != itBody)
     {   
-		delete *itBody;
+		OgreBulletDynamics::RigidBody * tmp = *itBody;
         ++itBody;
+		delete tmp;
     }   
     //OgreBullet physic delete - Shapes
     std::deque<OgreBulletCollisions::CollisionShape *>::iterator itShape = mShapes.begin();
     while (mShapes.end() != itShape)
     {   
-        delete *itShape;
+		OgreBulletCollisions::CollisionShape * tmp = *itShape;
         ++itShape;
+		delete tmp;
     }
     mBodies.clear();
     mShapes.clear();
