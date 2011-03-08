@@ -25,7 +25,7 @@ void GroupAsteroid::addAsteroid(Asteroid * asteroid, ListenerCollision * listene
 	this->node->addChild(nodeAsteroid);
     lstGroupAsteroid.push_back(asteroid);
     //gestion des collisions avec les astéroides
-     asteroid->createCollisionObject(listenerCollision, 2000);
+     asteroid->createCollisionObject(listenerCollision);
 
 }
 

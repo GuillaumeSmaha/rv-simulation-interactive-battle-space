@@ -5,12 +5,12 @@ ListenerCollision::ListenerCollision(ListenerFrame * listenerFrame)
     //Start Bullet
     mWorld = new OgreBulletDynamics::DynamicsWorld(GestSceneManager::getSceneManager(), Ogre::AxisAlignedBox(Ogre::Vector3 (-1, -1, -1), Ogre::Vector3 (1,  1,  1)), Ogre::Vector3(0,0,0));
     //add Debug info display tool
-    debugDrawer = new OgreBulletCollisions::DebugDrawer();
-    debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
-    mWorld->setDebugDrawer(debugDrawer);
-    mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
-    Ogre::SceneNode *node_debugDrawer = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
-    node_debugDrawer->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
+    //debugDrawer = new OgreBulletCollisions::DebugDrawer();
+    //debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
+    //mWorld->setDebugDrawer(debugDrawer);
+    //mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
+    //Ogre::SceneNode *node_debugDrawer = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
+    //node_debugDrawer->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
     //mWorld->getBulletDynamicsWorld()->clearForces();
 
     listenerFrame->signalFrameStarted.add(&ListenerCollision::updateCollision, this);
@@ -36,20 +36,41 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
     
     for(itShip = listShips.begin() ; itShip < listShips.end() ; itShip++)
 	{
-		std::cout << "." << std::ends;
 		if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER)
 		{
-			Ogre::Ray rayTo((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
+			Ogre::Ray rayToFront((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
+			Ogre::Ray rayToLeft((*itShip)->getPosition()+ Ogre::Vector3(0,-100,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
+			Ogre::Ray rayToRight((*itShip)->getPosition()+ Ogre::Vector3(0,100,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
+			Ogre::Ray rayToUp((*itShip)->getPosition()+ Ogre::Vector3(-100,0,0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
+			Ogre::Ray rayToDown((*itShip)->getPosition()+ Ogre::Vector3(100,0,0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
 			
-			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallback;
-			mCollisionClosestRayResultCallback = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayTo, mWorld, 90.0);
+			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackFront;
+			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackLeft;
+			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackRight;
+			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackUp;
+			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackDown;
+			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 90.0);
+			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 90.0);
+			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 90.0);
+			mCollisionClosestRayResultCallbackUp= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 90.0);
+			mCollisionClosestRayResultCallbackDown= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 90.0);
 
-			mWorld->launchRay(*mCollisionClosestRayResultCallback);
-			if (mCollisionClosestRayResultCallback->doesCollide ())
+			mWorld->launchRay(*mCollisionClosestRayResultCallbackFront);
+			mWorld->launchRay(*mCollisionClosestRayResultCallbackLeft);
+			mWorld->launchRay(*mCollisionClosestRayResultCallbackRight);
+			mWorld->launchRay(*mCollisionClosestRayResultCallbackUp);
+			mWorld->launchRay(*mCollisionClosestRayResultCallbackDown);
+			if (mCollisionClosestRayResultCallbackFront->doesCollide () || 
+                mCollisionClosestRayResultCallbackLeft->doesCollide() ||
+                mCollisionClosestRayResultCallbackRight->doesCollide() ||
+                mCollisionClosestRayResultCallbackUp->doesCollide() ||
+                mCollisionClosestRayResultCallbackDown->doesCollide()
+                )
 			{
-				OgreBulletDynamics::RigidBody * body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallback->getCollidedObject());
+                
+				//OgreBulletDynamics::RigidBody * body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackLeft->getCollidedObject());
 				
-				intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
+				//intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
 				(*itShip)->exploded();
 				(*itShip)->setSpeed(0);
 				(*itShip)->setAcceleration(0);
@@ -62,11 +83,16 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 				(*itShip)->setYawSpeed(Ogre::Radian(0));
 				(*itShip)->setYawAcceleration(Ogre::Radian(0));
 				
-				std::cout << "Hit :" << body->getName() << std::endl;
+				std::cout << "Hit :"<<std::endl;// body->getName() << std::endl;
 				break;
 			}
 			
-			delete mCollisionClosestRayResultCallback;
+			delete mCollisionClosestRayResultCallbackFront;
+			//delete mCollisionClosestRayResultCallbackBack;
+			delete mCollisionClosestRayResultCallbackLeft;
+			delete mCollisionClosestRayResultCallbackRight;
+			delete mCollisionClosestRayResultCallbackUp;
+			delete mCollisionClosestRayResultCallbackDown;
 		}
     }
 
@@ -77,7 +103,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
     
     for(itLaser = listLasers.begin() ; itLaser < listLasers.end() ; itLaser++)
 	{
-		std::cout << "." << std::ends;
+		//std::cout << "." << std::ends;
 		Ogre::Ray rayTo((*itLaser)->getPosition(), (*itLaser)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
 		
 		OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallback;
