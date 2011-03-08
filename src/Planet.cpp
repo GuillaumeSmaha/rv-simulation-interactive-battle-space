@@ -4,7 +4,7 @@ using namespace Ogre;
 
 int Planet::numberOfPlanet = 0;
 
-Planet::Planet(ListenerCollision * listenerCollision) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
+Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
 {
     this->typeObject = ObjectRoot::PLANET;
 	//this->entity = MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::PLANET);
@@ -21,7 +21,7 @@ Planet::Planet(ListenerCollision * listenerCollision) : type(MeshLoader::PLANET)
 
 }
 
-Planet::Planet(Ogre::Real radius, ListenerCollision * listenerCollision, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
+Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
 	if (this->hasAtmosphere)
 	{
@@ -60,7 +60,7 @@ Planet::Planet(Ogre::Real radius, ListenerCollision * listenerCollision, bool ha
 
 }
 
-Planet::Planet(Ogre::Real radius, Ogre::int16 _type, ListenerCollision * listenerCollision, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
+Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
 	if (this->hasAtmosphere)
 	{

@@ -330,7 +330,7 @@ void Application::initScene(void)
 
 	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
 
-	Planet *planet1 = new Planet(10000,this->listenerCollision, true);
+	Planet *planet1 = new Planet(10000, true);
 	//planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
     planet1->setPosition(2500.0, 300.0, 22500.0);
 	
@@ -348,7 +348,7 @@ void Application::initScene(void)
 
 	//planet1->setScale(150.0, 150.0, 150.0);
 
-	Planet *planet2 = new Planet(2500, 2,this->listenerCollision , false);
+	Planet *planet2 = new Planet(2500, 2, false);
 	planet2->setPosition(20000.0, 900.0, 15000.0);
 	//planet2->setScale(200.0, 200.0, 200.0);
     

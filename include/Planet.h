@@ -123,14 +123,14 @@ class Planet : public ObjectRoot
 		/*!
 		 * \brief Constructeur par défaut de Planet
 		 */
-		Planet(ListenerCollision * listenerCollision);
+		Planet(void);
 
 		/*!
 		 * \brief Constructeur d'une planète d'un certain rayon et du type par défaut (Terre).
 		 * \param radius Rayon de la planète.
 		 * \param hasAtmosphere Indique si la planète possède une atmosphère ou non
 		 */
-		Planet(Ogre::Real radius, ListenerCollision * listenerCollision, bool hasAtmosphere = false );
+		Planet(Ogre::Real radius, bool hasAtmosphere = false );
 
 		/*!
 		 * \brief Constructeur d'une planète d'un certain rayon et d'un certain type.
@@ -138,7 +138,7 @@ class Planet : public ObjectRoot
 		 * \param type Type de la planète (voir MeshLoader)
 		 * \param hasAtmosphere Indique si la planète possède une atmosphère ou non
 		 */
-		Planet(Ogre::Real radius, Ogre::int16 type, ListenerCollision * listenerCollision, bool hasAtmosphere = false);
+		Planet(Ogre::Real radius, Ogre::int16 type, bool hasAtmosphere = false);
 
 		/*!
 		 * \brief Destructeur de Planet (sisi)
@@ -209,8 +209,10 @@ class Planet : public ObjectRoot
 		{
 			return innerSphere;
 		}
-		
-		
+
+		/*!
+         * \brief Fonction qui permet 'assigner les objets de bullet-ogres (RigidBody...)
+        */
         void createCollisionObject(ListenerCollision * listenerCollision);
 	private:
 
