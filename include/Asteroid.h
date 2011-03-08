@@ -137,13 +137,6 @@ class Asteroid : public ObjectRoot
 			return this->entity->getParentSceneNode();
 		}
         /*!
-		 * \brief Setter du scale de l'asteroid
-		 * \param x Echelle de l'objet en x
-		 * \param y Echelle de l'objet en y
-		 * \param z Echelle de l'objet en z
-		 */
-		void setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
-        /*!
 		 *  \brief Retourne le noeud de l'entité
 		 */
 		Ogre::Entity * getEntity(void)

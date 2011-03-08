@@ -285,7 +285,8 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 			static_cast<Ogre::Entity *>(object)->setMaterialName("planet"+Utils::toString(type-PLANET+1));
 			break;
 		case ASTEROID:
-			static_cast<Ogre::Entity *>(object)->setMaterialName("asteroid1");
+			//static_cast<Ogre::Entity *>(object)->setMaterialName("asteroid1");
+			break;
 		case MISSILE:
 			static_cast<Ogre::Entity *>(object)->setMaterialName("missile");
 			break;

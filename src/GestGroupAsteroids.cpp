@@ -57,7 +57,7 @@ void GestGroupAsteroids::destroy()
     }
 }
 
-void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed) 
+void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed) 
 {
 	Ogre::Real x;
 	Ogre::Real y;
@@ -72,6 +72,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angl
 	for (x = rayon; x > 0; x=x-rayon/(nb/4)) //le 4 car on crée les asteroids 4 par 4
 	{
 		asteroid1 = new Asteroid();
+		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		//normaliser le nb par rapport au x -> le rayon
 		//(x - a)² + (y - b)² = r²
 		//	Ou (a,b) sont les coordonnées du centre et r est le rayon. 
@@ -90,6 +91,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angl
 			delete asteroid1;
 		}
 		asteroid1 = new Asteroid();
+		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
 		{
@@ -100,6 +102,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angl
 			delete asteroid1;
 		}
 		asteroid1 = new Asteroid();
+		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
 		{
@@ -110,6 +113,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angl
 			delete asteroid1;
 		}
 		asteroid1 = new Asteroid();
+		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
 		{

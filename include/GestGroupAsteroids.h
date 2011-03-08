@@ -79,11 +79,12 @@ class GestGroupAsteroids : public ClassRoot
 		 * \brief Crée un groupe d'asteroids
 		 * \param nb Nombre d'asteroids de ce groupe (multiple de 4!!!)
 		 * \param degreLiberte Degre de liberte autour de l'axe de rotation (distance d'écart tolérée)
+		 * \param scale Echelle des asteroids (un random de 10 est ajouté)
 		 * \param angleRotation Angle de rotation autour de l'axe
 		 * \param rayon Distances des asteroids autour de l'axe
 		 * \param planet Noeud de la planète
 		 * \param rotationSpeed Vitesse de la rotation
 		*/
-		void createGroup(int nb, int degreLiberte, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode * planet, Ogre::Real rotationSpeed);
+		void createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode * planet, Ogre::Real rotationSpeed);
 };
 #endif // __GEST_GROUP_ASTEROIDS_H__
