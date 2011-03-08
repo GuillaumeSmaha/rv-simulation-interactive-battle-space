@@ -14,6 +14,7 @@
 #include "GestSceneManager.h"
 #include "MeshLoader.h"
 #include "GestLaser.h"
+#include "ObjectRoot.h"
 
 class GestLaser;
 
@@ -21,7 +22,7 @@ class GestLaser;
 * \class Laser
 * \brief Classe gérant les lasers
 */
-class Laser : public ClassRoot
+class Laser : public ObjectRoot
 {
 	public:
         /*!
@@ -161,6 +162,10 @@ class Laser : public ClassRoot
 		{
 			return this->particule;
 		}
+		/*!
+		 * \brief Applique une texture blessé au laser
+		*/
+		void exploded(void);
 };
 
 
