@@ -244,12 +244,12 @@ void ShipPlayer::update_differente_acceleration()
     }
     if(leftPressed)
     {
-        this->rollAccelerate(Ogre::Radian(-0.006));
+        this->rollAccelerate(Ogre::Radian(-0.009));
 	    this->translateAccelerate(0.005);
     }
     if(rightPressed)
     {
-        this->rollAccelerate(Ogre::Radian(0.006));
+        this->rollAccelerate(Ogre::Radian(0.009));
         this->translateAccelerate(-0.005);
     }
     if(upPressed)
