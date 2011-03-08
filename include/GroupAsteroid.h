@@ -105,6 +105,12 @@ class GroupAsteroid
 		 */
 		Ogre::Real getRotationSpeed(void);
 		/*!
+		 * \brief Retourne vrai si il y a collision entre l'asteroid passé en parametre et un des asteroids du group
+		 * \param asteroid L'asteroid a testé
+		 * \return vrai ou faux selon si il y a collision ou non
+		*/
+		bool isCollided(Asteroid * asteroid);
+		/*!
 		 * \brief [Setter] Définit le noeud du groupe d'astéroides
 		 * \param node Le noeud du groupe d'astéroides
 		*/

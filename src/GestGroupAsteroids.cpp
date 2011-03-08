@@ -81,16 +81,28 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, Ogre::Radian angl
 
 		y =  Ogre::Math::Sqrt(rayon*rayon-x*x)+Utils::randRangeInt(-degreLiberte,degreLiberte);
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));
-		groupAsteroid->addAsteroid(asteroid1);
+		if (groupAsteroid->isCollided(asteroid1)==false)
+		{
+			groupAsteroid->addAsteroid(asteroid1);
+		}
 		asteroid1 = new Asteroid();
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));
-		groupAsteroid->addAsteroid(asteroid1);
+		if (groupAsteroid->isCollided(asteroid1)==false)
+		{
+			groupAsteroid->addAsteroid(asteroid1);
+		}
 		asteroid1 = new Asteroid();
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
-		groupAsteroid->addAsteroid(asteroid1);
+		if (groupAsteroid->isCollided(asteroid1)==false)
+		{
+			groupAsteroid->addAsteroid(asteroid1);
+		}
 		asteroid1 = new Asteroid();
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
-		groupAsteroid->addAsteroid(asteroid1);
+		if (groupAsteroid->isCollided(asteroid1)==false)
+		{
+			groupAsteroid->addAsteroid(asteroid1);
+		}
 	}
 	GestGroupAsteroids::getSingleton()->addGroupAsteroids(groupAsteroid);
 }

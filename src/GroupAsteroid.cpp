@@ -91,7 +91,28 @@ Ogre::Real GroupAsteroid::getRotationSpeed(void)
 {
 	return this->rotationSpeed;
 }
-
+bool GroupAsteroid::isCollided(Asteroid * asteroid) 
+{
+	vector<Asteroid*>::iterator itGroupAsteroids;
+	std::vector<Asteroid *> lstGroupAsteroids= GroupAsteroid::getAllGroupAsteroids();
+	Ogre::Real x = asteroid->getPosition()[0];
+	Ogre::Real y = asteroid->getPosition()[1];
+	Ogre::Real z = asteroid->getPosition()[2];
+	for (itGroupAsteroids = lstGroupAsteroids.begin(); itGroupAsteroids<lstGroupAsteroids.end();itGroupAsteroids++)
+	{
+		if (x < (*itGroupAsteroids)->getPosition()[0]+100 || x > (*itGroupAsteroids)->getPosition()[0]-100)
+		{			
+			if (y < (*itGroupAsteroids)->getPosition()[1]+100 || y > (*itGroupAsteroids)->getPosition()[1]-100)
+			{
+				if (z < (*itGroupAsteroids)->getPosition()[2]+100 || z > (*itGroupAsteroids)->getPosition()[2]-100)
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
 void GroupAsteroid::setNodeGroupAsteroid(Ogre::SceneNode * node)
 {
 	this->node = node;

@@ -398,6 +398,8 @@ void Application::initScene(void)
     ship3->getNode()->attachObject(bill);
 	//création de la ceinture d'asteroids
 	GestGroupAsteroids::getSingleton()->createGroup(32,100,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.05);
+	//création de 4 asteroids se balandant dans l'espace (autour de la terre)
+	GestGroupAsteroids::getSingleton()->createGroup(4,10000,Ogre::Radian(0.01),planet1->getMInnerRadius()*3, planet1->getNode(), 0.05);
 
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
