@@ -39,10 +39,10 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 		if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER)
 		{
 			Ogre::Ray rayToFront((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
-			Ogre::Ray rayToLeft((*itShip)->getPosition()+ Ogre::Vector3(0,-100,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
-			Ogre::Ray rayToRight((*itShip)->getPosition()+ Ogre::Vector3(0,100,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
-			Ogre::Ray rayToUp((*itShip)->getPosition()+ Ogre::Vector3(-100,0,0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
-			Ogre::Ray rayToDown((*itShip)->getPosition()+ Ogre::Vector3(100,0,0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
+			Ogre::Ray rayToLeft((*itShip)->getPosition()+ Ogre::Vector3(0,-50,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
+			Ogre::Ray rayToRight((*itShip)->getPosition()+ Ogre::Vector3(0,50,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
+			Ogre::Ray rayToUp((*itShip)->getPosition()+ Ogre::Vector3(-50,0,0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
+			Ogre::Ray rayToDown((*itShip)->getPosition()+ Ogre::Vector3(50,0,0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
 			
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackFront;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackLeft;
@@ -50,10 +50,10 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackUp;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackDown;
 			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 90.0);
-			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 90.0);
-			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 90.0);
-			mCollisionClosestRayResultCallbackUp= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 90.0);
-			mCollisionClosestRayResultCallbackDown= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 90.0);
+			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 50.0);
+			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 50.0);
+			mCollisionClosestRayResultCallbackUp= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 50.0);
+			mCollisionClosestRayResultCallbackDown= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 50.0);
 
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackFront);
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackLeft);

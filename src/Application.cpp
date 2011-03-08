@@ -352,8 +352,8 @@ void Application::initScene(void)
 	planet2->setPosition(20000.0, 900.0, 15000.0);
 	//planet2->setScale(200.0, 200.0, 200.0);
     
-    planet1->createCollisionObject(this->listenerCollision, planet1->getMInnerRadius());
-    planet2->createCollisionObject(this->listenerCollision, planet2->getMInnerRadius());
+    planet1->createCollisionObject(this->listenerCollision, planet1->getMInnerRadius()-10);
+    planet2->createCollisionObject(this->listenerCollision, planet2->getMInnerRadius()-10);
 
 
 	GestPlanet::getSingleton()->addPlanet(planet1);
@@ -382,8 +382,10 @@ void Application::initScene(void)
     ship2->setPosition(-130,0,0);
     ship2->touched();
     GestShip::getSingleton()->addShip(ship2);
-*/
 
+	ship2->createCollisionObject(this->listenerCollision);
+	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
+*/
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,10000);
 //    ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
