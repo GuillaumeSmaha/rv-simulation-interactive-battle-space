@@ -142,7 +142,7 @@ void ShipAbstract::createCollisionObject(ListenerCollision * listenerCollision)
 
     //rigidBody->setPosition(pos[0], pos[1], pos[2]);
     
-    listenerCollision->getWorld()->addRigidBody(this->rigidBody, 0, 0);
+    //listenerCollision->getWorld()->addRigidBody(this->rigidBody, 0, 0);
 }
 
 

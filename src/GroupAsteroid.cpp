@@ -100,11 +100,11 @@ bool GroupAsteroid::isCollided(Asteroid * asteroid)
 	Ogre::Real z = asteroid->getPosition()[2];
 	for (itGroupAsteroids = lstGroupAsteroids.begin(); itGroupAsteroids<lstGroupAsteroids.end();itGroupAsteroids++)
 	{
-		if (x < (*itGroupAsteroids)->getPosition()[0]+100 || x > (*itGroupAsteroids)->getPosition()[0]-100)
+		if (x < (*itGroupAsteroids)->getPosition()[0]+55 && x > (*itGroupAsteroids)->getPosition()[0]-55)
 		{			
-			if (y < (*itGroupAsteroids)->getPosition()[1]+100 || y > (*itGroupAsteroids)->getPosition()[1]-100)
+			if (y < (*itGroupAsteroids)->getPosition()[1]+55 && y > (*itGroupAsteroids)->getPosition()[1]-55)
 			{
-				if (z < (*itGroupAsteroids)->getPosition()[2]+100 || z > (*itGroupAsteroids)->getPosition()[2]-100)
+				if (z < (*itGroupAsteroids)->getPosition()[2]+55 && z > (*itGroupAsteroids)->getPosition()[2]-55)
 				{
 					return true;
 				}
