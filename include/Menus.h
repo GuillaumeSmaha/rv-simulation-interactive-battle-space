@@ -7,8 +7,6 @@
 
 #include <Ogre.h>
 #include <string>
-#include <CEGUI.h>
-#include <RendererModules/Ogre/CEGUIOgreRenderer.h>
 #include "config.h"
 #include "ListenerMouse.h"
 #include "ListenerKeyboard.h"
@@ -16,6 +14,7 @@
 #include "Application.h"
 #include "Signal.h"
 #include "Utils.h"
+#include "Fenetre.h"
 //#include <CEGUIOgreRenderer.h>
 
 //déclaration avancé pour permettre la compilation
@@ -25,7 +24,7 @@ class Application;
 * \class Menus
 * \brief Classe gérant les menus du jeux
 */
-class Menus: public ClassRoot
+class Menus: public ClassRoot, public Fenetre
 {
 	private:
 		/*!
@@ -51,10 +50,7 @@ class Menus: public ClassRoot
 		 */
         PlayerControls * pControl;
 
-        /*!
-        * \brief fenetre principale de l'application
-        */
-        CEGUI::Window * mainWdw;
+
 
          /*!
 		 * \brief Indique si le menu est ouvert
@@ -178,16 +174,6 @@ class Menus: public ClassRoot
         bool clicScenario(const CEGUI::EventArgs & evt);
 
         /*!
-		* \brief Permet de créer une fentre de menus générique
-		*/
-        CEGUI::Window * create_std_window(std::string name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu);
-
-        /*!
-		* \brief Permet de supprimer une fenetre (appeler par create_std_window, ne devrait pas être utilisé ailleurs).
-		*/
-        bool destroyWindow(const CEGUI::EventArgs & evt);
-
-        /*!
 		* \brief Permet de supprimer les intéractions du jeux en cours (actions des touches, défilement...)
 		*/
         void suspendre_jeux();
@@ -196,6 +182,10 @@ class Menus: public ClassRoot
 		* \brief Permet de reprendre le jeux en cours
 		*/
         void redemarrer_jeux();
+        /*!
+		* \brief Permet de supprimer une fenetre (appeler par create_std_window, ne devrait pas être utilisé ailleurs).
+		*/
+        bool destroyWindow(const CEGUI::EventArgs & evt);
 
 
 };

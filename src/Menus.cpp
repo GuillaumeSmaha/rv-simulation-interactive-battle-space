@@ -217,7 +217,6 @@ void Menus::creer_main_window(void)
 
     this->mainWdw=create_std_window("Combat de vaiseaux", 0.1, 0.05, 0.8, 0.1,4, tblWin);
 
-    CEGUI::System::getSingleton().setGUISheet(this->mainWdw);
     this->mainWdw->hide();
 }
 
@@ -233,6 +232,8 @@ void Menus::cacher_main_window(void)
 
 void Menus::afficher_main_window(void)
 {
+    CEGUI::System::getSingleton().setGUISheet(this->mainWdw);
+
     mainWdw->show();
 };
 bool Menus::clicExit(const CEGUI::EventArgs & evt)
@@ -250,46 +251,7 @@ bool Menus::clicRestart(const CEGUI::EventArgs & evt)
     return true;
 }
 
-CEGUI::Window * Menus::create_std_window(std::string name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu)
-{
-    //création de la nouvelle fenetre
-    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
-    CEGUI::Window * Wdw= wmgr.createWindow("DefaultWindow", "SpaceShip/"+name+"main");
 
-    //Titlebar
-    CEGUI::Window * titlebar= wmgr.createWindow("TaharezLook/Titlebar", "SpaceShip/titlebar"+name);
-    titlebar->setText(name);
-    titlebar->setSize(CEGUI::UVector2(CEGUI::UDim(largeur, 0), CEGUI::UDim(0.05,0)));
-    titlebar->setPosition(CEGUI::UVector2(CEGUI::UDim(posX, 0), CEGUI::UDim(posY,0)));
-    Wdw->addChildWindow(titlebar);
-
-    //création du background
-    CEGUI::Window * menuBackground = wmgr.createWindow("TaharezLook/StaticImage", "Background"+name);
-    menuBackground->setSize(CEGUI::UVector2(CEGUI::UDim(largeur, 0), CEGUI::UDim(hauteur,0)));
-    menuBackground->setPosition(CEGUI::UVector2(CEGUI::UDim(posX,0.0),CEGUI::UDim((posY+0.05),0.0)));
-
-    CEGUI::Window * tmp_contenu;
-    int i=0;
-    while(i<nbEl)
-    {
-        tmp_contenu=contenu[i];
-        menuBackground->addChildWindow(tmp_contenu);
-        i++;
-    }
-
-    //on ajoute un close bouton à chaque fenetre
-    CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/close"+name);
-    quit->setText("Fermer");
-    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.2,0)));
-    quit->setPosition( UVector2( UDim( 0.8, 0.0f ), UDim( 0.7, 0.0f) ) );
-    //menuBackground->addChildWindow(quit);
-    quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::destroyWindow, this));
-    menuBackground->addChildWindow(quit);
-    Wdw->addChildWindow(menuBackground);
-    return Wdw;
-
-
-}
 bool Menus::destroyWindow(const CEGUI::EventArgs & evt)
 {
     if(mainWdw==(static_cast<const WindowEventArgs&>(evt).window->getParent()->getParent()))

@@ -33,6 +33,7 @@
 #include "Planet.h"
 #include "Asteroid.h"
 #include "GroupAsteroid.h"
+#include "Message.h"
 
 class ListenerWindow;
 class ListenerMouse;

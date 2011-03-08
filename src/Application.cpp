@@ -135,6 +135,9 @@ bool Application::start(void)
 	*/
 
 	// start the scene rendering (main loop)
+    Message * message= new Message(this->listenerTime);
+    message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
+
 	this->root->startRendering();
 
 	return true;
@@ -377,7 +380,7 @@ void Application::initScene(void)
 	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
 
-/*
+
 	ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
     ship2->setPosition(-130,0,0);
     ship2->touched();
@@ -385,7 +388,7 @@ void Application::initScene(void)
 
 	ship2->createCollisionObject(this->listenerCollision);
 	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
-*/
+
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,10000);
 //    ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
