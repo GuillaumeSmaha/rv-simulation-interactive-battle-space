@@ -13,6 +13,7 @@
 
 #include "OgreBulletCollisionsPreRequisites.h"
 #include "Shapes/OgreBulletCollisionsSphereShape.h"
+#include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "Utils.h"
 #include <Ogre.h>
 
@@ -72,7 +73,7 @@ class ObjectRoot
         virtual Ogre::String getName() = 0;
         virtual Ogre::MovableObject * getEntity() = 0;
 	
-		virtual void createCollisionObject(ListenerCollision * listenerCollision);
+		virtual void createCollisionObject(ListenerCollision * listenerCollision, int size=0);
 		
 	
 		//Getter/Setter

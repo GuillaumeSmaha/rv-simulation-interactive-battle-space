@@ -352,8 +352,8 @@ void Application::initScene(void)
 	planet2->setPosition(20000.0, 900.0, 15000.0);
 	//planet2->setScale(200.0, 200.0, 200.0);
     
-    planet1->createCollisionObject(this->listenerCollision);
-    planet2->createCollisionObject(this->listenerCollision);
+    planet1->createCollisionObject(this->listenerCollision, planet1->getMInnerRadius());
+    planet2->createCollisionObject(this->listenerCollision, planet2->getMInnerRadius());
 
 
 	GestPlanet::getSingleton()->addPlanet(planet1);
