@@ -5,7 +5,7 @@ using namespace std;
 
 Laser::Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation, const Ogre::ColourValue &color) : position(position), orientation(orientation)
 {
-	this->typeObject = ObjectRoot::LASER;
+	//~ this->typeObject = ObjectRoot::LASER;
 	this->timerLife = new Ogre::Timer();
 		
     this->particule = static_cast<Ogre::ParticleSystem *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::LASER));

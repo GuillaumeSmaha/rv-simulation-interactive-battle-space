@@ -22,7 +22,7 @@ class GestLaser;
 * \class Laser
 * \brief Classe gérant les lasers
 */
-class Laser : public ObjectRoot
+class Laser
 {
 	public:
         /*!
@@ -155,10 +155,18 @@ class Laser : public ObjectRoot
 			return this->particule->getParentSceneNode();
 		}
 		/*!
-		 * \brief [Getter] Récupère un pointeur sur le particule
+		 * \brief [Getter] Récupère un pointeur sur l'entity
 		 * \return Nom du noeud
 		*/
 		Ogre::MovableObject * getEntity(void)
+		{
+			return this->particule;
+		}
+		/*!
+		 * \brief [Getter] Récupère un pointeur sur le particule
+		 * \return Nom du noeud
+		*/
+		Ogre::MovableObject * getMovableObject(void)
 		{
 			return this->particule;
 		}

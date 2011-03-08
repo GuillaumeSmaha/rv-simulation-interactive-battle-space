@@ -71,7 +71,7 @@ class ObjectRoot
 	public:
         virtual Ogre::SceneNode * getNode() = 0;
         virtual Ogre::String getName() = 0;
-        virtual Ogre::MovableObject * getEntity() = 0;
+        virtual Ogre::Entity * getEntity() = 0;
 	
 		virtual void createCollisionObject(ListenerCollision * listenerCollision, int size=0);
 		
