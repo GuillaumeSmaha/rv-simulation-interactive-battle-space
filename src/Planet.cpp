@@ -23,6 +23,8 @@ Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRad
 
 Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
+
+    this->typeObject = ObjectRoot::PLANET;
 	if (this->hasAtmosphere)
 	{
 		mKr = 0.000043f;
@@ -62,6 +64,8 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInner
 
 Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
+
+    this->typeObject = ObjectRoot::PLANET;
 	if (this->hasAtmosphere)
 	{
 		mKr = 0.000043f;
