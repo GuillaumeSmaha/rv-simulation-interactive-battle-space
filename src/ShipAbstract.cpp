@@ -8,7 +8,7 @@ ShipAbstract::ShipAbstract(void)
 	: shipLife(100), 
 	  speed(0), translateSpeed(0), rollSpeed(0), pitchSpeed(0), yawSpeed(0), 
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
-	  firstPos(true), firstDir(true)
+	  isTouched(false), isDead(false), firstPos(true), firstDir(true)
 {
     this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
 
@@ -287,5 +287,26 @@ void ShipAbstract::reset()
     setYawAcceleration(Ogre::Radian(0));
     setPosition(posInit);
     setOrientation(dirInit);
+}
+
+void ShipAbstract::isTouchedByLaser()
+{
+    if(isDead==false)
+    {
+        setShipLife(getShipLife()-10);
+        if(getShipLife()<0)
+        {
+            exploded();
+            isDead=true;   
+        }
+        else
+        {
+            if(isTouched==false)
+            {
+                isTouched=true;
+                touched();
+            }
+        }
+    }
 }
 

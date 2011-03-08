@@ -91,6 +91,16 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
         */
         Ogre::Vector3 posInit;
 
+
+        /*!
+         * \brief permet de savoir si le vaiseau à été touché
+        */
+        bool isTouched;
+
+         /*!
+         * \brief permet de savoir si le vaiseau à été détruit
+        */       
+        bool isDead;
         /*!
          * \brief vrai si la premiere fois que l'on regle la position
         */
@@ -140,7 +150,7 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
 		*/
 		void exploded(void);
 		/*!
-		 * \brief Applique une texture blessé au vaisseau
+		 * \brief envoi un laser
 		*/
 		void shootLaser(void);
 		/*!
@@ -574,6 +584,12 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
 		{
 			return this->entity;
 		}
+
+		/*!
+		 * \brief Lorsque le vaiseau est touché par un tir de laser
+		 * Perd 10 points de vies.
+		*/
+        void isTouchedByLaser(void);
 };
 
 #endif // __SHIP_ABSTRACT_H__
