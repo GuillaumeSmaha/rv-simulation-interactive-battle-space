@@ -1,5 +1,5 @@
 #include "GestSceneManager.h"
-
+#include "Utils.h"
 GestSceneManager* GestSceneManager::_instance = NULL;
 
 
@@ -88,8 +88,21 @@ void GestSceneManager::deleteAll()
     _listCameras.clear();
 }
 
+Ogre::Real GestSceneManager::getProjectedSize(Ogre::MovableObject* object, Ogre::Real size, Ogre::Vector3 point, Ogre::Camera* cam)
+{
+	  if(!object->isInScene())
+	  {
+		return -1;
+	  }
+	  Ogre::Vector3 eyeSpacePos = cam->getViewMatrix(true) * point;
+	  Ogre::Vector3 spheresize(size, size, eyeSpacePos.z);
+      spheresize = cam->getProjectionMatrix() * spheresize;
+	  //TODO:vérifier que quand c supérieur à 1 == vraiment hors champ sinon utilisé eyeSpacePoz.z<0
+      return  spheresize.x>1?-1:spheresize.x;
+}/*
 bool  GestSceneManager::projectSizeAndPos(Ogre::Camera* cam,const Ogre::Vector3& pos,const Ogre::Real rad,Ogre::Real& x,Ogre::Real& y,Ogre::Real& cx,Ogre::Real& cy) {
     Ogre::Vector3 eyeSpacePos = cam->getViewMatrix(true) * pos;
+
     // z < 0 means in front of cam
     if (eyeSpacePos.z < 0) {
         // calculate projected pos
@@ -117,14 +130,6 @@ bool GestSceneManager::getScreenspaceCoords(Ogre::MovableObject* object, Ogre::C
 
    const Ogre::AxisAlignedBox &AABB = object->getWorldBoundingBox(true);
 
-   /**
-   * If you need the point above the object instead of the center point:
-   * This snippet derives the average point between the top-most corners of the bounding box
-   * Ogre::Vector3 point = (AABB.getCorner(AxisAlignedBox::FAR_LEFT_TOP)
-   *    + AABB.getCorner(AxisAlignedBox::FAR_RIGHT_TOP)
-   *    + AABB.getCorner(AxisAlignedBox::NEAR_LEFT_TOP)
-   *    + AABB.getCorner(AxisAlignedBox::NEAR_RIGHT_TOP)) / 4;
-   */
 
    // Get the center point of the object's bounding box
    Ogre::Vector3 point = AABB.getCenter();
@@ -143,3 +148,4 @@ bool GestSceneManager::getScreenspaceCoords(Ogre::MovableObject* object, Ogre::C
 
    return true;
 }
+*/

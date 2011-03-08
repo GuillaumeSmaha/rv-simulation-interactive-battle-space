@@ -121,8 +121,57 @@ class GestSceneManager
         {
             return getSingleton()->getCount();
         }
-        static bool  projectSizeAndPos(Ogre::Camera* cam,const Ogre::Vector3& pos,const Ogre::Real rad,Ogre::Real& x,Ogre::Real& y,Ogre::Real& cx,Ogre::Real& cy);
-        static bool getScreenspaceCoords(Ogre::MovableObject* object, Ogre::Camera* camera, Ogre::Vector2& result);
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Real size)
+		{
+			Ogre::Real fsize = -1;
+			Ogre::Real tmp;
+			int i = GestSceneManager::getCamCount();
+			for(;i>0;i--)
+			{
+				tmp = GestSceneManager::getProjectedSize(object, size,  GestSceneManager::getCamera(i)->getCamera());
+				if(tmp > fsize)
+				{
+					fsize = tmp;
+				}
+			}
+			return fsize;
+		}
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Vector3 point)
+		{
+			Ogre::Real fsize = -1;
+			Ogre::Real tmp;
+			int i = GestSceneManager::getCamCount();
+			for(;i>0;i--)
+			{
+				tmp = GestSceneManager::getProjectedSize(object, object->getWorldBoundingSphere().getRadius(), point,  GestSceneManager::getCamera(i)->getCamera());
+				if(tmp > fsize)
+				{
+					fsize = tmp;
+				}
+			}
+			return fsize;
+		}
+		/*!
+         *  \brief [Static] Renvoie la taille normalisée affichée de l'objet [0;1]
+         *  \return la taille normalisée
+         */
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object)
+		{
+			return getProjectedSize(object, object->getWorldBoundingSphere().getRadius());
+		}
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Camera* cam)
+		{
+			return GestSceneManager::getProjectedSize(object, object->getWorldBoundingSphere().getRadius(), cam);
+		}
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Real size, Ogre::Camera* cam)
+		{
+			return getProjectedSize(object, size, object->getWorldBoundingBox(true).getCenter(), cam);
+		}
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Vector3 point, Ogre::Camera* cam)
+		{
+			return getProjectedSize(object, object->getWorldBoundingSphere().getRadius(), point , cam);
+		}
+		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Real size, Ogre::Vector3 point, Ogre::Camera* cam);
     protected:
 };
 
