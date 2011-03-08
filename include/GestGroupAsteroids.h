@@ -8,7 +8,7 @@
 
 #include <Ogre.h>
 #include "GroupAsteroid.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "Utils.h"
 
 /*!
@@ -16,7 +16,7 @@
 * \brief Classe gérant l'ensemble des groupes d'asteroids via un std::vecteur.
 * En particulier, on renvoit vers elle les traitements communs à tous les groupes asteroids (mise à jour de la position après une frame par exemple).
 */
-class GestGroupAsteroids : public ObjectRoot
+class GestGroupAsteroids : public ClassRoot
 {
     private:
 		/*!

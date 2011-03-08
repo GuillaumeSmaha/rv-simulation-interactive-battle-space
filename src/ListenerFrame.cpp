@@ -20,19 +20,18 @@ bool ListenerFrame::frameRenderingQueued(const Ogre::FrameEvent& evt)
     this->signalFrameRendering.dispatch();
 	return true;
 }
+
 void ListenerFrame::shutdown(void*)
 {
     this->closed = true;
 
 }
 
-//Tingshuo Debut
 bool ListenerFrame::frameStarted(const Ogre::FrameEvent &evt)
 {
 	this->signalFrameStarted.dispatch(evt);
     return true;
 }
-//Tingshuo Fin
 
 bool ListenerFrame::frameEnded(const Ogre::FrameEvent &evt)
 {

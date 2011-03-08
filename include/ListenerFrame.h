@@ -11,14 +11,14 @@
 #include <OgreBulletDynamicsRigidBody.h>
 #include <Shapes/OgreBulletCollisionsSphereShape.h>
 #include "Signal.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "GestSceneManager.h"
 
 /*!
  * \class ListenerFrame
  * \brief Classe permettant de gérer les événements de la mise à jour du rendu.
  */
-class ListenerFrame : public ObjectRoot, public Ogre::FrameListener
+class ListenerFrame : public ClassRoot, public Ogre::FrameListener
 {
     private :
         /*!

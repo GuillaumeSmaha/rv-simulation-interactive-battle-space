@@ -7,7 +7,7 @@ Laser::Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation,
 {
 	this->timerLife = new Ogre::Timer();
 		
-    this->particule = (Ogre::ParticleSystem *)MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::LASER);
+    this->particule = static_cast<Ogre::ParticleSystem *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::LASER));
 	this->particule->getEmitter(0)->setColour(color);
     
 	this->getNode()->_setDerivedPosition(position);

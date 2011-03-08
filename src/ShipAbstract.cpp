@@ -10,8 +10,7 @@ ShipAbstract::ShipAbstract(void)
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
 	  firstPos(true), firstDir(true)
 {
-    this->typeMesh = MeshRoot::SHIP;
-    this->entity = (Ogre::Entity *)MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP);
+    this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
 
 	// Calcul des tangentes (si pas présentes dans le mesh)
 	unsigned short src, dest;
@@ -49,6 +48,38 @@ ShipAbstract::~ShipAbstract(void)
 	this->signalDestruction.dispatch(this);
 	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::SHIP, this->getEntity());
 }
+
+
+void ShipAbstract::updatePosition(void)
+{
+    std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
+    std::cout<<"acceleration"<<this->getRollAcceleration()<<std::endl;
+    //calcule des nouvelles vitesses et positions
+    this->setSpeed(this->getSpeed()+this->getAcceleration());
+	this->setTranslateSpeed(this->getTranslateSpeed() + this->getTranslateAcceleration());
+	//if (this->getSpeed() != 0)
+	//{
+		//this->moveRelative(0.0, 0.0, this->getSpeed());
+	this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
+	//}
+
+    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+    this->rotateRollRelative(this->getRollSpeed());
+
+	this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
+    this->rotateYawRelative(this->getYawSpeed());
+
+    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+    this->goUp(this->getPitchSpeed());
+
+    //on réduit chacune des accélérations
+    this->setAcceleration(0);
+	this->setTranslateAcceleration(0);
+    this->setPitchAcceleration(Ogre::Radian(0));
+    this->setRollAcceleration(Ogre::Radian(0));
+	this->setYawAcceleration(Ogre::Radian(0));
+}
+
 
 void ShipAbstract::touched(void)
 {
@@ -97,6 +128,24 @@ void ShipAbstract::defineParticules(void)
 }
 
 
+void ShipAbstract::createCollisionObject(ListenerCollision * listenerCollision)
+{
+    Ogre::Vector3 pos = this->getNode()->getPosition();
+	this->shape = new OgreBulletCollisions::SphereCollisionShape(100.0);
+
+    std::ostringstream rigidBodyString;
+    rigidBodyString << "RigidShip" << Utils::toString(Utils::unique());
+    this->rigidBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
+
+    this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
+    this->getEntity()->setCastShadows(true);
+
+    //rigidBody->setPosition(pos[0], pos[1], pos[2]);
+    
+    listenerCollision->getWorld()->addRigidBody(this->rigidBody, 0, 0);
+}
+
+
 void ShipAbstract::move(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
 {
 	Vector3 pos = this->getPosition();
@@ -107,36 +156,6 @@ void ShipAbstract::move(const Ogre::Vector3 &vec)
 {
 	Vector3 pos = this->getPosition() + vec;
 	this->setPosition(pos[0], pos[1], pos[2]);
-}
-
-void ShipAbstract::updatePosition(void)
-{
-    std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
-    std::cout<<"acceleration"<<this->getRollAcceleration()<<std::endl;
-    //calcule des nouvelles vitesses et positions
-    this->setSpeed(this->getSpeed()+this->getAcceleration());
-	this->setTranslateSpeed(this->getTranslateSpeed() + this->getTranslateAcceleration());
-	//if (this->getSpeed() != 0)
-	//{
-		//this->moveRelative(0.0, 0.0, this->getSpeed());
-	this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
-	//}
-
-    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
-    this->rotateRollRelative(this->getRollSpeed());
-
-	this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
-    this->rotateYawRelative(this->getYawSpeed());
-
-    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
-    this->goUp(this->getPitchSpeed());
-
-    //on réduit chacune des accélérations
-    this->setAcceleration(0);
-	this->setTranslateAcceleration(0);
-    this->setPitchAcceleration(Ogre::Radian(0));
-    this->setRollAcceleration(Ogre::Radian(0));
-	this->setYawAcceleration(Ogre::Radian(0));
 }
 
 

@@ -17,7 +17,7 @@
  * \class ListenerWindow
  * \brief Classe permettant de gérer les événements de la fenêtre.
  */
-class ListenerWindow :  public ObjectRoot, public Ogre::WindowEventListener
+class ListenerWindow :  public ClassRoot, public Ogre::WindowEventListener
 {
 	private:
         /*!

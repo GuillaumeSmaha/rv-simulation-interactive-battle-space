@@ -21,7 +21,7 @@ class MeshLoader
 		/*!
 		 *  \brief Définit les différents types de matériel des mesh
 		 */
-		enum MeshMaterielType {
+		enum MeshType {
 			SHIP = 0,
 			POMPIDOU = 2, //peut etre a modifier
 			ARLEQUIN = 3,
@@ -75,7 +75,7 @@ class MeshLoader
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
 		 * \return Une object correspondante dont le nom est de la forme "object[0-9]+"
 		 */
-		Ogre::MovableObject * getMovableObject(MeshLoader::MeshMaterielType meshType, bool random = false)
+		Ogre::MovableObject * getMovableObject(MeshLoader::MeshType meshType, bool random = false)
 		{
 			return getMovableObject(meshType, "object"+Utils::toString(Utils::unique()), random);
 		}
@@ -86,14 +86,14 @@ class MeshLoader
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
 		 * \return Une object correspondante
 		 */
-		Ogre::MovableObject * getMovableObject(MeshLoader::MeshMaterielType meshType, Ogre::String name,  bool random = false);
+		Ogre::MovableObject * getMovableObject(MeshLoader::MeshType meshType, Ogre::String name,  bool random = false);
         /*!
 		 * \brief Retourne un Ogre::MovableObject correspondant au type de mesh transmis et l'insère dans le graphe de scène dans un node placé en fonction du type de mesh
 		 * \param meshType Correspond au mesh à créer
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
 		 * \return Une object correspondante dont le nom est de la forme "object[0-9]+" et attachée au node dont le nom est de la forme "node[0-9]+" lui même rattaché au graphe en fonction du type de mesh
 		 */
-		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshMaterielType meshType, bool random = false)
+		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, bool random = false)
 		{
 			return getNodedMovableObject(meshType, "node"+Utils::toString(Utils::unique()), random);
 		}
@@ -104,7 +104,7 @@ class MeshLoader
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
 		 * \return Une object correspondante dont le nom est de la forme "object[0-9]+" et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
 		 */
-		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshMaterielType meshType, Ogre::String nodeName, bool random = false)
+		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, Ogre::String nodeName, bool random = false)
 		{
 			return getNodedMovableObject(meshType, nodeName, "objet"+Utils::toString(Utils::unique()), random);
 		}
@@ -116,14 +116,14 @@ class MeshLoader
 		 * \param random Indique si le mesh doit être créer de manière aléatoire. i.e. pour les planètes et astéroïdes le type est choisi aléatoirement.
 		 * \return Une object correspondante dont le nom est passé en paramètre et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
 		 */
-		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshMaterielType meshType, Ogre::String nodeName, Ogre::String meshName,  bool random = false);
+		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, Ogre::String nodeName, Ogre::String meshName,  bool random = false);
 		
         /*!
 		 * \brief Supprime un noeud et l'entité du noeud
 		 * \param type Correspond au mesh à supprimer
 		 * \param object Objet/Entité/Particule à supprimer
 		 */
-		void deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::MovableObject * object);
+		void deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object);
          
 		/*!
 		* \brief Renvoie un simple noeud correspondant à un type de mesh.
@@ -132,7 +132,7 @@ class MeshLoader
 		* \param nodeName Nom du node
 		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'object)
 		*/
-		Ogre::SceneNode* getNode(MeshLoader::MeshMaterielType meshType, Ogre::String nodeName);
+		Ogre::SceneNode* getNode(MeshLoader::MeshType meshType, Ogre::String nodeName);
 
 		/*!
 		* \brief Renvoie un simple noeud correspondant à un type de mesh.
@@ -140,7 +140,7 @@ class MeshLoader
 		* \param meshType Correspond au mesh à créer
 		* \return Le nouveau node correspondant au mesh voulu (pour y attacher par la suite l'object)
 		*/
-		Ogre::SceneNode* getNode(MeshLoader::MeshMaterielType meshType)
+		Ogre::SceneNode* getNode(MeshLoader::MeshType meshType)
 		{
 			return getNode(meshType, "node"+Utils::toString(Utils::unique()));
 		}
@@ -158,7 +158,7 @@ class MeshLoader
          * \param object dont on veut changer le material d'affichage
          * \param meshType Correspondant au material
          */
-		void setMaterial(Ogre::MovableObject * object, MeshLoader::MeshMaterielType meshType);
+		void setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType meshType);
 
 		/*!
 		* \brief Permet de créer une sphère de manière optimisée

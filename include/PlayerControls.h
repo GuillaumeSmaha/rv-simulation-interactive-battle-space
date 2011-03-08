@@ -10,7 +10,7 @@
 #include <OISKeyboard.h>
 #include "Signal.h"
 #include "ListenerMouse.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "ListenerKeyboard.h"
 
 class ListenerKeyboard;
@@ -22,7 +22,7 @@ class ListenerMouse;
 * Permettra par la suite de facilemet modifier les contrôles pour chaque joueur (enregistrés dans un fichier par exemple)
 * Par la suite il faudra donc écouter les évènements (signaux) de PlayerControls et non plus directement de mouse et keyboard
 */
-class PlayerControls: public ObjectRoot
+class PlayerControls: public ClassRoot
 {
     public:
 		/// Définit les différents types de contrôles

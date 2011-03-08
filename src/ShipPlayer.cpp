@@ -4,8 +4,8 @@ using namespace Ogre;
 
 ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) : ShipAbstract()
 {
-
-    this->playerControl=pControl;
+    this->typeObject = ObjectRoot::SHIP_PLAYER;
+    this->playerControl = pControl;
 	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
 	pControl->signalKeyReleased.add(&ShipPlayer::keyReleased, this);
 	pControl->signalMouseMoved.add(&ShipPlayer::mouseMoved, this);

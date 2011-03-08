@@ -7,13 +7,13 @@
 
 #include <OgreAL.h>
 #include "config.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 
 /*!
 * \class GestSound
 * \brief Classe gérant le son 3D
 */
-class GestSound : public ObjectRoot
+class GestSound : public ClassRoot
 {
 	public:	
 		/// Définit les différents types de son

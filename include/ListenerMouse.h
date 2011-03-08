@@ -7,7 +7,7 @@
 
 #include <OISInputManager.h>
 #include <OISMouse.h>
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "CameraFixeAbstract.h"
 #include "Signal.h"
 
@@ -16,7 +16,7 @@
  * \class ListenerMouse
  * \brief Classe permettant de gérer les événements de la souris.
  */
-class ListenerMouse : public ObjectRoot, public OIS::MouseListener 
+class ListenerMouse : public ClassRoot, public OIS::MouseListener 
 {
 	private:
 		/*!

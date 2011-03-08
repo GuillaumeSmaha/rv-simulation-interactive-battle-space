@@ -9,7 +9,7 @@
 #include "config.h"
 #include "nodeName.h"
 #include "Utils.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "Signal.h"
 #include "GestSceneManager.h"
 #include "MeshLoader.h"
@@ -21,7 +21,7 @@ class GestLaser;
 * \class Laser
 * \brief Classe gérant les lasers
 */
-class Laser : public ObjectRoot
+class Laser : public ClassRoot
 {
 	public:
         /*!

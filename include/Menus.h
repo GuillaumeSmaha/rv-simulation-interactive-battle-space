@@ -25,7 +25,7 @@ class Application;
 * \class Menus
 * \brief Classe gérant les menus du jeux
 */
-class Menus: public ObjectRoot
+class Menus: public ClassRoot
 {
 	private:
 		/*!

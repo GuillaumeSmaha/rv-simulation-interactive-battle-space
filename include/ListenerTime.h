@@ -5,7 +5,7 @@
 #ifndef __LISTENER_TIME_H__
 #define __LISTENER_TIME_H__
 
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include <Ogre.h>
 #include "ListenerFrame.h"
 /*!
@@ -14,7 +14,7 @@
  *
  * Ecoute le frameListener, à chaque frame, regarde le temps écoulé depuis son dernier signal et si le temps est supérieur à un seuil, lance un signal
  */
-class ListenerTime : public ObjectRoot
+class ListenerTime : public ClassRoot
 {
 	public:	
         /*!

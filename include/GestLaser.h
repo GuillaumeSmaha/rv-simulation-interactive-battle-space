@@ -7,7 +7,7 @@
 
 #include <Ogre.h>
 #include "config.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "Utils.h"
 #include "Laser.h"
 
@@ -18,7 +18,7 @@ class Laser;
 * \class GestLaser
 * \brief Classe gérant les lasers
 */
-class GestLaser : public ObjectRoot
+class GestLaser : public ClassRoot
 {
 	public:	
 		/*!

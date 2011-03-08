@@ -8,12 +8,16 @@
 #include <Ogre.h>
 #include "MeshLoader.h"
 #include "Utils.h"
+#include "ClassRoot.h"
 #include "ObjectRoot.h"
-#include "MeshRoot.h"
 #include "Signal.h"
 #include "CameraFixeTarget.h"
 #include "GestSceneManager.h"
 #include "GestLaser.h"
+#include "ListenerCollision.h"
+
+class ListenerCollision;
+
 /*!
 * \class ShipAbstract
 * \brief Classe gérant les vaiseaux individuellements
@@ -21,7 +25,7 @@
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
 */
 
-class ShipAbstract : public ObjectRoot, public MeshRoot
+class ShipAbstract : public ClassRoot, public ObjectRoot
 {
 	private:
 		/*!
@@ -142,6 +146,8 @@ class ShipAbstract : public ObjectRoot, public MeshRoot
 		 * \brief Définit les particules des réacteurs
 		*/
 		void defineParticules(void);
+		
+		void createCollisionObject(ListenerCollision * listenerCollision);
 
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel du monde

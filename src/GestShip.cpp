@@ -55,12 +55,9 @@ void GestShip::updateShips(void *)
 
 void GestShip::deleteAllShips()
 {
-	//Utils::logFile("kill hsips");
     vector<ShipAbstract *>::iterator itShip = lstShip.begin();
-    //for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)
 	while(itShip != lstShip.end())
     {
-        //delete (*itShip);
 		itShip = lstShip.erase(itShip);
     }
 }

@@ -6,17 +6,24 @@
 #define __LISTENER_COLLISION_H__
 
 #include <Ogre.h>
+#include "OgreBulletCollisionsPreRequisites.h"
+#include "OgreBulletCollisionsRay.h"
+#include "OgreBulletDynamicsPreRequisites.h"
 #include "OgreBulletDynamicsRigidBody.h"
 #include "Shapes/OgreBulletCollisionsSphereShape.h"
 
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "ListenerFrame.h"
+#include "GestShip.h"
+#include "GestSceneManager.h"
+
+class ShipAbstract;
 
 /*!
  * \class ListenerCollision
  * \brief Classe permettant de gérer les événements de collision
  */
-class ListenerCollision : public ObjectRoot
+class ListenerCollision : public ClassRoot
 {
 	private :
 		/*!

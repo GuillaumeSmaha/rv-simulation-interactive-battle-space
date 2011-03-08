@@ -8,7 +8,7 @@
 #include <Ogre.h>
 #include <OISInputManager.h>
 #include "nodeName.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "Utils.h"
 #include "Signal.h"
 #include "ListenerKeyboard.h"
@@ -63,7 +63,7 @@ enum QueryFlags
 *
 *   OIS::MouseListener
 */
-class Application : public ObjectRoot
+class Application : public ClassRoot
 {
 	private:
 		/*!

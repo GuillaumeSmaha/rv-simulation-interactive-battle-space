@@ -6,7 +6,7 @@
 #define __SIGNAL_H__
 
 #include <vector>
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 
 
 /*!
@@ -14,7 +14,7 @@
  * \brief Permet la communication entre 2 classes facilement et proprement
  */
 template <typename Retour>
-class Signal : public ObjectRoot
+class Signal : public ClassRoot
 {
     public:
         /*!
@@ -41,7 +41,7 @@ class Signal : public ObjectRoot
         void add(void (myclass::* function)(Retour), myclass * ptrClass)
         {
 			this->listenersClass.push_back(ptrClass);
-			this->listenersMethod.push_back((void(ObjectRoot::*)(Retour))function);
+			this->listenersMethod.push_back((void(ClassRoot::*)(Retour))function);
         }
 
         /*!
@@ -58,8 +58,8 @@ class Signal : public ObjectRoot
 		*/
         void dispatch( Retour argument)
         {
-			ObjectRoot * ptrClass;
-            void (ObjectRoot::* func)(Retour);
+			ClassRoot * ptrClass;
+            void (ClassRoot::* func)(Retour);
             for ( size_t i = 0, size = this->listenersClass.size(); i < size; ++i )
             {
 				ptrClass = this->listenersClass[i];
@@ -76,9 +76,9 @@ class Signal : public ObjectRoot
         template<class myclass>
         void remove(void (myclass::* function)(Retour), myclass * ptrClass)
         {
-            void (ObjectRoot::* func)(Retour);
-            func = (void(ObjectRoot::*)(Retour))function;
-			ObjectRoot * ptr_class = ptrClass;
+            void (ClassRoot::* func)(Retour);
+            func = (void(ClassRoot::*)(Retour))function;
+			ClassRoot * ptr_class = ptrClass;
 
             for ( size_t i = 0; i < this->listenersClass.size(); ++i )
             {
@@ -95,11 +95,11 @@ class Signal : public ObjectRoot
         /*!
          * \brief Contient la liste des listeners Class
          */
-		std::vector<ObjectRoot *> listenersClass;
+		std::vector<ClassRoot *> listenersClass;
         /*!
          * \brief Contient la liste des listeners Method
          */
-		std::vector<void (ObjectRoot::*)(Retour)> listenersMethod;
+		std::vector<void (ClassRoot::*)(Retour)> listenersMethod;
 };
 
 #endif // __SIGNAL_H__

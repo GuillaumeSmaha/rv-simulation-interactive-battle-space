@@ -7,7 +7,6 @@
 
 #include <sstream>
 #include <Ogre.h>
-#include "ShipAbstract.h"
 #include "MeshLoader.h"
 #include "CameraFixeAbstract.h"
 #include "CameraFixe.h"
@@ -151,6 +150,14 @@ class ShipPlayer : public ShipAbstract
 		Ogre::SceneNode * getNodeCameraExterieureFixe(void)
 		{
 			return this->nodeCameraExterieureFixe;
+		}
+		/*!
+		 * \brief [Getter] Récupère le gestionnaire de caméra
+		 * \return Gestionnaire de caméra
+		*/
+		CameraFixeAbstract * getGestCamera(void)
+		{
+			return this->gestCamera;
 		}
 
     private:

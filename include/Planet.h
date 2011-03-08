@@ -7,7 +7,7 @@
 
 #include <Ogre.h>
 #include "MeshLoader.h"
-#include "MeshRoot.h"
+#include "ObjectRoot.h"
 #include "Utils.h"
 #include "ListenerCollision.h"
 
@@ -15,7 +15,7 @@
 * \class Planet
 * \brief Classe gérant les planètes
 */
-class Planet : public MeshRoot
+class Planet : public ObjectRoot
 {
 	private:
 		/*!

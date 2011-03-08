@@ -7,7 +7,7 @@
 
 #include <Ogre.h>
 #include "Planet.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 
 
 /*!
@@ -16,7 +16,7 @@
 * En particulier, on renvoit vers elle les traitements communs à tous les planètes (mise à jour de la position après une frame si on a besoin après). 
 */
 
-class GestPlanet : public ObjectRoot
+class GestPlanet : public ClassRoot
 {
     private:
 		/*!

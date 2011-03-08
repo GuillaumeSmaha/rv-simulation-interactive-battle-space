@@ -7,15 +7,17 @@
 
 #include <Ogre.h>
 #include "ShipAbstract.h"
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "Utils.h"
+
+class ShipAbstract;
 
 /*!
 * \class GestShip
 * \brief Classe gérant l'ensemble des vaiseaux via un std::vecteur.
 * En particulier, on renvoit vers elle les traitements communs à tous les vaiseaux (mise à jour de la position après une frame par exemple.
 */
-class GestShip : public ObjectRoot
+class GestShip : public ClassRoot
 {
     private:
 		/*!

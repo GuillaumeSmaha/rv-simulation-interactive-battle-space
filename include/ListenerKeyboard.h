@@ -7,7 +7,7 @@
 
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "CameraFixeAbstract.h"
 #include "Signal.h"
 
@@ -15,7 +15,7 @@
  * \class ListenerKeyboard
  * \brief Classe permettant de gérer les événements du clavier.
  */
-class ListenerKeyboard : public ObjectRoot , public OIS::KeyListener{
+class ListenerKeyboard : public ClassRoot , public OIS::KeyListener{
 	private:
         /*!
 		 *  \brief Gestionnaire d'événements I/O

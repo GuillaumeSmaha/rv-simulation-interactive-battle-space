@@ -362,6 +362,8 @@ void Application::initScene(void)
 
 	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
     ship->setPosition(-500,-500,-500);
+    
+	ship->createCollisionObject(this->listenerCollision);
     //Tingshuo Debut
 //	ship->getEntity()->setQueryFlags(SHIP_QUERY_MASK);
 //
@@ -389,7 +391,8 @@ void Application::initScene(void)
     ship3->touched();
     GestShip::getSingleton()->addShip(ship3);
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);
-    Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
+    //~ Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
+    bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
     bill->setMaterialName("test");
    // bill->setColor(ColourValue::Red);
     ship3->getNode()->attachObject(bill);

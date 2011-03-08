@@ -39,7 +39,7 @@ MeshLoader::~MeshLoader(void)
 {
 }
 
-Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshMaterielType type, Ogre::String name, bool random)
+Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Ogre::String name, bool random)
 {
 	Ogre::MovableObject * object;
 	switch(type)
@@ -62,14 +62,14 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshMaterielType 
 			object = this->sceneMgr->createEntity(name, "Prefab_Sphere");
 			if(random)
 			{
-				type = (MeshLoader::MeshMaterielType)((int)PLANET + Utils::randRangeInt(0,7));
+				type = (MeshLoader::MeshType)((int)PLANET + Utils::randRangeInt(0,7));
 			}
 			break;
 		case ASTEROID:
 			object = this->sceneMgr->createEntity(name, "asteroid.mesh");
 			if(random)
 			{
-				type = (MeshLoader::MeshMaterielType)((int)ASTEROID + Utils::randRangeInt(0,1));
+				type = (MeshLoader::MeshType)((int)ASTEROID + Utils::randRangeInt(0,1));
 			}
 			break;
 		case MISSILE:
@@ -94,7 +94,7 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshMaterielType 
 		}
 			
 		default:
-			Utils::log("@Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshMaterielType type, Ogre::String name, bool random) : type inconnu");
+			Utils::log("@Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Ogre::String name, bool random) : type inconnu");
 			break;
 	}
 	
@@ -103,7 +103,7 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshMaterielType 
 	return object;
 }
 
-Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshMaterielType type, Ogre::String nodeName, Ogre::String meshName, bool random)
+Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random)
 {
 	Ogre::SceneNode * node;
 	Ogre::MovableObject * object = getMovableObject(type, meshName, random);
@@ -145,7 +145,7 @@ Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshMateriel
 			break;
 			
 		default:
-			Utils::log("@Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshMaterielType type, Ogre::String nodeName, Ogre::String meshName, bool random) : type inconnu");
+			Utils::log("@Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random) : type inconnu");
 			break;
 	}
 	
@@ -153,7 +153,7 @@ Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshMateriel
 }
 
 
-void MeshLoader::deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::MovableObject * object)
+void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object)
 {
 	Ogre::SceneNode * node;
 	Ogre::SceneNode * nodeParent = object->getParentSceneNode();
@@ -186,7 +186,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::Mova
 			break;
 			
 		default:
-			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::MovableObject * object) : type inconnu");
+			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
 	}
 	
@@ -213,7 +213,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::Mova
 			break;
 			
 		default:
-			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::MovableObject * object) : type inconnu");
+			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
 	}
 	
@@ -221,7 +221,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshMaterielType type, Ogre::Mova
 }
 
 
-Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshMaterielType type, Ogre::String nodeName)
+Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String nodeName)
 {
 	Ogre::SceneNode * node;
 	switch(type)
@@ -257,21 +257,21 @@ Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshMaterielType type, Ogre::S
 			break;
 			
 		default:
-			Utils::log("@Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshMaterielType type, Ogre::String nodeName) : type inconnu");
+			Utils::log("@Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String nodeName) : type inconnu");
 			break;
 	}
 	return node;
 }
 
-void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshMaterielType type)
+void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType type)
 {
 	switch(type)
 	{
 		case SHIP:
-			((Ogre::Entity *)object)->setMaterialName("greychrome");
+			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
 			break;
 		case SHIP_TOUCHED:
-			((Ogre::Entity *)object)->setMaterialName("greychrome");
+			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
 			break;
 		case PLANET :
 		case PLANET2:
@@ -282,19 +282,19 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshMater
 		case PLANET7:
 		case PLANET8:
 		case PLANET9:
-			((Ogre::Entity *)object)->setMaterialName("planet"+Utils::toString(type-PLANET+1));
+			static_cast<Ogre::Entity *>(object)->setMaterialName("planet"+Utils::toString(type-PLANET+1));
 			break;
 		case ASTEROID:
-			((Ogre::Entity *)object)->setMaterialName("asteroid1");
+			static_cast<Ogre::Entity *>(object)->setMaterialName("asteroid1");
 		case MISSILE:
-			((Ogre::Entity *)object)->setMaterialName("missile");
+			static_cast<Ogre::Entity *>(object)->setMaterialName("missile");
 			break;
 		case LASER:
-			((Ogre::ParticleSystem *)object)->setMaterialName("laser");
+			static_cast<Ogre::ParticleSystem *>(object)->setMaterialName("laser");
 			break;
 			
 		default:
-			Utils::log("@void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshMaterielType type) : type inconnu");
+			Utils::log("@void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType type) : type inconnu");
 			break;
 	}
 }

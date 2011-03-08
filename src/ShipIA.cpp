@@ -4,7 +4,7 @@ using namespace Ogre;
 
 ShipIA::ShipIA(void) : ShipAbstract()
 {
-
+    this->typeObject = ObjectRoot::SHIP_IA;
 }
 
 ShipIA::~ShipIA(void)
