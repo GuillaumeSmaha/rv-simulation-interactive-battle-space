@@ -26,8 +26,10 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
     std::cout<<"size="<<size<<"ObjectType: "<<typeObject<<std::endl;
     Ogre::Vector3 pos = this->getNode()->getPosition();
 
-    OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter= new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity());
         if(typeObject==SHIP_PLAYER|| typeObject==SHIP_IA){
+
+            OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter= new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity());
+
             OgreBulletCollisions::ConvexHullCollisionShape * convexCollisionShape =shapeConverter->createConvex();
             this->shape =(OgreBulletCollisions::CollisionShape *) convexCollisionShape;
 
@@ -37,7 +39,8 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
 	        this->shape = new OgreBulletCollisions::SphereCollisionShape(size);
         }
         if(typeObject==ASTEROID){
-            this->shape = new OgreBulletCollisions::SphereCollisionShape(50.0);
+            std::cout<<"correctly created"<<std::endl;
+            this->shape = new OgreBulletCollisions::SphereCollisionShape(200.0);
         }
         if(typeObject== MISSILE){
             this->shape = new OgreBulletCollisions::SphereCollisionShape(10.0);
@@ -49,6 +52,7 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
 
     std::ostringstream rigidBodyString;
     rigidBodyString << "RigidObjectRoot" << Utils::toString(this->typeObject) << "_" << Utils::toString(Utils::unique());
+    std::cout<<"nom: "<<rigidBodyString.str()<<std::endl;
     this->rigidBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
 
     this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));

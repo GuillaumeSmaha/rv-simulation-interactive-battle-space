@@ -10,7 +10,7 @@
 #include "GroupAsteroid.h"
 #include "ClassRoot.h"
 #include "Utils.h"
-
+#include "ListenerCollision.h"
 /*!
 * \class GestGroupAsteroids
 * \brief Classe gérant l'ensemble des groupes d'asteroids via un std::vecteur.
@@ -85,6 +85,6 @@ class GestGroupAsteroids : public ClassRoot
 		 * \param planet Noeud de la planète
 		 * \param rotationSpeed Vitesse de la rotation
 		*/
-		void createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode * planet, Ogre::Real rotationSpeed);
+		void createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode * planet, Ogre::Real rotationSpeed, ListenerCollision * listenerCollision);
 };
 #endif // __GEST_GROUP_ASTEROIDS_H__

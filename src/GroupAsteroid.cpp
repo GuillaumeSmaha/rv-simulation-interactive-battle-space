@@ -12,7 +12,7 @@ GroupAsteroid::~GroupAsteroid()
 {
 }
 
-void GroupAsteroid::addAsteroid(Asteroid * asteroid)
+void GroupAsteroid::addAsteroid(Asteroid * asteroid, ListenerCollision * listenerCollision)
 {
 	Ogre::SceneNode *nodeAsteroid;
 	//node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
@@ -24,6 +24,9 @@ void GroupAsteroid::addAsteroid(Asteroid * asteroid)
 	}
 	this->node->addChild(nodeAsteroid);
     lstGroupAsteroid.push_back(asteroid);
+    //gestion des collisions avec les astéroides
+     asteroid->createCollisionObject(listenerCollision, 2000);
+
 }
 
 void GroupAsteroid::rotateRelative(const Ogre::Radian angle)

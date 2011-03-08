@@ -57,7 +57,7 @@ void GestGroupAsteroids::destroy()
     }
 }
 
-void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed) 
+void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode *planet, Ogre::Real rotationSpeed, ListenerCollision * listenerCollision) 
 {
 	Ogre::Real x;
 	Ogre::Real y;
@@ -84,7 +84,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
 		{
-			groupAsteroid->addAsteroid(asteroid1);
+    		groupAsteroid->addAsteroid(asteroid1, listenerCollision);
 		}
 		else 
 		{
@@ -94,8 +94,8 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
-		{
-			groupAsteroid->addAsteroid(asteroid1);
+		{	
+			groupAsteroid->addAsteroid(asteroid1, listenerCollision);
 		}
 		else 
 		{
@@ -106,7 +106,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
 		{
-			groupAsteroid->addAsteroid(asteroid1);
+			groupAsteroid->addAsteroid(asteroid1, listenerCollision);
 		}
 		else 
 		{
@@ -117,7 +117,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
 		if (groupAsteroid->isCollided(asteroid1)==false)
 		{
-			groupAsteroid->addAsteroid(asteroid1);
+			groupAsteroid->addAsteroid(asteroid1, listenerCollision);
 		}
 		else 
 		{

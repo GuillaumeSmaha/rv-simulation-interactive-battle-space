@@ -8,7 +8,7 @@
 #include <Ogre.h>
 #include "Asteroid.h"
 #include "GestSceneManager.h"
-
+#include "ListenerCollision.h"
 
 /*!
 * \class GroupAsteroid
@@ -54,7 +54,7 @@ class GroupAsteroid
 		 * \brief Ajoute un asteroid au groupe
 		 * \param asteroid Pointeur sur l'asteroid
 		*/     
-		void addAsteroid(Asteroid * asteroid);
+		void addAsteroid(Asteroid * asteroid, ListenerCollision * listenerCollision);
 		/*!
          * \brief Rotation autours de l'axe direction de l'objet, permet donc de tourner
          * \param angle Angle en radian
