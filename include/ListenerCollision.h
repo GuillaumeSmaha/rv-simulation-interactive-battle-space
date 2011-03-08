@@ -16,7 +16,10 @@
 #include "ListenerFrame.h"
 #include "GestShip.h"
 #include "GestSceneManager.h"
+#include "ShipAbstract.h"
 
+class GestShip;
+class ObjectRoot;
 class ShipAbstract;
 
 /*!

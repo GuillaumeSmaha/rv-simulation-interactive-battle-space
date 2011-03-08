@@ -5,8 +5,22 @@
 #ifndef __OBJECT_ROOT_H__
 #define __OBJECT_ROOT_H__
 
+
+#include <OgreBulletCollisions.h>
+#include <OgreBulletDynamics.h>
 #include "OgreBulletCollisionsShape.h"
 #include "OgreBulletDynamicsRigidBody.h"
+
+#include "OgreBulletCollisionsPreRequisites.h"
+#include "Shapes/OgreBulletCollisionsSphereShape.h"
+#include "Utils.h"
+#include <Ogre.h>
+
+
+//#include "ListenerCollision.h"
+
+class ListenerCollision;
+
 
 /*!
  * \class ObjectRoot
@@ -45,44 +59,21 @@ class ObjectRoot
         /*!
 		* \brief Constructor
 		*/
-        ObjectRoot()
-        {
-			shape = NULL;
-			rigidBody = NULL;
-        }        
+        ObjectRoot();
+                
         /*!
          * \brief Destructor
          */
-        virtual ~ObjectRoot()
-        {
-			if(shape != NULL)
-				delete shape;
-				
-			if(rigidBody != NULL)
-				delete rigidBody;
-        }
+        virtual ~ObjectRoot();
+        
         
 	public:
-	/*
-		virtual void createCollisionObject(ListenerCollision * listenerCollision)
-		{
-			Ogre::Vector3 pos = this->getNode()->getPosition();
-			this->shape = new OgreBulletCollisions::SphereCollisionShape(100.0);
-
-			std::ostringstream rigidBodyString;
-			rigidBodyString << "RigidObjectRoot" << Utils::toString(this->typeObject) << "_" << Utils::toString(Utils::unique());
-			this->rigidBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
-
-			this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
-			this->getEntity()->setCastShadows(true);
-			
-			listenerCollision->getWorld()->addRigidBody(this->rigidBody, 0, 0);
-		}
+        virtual Ogre::SceneNode * getNode() = 0;
+        virtual Ogre::String getName() = 0;
+        virtual Ogre::Entity * getEntity() = 0;
+	
+		virtual void createCollisionObject(ListenerCollision * listenerCollision);
 		
-		virtual void destroyCollisionObject()
-		{
-		}
-	*/
 	
 		//Getter/Setter
 		

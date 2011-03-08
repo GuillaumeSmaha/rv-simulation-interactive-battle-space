@@ -10,7 +10,7 @@
 #include "ClassRoot.h"
 #include "Utils.h"
 
-class ShipAbstract;
+//class ShipAbstract;
 
 /*!
 * \class GestShip

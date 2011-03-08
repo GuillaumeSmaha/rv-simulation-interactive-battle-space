@@ -128,22 +128,21 @@ void ShipAbstract::defineParticules(void)
 }
 
 
-void ShipAbstract::createCollisionObject(ListenerCollision * listenerCollision)
-{
-    Ogre::Vector3 pos = this->getNode()->getPosition();
-	this->shape = new OgreBulletCollisions::SphereCollisionShape(100.0);
-
-    std::ostringstream rigidBodyString;
-    rigidBodyString << "RigidShip" << Utils::toString(Utils::unique());
-    this->rigidBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
-
-    this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
-    this->getEntity()->setCastShadows(true);
-
-    //rigidBody->setPosition(pos[0], pos[1], pos[2]);
-    
-    //listenerCollision->getWorld()->addRigidBody(this->rigidBody, 0, 0);
-}
+//void ShipAbstract::createCollisionObject(ListenerCollision * listenerCollision)
+//{
+//    Ogre::Vector3 pos = this->getNode()->getPosition();
+//	this->shape = new OgreBulletCollisions::SphereCollisionShape(100.0);
+//
+//    std::ostringstream rigidBodyString;
+//    rigidBodyString << "RigidShip" << Utils::toString(Utils::unique());
+//    this->rigidBody = new OgreBulletDynamics::RigidBody(rigidBodyString.str() ,listenerCollision->getWorld());
+//
+//    this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
+//    this->getEntity()->setCastShadows(true);
+//
+//    //rigidBody->setPosition(pos[0], pos[1], pos[2]);
+//    
+//}
 
 
 void ShipAbstract::move(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)

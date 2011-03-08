@@ -14,9 +14,10 @@
 #include "CameraFixeTarget.h"
 #include "GestSceneManager.h"
 #include "GestLaser.h"
-#include "ListenerCollision.h"
 
-class ListenerCollision;
+//class ObjectRoot;
+//class ListenerCollision;
+
 
 /*!
 * \class ShipAbstract
@@ -147,7 +148,7 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
 		*/
 		void defineParticules(void);
 		
-		void createCollisionObject(ListenerCollision * listenerCollision);
+		//void createCollisionObject(ListenerCollision * listenerCollision);
 
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel du monde

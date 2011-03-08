@@ -15,6 +15,7 @@
 #include "PlayerControls.h"
 #include "GestSceneManager.h"
 #include "GestSound.h"
+#include "ShipAbstract.h"
 #include "SpeedCompteur.h"
 #include "ListenerTime.h"
 

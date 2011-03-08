@@ -9,7 +9,7 @@
 #include "MeshLoader.h"
 #include "ObjectRoot.h"
 #include "Utils.h"
-#include "ListenerCollision.h"
+
 
 /*!
 * \class Planet
@@ -213,7 +213,7 @@ class Planet : public ObjectRoot
 		/*!
          * \brief Fonction qui permet 'assigner les objets de bullet-ogres (RigidBody...)
         */
-        void createCollisionObject(ListenerCollision * listenerCollision);
+        //void createCollisionObject(ListenerCollision * listenerCollision);
 	private:
 
 		/*!
@@ -224,7 +224,7 @@ class Planet : public ObjectRoot
 		void createSpheres(const Ogre::String& innerName, const Ogre::String& outerName = "");
 
 
-        void destroyCollisionObject();
+        //void destroyCollisionObject();
 
 
 		/*!
