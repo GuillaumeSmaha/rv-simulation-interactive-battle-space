@@ -91,7 +91,6 @@ class ShipPlayer : public ShipAbstract
          */
         Ogre::ParticleEmitter * emitter;
 
-
 	public:
 		/*!
 		 * \brief Construction

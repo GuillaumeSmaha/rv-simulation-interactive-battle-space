@@ -359,7 +359,7 @@ void Application::initScene(void)
 
 	ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
     ship2->setPosition(-130,0,0);
-    ship2->touched();
+    //ship2->touched();
     GestShip::getSingleton()->addShip(ship2);
 
 	ship2->createCollisionObject(this->listenerCollision);
@@ -370,7 +370,7 @@ void Application::initScene(void)
     ship3->setPosition(130,0,10000);
 	//ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
     //ship3->getNode()->setScale(Ogre::Vector3(50,50,50));
-    ship3->touched();
+    //ship3->touched();
     GestShip::getSingleton()->addShip(ship3);
     
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);

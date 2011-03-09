@@ -48,6 +48,7 @@ ShipPlayer::~ShipPlayer(void)
 
 void ShipPlayer::updatePosition(void)
 {
+	static int playSound = 100;
     this->updateParticules();
     update_differente_acceleration();
 
@@ -144,8 +145,16 @@ void ShipPlayer::updatePosition(void)
     */
 	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0))>100000)
 	{
-		this->isTouch(5);
-		GestSound::getSingleton()->play(GestSound::SOUND_TRAITRE);
+		if (playSound >= 100)
+		{
+			playSound = 0;
+			this->isTouch(1);
+			GestSound::getSingleton()->play(GestSound::SOUND_TRAITRE);
+		}
+		else
+		{
+			playSound++;
+		}
 		//Message *traitre = new Message(0);
 		//traitre->Message::afficher_message("traitre","Retournez vous battre!");
 	}
