@@ -28,6 +28,15 @@ GestSound::GestSound()
 		file.assign(PROJECT_SOURCE_DIR);
 		file.append("/media/sound/tir.ogg");
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_SHOOT), file, false, false);
+		file.assign(PROJECT_SOURCE_DIR);
+		file.append("/media/sound/traitre.ogg");
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_TRAITRE), file, false, false);
+		file.assign(PROJECT_SOURCE_DIR);
+		file.append("/media/sound/explosion.ogg");
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_EXPLOSION), file, false, false);
+		file.assign(PROJECT_SOURCE_DIR);
+		file.append("/media/sound/touche.ogg");
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_DEGATS), file, false, false);
 	}
 }
 

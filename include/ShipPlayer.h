@@ -18,6 +18,7 @@
 #include "ShipAbstract.h"
 #include "SpeedCompteur.h"
 #include "ListenerTime.h"
+#include "Message.h"
 
 /*!
 * \class ShipPlayer

@@ -268,7 +268,7 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 	switch(type)
 	{
 		case SHIP:
-			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
+			static_cast<Ogre::Entity *>(object)->setMaterialName("StationSpatiale");
 			break;
 		case SHIP_TOUCHED:
 			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");

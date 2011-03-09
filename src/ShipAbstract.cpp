@@ -84,6 +84,7 @@ void ShipAbstract::updatePosition(void)
 void ShipAbstract::touched(void)
 {
    MeshLoader::getSingleton()->setMaterial(this->entity, MeshLoader::SHIP_TOUCHED);
+   GestSound::getSingleton()->play(GestSound::SOUND_DEGATS);
 }
 
 void ShipAbstract::exploded(void)
@@ -93,6 +94,7 @@ void ShipAbstract::exploded(void)
 	// fast forward 1 second  to the point where the particle has been emitted
 	particleSystem->fastForward(1.0);
 	 
+	GestSound::getSingleton()->play(GestSound::SOUND_EXPLOSION);
 	// attach the particle system to a scene node
     this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
 }

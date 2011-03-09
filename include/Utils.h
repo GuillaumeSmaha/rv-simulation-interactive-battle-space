@@ -157,6 +157,12 @@ class Utils
 		* \param Value valeur à chainer
 		*/
 		static Ogre::String toString( int * Value );
+		/*!
+		* \brief Retourne la distance entre deux points
+		* \param A: coordonnées de l'objet A
+		* \param B: coordonnées de l'objet B
+		*/
+		static Ogre::Real distance (Ogre::Vector3 A, Ogre::Vector3 B);
 
         /*!
 		* \brief Retourne le contenu d'un fichier sous la forme d'une chaine de caractères

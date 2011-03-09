@@ -141,7 +141,13 @@ void ShipPlayer::updatePosition(void)
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
     */
-
+	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0))>10000)
+	{
+		this->setOrientation(0,0,0,0);
+		GestSound::getSingleton()->play(GestSound::SOUND_TRAITRE);
+		//Message *traitre = new Message(0);
+		//traitre->Message::afficher_message("traitre","Retournez vous battre!");
+	}
     this->gestCamera->update_camera();
 }
 

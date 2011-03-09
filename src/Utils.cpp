@@ -95,6 +95,10 @@ Ogre::String Utils::toString( int * Value)
 	return Utils::toString(*Value);
 }
 
+Ogre::Real Utils::distance (Ogre::Vector3 A, Ogre::Vector3 B)
+{
+	return sqrt((A[0]-B[0])*(A[0]-B[0])+(A[1]-B[1])*(A[1]-B[1])+(A[2]-B[2])*(A[2]-B[2]));
+}
 
 Ogre::String Utils::read_file(char * path)
 {

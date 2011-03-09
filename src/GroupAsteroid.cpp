@@ -65,11 +65,11 @@ bool GroupAsteroid::isCollided(Asteroid * asteroid)
 	Ogre::Real z = asteroid->getPosition()[2];
 	for (itGroupAsteroids = lstGroupAsteroids.begin(); itGroupAsteroids<lstGroupAsteroids.end();itGroupAsteroids++)
 	{
-		if (x < (*itGroupAsteroids)->getPosition()[0]+55 && x > (*itGroupAsteroids)->getPosition()[0]-55)
+		if (x < (*itGroupAsteroids)->getPosition()[0]+(*itGroupAsteroids)->getNode()->getScale()[0]*5 && x > (*itGroupAsteroids)->getPosition()[0]-((*itGroupAsteroids)->getNode()->getScale()[0]*5))
 		{			
-			if (y < (*itGroupAsteroids)->getPosition()[1]+55 && y > (*itGroupAsteroids)->getPosition()[1]-55)
+			if (y < (*itGroupAsteroids)->getPosition()[1]+(*itGroupAsteroids)->getNode()->getScale()[1]*5 && y > (*itGroupAsteroids)->getPosition()[1]-((*itGroupAsteroids)->getNode()->getScale()[1]*5))
 			{
-				if (z < (*itGroupAsteroids)->getPosition()[2]+55 && z > (*itGroupAsteroids)->getPosition()[2]-55)
+				if (z < (*itGroupAsteroids)->getPosition()[2]+(*itGroupAsteroids)->getNode()->getScale()[2]*5 && z > (*itGroupAsteroids)->getPosition()[2]-((*itGroupAsteroids)->getNode()->getScale()[2]*5))
 				{
 					return true;
 				}
@@ -117,6 +117,7 @@ Ogre::Real GroupAsteroid::getRotationSpeed(void)
 {
 	return this->rotationSpeed;
 }
+
 
 void GroupAsteroid::setNodeGroupAsteroid(Ogre::SceneNode * node)
 {

@@ -14,6 +14,7 @@
 #include "CameraFixeTarget.h"
 #include "GestSceneManager.h"
 #include "GestLaser.h"
+#include "GestSound.h"
 
 //class ObjectRoot;
 //class ListenerCollision;
