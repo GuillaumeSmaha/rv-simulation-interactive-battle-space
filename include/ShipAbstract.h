@@ -160,9 +160,9 @@ class ShipAbstract : public ObjectRoot
 
 		/*!
 		 * \brief Lorsque le vaiseau est touché par un tir de laser
-		 * Perd 10 points de vies.
+		 * \param degat Nombre de dégat perdu par collision
 		*/
-        void isTouchedByLaser(void);
+        void isTouch(int degat);
 		
 		//void createCollisionObject(ListenerCollision * listenerCollision);
 
@@ -240,8 +240,8 @@ class ShipAbstract : public ObjectRoot
          * \param coefAcceleration Coefficient d'accélération
         */
         void yawAccelerate(const Ogre::Radian coefAcceleration);
-                
-		
+
+
 		/*!
 		 * \brief Calcule le facteur de rotation en fonction de la vitesse
 		 * \param method Methode de calcul sélectionnée :

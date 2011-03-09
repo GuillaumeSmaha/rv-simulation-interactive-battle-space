@@ -132,11 +132,11 @@ void ShipAbstract::defineParticules(void)
 }
 
 
-void ShipAbstract::isTouchedByLaser()
+void ShipAbstract::isTouch(int degat)
 {
     if(isDead == false)
     {
-        setShipLife(getShipLife()-10);
+        setShipLife(getShipLife()-degat);
         if(getShipLife() < 0)
         {
             exploded();

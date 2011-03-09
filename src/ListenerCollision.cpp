@@ -116,7 +116,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
             {
                 if((*itShip)->getRigidBody() == body)
                 {
-                    (*itShip)->isTouchedByLaser();
+                    (*itShip)->isTouch(10);
                 }
             }
             
