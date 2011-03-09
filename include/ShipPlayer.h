@@ -16,7 +16,7 @@
 #include "GestSceneManager.h"
 #include "GestSound.h"
 #include "ShipAbstract.h"
-#include "SpeedCompteur.h"
+#include "Compteur.h"
 #include "ListenerTime.h"
 #include "Message.h"
 
@@ -83,9 +83,10 @@ class ShipPlayer : public ShipAbstract
         */
         PlayerControls * playerControl;
         /*!
-         * \brief Compteur de vitesse associé au vaisseau
+         * \brief panneau comprend le compteur de vitesse et de vie associé au vaisseau
         */
-        SpeedCompteur * speedCompteur;
+        Compteur * compteur;
+
         /*!
          * \brief Particules indiquant l'ennemi (va être renommé et changé de place bientôt)
          */

@@ -23,7 +23,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
 	this->nodeCameraFirstPerson->setPosition(0, 30, 30);
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
-    speedCompteur= new SpeedCompteur(this, listenerTime);
+    compteur= new Compteur(this, listenerTime);
 	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 
     accelerationPressed = false;
@@ -190,7 +190,7 @@ void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 		GestSceneManager::addCamera(this->gestCamera);
 
 		this->idViewport = ViewportLoader::getSingleton()->addViewport(this->gestCamera);
-        this->speedCompteur->setViewport(ViewportLoader::getSingleton()->getListViewport()[this->idViewport]);
+        this->compteur->setViewport(ViewportLoader::getSingleton()->getListViewport()[this->idViewport]);
 	}
 }
 

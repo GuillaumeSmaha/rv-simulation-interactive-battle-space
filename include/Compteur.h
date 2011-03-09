@@ -1,9 +1,9 @@
 /*!
-*  \file  SpeedCompteur.h
-*  \brief Ce fichier contient la déclaration de la classe SpeedCompteur. Permet d'afficher pour un joueur un compteur de vitesse
+*  \file  Compteur.h
+*  \brief Ce fichier contient la déclaration de la classe Compteur. Classe abstraite permettant de gérer un compteur associé à un vaiseau
 */
-#ifndef __SPEED_COMPTEUR_H__
-#define __SPEED_COMPTEUR_H__
+#ifndef __COMPTEUR_H__
+#define __COMPTEUR_H__
 
 #include <Ogre.h>
 #include "Utils.h"
@@ -13,20 +13,20 @@
 
 
 /*!
-* \class SpeedCompteur
-* \brief Classe Permet d'afficher pour un joueur un compteur de vitesse
+* \class Compteur
 */
-class SpeedCompteur : public ClassRoot, public Ogre::RenderTargetListener
+class Compteur : public ClassRoot, public Ogre::RenderTargetListener
 {
-	private:
-		/*!
+    protected:	
+        /*!
 		 * \brief Le vaiseau auquel est lié le compteur
 		*/
 		ShipAbstract * ship;
 		/*!
 		 * \brief Nom de l'objet de la jauge
 		*/
-		Ogre::String panelJaugeName;
+		Ogre::String panelJaugeNameSpeed;
+		Ogre::String panelJaugeNameLife;
 		/*!
 		 * \brief Un compteur est associé à un unique viewport
 		*/
@@ -42,11 +42,12 @@ class SpeedCompteur : public ClassRoot, public Ogre::RenderTargetListener
 		 * \param ship Le vaisseau contenant la vitesse de celui-ci
 		 * \param listenerTime Pointeur sur le controleur de frame régulé
 		*/
-		SpeedCompteur(ShipAbstract * ship, ListenerTime * listenerTime);
+		Compteur(ShipAbstract * ship, ListenerTime * listenerTime);
+        Compteur();
 		/*!
 		 * \brief Destructeur
 		*/
-		~SpeedCompteur();
+		~Compteur();
 
 		/*!
 		 * \brief Définit le viewport où afficher le compteur
@@ -54,11 +55,14 @@ class SpeedCompteur : public ClassRoot, public Ogre::RenderTargetListener
 		*/
 		void setViewport(Ogre::Viewport * viewport);
 
-	private:
+    protected:	
 		/*!
 		 * \brief La fonction appelé régulièrement pour mettre à jour la vitesse
 		*/
 		void miseAJour(void *);
+
+        void miseAJourLifeCompteur(void);
+        void miseAJourSpeedCompteur(void);
 
 		/*!
 		 * \brief appelé juste avant la mise à jour des textures,
@@ -68,4 +72,4 @@ class SpeedCompteur : public ClassRoot, public Ogre::RenderTargetListener
 		virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 };
 
-#endif //__SPEED_COMPTEUR_H__
+#endif //__COMPTEUR_H__
