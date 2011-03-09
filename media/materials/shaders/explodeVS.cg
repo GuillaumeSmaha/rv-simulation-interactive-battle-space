@@ -1,0 +1,26 @@
+
+struct VertIn {
+	float4 position : POSITION;
+	float4 uv	   : TEXCOORD0;
+	float4 color   : COLOR0;
+};
+
+
+struct VertOut {
+	float4 position : POSITION;
+	float2 uv	   : TEXCOORD0;
+	float4 color   : COLOR0;
+};
+
+
+VertOut main(VertIn IN,
+ 
+			uniform float4x4 worldViewProj)
+{
+	VertOut OUT = (VertOut)0;
+	OUT.position = mul(worldViewProj, IN.position);
+	OUT.uv = IN.uv.xy;
+	OUT.color = IN.color;
+	
+	return OUT;
+}

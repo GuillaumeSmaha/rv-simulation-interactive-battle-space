@@ -324,6 +324,23 @@ class ShipAbstract : public ObjectRoot
 		{
 			this->shipLifeMax = shipLifeMax;
 		}
+		
+		/*!
+		 * \brief [Getter] Indique si le vaisseau est mort
+		 * \return Décé du vaisseau?
+		*/
+        bool getIsDead(void)
+		{
+			return this->isDead;
+		}		
+		/*!
+		 * \brief [Setter] Définit si le vaisseau est mort
+		 * \param isDead Etatdu vaisseau
+		*/
+        void setIsDead(bool isDead)
+		{
+			this->isDead = isDead;
+		}
 
 		/*!
 		 * \brief [Getter] Récupère la vitesse du vaisseau

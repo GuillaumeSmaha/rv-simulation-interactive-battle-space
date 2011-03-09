@@ -86,6 +86,10 @@ class ShipPlayer : public ShipAbstract
          * \brief Compteur de vitesse associé au vaisseau
         */
         SpeedCompteur * speedCompteur;
+        /*!
+         * \brief Particules indiquant l'ennemi (va être renommé et changé de place bientôt)
+         */
+        Ogre::ParticleEmitter * emitter;
 
 
 	public:
@@ -125,6 +129,15 @@ class ShipPlayer : public ShipAbstract
 		*/
 		void switchPrevCamera(void);
 
+        /*!
+		 * \brief Définit les particules des réacteurs et indiquant la direction
+		*/
+		void defineParticules(void);
+		/*!
+		 * \brief Oriente les particules vers le vaisseau ennemi (future : vers la station aussi)
+		*/
+        void updateParticules(void);
+
 
         //getter/setter
 
@@ -161,19 +174,6 @@ class ShipPlayer : public ShipAbstract
 		{
 			return this->gestCamera;
 		}
-
-        /*!
-		 * \brief Définit les particules des réacteurs et indiquant la direction
-		*/
-		void defineParticules(void);
-		/*!
-		 * \brief Oriente les particules vers le vaisseau ennemi (future : vers la station aussi)
-		*/
-        void updateParticules(void);
-        /*!
-         * \brief Particules indiquant l'ennemi (va être renommé et changé de place bientôt)
-         */
-        Ogre::ParticleEmitter * emitter;
 
     private:
         /*!

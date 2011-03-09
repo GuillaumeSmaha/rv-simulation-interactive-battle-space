@@ -14,14 +14,12 @@ material explosionMaterial
  
 			fragment_program_ref explodePS {}
  
-			// texture unit 0 - our volume texture
 			texture_unit
 			{
-				texture_alias baseMap
 				texture explode.dds 3d
-				tex_coord_set 0
-				//tex_address_mode border
+				texture_alias baseMap
 				tex_address_mode clamp
+				colour_op add
 			}
 		}
 	}

@@ -97,6 +97,8 @@ void ShipAbstract::exploded(void)
 	GestSound::getSingleton()->play(GestSound::SOUND_EXPLOSION);
 	// attach the particle system to a scene node
     this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
+    
+    this->isDead = true;
 }
 
 

@@ -36,7 +36,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
     
     for(itShip = listShips.begin() ; itShip < listShips.end() ; itShip++)
 	{
-		if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER)
+		if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER && !(*itShip)->getIsDead())
 		{
 			Ogre::Ray rayToFront((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
 			Ogre::Ray rayToLeft((*itShip)->getPosition()+ Ogre::Vector3(0,-50,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
@@ -53,8 +53,8 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 90.0);
 			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 50.0);
 			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 50.0);
-			mCollisionClosestRayResultCallbackUp= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 50.0);
-			mCollisionClosestRayResultCallbackDown= new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 50.0);
+			mCollisionClosestRayResultCallbackUp = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 50.0);
+			mCollisionClosestRayResultCallbackDown = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 50.0);
 
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackFront);
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackLeft);
@@ -84,7 +84,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 				(*itShip)->setYawSpeed(Ogre::Radian(0));
 				(*itShip)->setYawAcceleration(Ogre::Radian(0));
 				
-				std::cout << "Hit :"<<std::endl;// body->getName() << std::endl;
+				std::cout << "Hit :"<< std::endl;// body->getName() << std::endl;
 				break;
 			}
 			

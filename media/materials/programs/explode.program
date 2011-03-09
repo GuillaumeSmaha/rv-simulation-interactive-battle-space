@@ -32,14 +32,33 @@ fragment_program explodePS_GLSL glsl
 }
 
  
+vertex_program explodeVS_CG cg
+{
+	source explodeVS.cg
+	profiles vs_2_0 arbvp1
+	entry_point main
+	default_params
+    {
+        param_named_auto worldViewProj worldviewproj_matrix
+    }
+}
+ 
+fragment_program explodePS_CG cg
+{
+	source explodePS.cg
+	profiles ps_2_0 arbfp1
+	entry_point main
+}
+
+ 
 vertex_program explodeVS unified
 {
-	delegate explodeVS_HLSL
-	delegate explodeVS_GLSL
+	//delegate explodeVS_HLSL
+	delegate explodeVS_CG
 }
  
 fragment_program explodePS unified
 {
-	delegate explodePS_HLSL
-	delegate explodePS_GLSL
+	//delegate explodePS_HLSL
+	delegate explodePS_CG
 }
