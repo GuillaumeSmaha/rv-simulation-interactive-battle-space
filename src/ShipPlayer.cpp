@@ -1,5 +1,5 @@
 #include "ShipPlayer.h"
-
+#include "GestShip.h"
 using namespace Ogre;
 
 ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) : ShipAbstract()
@@ -32,7 +32,8 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
     rightPressed = false;
     upPressed = false;
     downPressed = false;
-    
+    this->defineParticules();
+
 }
 
 ShipPlayer::~ShipPlayer(void)
@@ -47,7 +48,7 @@ ShipPlayer::~ShipPlayer(void)
 
 void ShipPlayer::updatePosition(void)
 {
-
+    this->updateParticules();
     update_differente_acceleration();
 
     //calcule des nouvelles vitesses et positions
@@ -347,9 +348,57 @@ void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 
 	this->pitchAccelerate(Ogre::Radian(mouseVec[1] / 8000.0));
 	this->yawAccelerate(Ogre::Radian(-mouseVec[0] / 8000.0));
-		
+
 	//this->rollAccelerate(Ogre::Radian(mouseVec[0] / 3000.0));
 	//this->getNode()->rotate(rotation);
 	//this->getNode()->yaw(Radian(-mouseVec[0] / 2000.0));
 	//this->getNode()->translate(-mouseVec[0] / 10.0, 0, 0);
 }
+
+
+
+void ShipPlayer::updateParticules(void)
+{
+
+    int i = 0;
+    while(GestShip::getSingleton()->getAllShips().at(i)==this)
+    {
+        if(GestShip::getSingleton()->getAllShips().size()>i+1)
+        {
+                i++;
+        }
+
+    }
+    Ogre::Matrix3 m;
+    this->getNode()->getOrientation().ToRotationMatrix(m);
+    emitter->setDirection((GestShip::getSingleton()->getAllShips().at(i)->getNode()->getPosition()- this->getNode()->getPosition())*m);
+    Ogre::Vector3 rot = emitter->getDirection();
+    rot.normalise();
+    emitter->setPosition(rot*80-this->getEntity()->getBoundingBox().getCenter()+Ogre::Vector3(0,0,100));
+
+}
+void ShipPlayer::defineParticules(void)
+{
+
+    Ogre::ParticleSystem* thrusters = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem(25);
+    thrusters->setMaterialName("Reactor");
+    thrusters->setDefaultDimensions(10, 10);
+    thrusters->setKeepParticlesInLocalSpace(true);
+
+	// Création de 1 émetteur pour le système de particules vers l'ennemi
+	for (unsigned int i = 0; i < 1; i++)
+	{
+		emitter = thrusters->addEmitter("Point");
+
+		// set the emitter properties
+		emitter->setAngle(Ogre::Degree(0));
+		emitter->setTimeToLive(0.3);
+		emitter->setEmissionRate(25);
+		emitter->setParticleVelocity(200);
+		emitter->setColour(Ogre::ColourValue::Red, Ogre::ColourValue::Red);
+		emitter->setPosition(Ogre::Vector3(i == 0 ? 5.7 : -18, 0, 0));
+	}
+    this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
+    ShipAbstract::defineParticules();
+}
+

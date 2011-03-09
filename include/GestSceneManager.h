@@ -121,6 +121,22 @@ class GestSceneManager
         {
             return getSingleton()->getCount();
         }
+        static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Real size, Ogre::Vector3 point)
+        {
+             Ogre::Real fsize = -1;
+			Ogre::Real tmp;
+			int i = GestSceneManager::getCamCount();
+			for(;i>0;i--)
+			{
+				tmp = GestSceneManager::getProjectedSize(object, size, point,  GestSceneManager::getCamera(i-1)->getCamera());
+				if(tmp > fsize)
+				{
+					fsize = tmp;
+				}
+			}
+			return fsize;
+
+        }
 		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Real size)
 		{
 			Ogre::Real fsize = -1;
@@ -128,7 +144,7 @@ class GestSceneManager
 			int i = GestSceneManager::getCamCount();
 			for(;i>0;i--)
 			{
-				tmp = GestSceneManager::getProjectedSize(object, size,  GestSceneManager::getCamera(i)->getCamera());
+				tmp = GestSceneManager::getProjectedSize(object, size,  GestSceneManager::getCamera(i-1)->getCamera());
 				if(tmp > fsize)
 				{
 					fsize = tmp;
@@ -143,7 +159,7 @@ class GestSceneManager
 			int i = GestSceneManager::getCamCount();
 			for(;i>0;i--)
 			{
-				tmp = GestSceneManager::getProjectedSize(object, object->getWorldBoundingSphere().getRadius(), point,  GestSceneManager::getCamera(i)->getCamera());
+				tmp = GestSceneManager::getProjectedSize(object, object->getWorldBoundingSphere().getRadius(), point,  GestSceneManager::getCamera(i-1)->getCamera());
 				if(tmp > fsize)
 				{
 					fsize = tmp;

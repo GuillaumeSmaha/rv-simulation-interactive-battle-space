@@ -38,7 +38,7 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInner
 	}
 
 	this->planetNode = MeshLoader::getSingleton()->getNode(MeshLoader::PLANET);
-	
+
 	Ogre::String planetMaterialName = "planet1";
 	if (this->hasAtmosphere)
 	{
@@ -54,7 +54,7 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInner
   numberOfPlanet++;
 
   this->setMaterialGroundFromSpace(planetMaterialName);
-  
+
 
 }
 
@@ -116,9 +116,9 @@ Planet::~Planet(void)
 	{
 		scnMgr->destroyEntity(outerSphere);
 	}
-	
+
 	scnMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES)->removeAndDestroyChild(planetNode->getName());
-    
+
     //nettoie les pointeurs utilisé pour géré les collisions
     //destroyCollisionObject();
 }
@@ -127,6 +127,7 @@ void Planet::update()
 {
 	// Mise à jour de la position de la planète
 	updatePosition();
+
 
 	// Mise à jour nécessaire seulement si une atmosphère est présente
 	if (this->hasAtmosphere == false)
@@ -150,11 +151,11 @@ void Planet::update()
 		if (cameraHeight >= mOuterRadius)
 		{
 			//mInnerSphere->setMaterialName("Moon");
-			
+
 			// GroundFromSpace
 			pPass = mGroundFromSpace->getTechnique(0)->getPass(1);
 			pParams = pPass->getVertexProgramParameters();
-			
+
 			pParams->setNamedConstant("fvInvWavelengths", mInvWaveLengthsPow4);
 			pParams->setNamedConstant("fCameraHeightSqr", cameraHeightSqr);
 			pParams->setNamedConstant("fInnerRadius", mInnerRadius);
@@ -169,7 +170,7 @@ void Planet::update()
 
 			pParams = pPass->getFragmentProgramParameters();
 			pParams->setNamedConstant("fExposure", mExposure);
-			
+
 			// SkyFromSpace
 			pPass = mSkyFromSpace->getTechnique(0)->getPass(0);
 			pParams = pPass->getVertexProgramParameters();
@@ -223,7 +224,7 @@ void Planet::createSpheres(const Ogre::String& innerName, const Ogre::String& ou
 	innerSphere = scnMgr->createEntity(innerName + "_Ent", innerName);
 	planetNode->attachObject(innerSphere);
 
-	
+
 	if (hasAtmosphere)
 	{
 		MeshLoader::getSingleton()->createSphere(outerName, mOuterRadius, 128, 128);
@@ -270,7 +271,7 @@ void Planet::updateCalculations()
 //    this->getEntity()->setCastShadows(true);
 //
 //    //this->rigidBody->setPosition(pos[0], pos[1], pos[2]);
-//    
+//
 //}
 
 //void Planet::destroyCollisionObject()

@@ -95,10 +95,15 @@ Ogre::Real GestSceneManager::getProjectedSize(Ogre::MovableObject* object, Ogre:
 		return -1;
 	  }
 	  Ogre::Vector3 eyeSpacePos = cam->getViewMatrix(true) * point;
+	  //équivalent à getRendering distance ?
+	  if (eyeSpacePos.z > 0)
+      {
+            return -1;
+	  }
 	  Ogre::Vector3 spheresize(size, size, eyeSpacePos.z);
       spheresize = cam->getProjectionMatrix() * spheresize;
 	  //TODO:vérifier que quand c supérieur à 1 == vraiment hors champ sinon utilisé eyeSpacePoz.z<0
-      return  spheresize.x>1?-1:spheresize.x;
+      return  spheresize.x;//spheresize.x>1?-1:spheresize.x;
 }
 
 /*

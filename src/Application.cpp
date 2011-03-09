@@ -414,7 +414,8 @@ void Application::initScene(void)
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
-
+    this->listenerTime->signalTimerElapsed.add(&ObjectRoot::updateCulling,dynamic_cast<ObjectRoot*>(planet2));
+    this->listenerTime->signalTimerElapsed.add(&ObjectRoot::updateCulling,dynamic_cast<ObjectRoot*>(planet1));
 
 }
 

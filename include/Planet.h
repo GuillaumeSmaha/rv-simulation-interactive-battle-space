@@ -9,13 +9,14 @@
 #include "MeshLoader.h"
 #include "ObjectRoot.h"
 #include "Utils.h"
+#include "ClassRoot.h"
 
 
 /*!
 * \class Planet
 * \brief Classe gérant les planètes
 */
-class Planet : public ObjectRoot
+class Planet :/* public ClassRoot,*/ public ObjectRoot
 {
 	private:
 		/*!
@@ -41,16 +42,16 @@ class Planet : public ObjectRoot
 		* \brief Type de planète qui correspond les modèles de mesh
 		*/
 		Ogre::int16 type;
-		
+
 		/*!
-		* \brief L'axe de rotation		
+		* \brief L'axe de rotation
 		*/
 		// Ogre::Vector3 orbit_axis;
 		/*!
 		* \brief Angle de rotation
 		*/
 		//Ogre::Real orbit_radius;
-		
+
 		/*!
 		* \brief La vitesse de rotation(2 types de vitesse de rotation, entrain de penser)
 		//Ogre::Real speed;
@@ -76,7 +77,7 @@ class Planet : public ObjectRoot
 			pour le détail des paramètres =)
 		*/
 		Ogre::Vector3 mWaveLengths;
-		
+
 		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
 		Ogre::Vector3 mInvWaveLengthsPow4;
 		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
@@ -115,7 +116,7 @@ class Planet : public ObjectRoot
 		Ogre::Real mG2;
 		///brief Paramètres du shader "atmosphère"\n voir http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter16.html\n pour le détail des paramètres =)
 		Ogre::Real mExposure;
-		
+
         //rajouté pour les collision avec ogreBullet
 
 	public:
@@ -153,10 +154,10 @@ class Planet : public ObjectRoot
 		* \brief Mise à jour de la position de la planète
 		*/
 		void updatePosition(void);
-		
-		
+
+
 		//Getter/setter
-		
+
 		/*!
 		* \brief [Setter] Configure la position de planète par rapport au noeud de groupe de planètes
 		* \param x Position en X
@@ -171,7 +172,7 @@ class Planet : public ObjectRoot
 		* \param z Dimension en Z
 		*/
 		void setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
-		
+
 		/*!
 		 * \brief [Getter] Radius de la planete
 		 * \return radius Rayon de la planète.
@@ -190,7 +191,7 @@ class Planet : public ObjectRoot
 		{
 			return innerSphere->getName();
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère un pointeur sur le noeud content le mesh
 		 * \return Nom du noeud
@@ -199,7 +200,7 @@ class Planet : public ObjectRoot
 		{
 			return planetNode;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Récupère un pointeur sur le mesh
 		 * \return Nom du noeud
@@ -208,11 +209,18 @@ class Planet : public ObjectRoot
 		{
 			return innerSphere;
 		}
-
 		/*!
          * \brief Fonction qui permet 'assigner les objets de bullet-ogres (RigidBody...)
         */
         //void createCollisionObject(ListenerCollision * listenerCollision);
+        /*!
+         * \brief Renvoie le rayon de la planète (pour le culling/lod)
+        */
+        Ogre::Real getRadius()
+        {
+            return this->mInnerRadius * 1.25;
+        }
+
 	private:
 
 		/*!
@@ -248,7 +256,7 @@ class Planet : public ObjectRoot
 			mSkyFromSpace = Ogre::MaterialManager::getSingleton().getByName(name);
 			outerSphere->setMaterialName(name);
 		}
-		
+
 };
 
 #endif // __PLANET_H__

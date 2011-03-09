@@ -8,7 +8,6 @@
 #include <Ogre.h>
 #include "MeshLoader.h"
 #include "Utils.h"
-#include "ClassRoot.h"
 #include "ObjectRoot.h"
 #include "Signal.h"
 #include "CameraFixeTarget.h"
@@ -27,7 +26,7 @@
 *   Comporte également une fonction getNode qui permet de récupèrer le SceneNode de l'objet et donc de le positionner dans le graphe de scene (c'est via celui que l'on récupere la position orientation de l'objet.
 */
 
-class ShipAbstract : public ClassRoot, public ObjectRoot
+class ShipAbstract : public ObjectRoot
 {
 	private:
 		/*!
@@ -157,7 +156,7 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
 		/*!
 		 * \brief Définit les particules des réacteurs
 		*/
-		void defineParticules(void);
+		virtual void defineParticules(void);
 
 		/*!
 		 * \brief Lorsque le vaiseau est touché par un tir de laser

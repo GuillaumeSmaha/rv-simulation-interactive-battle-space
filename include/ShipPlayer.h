@@ -81,7 +81,7 @@ class ShipPlayer : public ShipAbstract
         /*!
          * \brief Controleur de vaiseau
         */
-        PlayerControls * playerControl; 
+        PlayerControls * playerControl;
         /*!
          * \brief Compteur de vitesse associé au vaisseau
         */
@@ -161,6 +161,19 @@ class ShipPlayer : public ShipAbstract
 		{
 			return this->gestCamera;
 		}
+
+        /*!
+		 * \brief Définit les particules des réacteurs et indiquant la direction
+		*/
+		void defineParticules(void);
+		/*!
+		 * \brief Oriente les particules vers le vaisseau ennemi (future : vers la station aussi)
+		*/
+        void updateParticules(void);
+        /*!
+         * \brief Particules indiquant l'ennemi (va être renommé et changé de place bientôt)
+         */
+        Ogre::ParticleEmitter * emitter;
 
     private:
         /*!
