@@ -128,6 +128,29 @@ void ShipAbstract::defineParticules(void)
 }
 
 
+void ShipAbstract::isTouchedByLaser()
+{
+    if(isDead == false)
+    {
+        setShipLife(getShipLife()-10);
+        if(getShipLife() < 0)
+        {
+            exploded();
+            isDead = true;
+        }
+        else
+        {
+            if(isTouched == false)
+            {
+                isTouched = true;
+                touched();
+            }
+        }
+    }
+}
+
+
+
 //void ShipAbstract::createCollisionObject(ListenerCollision * listenerCollision)
 //{
 //    Ogre::Vector3 pos = this->getNode()->getPosition();
@@ -229,8 +252,8 @@ void ShipAbstract::setOrientation(const Ogre::Quaternion &q)
 {
     if(firstDir)
     {
-        dirInit=q;
-        firstDir=false;
+        dirInit = q;
+        firstDir = false;
     }
 	this->getNode()->setOrientation(q);
 }
@@ -239,8 +262,8 @@ void ShipAbstract::setOrientation(const Ogre::Real x, const Ogre::Real y, const 
 {
     if(firstDir)
     {
-        dirInit=Quaternion(x,y,z,a);
-        firstDir=false;
+        dirInit = Quaternion(x,y,z,a);
+        firstDir = false;
     }
 	this->getNode()->setOrientation(x, y, z, a);
 }
@@ -255,8 +278,8 @@ void ShipAbstract::setPosition(const Ogre::Vector3 &v)
 {
     if(firstPos)
     {
-        posInit=v;
-        firstPos=false;
+        posInit = v;
+        firstPos = false;
     }
     this->getNode()->setPosition(v);
 }
@@ -265,10 +288,10 @@ void ShipAbstract::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogr
 {
     if(firstPos)
     {
-        posInit[0]=x;
-        posInit[1]=y;
-        posInit[2]=z;
-        firstPos=false;
+        posInit[0] = x;
+        posInit[1] = y;
+        posInit[2] = z;
+        firstPos = false;
     }
     this->getNode()->setPosition(x, y, z);
 }
@@ -288,25 +311,3 @@ void ShipAbstract::reset()
     setPosition(posInit);
     setOrientation(dirInit);
 }
-
-void ShipAbstract::isTouchedByLaser()
-{
-    if(isDead==false)
-    {
-        setShipLife(getShipLife()-10);
-        if(getShipLife()<0)
-        {
-            exploded();
-            isDead=true;   
-        }
-        else
-        {
-            if(isTouched==false)
-            {
-                isTouched=true;
-                touched();
-            }
-        }
-    }
-}
-

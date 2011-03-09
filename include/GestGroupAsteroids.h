@@ -84,6 +84,7 @@ class GestGroupAsteroids : public ClassRoot
 		 * \param rayon Distances des asteroids autour de l'axe
 		 * \param planet Noeud de la planète
 		 * \param rotationSpeed Vitesse de la rotation
+		 * \param listenerCollision Controlleur de collision
 		*/
 		void createGroup(int nb, int degreLiberte, int scale, Ogre::Radian angleRotation, Ogre::Real rayon, Ogre::SceneNode * planet, Ogre::Real rotationSpeed, ListenerCollision * listenerCollision);
 };

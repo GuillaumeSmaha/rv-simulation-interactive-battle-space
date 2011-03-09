@@ -53,6 +53,7 @@ class GroupAsteroid
 		/*!
 		 * \brief Ajoute un asteroid au groupe
 		 * \param asteroid Pointeur sur l'asteroid
+		 * \param listenerCollision Controlleur de collision
 		*/     
 		void addAsteroid(Asteroid * asteroid, ListenerCollision * listenerCollision);
 		/*!
@@ -68,6 +69,12 @@ class GroupAsteroid
 		 * \brief Supprime tous les asteroids du groupe
 		*/
         void deleteAllGroupAsteroids(void);
+		/*!
+		 * \brief Retourne vrai si il y a collision entre l'asteroid passé en parametre et un des asteroids du group
+		 * \param asteroid L'asteroid a testé
+		 * \return vrai ou faux selon si il y a collision ou non
+		*/
+		bool isCollided(Asteroid * asteroid);
         
         
         //Getter/setter
@@ -104,12 +111,6 @@ class GroupAsteroid
 		 *  \brief [Getter] Vitesse de rotation du groupe d'asteroids
 		 */
 		Ogre::Real getRotationSpeed(void);
-		/*!
-		 * \brief Retourne vrai si il y a collision entre l'asteroid passé en parametre et un des asteroids du group
-		 * \param asteroid L'asteroid a testé
-		 * \return vrai ou faux selon si il y a collision ou non
-		*/
-		bool isCollided(Asteroid * asteroid);
 		/*!
 		 * \brief [Setter] Définit le noeud du groupe d'astéroides
 		 * \param node Le noeud du groupe d'astéroides

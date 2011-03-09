@@ -99,7 +99,9 @@ Ogre::Real GestSceneManager::getProjectedSize(Ogre::MovableObject* object, Ogre:
       spheresize = cam->getProjectionMatrix() * spheresize;
 	  //TODO:vérifier que quand c supérieur à 1 == vraiment hors champ sinon utilisé eyeSpacePoz.z<0
       return  spheresize.x>1?-1:spheresize.x;
-}/*
+}
+
+/*
 bool  GestSceneManager::projectSizeAndPos(Ogre::Camera* cam,const Ogre::Vector3& pos,const Ogre::Real rad,Ogre::Real& x,Ogre::Real& y,Ogre::Real& cx,Ogre::Real& cy) {
     Ogre::Vector3 eyeSpacePos = cam->getViewMatrix(true) * pos;
 

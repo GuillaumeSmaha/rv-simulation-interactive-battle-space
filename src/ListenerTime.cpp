@@ -26,7 +26,7 @@ void ListenerTime::watchTime(const Ogre::FrameEvent &evt)
 	}
 
 	//si le temps est écoulé
-	if(this->timer->getMilliseconds()>seuil)
+	if(this->timer->getMilliseconds() > seuil)
 	{
 		//emit dispatch
 		if(!paused)

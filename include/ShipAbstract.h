@@ -157,6 +157,12 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
 		 * \brief Définit les particules des réacteurs
 		*/
 		void defineParticules(void);
+
+		/*!
+		 * \brief Lorsque le vaiseau est touché par un tir de laser
+		 * Perd 10 points de vies.
+		*/
+        void isTouchedByLaser(void);
 		
 		//void createCollisionObject(ListenerCollision * listenerCollision);
 
@@ -584,12 +590,6 @@ class ShipAbstract : public ClassRoot, public ObjectRoot
 		{
 			return this->entity;
 		}
-
-		/*!
-		 * \brief Lorsque le vaiseau est touché par un tir de laser
-		 * Perd 10 points de vies.
-		*/
-        void isTouchedByLaser(void);
 };
 
 #endif // __SHIP_ABSTRACT_H__

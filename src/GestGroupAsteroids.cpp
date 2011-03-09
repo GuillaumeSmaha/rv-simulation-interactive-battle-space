@@ -90,6 +90,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		{
 			delete asteroid1;
 		}
+		
 		asteroid1 = new Asteroid();
 		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),y,Utils::randRangeInt(-degreLiberte,degreLiberte));
@@ -101,6 +102,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		{
 			delete asteroid1;
 		}
+		
 		asteroid1 = new Asteroid();
 		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));
@@ -112,6 +114,7 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		{
 			delete asteroid1;
 		}
+		
 		asteroid1 = new Asteroid();
 		asteroid1->getNode()->setScale(scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10),scale+Utils::randRangeInt(-10,10));
 		asteroid1->setPosition(-x+Utils::randRangeInt(-degreLiberte,degreLiberte),-y,Utils::randRangeInt(-degreLiberte,degreLiberte));

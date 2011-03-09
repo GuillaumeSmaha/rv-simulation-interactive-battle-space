@@ -35,7 +35,7 @@ SpeedCompteur::~SpeedCompteur()
 
 }
 
-void SpeedCompteur::setViewport(Viewport * viewport)
+void SpeedCompteur::setViewport(Ogre::Viewport * viewport)
 {
     viewport->getTarget()->addListener(this);
     viewport->setAutoUpdated(false);

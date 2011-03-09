@@ -55,7 +55,7 @@ class ListenerTime : public ClassRoot
 		
         /*!
          * \brief Méthode appelé pour la mise à jour de la frame régulée
-         * \param useless NULL
+         * \param evt Evenement de frame
          */
 		void watchTime(const Ogre::FrameEvent &evt);
 		

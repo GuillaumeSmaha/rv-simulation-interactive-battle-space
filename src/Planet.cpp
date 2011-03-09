@@ -15,7 +15,6 @@ Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRad
 	this->planetNode = MeshLoader::getSingleton()->getNode(MeshLoader::PLANET);
 
 	createSpheres("Planet" + numberOfPlanet);
-    planetNumber=numberOfPlanet;
     numberOfPlanet++;
 	this->setMaterialGroundFromSpace("Earth");
 
@@ -52,11 +51,8 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInner
 	{
       createSpheres("Planet" + numberOfPlanet);
   }
-
-  planetNumber=numberOfPlanet;
   numberOfPlanet++;
 
-  //Utils::log(planetMaterialName);
   this->setMaterialGroundFromSpace(planetMaterialName);
   
 
@@ -94,7 +90,7 @@ Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type)
 	Ogre::String planetMaterialName = "planet" + Ogre::StringConverter::toString(type);
 	if (this->hasAtmosphere)
 	{
-		createSpheres("Planet" + numberOfPlanet, "Atmo" + planetNumber);
+		createSpheres("Planet" + numberOfPlanet, "Atmo" + numberOfPlanet);
 		planetMaterialName += "_Atmo";
 
 		this->setMaterialSkyFromSpace("SkyFromSpace");
@@ -103,7 +99,6 @@ Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type)
 	{
 		createSpheres("Planet" + numberOfPlanet);
 	}
-    planetNumber=numberOfPlanet;
 	numberOfPlanet++;
 
 	this->setMaterialGroundFromSpace(planetMaterialName);

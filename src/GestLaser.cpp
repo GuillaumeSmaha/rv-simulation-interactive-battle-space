@@ -60,12 +60,10 @@ void GestLaser::updateLasers(void *)
 {
     vector<Laser *>::iterator itLaser = listLasers.begin();
     
-    //for(itLaser = this->listLasers.begin(); itLaser != this->listLasers.end() ; itLaser++)
 	while (itLaser != this->listLasers.end())
     {
 		if(!(*itLaser)->isAlive())
 		{
-			//delete (*itLaser); marche pas
 			itLaser = this->listLasers.erase(itLaser);
 		}
 		else
@@ -74,20 +72,14 @@ void GestLaser::updateLasers(void *)
 			itLaser++;
 		}
     }
-    //for(itLaser = this->listLasers.begin(); itLaser != this->listLasers.end() ; itLaser++)
-    //{
-		//(*itLaser)->updatePosition();
-    //}
 }
 
 void GestLaser::deleteAll()
 {
 	vector<Laser *>::iterator itLaser = this->listLasers.begin();
-    //for(itLaser = this->listLasers.begin(); itLaser < this->listLasers.end() ; itLaser++)
 	while (itLaser != listLasers.end())
     {
-        //delete (*itLaser); marche pas =)
-		itLaser = this->listLasers.erase(itLaser); // incrémente automatiquement
+		itLaser = this->listLasers.erase(itLaser);
     }
 }
 

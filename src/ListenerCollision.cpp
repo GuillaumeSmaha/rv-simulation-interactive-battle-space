@@ -49,6 +49,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackRight;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackUp;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackDown;
+			
 			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 90.0);
 			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 50.0);
 			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 50.0);
@@ -88,7 +89,6 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			}
 			
 			delete mCollisionClosestRayResultCallbackFront;
-			//delete mCollisionClosestRayResultCallbackBack;
 			delete mCollisionClosestRayResultCallbackLeft;
 			delete mCollisionClosestRayResultCallbackRight;
 			delete mCollisionClosestRayResultCallbackUp;
@@ -99,11 +99,9 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 	//***************************************************************************
 	std::vector<Laser *> listLasers = GestLaser::getSingleton()->getAll();
     std::vector<Laser *>::iterator itLaser = listLasers.begin();
-    //Ogre::Vector3 intersectionPoint;
     
     for(itLaser = listLasers.begin() ; itLaser < listLasers.end() ; itLaser++)
 	{
-		//std::cout << "." << std::ends;
 		Ogre::Ray rayTo((*itLaser)->getPosition(), (*itLaser)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
 		
 		OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallback;
@@ -116,13 +114,12 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			//On regarde si on a toucher un vaiseau
             for(itShip = listShips.begin() ; itShip < listShips.end() ; itShip++)
             {
-                if((*itShip)->getRigidBody()==body )
+                if((*itShip)->getRigidBody() == body)
                 {
                     (*itShip)->isTouchedByLaser();
                 }
             }
             
-
 			intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
 			(*itLaser)->exploded();
 			std::cout << "LASER Hit :" << body->getName() << std::endl;

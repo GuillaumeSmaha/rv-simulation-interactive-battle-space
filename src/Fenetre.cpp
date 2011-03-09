@@ -9,7 +9,7 @@ CEGUI::Window * Fenetre::create_std_window(std::string name, float posX, float p
     CEGUI::Window * Wdw= wmgr.createWindow("DefaultWindow", "SpaceShip/"+name+"main");
 
     //Titlebar
-    CEGUI::Window * titlebar= wmgr.createWindow("TaharezLook/Titlebar", "SpaceShip/titlebar"+name);
+    CEGUI::Window * titlebar = wmgr.createWindow("TaharezLook/Titlebar", "SpaceShip/titlebar"+name);
     titlebar->setText(name);
     titlebar->setSize(CEGUI::UVector2(CEGUI::UDim(largeur, 0), CEGUI::UDim(0.05,0)));
     titlebar->setPosition(CEGUI::UVector2(CEGUI::UDim(posX, 0), CEGUI::UDim(posY,0)));
@@ -22,9 +22,9 @@ CEGUI::Window * Fenetre::create_std_window(std::string name, float posX, float p
 
     CEGUI::Window * tmp_contenu;
     int i=0;
-    while(i<nbEl)
+    while(i < nbEl)
     {
-        tmp_contenu=contenu[i];
+        tmp_contenu = contenu[i];
         menuBackground->addChildWindow(tmp_contenu);
         i++;
     }

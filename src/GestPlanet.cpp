@@ -18,7 +18,6 @@ GestPlanet::GestPlanet()
 {
 	if (_instance == NULL)
 	{
-		//lstPlanet.clear();
 		_instance = this;
 	}
 }
@@ -46,10 +45,8 @@ void GestPlanet::updatePlanet(const Ogre::FrameEvent &evt)
 void GestPlanet::deleteAllPlanet()
 {
     vector<Planet *>::iterator itPlanet = lstPlanet.begin();
-    //for(itPlanet=lstPlanet.begin(); itPlanet<lstPlanet.end();itPlanet++)
 	while (itPlanet != lstPlanet.end())
 	{
-        //delete (*itPlanet);
 		itPlanet = lstPlanet.erase(itPlanet);
     }
 }

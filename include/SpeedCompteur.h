@@ -49,7 +49,8 @@ class SpeedCompteur : public ClassRoot, public Ogre::RenderTargetListener
 		~SpeedCompteur();
 
 		/*!
-		 * \brief set le viewport
+		 * \brief Définit le viewport où afficher le compteur
+		 * \param viewport Pointeur sur le viewport
 		*/
 		void setViewport(Ogre::Viewport * viewport);
 
@@ -62,6 +63,7 @@ class SpeedCompteur : public ClassRoot, public Ogre::RenderTargetListener
 		/*!
 		 * \brief appelé juste avant la mise à jour des textures,
 		 * permet de mettre à jour l'overlay et de la cacher aux autres viewport et le recachant juste aprés
+		 * \param evt Evenement de rendu
 		*/
 		virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 };

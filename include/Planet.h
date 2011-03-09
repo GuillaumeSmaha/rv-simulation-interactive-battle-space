@@ -22,8 +22,7 @@ class Planet : public ObjectRoot
 		* \brief Compteur de planètes
 		*/
 		static int numberOfPlanet;
-
-        int planetNumber;
+		
 		/*!
 		* \brief Sphère interne de la planète (sol)
 		*/

@@ -22,7 +22,6 @@ void ListenerWindow::windowResized(Ogre::RenderWindow * rw)
 		unsigned int width, height, depth;
 		int left, top;
 
-		// Adjust mouse clipping area		
 		rw->getMetrics(width, height, depth, left, top);
 		const OIS::MouseState &ms = this->mouseControl->getMouse()->getMouseState();
 		ms.width = width;
@@ -32,7 +31,6 @@ void ListenerWindow::windowResized(Ogre::RenderWindow * rw)
 
 void ListenerWindow::windowClosed(Ogre::RenderWindow * rw)
 {
-	// Only close for window that created OIS (the main window)
 	if(rw == this->renderWindow)
 	{
 		this->signalWindowClosed.dispatch();

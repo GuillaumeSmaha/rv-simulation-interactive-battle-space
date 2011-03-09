@@ -336,19 +336,6 @@ void Application::initScene(void)
 	Planet *planet1 = new Planet(10000, true);
 	//planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
     planet1->setPosition(2500.0, 300.0, 22500.0);
-	
-	
-	//Tingshuo Debut
-	//planet1->getEntity()->setQueryFlags(PLANET_QUERY_MASK);
-	//planet1->getEntity()->setCastShadows(true);
-	//const Ogre::Vector3 pos(2500.0, 300.0, 22500.0);
-	//Ogre::Vector3 size = planet1->getEntity()->getBoundingBox().getSize();
-	//size *= 0.60;
-	//OgreBulletDynamics::RigidBody *body = this->listenerFrame->addSphere(planet1->getEntity(), planet1->getNode(), pos, Quaternion(0,0,0,1),
-	//	size.x, 1.0, 1.0, 0.0);
-	//Tingshuo Fin
-
-
 	//planet1->setScale(150.0, 150.0, 150.0);
 
 	Planet *planet2 = new Planet(2500, 2, false);
@@ -367,16 +354,6 @@ void Application::initScene(void)
     ship->setPosition(-500,-500,-500);
     
 	ship->createCollisionObject(this->listenerCollision);
-    //Tingshuo Debut
-//	ship->getEntity()->setQueryFlags(SHIP_QUERY_MASK);
-//
-//	ship->getEntity()->setCastShadows(true);
-//	const Ogre::Vector3 pos_ship(-50,-50,-50);
-//	Ogre::Vector3 size_ship = ship->getEntity()->getBoundingBox().getSize();
-//	size_ship *= 0.48;
-//	OgreBulletDynamics::RigidBody *body_ship = this->listenerFrame->addSphere(ship->getEntity(), ship->getNode(), pos_ship, Quaternion(0,0,0,1),
-//		size_ship.x, 1.0, 1.0, 0.0);
-	//Tingshuo Fin
 	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
 
@@ -389,22 +366,27 @@ void Application::initScene(void)
 	ship2->createCollisionObject(this->listenerCollision);
 	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
 
+
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,10000);
-//    ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
+	//ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
     //ship3->getNode()->setScale(Ogre::Vector3(50,50,50));
     ship3->touched();
     GestShip::getSingleton()->addShip(ship3);
+    
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);
     //~ Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
     bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
     bill->setMaterialName("test");
-   // bill->setColor(ColourValue::Red);
+	//bill->setColor(ColourValue::Red);
     ship3->getNode()->attachObject(bill);
+    
+    
 	//création de la ceinture d'asteroids
 	GestGroupAsteroids::getSingleton()->createGroup(32,100,100,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.05, this->listenerCollision);
 	//création de 4 asteroids se balandant dans l'espace (autour de la terre)
 	GestGroupAsteroids::getSingleton()->createGroup(4,10000,1000,Ogre::Radian(0.01),planet1->getMInnerRadius()*3, planet1->getNode(), 0.05, this->listenerCollision);
+
 
 
 	//this->listenerTime->signalTimerElapsed.add(&GestPlanet::updatePlanet,GestPlanet::getSingleton());
