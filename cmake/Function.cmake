@@ -158,5 +158,6 @@ macro(writeResourceFile destDir isDebug)
 	file(APPEND ${FILE_DEST} "FileSystem=${CMAKE_SOURCE_DIR}/cegui/layouts\n")		
     file(APPEND ${FILE_DEST} "[General]\n")
 	file(APPEND ${FILE_DEST} "FileSystem=${CMAKE_SOURCE_DIR}/cegui/general\n")	
+	file(APPEND ${FILE_DEST} "FileSystem=${CMAKE_SOURCE_DIR}/txt_menus\n")	
 
 endmacro(writeResourceFile)

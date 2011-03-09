@@ -86,9 +86,6 @@ bool Application::start(void)
 	// initialise the system, create the default rendering window
 	this->listenerWindow = new ListenerWindow(this->root, "Combat spatial");
 
-	//create Sound singleton
-	GestSound::getSingleton();
-
 	// get the generic SceneManager
 	this->sceneMgr = this->root->createSceneManager(Ogre::ST_GENERIC);
 

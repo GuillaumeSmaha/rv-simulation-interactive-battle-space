@@ -23,20 +23,13 @@ GestSound::GestSound()
 		//initialisation du manager de son OpenAL
 		this->soundManager = new OgreAL::SoundManager("Device Manager", 10);
 		
-		std::string file;
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_SHOOT), Utils::getFullPathSound("tir.ogg"), false, false);
 		
-		file.assign(PROJECT_SOURCE_DIR);
-		file.append("/media/sound/tir.ogg");
-		this->soundManager->createSound(Utils::toString(GestSound::SOUND_SHOOT), file, false, false);
-		file.assign(PROJECT_SOURCE_DIR);
-		file.append("/media/sound/traitre.ogg");
-		this->soundManager->createSound(Utils::toString(GestSound::SOUND_TRAITRE), file, false, false);
-		file.assign(PROJECT_SOURCE_DIR);
-		file.append("/media/sound/explosion.ogg");
-		this->soundManager->createSound(Utils::toString(GestSound::SOUND_EXPLOSION), file, false, false);
-		file.assign(PROJECT_SOURCE_DIR);
-		file.append("/media/sound/touche.ogg");
-		this->soundManager->createSound(Utils::toString(GestSound::SOUND_DEGATS), file, false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_TRAITRE), Utils::getFullPathSound("traitre.ogg"), false, false);
+		
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_EXPLOSION), Utils::getFullPathSound("explosion.ogg"), false, false);
+		
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_DEGATS), Utils::getFullPathSound("touche.ogg"), false, false);
 	}
 }
 

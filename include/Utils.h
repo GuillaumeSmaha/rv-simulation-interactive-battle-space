@@ -178,6 +178,23 @@ class Utils
 		* \param path Le chemin du fichier à lire
 		*/
         static Ogre::String read_file(char * path);
+
+        /*!
+		* \brief Retourne le chemin complet d'un fichier contenu dans les ressources d'un groupe défini
+		* \param groupName Nom du groupe de la ressource
+		* \param filename Nom du fichier
+		*/
+		static Ogre::String getFullPathRessources(Ogre::String groupName, Ogre::String filename);
+        /*!
+		* \brief Retourne le chemin complet d'un fichier contenu dans tous les groupes des ressources
+		* \param filename Nom du fichier
+		*/
+		static Ogre::String getFullPathRessources(Ogre::String filename);
+        /*!
+		* \brief Retourne le chemin complet pour un fichier sonore en fonction du fichier "soundDir.here"
+		* \param filename Nom du fichier
+		*/
+		static Ogre::String getFullPathSound(Ogre::String filename);
 };
 
 

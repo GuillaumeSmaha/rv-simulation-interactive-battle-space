@@ -63,7 +63,7 @@ void Utils::logFile(Ogre::String text)
 	{
 		time_t rawtime;
 		struct tm * timeinfo;
-		char bufferTime[10];
+		char bufferTime[15];
 		std::ofstream fileLog(Utils::_logFile.c_str(), std::ios_base::app);
 
 		time ( &rawtime );
@@ -116,4 +116,50 @@ Ogre::String Utils::read_file(char * path)
     }
     else  // sinon
         return NULL;
+}
+
+
+Ogre::String Utils::getFullPathRessources(Ogre::String groupName, Ogre::String filename)
+{
+	Ogre::FileInfoListPtr listPtr = Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo(groupName, filename);
+	if(listPtr->size() != 1)
+		return "";
+
+	Ogre::String output = listPtr->at(0).archive->getName();
+	output.append("/");
+	output.append(filename);
+
+	return output;
+}
+
+
+Ogre::String Utils::getFullPathRessources(Ogre::String filename)
+{
+	Ogre::String group = Ogre::ResourceGroupManager::getSingleton().findGroupContainingResource(filename);
+
+	Ogre::FileInfoListPtr listPtr = Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo(group, filename);
+	if(listPtr->size() != 1)
+		return "";
+
+	Ogre::String output = listPtr->at(0).archive->getName();
+	output.append("/");
+	output.append(filename);
+
+	return output;
+}
+
+Ogre::String Utils::getFullPathSound(Ogre::String filename)
+{
+	Ogre::String fileSoundDir = "soundDir.here";
+	Ogre::String group = Ogre::ResourceGroupManager::getSingleton().findGroupContainingResource(fileSoundDir);
+
+	Ogre::FileInfoListPtr listPtr = Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo(group, fileSoundDir);
+	if(listPtr->size() != 1)
+		return "";
+		
+	Ogre::String output = listPtr->at(0).archive->getName();
+	output.append("/sound/");
+	output.append(filename);
+
+	return output;
 }

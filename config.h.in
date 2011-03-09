@@ -21,9 +21,5 @@
 	 **  \brief Nom complet du projet
 	 **/
 	#define PROJECT_FULLNAME PROJECT_NAME" "PROJECT_VERSION_FULL
-	/*!
-	 **  \brief Chemin des sources
-	 **/
-	#cmakedefine PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}"
 
 #endif
