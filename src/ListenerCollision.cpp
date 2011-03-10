@@ -146,19 +146,10 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 					}
 					
 					case ObjectRoot::SHIP_PLAYER :
-					{
-						ShipAbstract * ship = static_cast<ShipAbstract *>(object);
-						ship->isTouch(10);
-						break;
-					}
-					
 					case ObjectRoot::SHIP_IA :
 					{
 						ShipAbstract * ship = static_cast<ShipAbstract *>(object);
 						ship->exploded();
-						//~ GestShip::getSingleton()->remShip(ship);
-						ship->setSpeed(0.0);
-						ship->getNode()->setVisible(false);
 						
 						break;
 					}
@@ -176,27 +167,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 				}
 				
 				//intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
-				if((*itShip)->getTypeObject() != ObjectRoot::SHIP_PLAYER)
-				{
-					//~ GestShip::getSingleton()->remShip(*itShip);
-					(*itShip)->setSpeed(0.0);
-					(*itShip)->getNode()->setVisible(false);
-				}
-				else
-				{
-					//TODO
-				}
 				(*itShip)->exploded();
-				(*itShip)->setSpeed(0);
-				(*itShip)->setAcceleration(0);
-				(*itShip)->setTranslateSpeed(0);
-				(*itShip)->setTranslateAcceleration(0);
-				(*itShip)->setRollSpeed(Ogre::Radian(0));
-				(*itShip)->setRollAcceleration(Ogre::Radian(0));
-				(*itShip)->setPitchSpeed(Ogre::Radian(0));
-				(*itShip)->setPitchAcceleration(Ogre::Radian(0));
-				(*itShip)->setYawSpeed(Ogre::Radian(0));
-				(*itShip)->setYawAcceleration(Ogre::Radian(0));
 				
 				break;
 			}
@@ -261,24 +232,11 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			switch(object->getTypeObject())
 			{
 				case ObjectRoot::SHIP_PLAYER :
-				{
-					ShipAbstract * ship = static_cast<ShipAbstract *>(object);
-                    ship->isTouch(10);
-                    break;
-                }
-                    
 				case ObjectRoot::SHIP_IA :
 				case ObjectRoot::SHIP_BATTLE_STATION :
 				{
 					ShipAbstract * ship = static_cast<ShipAbstract *>(object);
-                    ship->isTouch(10);
-                    if(ship->getIsDead())
-                    {
-						//~ GestShip::getSingleton()->remShip(ship);
-						ship->setSpeed(0.0);
-						ship->getNode()->setVisible(false);
-					}
-                    
+                    ship->isTouch(10);                    
 					break;
 				}
 					

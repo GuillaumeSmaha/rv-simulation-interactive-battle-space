@@ -107,10 +107,33 @@ std::vector<ShipAbstract *> GestShip::getAllShips()
 
 void GestShip::updateShips(void *)
 {
-    vector<ShipAbstract *>::iterator itShip;
-    for(itShip=lstShip.begin(); itShip<lstShip.end();itShip++)
+    vector<ShipAbstract *>::iterator itShip = lstShip.begin();
+	while (itShip != lstShip.end())
     {
-        (*itShip)->updatePosition();
+		if((*itShip)->getIsDead() && (*itShip)->getTypeObject() != ObjectRoot::SHIP_PLAYER)
+		{
+			(*itShip)->getNode()->setVisible(false);
+			(*itShip)->getEntity()->setVisible(false);
+			(*itShip)->setShipLife(0);
+			(*itShip)->setSpeed(0);
+			(*itShip)->setAcceleration(0);
+			(*itShip)->setTranslateSpeed(0);
+			(*itShip)->setTranslateAcceleration(0);
+			(*itShip)->setRollSpeed(Ogre::Radian(0));
+			(*itShip)->setRollAcceleration(Ogre::Radian(0));
+			(*itShip)->setPitchSpeed(Ogre::Radian(0));
+			(*itShip)->setPitchAcceleration(Ogre::Radian(0));
+			(*itShip)->setYawSpeed(Ogre::Radian(0));
+			(*itShip)->setYawAcceleration(Ogre::Radian(0));
+
+			//~ delete *itShip;
+			itShip = lstShip.erase(itShip);
+		}
+		else
+		{
+			(*itShip)->updatePosition();
+			itShip++;
+		}
     }
 }
 

@@ -113,6 +113,24 @@ void ShipAbstract::exploded(void)
     this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
 
     this->isDead = true;
+		
+	switch(this->getTypeObject())
+	{
+		case ObjectRoot::SHIP_PLAYER :
+			std::cout << "ShipPlayer : Explosion de " << this->getName() << std::endl;
+			break;
+			
+		case ObjectRoot::SHIP_IA :
+			std::cout << "ShipIA : Explosion de " << this->getName() << std::endl;
+			break;
+			
+		case ObjectRoot::SHIP_BATTLE_STATION :
+			std::cout << "ShipBattleStation : Explosion de " << this->getName() << std::endl;
+			break;
+			
+		default:
+			break;
+	}
 }
 
 
