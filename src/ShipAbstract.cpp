@@ -3,6 +3,7 @@
 using namespace Ogre;
 
 Ogre::Real ShipAbstract::MAXSPEED = 100;
+Ogre::Real ShipAbstract::MAXLIFE= 100;
 
 ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 	: shipLife(100),

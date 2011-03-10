@@ -112,6 +112,12 @@ class ShipPlayer : public ShipAbstract
 		*/
 		void updatePosition(void);
 
+        /*
+         * \brief regarde si le vaisseau est trop loin du champs de bataille et lui fait perdre de la vie si c'est le cas
+         *
+        */
+        void check_out_of_battle(void);
+
 		/*!
 		 * \brief Active la premiere caméra
 		 * \param type Type de caméra

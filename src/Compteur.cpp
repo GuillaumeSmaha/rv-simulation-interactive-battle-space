@@ -16,7 +16,7 @@ Compteur::Compteur(ShipAbstract * ship, ListenerTime * listenerTime)
 
     OverlayContainer* panelCompteurLife = static_cast<OverlayContainer*>(overlayManager.createOverlayElement("Panel", "PanelCompteur"+Utils::toString(Utils::unique())));
     panelCompteurLife->setMetricsMode(Ogre::GMM_RELATIVE);
-    panelCompteurLife->setPosition(0.07, 0.85);
+    panelCompteurLife->setPosition(0.0, 0.85);
     panelCompteurLife->setDimensions(0.15, 0.15);
     panelCompteurLife->setMaterialName("jaugeVide");
 
@@ -33,7 +33,7 @@ Compteur::Compteur(ShipAbstract * ship, ListenerTime * listenerTime)
 
     OverlayContainer * panelJaugeLife= static_cast<OverlayContainer*>(overlayManager.createOverlayElement("Panel", panelJaugeNameLife));
     panelJaugeLife->setMetricsMode(Ogre::GMM_RELATIVE);
-    panelJaugeLife->setPosition(0.075, 0.86);
+    panelJaugeLife->setPosition(0.0025, 0.86);
     panelJaugeLife->setDimensions(0.10, 0.13);
     panelJaugeLife->setMaterialName("jaugePleine");
 
@@ -66,8 +66,8 @@ void Compteur::miseAJourLifeCompteur(void)
     OverlayManager& overlayManager = OverlayManager::getSingleton();
     OverlayContainer * jauge= static_cast<OverlayContainer*>(overlayManager.getOverlayElement(panelJaugeNameLife));
     Ogre::Real acLife=this->ship->getShipLife();
-    Ogre::Real coef= acLife/100;
-    jauge->setPosition(0.075, (0.99-0.13*coef));
+    Ogre::Real coef= acLife/ShipAbstract::MAXLIFE;
+    jauge->setPosition(0.025, (0.99-0.13*coef));
     jauge->setDimensions(0.10, 0.13*coef);
 }
 

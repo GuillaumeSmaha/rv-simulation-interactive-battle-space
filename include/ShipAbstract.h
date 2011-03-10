@@ -120,6 +120,10 @@ class ShipAbstract : public ObjectRoot
 		 * \brief Vitesse maximale du vaisseau
 		 */
         static Ogre::Real MAXSPEED;
+        /*!
+		 * \brief Vie maximale du vaisseau
+		 */
+        static Ogre::Real MAXLIFE;
 		/*!
 		 * \brief Construction
 		*/

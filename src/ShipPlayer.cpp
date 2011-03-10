@@ -47,7 +47,6 @@ ShipPlayer::~ShipPlayer(void)
 
 void ShipPlayer::updatePosition(void)
 {
-	static int playSound = 100;
     this->updateParticules();
     update_differente_acceleration();
 
@@ -138,16 +137,23 @@ void ShipPlayer::updatePosition(void)
 			this->setPitchSpeed(Ogre::Radian(0));
 	}
 
-    /*this->setAcceleration(0);
-    this->setPitchAcceleration(Ogre::Radian(0));
-    this->setRollAcceleration(Ogre::Radian(0));
-    */
+    /**/
+    check_out_of_battle();
+
+    this->gestCamera->update_camera();
+	//this->gestCamera->update_particles();
+}
+
+
+void ShipPlayer::check_out_of_battle(void){
+
+	static int playSound = 100;
 	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0))>100000)
 	{
 		if (playSound >= 100)
 		{
 			playSound = 0;
-			this->isTouch(1);
+			this->isTouch(5);
 			GestSound::getSingleton()->play(GestSound::SOUND_TRAITRE);
 		}
 		else
@@ -157,8 +163,6 @@ void ShipPlayer::updatePosition(void)
 		//Message *traitre = new Message(0);
 		//traitre->Message::afficher_message("traitre","Retournez vous battre!");
 	}
-    this->gestCamera->update_camera();
-	//this->gestCamera->update_particles();
 }
 
 void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
