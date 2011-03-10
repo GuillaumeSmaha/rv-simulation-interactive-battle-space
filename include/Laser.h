@@ -22,14 +22,8 @@ class GestLaser;
 * \class Laser
 * \brief Classe gérant les lasers
 */
-class Laser
-{
-	public:
-        /*!
-		 * \brief Dispatche un signal lorsque le vaisseau est détruit
-		 */
-		 Signal<Laser *> signalDestruction;
-	
+class Laser : public ObjectRoot
+{	
 	private:
          /*!
          * \brief Position initial du laser
@@ -158,9 +152,10 @@ class Laser
 		 * \brief [Getter] Récupère un pointeur sur l'entity
 		 * \return Nom du noeud
 		*/
-		Ogre::MovableObject * getEntity(void)
+		Ogre::Entity * getEntity(void)
 		{
-			return this->particule;
+			//~ return this->particule;
+			return NULL;
 		}
 		/*!
 		 * \brief [Getter] Récupère un pointeur sur le particule

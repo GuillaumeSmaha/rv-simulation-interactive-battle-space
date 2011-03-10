@@ -84,13 +84,14 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
 		case LASER:
 		{
 			Ogre::ParticleSystem * particle;
-			particle = this->sceneMgr->createParticleSystem(25);
+			particle = this->sceneMgr->createParticleSystem("Laser"+Utils::toString(Utils::unique()), 25);
 			particle->setDefaultDimensions(10, 10);
 			Ogre::ParticleEmitter * emitter = particle->addEmitter("Point");
 			emitter->setAngle(Ogre::Degree(3));
 			emitter->setTimeToLive(0.1);
 			emitter->setEmissionRate(50);
 			emitter->setParticleVelocity(5);
+			emitter->setDuration(GestLaser::timeLife/1000);
 			emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
 			emitter->setColour(Ogre::ColourValue::Red);
 			emitter->setPosition(Ogre::Vector3(5.7, 0, 0));
@@ -165,8 +166,9 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 {
 	Ogre::SceneNode * node;
 	Ogre::SceneNode * nodeParent = object->getParentSceneNode();
-	nodeParent->detachObject(object);
+	nodeParent->setVisible(false);
 	object->setVisible(false);
+	nodeParent->detachObject(object);
 
 	switch(type)
 	{
@@ -219,13 +221,17 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 		case PLANET9:
 		case ASTEROID:
 		case MISSILE:
-			this->sceneMgr->destroyEntity((Ogre::Entity *)object);
+			this->sceneMgr->destroyEntity(static_cast<Ogre::Entity *>(object));
 			break;
 
 		case LASER:
-			this->sceneMgr->destroyParticleSystem((Ogre::ParticleSystem *)object);
+		{
+			Ogre::ParticleSystem * particle = static_cast<Ogre::ParticleSystem *>(object);
+			particle->removeAllEmitters();
+			particle->removeAllAffectors();
+			this->sceneMgr->destroyParticleSystem(particle);
 			break;
-
+		}
 		default:
 			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
@@ -233,7 +239,6 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 
 	nodeParent->removeAndDestroyAllChildren();
 	node->removeAndDestroyChild(nodeParent->getName());
-	//~ delete object;
 }
 
 

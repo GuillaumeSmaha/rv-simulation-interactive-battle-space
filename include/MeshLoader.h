@@ -11,6 +11,8 @@
 #include "nodeName.h"
 #include "Utils.h"
 #include "GestSceneManager.h"
+#include "GestLaser.h"
+
 /*!
  * \class MeshLoader
  *  \brief Définit les différents types de mesh. Crée les entités et les ajoute au graphe de scène

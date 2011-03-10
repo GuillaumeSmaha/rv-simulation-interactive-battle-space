@@ -3,7 +3,7 @@
 using namespace std;
 
 Ogre::Real GestLaser::speedLaserBase = 250.0;
-Ogre::Real GestLaser::timeLife = 5000.0;
+Ogre::Real GestLaser::timeLife = 2500.0;
 
 GestLaser * GestLaser::_instance = NULL;
 
@@ -41,7 +41,6 @@ Laser * GestLaser::create(const Ogre::Vector3 &position, const Ogre::Quaternion 
 void GestLaser::add(Laser * laser)
 {
     this->listLasers.push_back(laser);
-    laser->signalDestruction.add(&GestLaser::remove, this);
 }
 
 void GestLaser::remove(Laser * laser)
