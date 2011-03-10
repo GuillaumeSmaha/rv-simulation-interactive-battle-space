@@ -225,7 +225,7 @@ class Planet :/* public ClassRoot,*/ public ObjectRoot
         }
 
 		/*!
-         * \brief Indique la planète de père
+         * \brief Indiquer la planète de père
         */
 		void setPlanetOrbit(Ogre::Entity *_planetOrbit)
 		{
