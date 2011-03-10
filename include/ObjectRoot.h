@@ -46,7 +46,8 @@ class ObjectRoot : public ClassRoot
 			PLANET = 2,
 			ASTEROID = 3,
 			MISSILE = 4,
-			LASER = 5
+			LASER = 5,
+			SHIP_BATTLE_STATION = 6
 		};
 
 	protected:

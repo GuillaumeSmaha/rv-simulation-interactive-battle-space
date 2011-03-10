@@ -381,6 +381,10 @@ void Application::initScene(void)
         GestShip::getSingleton()->addShip(ship3);
 		ship3->createCollisionObject(this->listenerCollision);
     }
+    BattleStation * station;
+    station = new BattleStation();
+    station->setPosition(100,100,1000);
+    GestShip::getSingleton()->addShip(station);
 /*
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);
     //~ Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
@@ -410,7 +414,7 @@ void Application::initScene(void)
 //Temporaire :
 	Vector3 lightPosition(100, 200, -100000);
 	Sun *sun = new Sun(lightPosition, GestSceneManager::getCamera(0)->getCamera(), sceneMgr);
-	
+
     // Set ambient light
     //this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
 	this->sceneMgr->setAmbientLight(Ogre::ColourValue::Black);

@@ -24,7 +24,7 @@ class MeshLoader
 		enum MeshType {
 			SHIP = 0,
 			SHIP_IA = 2, //peut etre a modifier
-			ARLEQUIN = 3,
+			SHIP_BATTLE_STATION = 3,
 			SHIP_TOUCHED = 4,
 			PLANET = 5,
 			PLANET2 = 6,

@@ -14,7 +14,13 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
     {
         this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_IA));
     }else{
-        this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
+        if(type==ObjectRoot::SHIP_BATTLE_STATION)
+        {
+            this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_BATTLE_STATION));
+        }else
+        {
+            this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
+        }
     }
 
 	// Calcul des tangentes (si pas présentes dans le mesh)

@@ -34,7 +34,7 @@
 #include "Asteroid.h"
 #include "GroupAsteroid.h"
 #include "Message.h"
-
+#include "BattleStation.h"
 class ListenerWindow;
 class ListenerMouse;
 class ListenerKeyboard;
@@ -184,7 +184,7 @@ class Application : public ClassRoot
 		*  \brief Tue le gestionnaire d'événements
 		*/
 		void killInputManager(void*);
-		
+
 		/*!
 		* \brief Mise à jour des stats (FPS, etc...)
 		*/
@@ -206,10 +206,10 @@ class Application : public ClassRoot
 		*  \brief Permet de redemarrer sur une scene initiale sans tout recharger
 		*/
 		void restartScene(void);
-		
-		
+
+
 		//Getter/Setter
-		
+
 		/*!
 		*  \brief [Getter] Capteur d'événements
 		*/
@@ -266,7 +266,7 @@ class Application : public ClassRoot
 		*  \brief Charge les ressources listées dans resources.cfg
 		*/
 		void loadRessources(void);
-		
+
 		/*!
 		*  \brief Initialise l'écoute de l'entrée clavier et souris
 		*/
@@ -279,7 +279,7 @@ class Application : public ClassRoot
 		*  \brief Initialise la scène
 		*/
 		void initScene(void);
-		
+
         /*!
          * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)
          */

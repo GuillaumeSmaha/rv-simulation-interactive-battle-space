@@ -256,16 +256,6 @@ void ShipPlayer::updateParticules(void)
     int j = -1;
     Ogre::Real dist = -1;
     Ogre::Real distCurrent;
-    /*
-    while(GestShip::getSingleton()->getAllShips().at(i) == this)
-    {
-        if(GestShip::getSingleton()->getAllShips().size() > i+1)
-        {
-			i++;
-        }
-*/
-
-
 
     for(i=GestShip::getSingleton()->getAllShips().size()-1; i>=0;i--)
     {

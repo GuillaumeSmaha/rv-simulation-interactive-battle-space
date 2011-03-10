@@ -53,6 +53,9 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
         case SHIP_IA:
 			object = this->sceneMgr->createEntity(name, "razor.mesh");
         break;
+        case SHIP_BATTLE_STATION:
+            object = this->sceneMgr->createEntity(name, "Dansphere.mesh");
+        break;
 		case PLANET:
 		case PLANET2:
 		case PLANET3:
@@ -115,6 +118,7 @@ Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType typ
 		case SHIP:
 		case SHIP_TOUCHED:
 		case SHIP_IA:
+		case SHIP_BATTLE_STATION:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 			node = node->createChildSceneNode(nodeName);
 			node->attachObject(object);
@@ -169,6 +173,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 		case SHIP:
 		case SHIP_TOUCHED:
 		case SHIP_IA:
+		case SHIP_BATTLE_STATION:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 			break;
 		case PLANET:
@@ -202,6 +207,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 		case SHIP:
 		case SHIP_TOUCHED:
 		case SHIP_IA:
+		case SHIP_BATTLE_STATION:
 		case PLANET:
 		case PLANET2:
 		case PLANET3:
@@ -239,6 +245,7 @@ Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String no
 		case SHIP:
 		case SHIP_TOUCHED:
 		case SHIP_IA:
+		case SHIP_BATTLE_STATION:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 			node = node->createChildSceneNode(nodeName);
 			break;
@@ -287,6 +294,9 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
         case SHIP_IA:
             static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
 			break;
+        case SHIP_BATTLE_STATION:
+            static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
+        break;
 
         case PLANET :
 		case PLANET2:
