@@ -72,6 +72,10 @@ class PlayerControls: public ClassRoot
 		 * \brief Lie un bouton de souris à un contrôle.
 		 */
         std::vector<PlayerControls::Controls> listMouseControl;
+         /*!
+		 * \brief Indique si le mouseMove est pris en compte pour les mouvements du vaisseau
+		 */
+        bool mouseMovedActif;
         
 	public:
 		/*!
@@ -165,6 +169,16 @@ class PlayerControls: public ClassRoot
 		 * \return PlayerControls::Controls key correspondante
 		 */
         PlayerControls::Controls OISEventToControlKey(const OIS::MouseButtonID evt);
+         /*!
+		 * \brief [Getter] Recupère la valeur de mouseMovedActif
+		 * \return Indique si le mouvement de la souris est actif pour le vaisseau
+		 */
+        bool getMouseMovedActif();
+         /*!
+		 * \brief [Setter] Définit la valeur de mouseMovedActif
+		 * \param mouseMovedActif Indique si le mouvement de la souris est actif pour le vaisseau
+		 */
+        void setMouseMovedActif(bool mouseMovedActif);
 
 };
 

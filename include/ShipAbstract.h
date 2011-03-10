@@ -148,7 +148,7 @@ class ShipAbstract : public ObjectRoot
 		/*!
 		 * \brief Applique une texture blessé au vaisseau
 		*/
-		void exploded(void);
+		void exploded(Ogre::Real size = 150);
 		/*!
 		 * \brief envoi un laser
 		*/

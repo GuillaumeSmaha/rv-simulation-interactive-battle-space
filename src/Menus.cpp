@@ -248,7 +248,7 @@ void Menus::creer_menus_start(void)
     tblWin[0]=onePlayer;
     tblWin[1]=twoPlayer;
 
-    startWdw=create_std_window((CEGUI::utf8 *)"Choisir mode de jeux", 0.1, 0.05, 0.8, 0.8,2, tblWin);
+    startWdw=create_std_window((CEGUI::utf8 *)"Choisir mode de jeu", 0.1, 0.05, 0.8, 0.8,2, tblWin);
 
     afficher_souris();
     CEGUI::System::getSingleton().setGUISheet(startWdw);

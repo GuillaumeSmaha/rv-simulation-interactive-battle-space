@@ -381,15 +381,23 @@ void Application::initScene(bool isTwoPlayer)
 	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
 
-    if(isTwoPlayer){
+    if(isTwoPlayer)
+    {
         ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
         ship2->setPosition(1200,-600,0);
         //ship2->touched();
         GestShip::getSingleton()->addShip(ship2);
 
         ship2->createCollisionObject(this->listenerCollision);
-        player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
-        player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_S);
+        
+		player2->resetControls();
+		player2->setKeyControl(PlayerControls::SHOOT1, OIS::KC_R);
+		player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_E);
+		player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_D);
+		player2->setKeyControl(PlayerControls::LEFT, OIS::KC_S);
+		player2->setKeyControl(PlayerControls::RIGHT, OIS::KC_F);
+		player2->setKeyControl(PlayerControls::UP, OIS::KC_U);
+		player2->setKeyControl(PlayerControls::DOWN, OIS::KC_Y);
     }
 	
 

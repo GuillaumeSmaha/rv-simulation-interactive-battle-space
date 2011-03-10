@@ -98,44 +98,47 @@ void ShipAbstract::touched(void)
    GestSound::getSingleton()->play(GestSound::SOUND_DEGATS);
 }
 
-void ShipAbstract::exploded(void)
+void ShipAbstract::exploded(Ogre::Real size)
 {
-   Ogre::ParticleSystem * particleSystem = GestSceneManager::getSceneManager()->createParticleSystem("explosions"+Utils::toString(Utils::unique()), "explosionTemplate");
+	Ogre::ParticleSystem * particleSystem = GestSceneManager::getSceneManager()->createParticleSystem("explosions"+Utils::toString(Utils::unique()), "explosionTemplate");
+	particleSystem->setDefaultDimensions(size, size);
 
 	// fast forward 1 second  to the point where the particle has been emitted
 	particleSystem->fastForward(1.0);
 
 	GestSound::getSingleton()->play(GestSound::SOUND_EXPLOSION);
 	// attach the particle system to a scene node
-    this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
+    //~ this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
+    this->getNode()->createChildSceneNode(Vector3(0.0, 0.0, 0.0))->attachObject(particleSystem);
 
     this->isDead = true;
 		
 	switch(this->getTypeObject())
 	{
 		case ObjectRoot::SHIP_PLAYER :
-            {
+		{
 			std::cout << "ShipPlayer : Explosion de " << this->getName() << std::endl;
             Message* message = Message::getSingleton();
             message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, Nous avons été détruits!");
 			break;
-            }
+		}
 			
 		case ObjectRoot::SHIP_IA :
-            {
+		{
 			std::cout << "ShipIA : Explosion de " << this->getName() << std::endl;
             Message* message = Message::getSingleton();
             message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, Un vaisseau ennemi de moins!");
 			break;
-            }
+        }
 			
-		case ObjectRoot::SHIP_BATTLE_STATION :    
-            {
+		case ObjectRoot::SHIP_BATTLE_STATION :
+        {
 			std::cout << "ShipBattleStation : Explosion de " << this->getName() << std::endl;
             Message* message = Message::getSingleton();
             message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, La station spatiale est détruite!");
 			break;
-            }
+		}
+        
 		default:
 			break;
 	}
@@ -178,8 +181,17 @@ void ShipAbstract::isTouch(int degat)
     {
         setShipLife(getShipLife()-degat);
         if(getShipLife() < 0)
-        {
-            exploded();
+        {            
+			switch(this->getTypeObject())
+			{						
+				case ObjectRoot::SHIP_BATTLE_STATION :
+					this->exploded(1000);
+					break;
+				
+				default:
+					this->exploded();
+					break;
+			}
             isDead = true;
         }
         else
