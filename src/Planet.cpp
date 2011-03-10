@@ -6,7 +6,8 @@ int Planet::numberOfPlanet = 0;
 
 Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRadius(1000)
 {
-    this->typeObject = ObjectRoot::PLANET;
+	this->planetOrbit = NULL;
+	this->typeObject = ObjectRoot::PLANET;
 	//this->entity = MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::PLANET);
     //this->getNode()->setPosition(150, 100, -100);
 
@@ -22,7 +23,7 @@ Planet::Planet(void) : type(MeshLoader::PLANET), hasAtmosphere(false), mInnerRad
 
 Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
-
+	this->planetOrbit = NULL;
     this->typeObject = ObjectRoot::PLANET;
 	if (this->hasAtmosphere)
 	{
@@ -60,7 +61,7 @@ Planet::Planet(Ogre::Real radius, bool hasAtmo)	: hasAtmosphere(hasAtmo), mInner
 
 Planet::Planet(Ogre::Real radius, Ogre::int16 _type, bool hasAtmo)	: type(_type), hasAtmosphere(hasAtmo), mInnerRadius(radius)
 {
-
+	this->planetOrbit = NULL;
     this->typeObject = ObjectRoot::PLANET;
 	if (this->hasAtmosphere)
 	{
@@ -192,6 +193,15 @@ void Planet::update()
 
 void Planet::updatePosition(void)
 {
+	if(this->planetOrbit!=NULL)
+	{
+		Ogre::Real rotationSpeed = 0.002;
+		Ogre::Vector3 direction = this->planetOrbit->getParentNode()->getPosition()-this->getNode()->getPosition();
+
+		Ogre::Vector3 trans = Ogre::Vector3(direction.z, -direction.y, -direction.x)*rotationSpeed;
+		Ogre::Vector3 pos = this->getNode()->getPosition()+trans;
+		this->setPosition(pos[0], pos[1], pos[2]);
+	}
 }
 
 

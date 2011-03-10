@@ -56,7 +56,10 @@ class Planet :/* public ClassRoot,*/ public ObjectRoot
 		* \brief La vitesse de rotation(2 types de vitesse de rotation, entrain de penser)
 		//Ogre::Real speed;
 		*/
-
+		/*!
+		* \brief Indique la planète de père
+		*/
+		Ogre::Entity * planetOrbit;
 		/*!
 		* \brief Indique si la planète possède une atmosphère ou pas
 		*/
@@ -221,6 +224,14 @@ class Planet :/* public ClassRoot,*/ public ObjectRoot
             return this->mInnerRadius * 1.25;
         }
 
+		/*!
+         * \brief Indique la planète de père
+        */
+		void setPlanetOrbit(Ogre::Entity *_planetOrbit)
+		{
+			this->planetOrbit = _planetOrbit;
+		}
+
 	private:
 
 		/*!
@@ -257,6 +268,7 @@ class Planet :/* public ClassRoot,*/ public ObjectRoot
 			outerSphere->setMaterialName(name);
 		}
 
+		
 };
 
 #endif // __PLANET_H__

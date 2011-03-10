@@ -361,6 +361,7 @@ void Application::initScene(bool isTwoPlayer)
 
 	Planet *planet2 = new Planet(2500, 2, false);
 	planet2->setPosition(20000.0, 900.0, 15000.0);
+	planet2->setPlanetOrbit(planet1->getEntity());
 	//planet2->setScale(200.0, 200.0, 200.0);
 
     planet1->createCollisionObject(this->listenerCollision, planet1->getMInnerRadius()-10);
