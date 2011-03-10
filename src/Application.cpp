@@ -1,7 +1,5 @@
 #include "Application.h"
-//#include "HDRLogic.h"
-#include "ViewportLoader.h"
-#include "Sun.h"
+
 using namespace Ogre;
 
 
@@ -33,6 +31,9 @@ Application::~Application(void)
 {
 	std::cout << std::endl << "-" << std::endl << "Stop	application !!" << std::endl;
 
+	std::cout << "delete sun" << std::endl;
+    delete sun;
+    
 	std::cout << "delete GestLaser::deleteAll" << std::endl;
     GestLaser::getSingleton()->deleteAll();
 	std::cout << "delete GestLaser::destroy" << std::endl;
@@ -437,7 +438,7 @@ void Application::initScene(bool isTwoPlayer)
 
 //Temporaire :
 	Vector3 lightPosition(100, 200, -100000);
-	Sun *sun = new Sun(lightPosition, sceneMgr);
+	this->sun = new Sun(lightPosition);
 
     // Set ambient light
     //this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
@@ -458,7 +459,7 @@ void Application::initScene(bool isTwoPlayer)
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 
-    Message * message= new Message(this->listenerTime);
+    Message * message = new Message(this->listenerTime);
     message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);

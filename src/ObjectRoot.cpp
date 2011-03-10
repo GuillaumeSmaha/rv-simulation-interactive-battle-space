@@ -4,6 +4,27 @@
 using namespace Ogre;
 using namespace OgreBulletCollisions;
 
+
+std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *> ObjectRoot::lstRigidbodyToObject = std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *>();
+
+
+void ObjectRoot::addRelationRigidbodyToObject(OgreBulletDynamics::RigidBody * rigidBody, ObjectRoot * object)
+{
+	std::pair<OgreBulletDynamics::RigidBody *, ObjectRoot *> relation(rigidBody, object);
+	lstRigidbodyToObject.insert(relation);
+}
+
+ObjectRoot * ObjectRoot::getObjectWithRigidBody(OgreBulletDynamics::RigidBody * rigidBody)
+{
+	return lstRigidbodyToObject[rigidBody];
+}
+
+std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *> ObjectRoot::getAllRigidbodyToObject()
+{
+	return lstRigidbodyToObject;
+}
+
+
 ObjectRoot::ObjectRoot()
 {
     shape = NULL;
@@ -79,7 +100,8 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
 
     this->rigidBody->setShape (this->getNode(),  this->shape, 0.6, 0.6, 1.0, pos ,Quaternion(0,0,0,1));
     this->getEntity()->setCastShadows(true);
-
+    
+    ObjectRoot::addRelationRigidbodyToObject(this->rigidBody, this);
 }
 
 

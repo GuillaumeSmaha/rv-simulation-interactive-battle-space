@@ -198,8 +198,8 @@ class Utils
 		/*!
 		* \brief Retourne ou est l'asteroid
 		* \param ship Position du vaisseau
-		* \param shipOrientation Orientation du vaisseeau
-		* \param asteroid
+		* \param shipFutur Future position du vaisseeau
+		* \param asteroid Position de l'astéroide
 		* \return angle [0.0,0.4[ gauche; [O.4,0.6] centre; ]0.6, 1.0] droite;
 		*/
 		static Ogre::Real getAngle(Ogre::Vector3 ship, Ogre::Vector3 shipFutur, Ogre::Vector3 asteroid);

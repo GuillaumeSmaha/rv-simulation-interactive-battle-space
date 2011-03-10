@@ -35,6 +35,9 @@
 #include "GroupAsteroid.h"
 #include "Message.h"
 #include "BattleStation.h"
+#include "Sun.h"
+//#include "HDRLogic.h"
+
 class ListenerWindow;
 class ListenerMouse;
 class ListenerKeyboard;
@@ -139,6 +142,10 @@ class Application : public ClassRoot
         * \brief Gere l'ensemble des planetes
         */
 		GestPlanet * gestPlanet;
+        /*!
+        * \brief Le soleil
+        */
+		Sun * sun;
 
 	public: //TODO : faire des fonctions pour ca
 

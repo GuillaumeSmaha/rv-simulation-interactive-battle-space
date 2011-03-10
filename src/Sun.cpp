@@ -1,18 +1,19 @@
 #include "Sun.h"
 
-Sun::Sun(Vector3 LightPosition, SceneManager* SceneMgr)
+using namespace Ogre;
+
+Sun::Sun(Ogre::Vector3 lightPosition)
 {
-	mSceneMgr      = SceneMgr;
 	this->createSun();
-	this->setLightPosition(LightPosition);
+	this->setLightPosition(lightPosition);
 }
 
 Sun::~Sun()
 {
 	mNode->detachObject(mHaloSet);
 	mNode->detachObject(mBurstSet);
-	mSceneMgr->destroyBillboardSet(mHaloSet);
-	mSceneMgr->destroyBillboardSet(mBurstSet);
+	GestSceneManager::getSceneManager()->destroyBillboardSet(mHaloSet);
+	GestSceneManager::getSceneManager()->destroyBillboardSet(mBurstSet);
 	/// TODO destroy mNode
 } 
 
@@ -23,18 +24,18 @@ void Sun::createSun()
 	// -----------------------------------------------------
 	// We create 2 sets of billboards for the Sun
 	// -----------------------------------------------------
-	mHaloSet = mSceneMgr->createBillboardSet("halo");
+	mHaloSet = GestSceneManager::getSceneManager()->createBillboardSet("halo");
 	mHaloSet->setMaterialName("lensflare/halo");
 	mHaloSet->setCullIndividually(true);
 	mHaloSet->setQueryFlags(0);
 
-	mBurstSet= mSceneMgr->createBillboardSet("burst");
+	mBurstSet = GestSceneManager::getSceneManager()->createBillboardSet("burst");
 	mBurstSet->setMaterialName("lensflare/burst");
 	mBurstSet->setCullIndividually(true);
 	mBurstSet->setQueryFlags(0);	
 
 	// The node is located at the light source.
-	mNode  = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	mNode  = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode();
 
 	mNode->attachObject(mBurstSet);
 	mNode->attachObject(mHaloSet);
@@ -104,31 +105,21 @@ void Sun::update(const Ogre::FrameEvent &evt)
 	}
 }
 
-/* ------------------------------------------------------------------------- */
-/// This function updates the light source position. 
-/** This function can be used if the light source is moving.*/
-/* ------------------------------------------------------------------------- */
-void Sun::setLightPosition(Vector3 pos)
+
+void Sun::setLightPosition(Ogre::Vector3 pos)
 {
 	mLightPosition = pos;
 	mNode->setPosition(mLightPosition); 
 }
 
-
-/* ------------------------------------------------------------------------- */
-/// This function changes the colour of the burst. 
-/* ------------------------------------------------------------------------- */
-void Sun::setBurstColour(ColourValue color)
+void Sun::setBurstColour(Ogre::ColourValue color)
 {
 	mBurstSet->getBillboard(0)->setColour(color);
 	mBurstSet->getBillboard(1)->setColour(color*0.8);
 	mBurstSet->getBillboard(2)->setColour(color*0.6);
 } 
 
-/* ------------------------------------------------------------------------- */
-/// This function changes the colour of the halos. 
-/* ------------------------------------------------------------------------- */
-void Sun::setHaloColour(ColourValue color)
+void Sun::setHaloColour(Ogre::ColourValue color)
 { 
 	//mHaloSet->getBillboard(0)->setColour(color*0.8);
 	//mHaloSet->getBillboard(1)->setColour(color*0.6);

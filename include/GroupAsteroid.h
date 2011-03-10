@@ -66,7 +66,6 @@ class GroupAsteroid
 		void rotateRelative(const Ogre::Radian angle);
 		/*!
 		 * \brief Met à jour la position de tous les asteroids du groupe
-		 * \param groupShips vecteur contenant tous les ships
 		*/
         void updateGroupAsteroids(void);
 		/*!

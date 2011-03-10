@@ -6,6 +6,9 @@
 #define __OBJECT_ROOT_H__
 
 
+#include <map>
+#include <Ogre.h>
+#include <OgreBlendMode.h>
 #include <OgreBulletCollisions.h>
 #include <OgreBulletDynamics.h>
 #include "OgreBulletCollisionsShape.h"
@@ -15,14 +18,13 @@
 #include "Shapes/OgreBulletCollisionsSphereShape.h"
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "Utils.h"
-#include <Ogre.h>
 #include "GestSceneManager.h"
+#include "ClassRoot.h"
+
 //#define LIMIT_DOWN_CULLING 0.5
 //#define LIMIT_UP_CULLING 0.7
 #define LIMIT_DOWN_CULLING 0.05
 #define LIMIT_UP_CULLING 0.0625
-#include "ClassRoot.h"
-#include <OgreBlendMode.h>
 
 
 //#include "ListenerCollision.h"
@@ -36,6 +38,30 @@ class ListenerCollision;
  */
 class ObjectRoot : public ClassRoot
 {
+	private:
+		/*!
+		 * \brief Définit les relations entre un rigid body et l'objet associé
+		 */
+		static std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *> lstRigidbodyToObject;
+		
+	public:
+		/*!
+		 * \brief Ajoute une relation entre le rigidBody et l'objet
+		 * \param rigidBody Le rigid body
+		 * \param object L'objet
+		 */
+		static void addRelationRigidbodyToObject(OgreBulletDynamics::RigidBody * rigidBody, ObjectRoot * object);
+		/*!
+		 * \brief Récupère l'objet en fonction d'un rigid body
+		 * \return L'objet lié au rigid body
+		*/
+		static ObjectRoot * getObjectWithRigidBody(OgreBulletDynamics::RigidBody * rigidBody);
+		/*!
+		 * \brief Récupère la liste des relations
+		 * \return Liste des relations
+		*/
+		static std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *> getAllRigidbodyToObject();
+	
 	public:
 		/*!
 		 *  \brief Définit les différents types de mesh
@@ -76,10 +102,27 @@ class ObjectRoot : public ClassRoot
 
 
 	public:
-        virtual Ogre::SceneNode * getNode() = 0;
+		/*!
+		 * \brief [Getter] Récupère le nom du noeud
+		 * \return Nom du noeud
+		*/
         virtual Ogre::String getName() = 0;
+		/*!
+		 * \brief [Getter] Récupère un pointeur sur le noeud content le mesh
+		 * \return Nom du noeud
+		*/
+        virtual Ogre::SceneNode * getNode() = 0;
+		/*!
+		 * \brief [Getter] Récupère un pointeur sur l'entity
+		 * \return Nom du noeud
+		*/
         virtual Ogre::Entity * getEntity() = 0;
 
+		/*!
+		 * \brief Créer le bouding volum du mesh associé
+		 * \param listenerCollision Controler de collision
+		 * \param size Dimension du volume englobant
+		*/
 		virtual void createCollisionObject(ListenerCollision * listenerCollision, int size=0);
 
 

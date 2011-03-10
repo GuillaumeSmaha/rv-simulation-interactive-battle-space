@@ -162,8 +162,6 @@ class ShipAbstract : public ObjectRoot
 		*/
         void isTouch(int degat);
 
-		//void createCollisionObject(ListenerCollision * listenerCollision);
-
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel du monde
 		 * \param x Déplacement de l'objet en x

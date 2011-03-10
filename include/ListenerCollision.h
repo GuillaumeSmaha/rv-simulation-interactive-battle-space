@@ -14,6 +14,7 @@
 
 #include "ClassRoot.h"
 #include "ListenerFrame.h"
+#include "GestLaser.h"
 #include "GestShip.h"
 #include "GestSceneManager.h"
 #include "ShipAbstract.h"

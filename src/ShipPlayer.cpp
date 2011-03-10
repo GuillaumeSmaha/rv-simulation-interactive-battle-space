@@ -282,7 +282,7 @@ void ShipPlayer::updateParticules(void)
 
 
     dist = -1;
-    distCurrent;
+    //~ distCurrent;
 
     for(i=GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).size()-1; i>=0;i--)
     {
