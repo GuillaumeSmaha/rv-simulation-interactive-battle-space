@@ -298,7 +298,7 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
 			break;
         case SHIP_IA:
-            static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
+            static_cast<Ogre::Entity *>(object)->setMaterialName("razor");
 			break;
         case SHIP_BATTLE_STATION:
             static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");

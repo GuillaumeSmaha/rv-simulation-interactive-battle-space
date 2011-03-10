@@ -77,10 +77,7 @@ class GestShip : public ClassRoot
 		 * \brief Récupère la liste des vaisseaux
 		 * \return Liste des vaisseaux
 		*/
-        std::vector<ShipAbstract *> getAllShips()
-		{
-			return lstShip;
-		}
+        std::vector<ShipAbstract *> getAllShips();
 		/*!
 		 * \brief Récupère la liste des vaisseaux d'un type
 		 * \return Liste des vaisseaux

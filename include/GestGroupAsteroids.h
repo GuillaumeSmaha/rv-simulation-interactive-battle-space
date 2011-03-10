@@ -8,6 +8,7 @@
 
 #include <Ogre.h>
 #include "GroupAsteroid.h"
+#include "GestShip.h"
 #include "ClassRoot.h"
 #include "Utils.h"
 #include "ListenerCollision.h"

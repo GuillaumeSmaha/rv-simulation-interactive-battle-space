@@ -353,7 +353,8 @@ void Application::initScene(void)
 {
 	// Mise en place du SkyBox "Etoiles"
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
-
+	//Son d'intro
+	GestSound::getSingleton()->play(GestSound::SOUND_INTRO);
 	// constructeur: Planet(rayonPlanete, typePlanete, avec_atmosphere)
 
 	Planet *planet1 = new Planet(10000, true);
@@ -398,7 +399,6 @@ void Application::initScene(void)
     ShipIA * ship3;
     for(int i = 0 ; i < 30 ; i++)
     {
-
         ship3 = new ShipIA();
         ship3->setPosition(Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000));
         GestShip::getSingleton()->addShip(ship3);

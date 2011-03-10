@@ -131,6 +131,7 @@ bool  GestSceneManager::projectSizeAndPos(Ogre::Camera* cam,const Ogre::Vector3&
         return false;
     }
 }
+
 bool GestSceneManager::getScreenspaceCoords(Ogre::MovableObject* object, Ogre::Camera* camera, Ogre::Vector2& result)
 {
    if(!object->isInScene())
@@ -138,14 +139,11 @@ bool GestSceneManager::getScreenspaceCoords(Ogre::MovableObject* object, Ogre::C
 
    const Ogre::AxisAlignedBox &AABB = object->getWorldBoundingBox(true);
 
-
    // Get the center point of the object's bounding box
    Ogre::Vector3 point = AABB.getCenter();
 
    // Is the camera facing that point? If not, return false
    Ogre::Plane cameraPlane = Ogre::Plane(Ogre::Vector3(camera->getDerivedOrientation().zAxis()), camera->getDerivedPosition());
-   if(cameraPlane.getSide(point) != Ogre::Plane::NEGATIVE_SIDE)
-      return false;
 
    // Transform the 3D point into screen space
    point = camera->getProjectionMatrix() * (camera->getViewMatrix() * point);
@@ -155,5 +153,4 @@ bool GestSceneManager::getScreenspaceCoords(Ogre::MovableObject* object, Ogre::C
    result.y = 1 - ((point.y / 2) + 0.5f);
 
    return true;
-}
-*/
+}*/

@@ -23,6 +23,7 @@ GestSound::GestSound()
 		//initialisation du manager de son OpenAL
 		this->soundManager = new OgreAL::SoundManager("Device Manager", 10);
 
+
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_SHOOT), Utils::getFullPathSound("tir.ogg"), false, false);
 
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_TRAITRE), Utils::getFullPathSound("traitre.ogg"), false, false);
@@ -30,6 +31,10 @@ GestSound::GestSound()
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_EXPLOSION), Utils::getFullPathSound("explosion.ogg"), false, false);
 
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_DEGATS), Utils::getFullPathSound("touche.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_FROLE), Utils::getFullPathSound("frole.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_FROLEG), Utils::getFullPathSound("froleg.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_FROLED), Utils::getFullPathSound("froleg.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_INTRO), Utils::getFullPathSound("intro.ogg"), false, false);
 
 	}
 }

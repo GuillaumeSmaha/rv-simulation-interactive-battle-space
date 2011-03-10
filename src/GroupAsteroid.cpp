@@ -38,12 +38,67 @@ void GroupAsteroid::rotateRelative(const Ogre::Radian angle)
 
 void GroupAsteroid::updateGroupAsteroids(void)
 {
+	static int test = 0;
+	unsigned int i;
+	bool frole = false;
+	bool ok;
+	Ogre::Real minDist = 50000;
+	Ogre::Real dist;
+	Ogre::Vector3 trans;
+	Ogre::Vector3 pos;
+	Ogre::Real angle;
 	this->rotateRelative(Ogre::Radian(this->getRotationSpeed()));
     vector<Asteroid *>::iterator itAsteroid;
-    for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid<lstGroupAsteroid.end();itAsteroid++)
+	unsigned int iMax = GestShip::getSingleton()->getAllShips().size();
+	Utils::log(iMax);
+    for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid!=lstGroupAsteroid.end();itAsteroid++)
 	{
         (*itAsteroid)->updatePosition();
-    }
+		if (test <= 0 && !frole)
+		{
+			i = 0;
+			while(i < iMax && !frole)
+			{
+				if (GestShip::getSingleton()->getAllShips().at(i)->getTypeObject()==ObjectRoot::SHIP_PLAYER)
+				{
+					dist = sqrt(GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition().squaredDistance( (*itAsteroid)->getNode()->_getDerivedPosition()));
+
+					minDist = std::min(dist, minDist);
+					if (dist < 5000)
+					{
+						trans = GestShip::getSingleton()->getAllShips().at(i)->getOrientation() * Ogre::Vector3(0.0,0.0,1.0);
+						pos = GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition() + trans;
+						angle = Utils::getAngle(GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition(),pos,(*itAsteroid)->getNode()->_getDerivedPosition());
+						Utils::log (angle);
+						if (angle < 0.4)
+						{
+							GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
+						}
+						else
+						{
+							if (angle < 0.6)
+							{
+								GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
+							}
+							else 
+							{
+								GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
+							}
+
+						}
+
+						frole = true;
+					}
+				}
+				i++;
+			}
+			test = minDist / 10;
+		}
+		else
+		{
+			test-= 10;
+		}
+	}
 }
 
 void GroupAsteroid::deleteAllGroupAsteroids(void)

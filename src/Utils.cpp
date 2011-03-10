@@ -163,3 +163,11 @@ Ogre::String Utils::getFullPathSound(Ogre::String filename)
 
 	return output;
 }
+
+Ogre::Real Utils::getAngle(Ogre::Vector3 ship, Ogre::Vector3 shipFutur, Ogre::Vector3 asteroid)
+{
+	Ogre::Real a = distance(shipFutur, asteroid);
+	Ogre::Real b = distance(ship, asteroid);
+	Ogre::Real c = distance(ship, shipFutur);
+	return Ogre::Math::ACos((a*a+b*b-c*c)/(2*a*b)).valueDegrees()/(360.0);
+}

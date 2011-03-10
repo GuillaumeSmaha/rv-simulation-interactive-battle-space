@@ -100,6 +100,11 @@ void GestShip::remShip(ShipAbstract * ship)
 	}
 }
 
+std::vector<ShipAbstract *> GestShip::getAllShips()
+{
+	return lstShip;
+}
+
 void GestShip::updateShips(void *)
 {
     vector<ShipAbstract *>::iterator itShip;

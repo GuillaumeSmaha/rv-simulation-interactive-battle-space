@@ -34,7 +34,8 @@ void GestGroupAsteroids::addGroupAsteroids(GroupAsteroid * groupAsteroid)
 void GestGroupAsteroids::updateGroupsAsteroids(void * useless)
 {
     vector<GroupAsteroid *>::iterator itGroupAsteroid;
-    for(itGroupAsteroid=lstGroupAsteroids.begin(); itGroupAsteroid<lstGroupAsteroids.end();itGroupAsteroid++)
+
+    for(itGroupAsteroid=lstGroupAsteroids.begin(); itGroupAsteroid < lstGroupAsteroids.end(); itGroupAsteroid++)
 	{
         (*itGroupAsteroid)->updateGroupAsteroids();
 	}

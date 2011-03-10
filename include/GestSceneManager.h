@@ -188,6 +188,8 @@ class GestSceneManager
 			return getProjectedSize(object, object->getWorldBoundingSphere().getRadius(), point , cam);
 		}
 		static Ogre::Real getProjectedSize(Ogre::MovableObject* object, Ogre::Real size, Ogre::Vector3 point, Ogre::Camera* cam);
+
+		//bool getScreenspaceCoords(Ogre::MovableObject* object, Ogre::Camera* camera, Ogre::Vector2& result);
     protected:
 };
 

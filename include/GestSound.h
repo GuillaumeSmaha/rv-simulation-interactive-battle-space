@@ -28,7 +28,12 @@ class GestSound : public ClassRoot
 			// Son explosion
 			SOUND_EXPLOSION = 3,
 			// Son dégats reçu
-			SOUND_DEGATS = 4
+			SOUND_DEGATS = 4,
+			// Son frolement
+			SOUND_FROLE = 5,
+			SOUND_FROLEG = 6,
+			SOUND_FROLED = 7,
+			SOUND_INTRO = 8
 		};
 	
 	private:
