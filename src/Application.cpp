@@ -382,7 +382,7 @@ void Application::initScene(bool isTwoPlayer)
 
     if(isTwoPlayer){
         ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
-        ship2->setPosition(-130,0,0);
+        ship2->setPosition(1200,-600,0);
         //ship2->touched();
         GestShip::getSingleton()->addShip(ship2);
 
@@ -459,8 +459,8 @@ void Application::initScene(bool isTwoPlayer)
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 
-    Message * message = new Message(this->listenerTime);
-    message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
+    //Message * message = new Message(this->listenerTime);
+    //message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 }
