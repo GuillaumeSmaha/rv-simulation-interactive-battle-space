@@ -8,8 +8,8 @@
 #include "ShipAbstract.h"
 #include "Utils.h"
 /*!
-* \class ShipIA
-* \brief Classe gérant les vaiseaux automatique
+* \class BattleStation
+* \brief Classe gérant la station spatiale
 */
 class BattleStation : public ShipAbstract
 {
