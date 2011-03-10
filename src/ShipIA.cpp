@@ -6,11 +6,11 @@ using namespace Ogre;
 ShipIA::ShipIA(void) : ShipAbstract(ObjectRoot::SHIP_IA)
 {
     this->typeObject = ObjectRoot::SHIP_IA;
-    this->speed = 50;
+    this->speed = 30;
     this->setShipLife(30);
     this->setShipLifeMax(30);
     this->target = Utils::randRangeInt(0,GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).size()+GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size()-1);//0;
-    this->mRotFrames = 50;
+    this->mRotFrames = 100;
     this->destination = Ogre::Vector3(130,0,9000);
     mRotating = true;
     mRotFactor = 1;

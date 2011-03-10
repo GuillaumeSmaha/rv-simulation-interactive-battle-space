@@ -158,7 +158,7 @@ void ShipAbstract::defineParticules(void)
 		emitter->setParticleVelocity(5);
 		emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
 		emitter->setColour(Ogre::ColourValue::White, Ogre::ColourValue::Red);
-		emitter->setPosition(Ogre::Vector3(i == 0 ? 5.7 : -18, 0, 0));
+		emitter->setPosition(Ogre::Vector3(i == 0 ? 12.7 : -5, 0, 0));
 	}
     this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
 }

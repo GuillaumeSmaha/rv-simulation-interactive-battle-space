@@ -20,7 +20,7 @@ Application::Application(void)
 
 	this->shutDown = false;
 
-	this->isStatsOn = true;
+	this->isStatsOn = false;
 	this->timeUntilNextToggle = 0;
 }
 
