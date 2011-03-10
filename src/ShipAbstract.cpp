@@ -4,13 +4,18 @@ using namespace Ogre;
 
 Ogre::Real ShipAbstract::MAXSPEED = 100;
 
-ShipAbstract::ShipAbstract(void) 
-	: shipLife(100), 
-	  speed(0), translateSpeed(0), rollSpeed(0), pitchSpeed(0), yawSpeed(0), 
+ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
+	: shipLife(100),
+	  speed(0), translateSpeed(0), rollSpeed(0), pitchSpeed(0), yawSpeed(0),
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
 	  isTouched(false), isDead(false), firstPos(true), firstDir(true)
 {
-    this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
+    if(type==ObjectRoot::SHIP_IA)
+    {
+        this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_IA));
+    }else{
+        this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
+    }
 
 	// Calcul des tangentes (si pas présentes dans le mesh)
 	unsigned short src, dest;
@@ -18,28 +23,28 @@ ShipAbstract::ShipAbstract(void)
 	{
 		this->entity->getMesh()->buildTangentVectors(VES_TANGENT, src, dest);
 	}
-	
+
 	switch(Utils::randRangeInt(0, 2))
 	{
 		case 0 :
 			this->colorLaser = Ogre::ColourValue::Blue;
 			break;
-			
+
 		case 1 :
 			this->colorLaser = Ogre::ColourValue::Green;
 			break;
-			
+
 		case 2 :
 			this->colorLaser = Ogre::ColourValue::Red;
 			break;
-		
+
 		default:
 			this->colorLaser = Ogre::ColourValue::Red;
 			break;
 	}
 
     this->getNode()->setPosition(0, 0, 0);
-    
+
     this->defineParticules();
 }
 
@@ -90,14 +95,14 @@ void ShipAbstract::touched(void)
 void ShipAbstract::exploded(void)
 {
    Ogre::ParticleSystem * particleSystem = GestSceneManager::getSceneManager()->createParticleSystem("explosions"+Utils::toString(Utils::unique()), "explosionTemplate");
- 
+
 	// fast forward 1 second  to the point where the particle has been emitted
 	particleSystem->fastForward(1.0);
-	 
+
 	GestSound::getSingleton()->play(GestSound::SOUND_EXPLOSION);
 	// attach the particle system to a scene node
     this->getNode()->createChildSceneNode(Vector3(0.0, 45.0, 0.0))->attachObject(particleSystem);
-    
+
     this->isDead = true;
 }
 
@@ -168,7 +173,7 @@ void ShipAbstract::isTouch(int degat)
 //    this->getEntity()->setCastShadows(true);
 //
 //    //rigidBody->setPosition(pos[0], pos[1], pos[2]);
-//    
+//
 //}
 
 
@@ -247,7 +252,7 @@ void ShipAbstract::yawAccelerate(const Ogre::Radian coefAcceleration)
 
 
 
-Quaternion ShipAbstract::getOrientation(void) 
+Quaternion ShipAbstract::getOrientation(void)
 {
 	return this->getNode()->getOrientation();
 }
@@ -262,7 +267,7 @@ void ShipAbstract::setOrientation(const Ogre::Quaternion &q)
 	this->getNode()->setOrientation(q);
 }
 
-void ShipAbstract::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a) 
+void ShipAbstract::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a)
 {
     if(firstDir)
     {
@@ -275,7 +280,7 @@ void ShipAbstract::setOrientation(const Ogre::Real x, const Ogre::Real y, const 
 
 Ogre::Vector3 ShipAbstract::getPosition(void)
 {
-    return this->getNode()->getPosition();   
+    return this->getNode()->getPosition();
 }
 
 void ShipAbstract::setPosition(const Ogre::Vector3 &v)

@@ -23,7 +23,7 @@ class MeshLoader
 		 */
 		enum MeshType {
 			SHIP = 0,
-			POMPIDOU = 2, //peut etre a modifier
+			SHIP_IA = 2, //peut etre a modifier
 			ARLEQUIN = 3,
 			SHIP_TOUCHED = 4,
 			PLANET = 5,
@@ -54,7 +54,7 @@ class MeshLoader
 		 * \brief Constructor
          */
 		MeshLoader();
-		
+
 	public:
         /*!
 		 *  \brief Retourne une instance du singleton
@@ -117,14 +117,14 @@ class MeshLoader
 		 * \return Une object correspondante dont le nom est passé en paramètre et attachée au node dont le nom est celui indiqué lui même rattaché au graphe en fonction du type de mesh
 		 */
 		Ogre::MovableObject * getNodedMovableObject(MeshLoader::MeshType meshType, Ogre::String nodeName, Ogre::String meshName,  bool random = false);
-		
+
         /*!
 		 * \brief Supprime un noeud et l'entité du noeud
 		 * \param type Correspond au mesh à supprimer
 		 * \param object Objet/Entité/Particule à supprimer
 		 */
 		void deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object);
-         
+
 		/*!
 		* \brief Renvoie un simple noeud correspondant à un type de mesh.
 		* (Utile pour gérer la création de le MovableObject séparemment pour ensuite l'attacher au noeud correspondant)
@@ -144,7 +144,7 @@ class MeshLoader
 		{
 			return getNode(meshType, "node"+Utils::toString(Utils::unique()));
 		}
-		
+
 		/*!
 		 * \brief Retourne le graphe de scène
 		 * \return Le graphe de scène

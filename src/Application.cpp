@@ -62,7 +62,7 @@ Application::~Application(void)
 	MeshLoader::deleteMeshLoader();
 
 	delete this->listenerWindow;
-    
+
 	//this->root->destroySceneManager(this->sceneMgr);
     //delete this->root;
 }
@@ -91,7 +91,6 @@ bool Application::start(void)
 
 	//create SceneManager singleton
     GestSceneManager::getSingleton()->setSceneManager(this->sceneMgr);
-
 	//init viewportLoader
 	new ViewportLoader(this->listenerWindow);
 
@@ -338,7 +337,7 @@ void Application::initScene(void)
 	Planet *planet2 = new Planet(2500, 2, false);
 	planet2->setPosition(20000.0, 900.0, 15000.0);
 	//planet2->setScale(200.0, 200.0, 200.0);
-    
+
     planet1->createCollisionObject(this->listenerCollision, planet1->getMInnerRadius()-10);
     planet2->createCollisionObject(this->listenerCollision, planet2->getMInnerRadius()-10);
     this->listenerTime->signalTimerElapsed.add(&ObjectRoot::updateCulling, dynamic_cast<ObjectRoot*>(planet2));
@@ -351,36 +350,45 @@ void Application::initScene(void)
 
 	ShipPlayer * ship = new ShipPlayer(this->player, listenerTime);
     ship->setPosition(-500,-500,-500);
-    
+
 	ship->createCollisionObject(this->listenerCollision);
 	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
 
 
-	ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
+	/*ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
     ship2->setPosition(-130,0,0);
     //ship2->touched();
     GestShip::getSingleton()->addShip(ship2);
 
 	ship2->createCollisionObject(this->listenerCollision);
 	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
+*/
 
 
+ //MECHANT VAISSEAUX
     ShipIA * ship3 = new ShipIA();
     ship3->setPosition(130,0,10000);
 	//ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
     //ship3->getNode()->setScale(Ogre::Vector3(50,50,50));
     //ship3->touched();
     GestShip::getSingleton()->addShip(ship3);
-    
+    for(int i=0;i<3;i++)
+    {
+
+        ship3 = new ShipIA();
+        ship3->setPosition(Utils::randRangeInt(0,10000),Utils::randRangeInt(0,10000),Utils::randRangeInt(0,10000));
+        GestShip::getSingleton()->addShip(ship3);
+    }
+/*
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);
     //~ Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
     bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
     bill->setMaterialName("test");
 	//bill->setColor(ColourValue::Red);
     ship3->getNode()->attachObject(bill);
-    
-    
+
+*/
 	//création de la ceinture d'asteroids
 	GestGroupAsteroids::getSingleton()->createGroup(32,100,100,Ogre::Radian(0.01),planet2->getMInnerRadius(), planet2->getNode(), 0.01, this->listenerCollision);
 	//création de 4 asteroids se balandant dans l'espace (autour de la terre)
@@ -413,7 +421,7 @@ void Application::initScene(void)
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
-	
+
 }
 
 void Application::onKeyPressed(PlayerControls::Controls key)

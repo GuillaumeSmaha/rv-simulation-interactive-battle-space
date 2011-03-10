@@ -58,10 +58,10 @@ class ObjectRoot : public ClassRoot
 		 *  \brief Rigid Body
 		 */
 		OgreBulletDynamics::RigidBody * rigidBody;
-		/*!
+        /*!
 		 *  \brief Type de l'objet
 		 */
-		ObjectType typeObject;
+		 ObjectType typeObject;
 
 	protected:
         /*!

@@ -105,14 +105,14 @@ Ogre::String Utils::read_file(char * path)
     Ogre::String res;
     std::ifstream fichier(path, std::ios::in);
     if(fichier)  // si l'ouverture a réussi
-    { 
+    {
         std::string ligne;
         while(getline(fichier, ligne))  // tant que l'on peut mettre la ligne dans "contenu"
         {
                 res= res+(ligne+"\n");
         }
             fichier.close();
-            return res; 
+            return res;
     }
     else  // sinon
         return NULL;
@@ -150,13 +150,13 @@ Ogre::String Utils::getFullPathRessources(Ogre::String filename)
 
 Ogre::String Utils::getFullPathSound(Ogre::String filename)
 {
-	Ogre::String fileSoundDir = "soundDir.here";
+	Ogre::String fileSoundDir = "SoundDir.here";
 	Ogre::String group = Ogre::ResourceGroupManager::getSingleton().findGroupContainingResource(fileSoundDir);
 
 	Ogre::FileInfoListPtr listPtr = Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo(group, fileSoundDir);
 	if(listPtr->size() != 1)
 		return "";
-		
+
 	Ogre::String output = listPtr->at(0).archive->getName();
 	output.append("/sound/");
 	output.append(filename);

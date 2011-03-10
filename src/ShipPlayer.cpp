@@ -252,23 +252,48 @@ void ShipPlayer::switchPrevCamera(void)
 
 void ShipPlayer::updateParticules(void)
 {
-    unsigned int i = 0;
+    int i = 0;
+    int j = -1;
+    Ogre::Real dist = -1;
+    Ogre::Real distCurrent;
+    /*
     while(GestShip::getSingleton()->getAllShips().at(i) == this)
     {
         if(GestShip::getSingleton()->getAllShips().size() > i+1)
         {
 			i++;
         }
+*/
 
+
+
+    for(i=GestShip::getSingleton()->getAllShips().size()-1; i>=0;i--)
+    {
+        //Utils::log(i);
+        if(GestShip::getSingleton()->getAllShips().at(i) != this)
+        {
+           distCurrent = GestShip::getSingleton()->getAllShips().at(i)->getNode()->getPosition().squaredDistance(this->getNode()->getPosition());
+           if(dist<0 || distCurrent < dist)
+           {
+                dist = distCurrent;
+                j = i;
+           }
+        }
     }
-    Ogre::Matrix3 m;
-    this->getNode()->getOrientation().ToRotationMatrix(m);
-    emitter->setDirection((GestShip::getSingleton()->getAllShips().at(i)->getNode()->getPosition() - this->getNode()->getPosition())*m);
-    Ogre::Vector3 rot = emitter->getDirection();
-    rot.normalise();
-    emitter->setPosition(rot*80-this->getEntity()->getBoundingBox().getCenter()+Ogre::Vector3(0,0,100));
+
+    if(j>-1)
+    {
+        Ogre::Matrix3 m;
+        this->getNode()->getOrientation().ToRotationMatrix(m);
+        emitter->setDirection((GestShip::getSingleton()->getAllShips().at(j)->getNode()->getPosition() - this->getNode()->getPosition())*m);
+        Ogre::Vector3 rot = emitter->getDirection();
+        rot.normalise();
+        emitter->setPosition(rot*80-this->getEntity()->getBoundingBox().getCenter()+Ogre::Vector3(0,0,100));
+    }
+
+
 }
-	
+
 void ShipPlayer::defineParticules(void)
 {
 

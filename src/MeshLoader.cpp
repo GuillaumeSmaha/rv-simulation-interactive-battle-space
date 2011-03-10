@@ -50,6 +50,9 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
 		case SHIP_TOUCHED:
 			object = this->sceneMgr->createEntity(name, "Heideki.mesh");
 			break;
+        case SHIP_IA:
+			object = this->sceneMgr->createEntity(name, "razor.mesh");
+        break;
 		case PLANET:
 		case PLANET2:
 		case PLANET3:
@@ -88,18 +91,18 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
 			emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
 			emitter->setColour(Ogre::ColourValue::Red);
 			emitter->setPosition(Ogre::Vector3(5.7, 0, 0));
-			
+
 			object = particle;
 			break;
 		}
-			
+
 		default:
 			Utils::log("@Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Ogre::String name, bool random) : type inconnu");
 			break;
 	}
-	
+
 	MeshLoader::setMaterial(object, type);
-	
+
 	return object;
 }
 
@@ -111,6 +114,7 @@ Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType typ
 	{
 		case SHIP:
 		case SHIP_TOUCHED:
+		case SHIP_IA:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 			node = node->createChildSceneNode(nodeName);
 			node->attachObject(object);
@@ -143,12 +147,12 @@ Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType typ
 			node = node->createChildSceneNode(nodeName);
 			node->attachObject(object);
 			break;
-			
+
 		default:
 			Utils::log("@Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType type, Ogre::String nodeName, Ogre::String meshName, bool random) : type inconnu");
 			break;
 	}
-	
+
 	return object;
 }
 
@@ -157,11 +161,12 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 {
 	Ogre::SceneNode * node;
 	Ogre::SceneNode * nodeParent = object->getParentSceneNode();
-	
+
 	switch(type)
 	{
 		case SHIP:
 		case SHIP_TOUCHED:
+		case SHIP_IA:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 			break;
 		case PLANET:
@@ -184,16 +189,17 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 		case LASER:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_LASERS);
 			break;
-			
+
 		default:
 			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
 	}
-	
+
 	switch(type)
 	{
 		case SHIP:
 		case SHIP_TOUCHED:
+		case SHIP_IA:
 		case PLANET:
 		case PLANET2:
 		case PLANET3:
@@ -203,20 +209,20 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 		case PLANET7:
 		case PLANET8:
 		case PLANET9:
-		case ASTEROID:		
+		case ASTEROID:
 		case MISSILE:
 			this->sceneMgr->destroyEntity((Ogre::Entity *)object);
 			break;
-			
+
 		case LASER:
-			this->sceneMgr->destroyParticleSystem((Ogre::ParticleSystem *)object);		
+			this->sceneMgr->destroyParticleSystem((Ogre::ParticleSystem *)object);
 			break;
-			
+
 		default:
 			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
 	}
-	
+
 	node->removeAndDestroyChild(nodeParent->getName());
 }
 
@@ -228,6 +234,7 @@ Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String no
 	{
 		case SHIP:
 		case SHIP_TOUCHED:
+		case SHIP_IA:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_VAISSEAUX);
 			node = node->createChildSceneNode(nodeName);
 			break;
@@ -255,7 +262,7 @@ Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String no
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_LASERS);
 			node = node->createChildSceneNode(nodeName);
 			break;
-			
+
 		default:
 			Utils::log("@Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String nodeName) : type inconnu");
 			break;
@@ -273,7 +280,11 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 		case SHIP_TOUCHED:
 			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
 			break;
-		case PLANET :
+        case SHIP_IA:
+            static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
+			break;
+
+        case PLANET :
 		case PLANET2:
 		case PLANET3:
 		case PLANET4:
@@ -293,7 +304,7 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 		case LASER:
 			static_cast<Ogre::ParticleSystem *>(object)->setMaterialName("laser");
 			break;
-			
+
 		default:
 			Utils::log("@void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType type) : type inconnu");
 			break;
@@ -364,7 +375,7 @@ void MeshLoader::createSphere(const std::string& strName, const float r, const i
 			if (ring != nRings) {
 				// each vertex (except the last) has six indices pointing to it
 				*pIndices++ = wVerticeIndex + nSegments + 1;
-				*pIndices++ = wVerticeIndex;               
+				*pIndices++ = wVerticeIndex;
 				*pIndices++ = wVerticeIndex + nSegments;
 				*pIndices++ = wVerticeIndex + nSegments + 1;
 				*pIndices++ = wVerticeIndex + 1;

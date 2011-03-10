@@ -99,7 +99,7 @@ class ShipAbstract : public ObjectRoot
 
          /*!
          * \brief permet de savoir si le vaiseau à été détruit
-        */       
+        */
         bool isDead;
         /*!
          * \brief vrai si la premiere fois que l'on regle la position
@@ -114,8 +114,6 @@ class ShipAbstract : public ObjectRoot
         */
         Ogre::Quaternion dirInit;
 
-
-
 	public:
 
         /*!
@@ -129,7 +127,7 @@ class ShipAbstract : public ObjectRoot
 		/*!
 		 * \brief Construction
 		*/
-		ShipAbstract(void);
+		ShipAbstract(ObjectRoot::ObjectType type = ObjectRoot::SHIP_PLAYER);
 		/*!
 		 * \brief Destructeur
 		*/
@@ -163,7 +161,7 @@ class ShipAbstract : public ObjectRoot
 		 * \param degat Nombre de dégat perdu par collision
 		*/
         void isTouch(int degat);
-		
+
 		//void createCollisionObject(ListenerCollision * listenerCollision);
 
 		/*!
@@ -264,11 +262,11 @@ class ShipAbstract : public ObjectRoot
 					factor = 0.0;
 				}
 				else
-				{	
+				{
 					factor = (log10(ratio)+2.0)/2.0;
 				}
 			}
-			
+
 			return factor;
 		}
 
@@ -324,7 +322,7 @@ class ShipAbstract : public ObjectRoot
 		{
 			this->shipLifeMax = shipLifeMax;
 		}
-		
+
 		/*!
 		 * \brief [Getter] Indique si le vaisseau est mort
 		 * \return Décé du vaisseau?
@@ -332,7 +330,7 @@ class ShipAbstract : public ObjectRoot
         bool getIsDead(void)
 		{
 			return this->isDead;
-		}		
+		}
 		/*!
 		 * \brief [Setter] Définit si le vaisseau est mort
 		 * \param isDead Etatdu vaisseau
