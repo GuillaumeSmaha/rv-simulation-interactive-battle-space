@@ -6,6 +6,7 @@
 #define __GROUP_ASTEROID_H__
 
 #include <Ogre.h>
+#include <math.h>
 #include "Asteroid.h"
 #include "GestSceneManager.h"
 #include "ListenerCollision.h"

@@ -104,6 +104,9 @@ bool Application::start(void)
 	//create Laser singleton
 	GestLaser::getSingleton();
 
+	//create Sound singleton
+	GestSound::getSingleton();
+
 	// create the scene graph
 	this->initSceneGraph();
 
@@ -364,22 +367,19 @@ void Application::initScene(void)
 
 	ship2->createCollisionObject(this->listenerCollision);
 	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
-*/
+	player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_S);
+	*/
 
 
  //MECHANT VAISSEAUX
-    ShipIA * ship3 = new ShipIA();
-    ship3->setPosition(130,0,10000);
-	//ship3->getNode()->setRotate(Ogre::Vector3(0,0,180));
-    //ship3->getNode()->setScale(Ogre::Vector3(50,50,50));
-    //ship3->touched();
-    GestShip::getSingleton()->addShip(ship3);
-    for(int i=0;i<30;i++)
+    ShipIA * ship3;
+    for(int i = 0 ; i < 30 ; i++)
     {
 
         ship3 = new ShipIA();
-        ship3->setPosition(Utils::randRangeInt(0,10000),Utils::randRangeInt(0,10000),Utils::randRangeInt(0,10000));
+        ship3->setPosition(Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000));
         GestShip::getSingleton()->addShip(ship3);
+		ship3->createCollisionObject(this->listenerCollision);
     }
 /*
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);

@@ -19,7 +19,7 @@ GestSound::GestSound()
 	if (_instance == NULL)
 	{
 		_instance = this;
-/*
+
 		//initialisation du manager de son OpenAL
 		this->soundManager = new OgreAL::SoundManager("Device Manager", 10);
 
@@ -30,7 +30,7 @@ GestSound::GestSound()
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_EXPLOSION), Utils::getFullPathSound("explosion.ogg"), false, false);
 
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_DEGATS), Utils::getFullPathSound("touche.ogg"), false, false);
-*/
+
 	}
 }
 
@@ -41,7 +41,7 @@ GestSound::~GestSound()
 
 void GestSound::play(GestSound::SoundType soundType)
 {
-//	this->soundManager->getSound(Utils::toString(soundType))->play();
+	this->soundManager->getSound(Utils::toString(soundType))->play();
 }
 
 void GestSound::destroy()

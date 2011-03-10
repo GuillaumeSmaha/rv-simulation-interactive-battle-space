@@ -25,8 +25,10 @@ void GroupAsteroid::addAsteroid(Asteroid * asteroid, ListenerCollision * listene
 	this->node->addChild(nodeAsteroid);
     lstGroupAsteroid.push_back(asteroid);
     //gestion des collisions avec les astéroides
-     asteroid->createCollisionObject(listenerCollision);
-
+    
+    Ogre::Real size = 2*min(min(asteroid->getNode()->getScale()[0], asteroid->getNode()->getScale()[1]), asteroid->getNode()->getScale()[2]);
+    
+     asteroid->createCollisionObject(listenerCollision, size);
 }
 
 void GroupAsteroid::rotateRelative(const Ogre::Radian angle)

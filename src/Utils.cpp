@@ -150,7 +150,7 @@ Ogre::String Utils::getFullPathRessources(Ogre::String filename)
 
 Ogre::String Utils::getFullPathSound(Ogre::String filename)
 {
-	Ogre::String fileSoundDir = "SoundDir.here";
+	Ogre::String fileSoundDir = "soundDir.here";
 	Ogre::String group = Ogre::ResourceGroupManager::getSingleton().findGroupContainingResource(fileSoundDir);
 
 	Ogre::FileInfoListPtr listPtr = Ogre::ResourceGroupManager::getSingleton().findResourceFileInfo(group, fileSoundDir);

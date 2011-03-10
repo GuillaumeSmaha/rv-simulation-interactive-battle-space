@@ -161,6 +161,8 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 {
 	Ogre::SceneNode * node;
 	Ogre::SceneNode * nodeParent = object->getParentSceneNode();
+	nodeParent->detachObject(object);
+	object->setVisible(false);
 
 	switch(type)
 	{
@@ -223,7 +225,9 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 			break;
 	}
 
+	nodeParent->removeAndDestroyAllChildren();
 	node->removeAndDestroyChild(nodeParent->getName());
+	//~ delete object;
 }
 
 

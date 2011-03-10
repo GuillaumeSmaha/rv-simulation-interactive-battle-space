@@ -26,28 +26,37 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
     std::cout<<"size="<<size<<"ObjectType: "<<typeObject<<std::endl;
     Ogre::Vector3 pos = this->getNode()->getPosition();
 
-        if(typeObject==SHIP_PLAYER|| typeObject==SHIP_IA){
+	switch(this->typeObject)
+	{
+		case SHIP_PLAYER :
+		case SHIP_IA :
+		{
 
-            OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter= new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity());
+			OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter= new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity());
 
-            OgreBulletCollisions::ConvexHullCollisionShape * convexCollisionShape =shapeConverter->createConvex();
-            this->shape =(OgreBulletCollisions::CollisionShape *) convexCollisionShape;
+			OgreBulletCollisions::ConvexHullCollisionShape * convexCollisionShape =shapeConverter->createConvex();
+			this->shape =(OgreBulletCollisions::CollisionShape *) convexCollisionShape;
 
-            delete shapeConverter;
-        }
-        if(typeObject==PLANET){
-	        this->shape = new OgreBulletCollisions::SphereCollisionShape(size);
-        }
-        if(typeObject==ASTEROID){
-            std::cout<<"correctly created"<<std::endl;
-            this->shape = new OgreBulletCollisions::SphereCollisionShape(200.0);
-        }
-        if(typeObject== MISSILE){
-            this->shape = new OgreBulletCollisions::SphereCollisionShape(10.0);
-        }
-        if(typeObject==LASER){
-            this->shape = new OgreBulletCollisions::SphereCollisionShape(10.0);
-        }
+			delete shapeConverter;
+			break;
+		}
+		
+		case PLANET :
+			this->shape = new OgreBulletCollisions::SphereCollisionShape(size);
+			break;
+			
+		case ASTEROID :
+			this->shape = new OgreBulletCollisions::SphereCollisionShape(size);
+			break;
+			
+		case MISSILE :
+			this->shape = new OgreBulletCollisions::SphereCollisionShape(10.0);
+			break;
+			
+		case LASER :
+			this->shape = new OgreBulletCollisions::SphereCollisionShape(10.0);
+			break;
+	}
 
 
     std::ostringstream rigidBodyString;
