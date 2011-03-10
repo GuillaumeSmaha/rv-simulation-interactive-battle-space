@@ -26,8 +26,7 @@ void BattleStation::updatePosition(void)
     //commenté pke bouffeur de FPS = les particules ne meurent pas
     if(direction.squaredLength()<40000000)
     {
-
-       // this->shootLaser();
+		this->shootLaser();
     }
 
     //Se tourne vers nous plus ou moins (mRotFactor == vitesse à laquelle c fait et avant que le vsx change de destination => inversement proportionnel)
