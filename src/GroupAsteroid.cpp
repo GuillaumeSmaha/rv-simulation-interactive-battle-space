@@ -41,7 +41,6 @@ void GroupAsteroid::updateGroupAsteroids(void)
 	static int test = 0;
 	unsigned int i;
 	bool frole = false;
-	bool ok;
 	Ogre::Real minDist = 50000;
 	Ogre::Real dist;
 	Ogre::Vector3 trans;
@@ -49,8 +48,7 @@ void GroupAsteroid::updateGroupAsteroids(void)
 	Ogre::Real angle;
 	this->rotateRelative(Ogre::Radian(this->getRotationSpeed()));
     vector<Asteroid *>::iterator itAsteroid;
-	unsigned int iMax = GestShip::getSingleton()->getAllShips().size();
-	Utils::log(iMax);
+	unsigned int iMax = GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size();
     for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid!=lstGroupAsteroid.end();itAsteroid++)
 	{
         (*itAsteroid)->updatePosition();
@@ -59,36 +57,30 @@ void GroupAsteroid::updateGroupAsteroids(void)
 			i = 0;
 			while(i < iMax && !frole)
 			{
-				if (GestShip::getSingleton()->getAllShips().at(i)->getTypeObject()==ObjectRoot::SHIP_PLAYER)
-				{
-					dist = sqrt(GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition().squaredDistance( (*itAsteroid)->getNode()->_getDerivedPosition()));
+				dist = sqrt(GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition().squaredDistance( (*itAsteroid)->getNode()->_getDerivedPosition()));
 
-					minDist = std::min(dist, minDist);
-					if (dist < 5000)
+				minDist = std::min(dist, minDist);
+				if (dist < 5000)
+				{
+					trans = GestShip::getSingleton()->getAllShips().at(i)->getOrientation() * Ogre::Vector3(0.0,0.0,1.0);
+					pos = GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition() + trans;
+					angle = Utils::getAngle(GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition(),pos,(*itAsteroid)->getNode()->_getDerivedPosition());
+					if (angle < 0.4)
 					{
-						trans = GestShip::getSingleton()->getAllShips().at(i)->getOrientation() * Ogre::Vector3(0.0,0.0,1.0);
-						pos = GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition() + trans;
-						angle = Utils::getAngle(GestShip::getSingleton()->getAllShips().at(i)->getNode()->_getDerivedPosition(),pos,(*itAsteroid)->getNode()->_getDerivedPosition());
-						Utils::log (angle);
-						if (angle < 0.4)
+						GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
+					}
+					else
+					{
+						if (angle < 0.6)
 						{
 							GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
 						}
-						else
+						else 
 						{
-							if (angle < 0.6)
-							{
-								GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
-							}
-							else 
-							{
-								GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
-							}
-
+							GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
 						}
-
-						frole = true;
 					}
+					frole = true;
 				}
 				i++;
 			}
