@@ -7,6 +7,7 @@ BattleStation::BattleStation(void) : ShipAbstract(ObjectRoot::SHIP_BATTLE_STATIO
 {
     this->typeObject = ObjectRoot::SHIP_BATTLE_STATION;
     this->setShipLife(250);
+    this->setShipLifeMax(250);
     this->speed = 0.4;
     this->mRotFrames = 10000;
     this->destination = Ogre::Vector3(130,0,9000);
