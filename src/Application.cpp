@@ -1,6 +1,7 @@
 #include "Application.h"
 //#include "HDRLogic.h"
 #include "ViewportLoader.h"
+#include "Sun.h"
 using namespace Ogre;
 
 
@@ -373,7 +374,7 @@ void Application::initScene(void)
     //ship3->getNode()->setScale(Ogre::Vector3(50,50,50));
     //ship3->touched();
     GestShip::getSingleton()->addShip(ship3);
-    for(int i=0;i<3;i++)
+    for(int i=0;i<30;i++)
     {
 
         ship3 = new ShipIA();
@@ -407,6 +408,9 @@ void Application::initScene(void)
 
 
 //Temporaire :
+	Vector3 lightPosition(100, 200, -100000);
+	Sun *sun = new Sun(lightPosition, GestSceneManager::getCamera(0)->getCamera(), sceneMgr);
+	
     // Set ambient light
     //this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));
 	this->sceneMgr->setAmbientLight(Ogre::ColourValue::Black);
@@ -415,13 +419,16 @@ void Application::initScene(void)
 	l->setType(Ogre::Light::LT_POINT);
 	l->setDiffuseColour(1.0, 1.0, 1.0);
 	l->setSpecularColour(1.0, 1.0, 1.0);
+	l->setAttenuation(std::numeric_limits<Ogre::Real>::infinity(), 1, 0, 0);
     //l->setPosition(320,480,500);
-	l->setPosition(32, 48, -5000);
+	//l->setPosition(32, 48, -5000);
+	l->setPosition(lightPosition);
 	l->setDirection(Ogre::Vector3::UNIT_Z);
 	//l->setType(Light::LT_POINT);
-	Ogre::SceneNode * nodeLight1 = this->sceneMgr->getRootSceneNode()->createChildSceneNode("NodeLight1");
+	Ogre::SceneNode * nodeLight1 = sun->getNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
 
+	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 }
 
 void Application::onKeyPressed(PlayerControls::Controls key)

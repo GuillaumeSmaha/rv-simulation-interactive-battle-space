@@ -41,7 +41,7 @@ void ShipIA::updatePosition(void)
               this->destination = GestShip::getSingleton()->getAllShips().at(0)->getNode()->getPosition()+Ogre::Vector3(Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000));
               mRotating = false;
                mRotating = true;
-                mRotFactor = 1.0f / 10;
+                mRotFactor = 1.0f / 50;
                 mOrientSrc = this->getNode()->getOrientation();
                 Ogre::Quaternion quat =  (this->getNode()->getOrientation()* Vector3::UNIT_Z).getRotationTo(    this->destination-this->getNode()->getPosition());
                 mOrientDest = quat * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
@@ -57,7 +57,7 @@ void ShipIA::updatePosition(void)
         //si on est encore loin on avance
         if(direction.squaredLength()>4000000)
         {
-            this->setSpeed(100);
+            this->setSpeed(50);
 
         }else{
             this->setSpeed(0);
