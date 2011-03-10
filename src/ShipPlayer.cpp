@@ -32,8 +32,10 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
     rightPressed = false;
     upPressed = false;
     downPressed = false;
+    
+	this->setColorLaser(Ogre::ColourValue::Green);
+	
     this->defineParticules();
-
 }
 
 ShipPlayer::~ShipPlayer(void)

@@ -34,21 +34,7 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 		this->entity->getMesh()->buildTangentVectors(VES_TANGENT, src, dest);
 	}
 
-	switch(this->getTypeObject())
-	{
-		case ObjectRoot::SHIP_PLAYER :
-		case ObjectRoot::SHIP_BATTLE_STATION :
-			this->colorLaser = Ogre::ColourValue::Green;
-			break;
-
-		case ObjectRoot::SHIP_IA :
-			this->colorLaser = Ogre::ColourValue::Red;
-			break;
-
-		default:
-			this->colorLaser = Ogre::ColourValue::Green;
-			break;
-	}
+	this->colorLaser = Ogre::ColourValue::Red;
 
     this->getNode()->setPosition(0, 0, 0);
 
