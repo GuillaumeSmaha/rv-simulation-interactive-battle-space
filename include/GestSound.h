@@ -16,24 +16,31 @@
 class GestSound : public ClassRoot
 {
 	public:	
-		// Définit les différents types de son
+		/// Définit les différents types de son
 		enum SoundType
 		{
-			// Son Null
+			/// Son Null
 			SOUND_NULL = 0,
-			// Son tir
+			/// Son tir
 			SOUND_SHOOT = 1,
-			// Son "Retournez vous battre"
+			/// Son "Retournez vous battre"
 			SOUND_TRAITRE = 2,
-			// Son explosion
+			/// Son explosion
 			SOUND_EXPLOSION = 3,
-			// Son dégats reçu
+			/// Son dégats reçu
 			SOUND_DEGATS = 4,
-			// Son frolement
+			/// Son frolement
 			SOUND_FROLE = 5,
 			SOUND_FROLEG = 6,
 			SOUND_FROLED = 7,
-			SOUND_INTRO = 8
+			/// Son intro
+			SOUND_INTRO = 8,
+			/// Son moteur
+			SOUND_MOTEUR = 9,
+			/// Son statistique
+			SOUND_STATS = 10,
+			/// Son champ asteroid
+			SOUND_AST = 11
 		};
 	
 	private:

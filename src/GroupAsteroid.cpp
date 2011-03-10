@@ -39,6 +39,7 @@ void GroupAsteroid::rotateRelative(const Ogre::Radian angle)
 void GroupAsteroid::updateGroupAsteroids(void)
 {
 	static int test = 0;
+	static int first = 0;
 	unsigned int i;
 	bool frole = false;
 	Ogre::Real minDist = 50000;
@@ -81,6 +82,25 @@ void GroupAsteroid::updateGroupAsteroids(void)
 						}
 					}
 					frole = true;
+				}
+				else 
+				{
+					if (dist > 5000 && dist < 15000) 
+					{
+						if (first == 0)
+						{
+							first++;
+							GestSound::getSingleton()->play(GestSound::SOUND_AST);
+						}
+						else 
+						{
+							if (first == 1)
+							{
+								first++;
+								GestSound::getSingleton()->play(GestSound::SOUND_STATS);
+							}
+						}
+					}
 				}
 				i++;
 			}

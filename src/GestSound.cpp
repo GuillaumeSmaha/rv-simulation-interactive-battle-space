@@ -35,6 +35,9 @@ GestSound::GestSound()
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_FROLEG), Utils::getFullPathSound("froleg.ogg"), false, false);
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_FROLED), Utils::getFullPathSound("froleg.ogg"), false, false);
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_INTRO), Utils::getFullPathSound("intro.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_MOTEUR), Utils::getFullPathSound("moteur.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_STATS), Utils::getFullPathSound("stats.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_AST), Utils::getFullPathSound("asteroid.ogg"), false, false);
 
 	}
 }
