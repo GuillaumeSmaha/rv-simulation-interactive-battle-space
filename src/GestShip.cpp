@@ -142,6 +142,8 @@ void GestShip::updateShips(void *)
 			(*itShip)->setPitchAcceleration(Ogre::Radian(0));
 			(*itShip)->setYawSpeed(Ogre::Radian(0));
 			(*itShip)->setYawAcceleration(Ogre::Radian(0));
+			(*itShip)->updatePosition();
+			itShip++;
 		}
 		else
 		{
