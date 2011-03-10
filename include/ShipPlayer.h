@@ -88,9 +88,13 @@ class ShipPlayer : public ShipAbstract
         Compteur * compteur;
 
         /*!
-         * \brief Particules indiquant l'ennemi (va être renommé et changé de place bientôt)
+         * \brief Particules indiquant l'ennemi
          */
         Ogre::ParticleEmitter * emitter;
+        /*!
+         * \brief Particules indiquant la station
+         */
+        Ogre::ParticleEmitter * emitterFriend;
 
 	public:
 		/*!

@@ -256,30 +256,49 @@ void ShipPlayer::updateParticules(void)
     Ogre::Real dist = -1;
     Ogre::Real distCurrent;
 
-    for(i=GestShip::getSingleton()->getAllShips().size()-1; i>=0;i--)
+    for(i=GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_IA).size()-1; i>=0;i--)
     {
-        //Utils::log(i);
-        if(GestShip::getSingleton()->getAllShips().at(i) != this)
-        {
-           distCurrent = GestShip::getSingleton()->getAllShips().at(i)->getNode()->getPosition().squaredDistance(this->getNode()->getPosition());
-           if(dist<0 || distCurrent < dist)
-           {
-                dist = distCurrent;
-                j = i;
-           }
-        }
+       distCurrent = GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_IA).at(i)->getNode()->getPosition().squaredDistance(this->getNode()->getPosition());
+       if(dist<0 || distCurrent < dist)
+       {
+            dist = distCurrent;
+            j = i;
+       }
     }
 
     if(j>-1)
     {
         Ogre::Matrix3 m;
         this->getNode()->getOrientation().ToRotationMatrix(m);
-        emitter->setDirection((GestShip::getSingleton()->getAllShips().at(j)->getNode()->getPosition() - this->getNode()->getPosition())*m);
+        emitter->setDirection((GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_IA).at(j)->getNode()->getPosition() - this->getNode()->getPosition())*m);
         Ogre::Vector3 rot = emitter->getDirection();
         rot.normalise();
         emitter->setPosition(rot*80-this->getEntity()->getBoundingBox().getCenter()+Ogre::Vector3(0,0,100));
     }
 
+
+    dist = -1;
+    distCurrent;
+
+    for(i=GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).size()-1; i>=0;i--)
+    {
+       distCurrent = GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).at(i)->getNode()->getPosition().squaredDistance(this->getNode()->getPosition());
+       if(dist<0 || distCurrent < dist)
+       {
+            dist = distCurrent;
+            j = i;
+       }
+    }
+
+    if(j>-1)
+    {
+        Ogre::Matrix3 m;
+        this->getNode()->getOrientation().ToRotationMatrix(m);
+        emitterFriend->setDirection((GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).at(j)->getNode()->getPosition() - this->getNode()->getPosition())*m);
+        Ogre::Vector3 rot = emitterFriend->getDirection();
+        rot.normalise();
+        emitterFriend->setPosition(rot*80-this->getEntity()->getBoundingBox().getCenter()+Ogre::Vector3(0,0,100));
+    }
 
 }
 
@@ -292,18 +311,24 @@ void ShipPlayer::defineParticules(void)
     thrusters->setKeepParticlesInLocalSpace(true);
 
 	// Création de 1 émetteur pour le système de particules vers l'ennemi
-	for (unsigned int i = 0; i < 1; i++)
-	{
-		emitter = thrusters->addEmitter("Point");
 
-		// set the emitter properties
-		emitter->setAngle(Ogre::Degree(0));
-		emitter->setTimeToLive(0.3);
-		emitter->setEmissionRate(25);
-		emitter->setParticleVelocity(200);
-		emitter->setColour(Ogre::ColourValue::Red, Ogre::ColourValue::Red);
-		emitter->setPosition(Ogre::Vector3(i == 0 ? 5.7 : -18, 0, 0));
-	}
+    emitter = thrusters->addEmitter("Point");
+    // set the emitter properties
+    emitter->setAngle(Ogre::Degree(0));
+    emitter->setTimeToLive(0.3);
+    emitter->setEmissionRate(25);
+    emitter->setParticleVelocity(200);
+    emitter->setColour(Ogre::ColourValue::Red, Ogre::ColourValue::Red);
+
+    emitterFriend = thrusters->addEmitter("Point");
+    // set the emitter properties
+    emitterFriend->setAngle(Ogre::Degree(0));
+    emitterFriend->setTimeToLive(0.3);
+    emitterFriend->setEmissionRate(25);
+    emitterFriend->setParticleVelocity(200);
+    emitterFriend->setColour(Ogre::ColourValue::Green, Ogre::ColourValue::Green);
+
+
     this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
     ShipAbstract::defineParticules();
 }
