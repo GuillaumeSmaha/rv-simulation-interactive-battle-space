@@ -5,6 +5,7 @@
 #ifndef __SHIP_ABSTRACT_H__
 #define __SHIP_ABSTRACT_H__
 
+#include <algorithm>
 #include <Ogre.h>
 #include "MeshLoader.h"
 #include "Utils.h"
@@ -252,6 +253,7 @@ class ShipAbstract : public ObjectRoot
 			if(method == 2)
 			{
 				factor = ratio*ratio*ratio;
+				//~ factor = std::min(1.0, std::max(0.0, ratio*ratio*ratio*0.5+0.5));
 			}
 			else
 			{
@@ -261,7 +263,8 @@ class ShipAbstract : public ObjectRoot
 				}
 				else
 				{
-					factor = (log10(ratio)+2.0)/2.0;
+					//~ factor = (log10(ratio)+2.0)/2.0;
+					factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.5 + 0.5));
 				}
 			}
 
