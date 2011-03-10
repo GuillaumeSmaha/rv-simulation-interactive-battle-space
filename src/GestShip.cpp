@@ -29,6 +29,18 @@ GestShip::~GestShip()
 void GestShip::addShip(ShipAbstract * ship)
 {
     lstShip.push_back(ship);
+    switch(ship->getTypeObject())
+    {
+            case ObjectRoot::SHIP_IA:
+                lstShipIA.push_back(ship);
+            break;
+            case ObjectRoot::SHIP_PLAYER:
+                lstShipPlayer.push_back(ship);
+            break;
+            case ObjectRoot::SHIP_BATTLE_STATION:
+                lstShipBattleStation.push_back(ship);
+            break;
+    }
     ship->signalDestruction.add(&GestShip::remShip, this);
 }
 
@@ -42,6 +54,39 @@ void GestShip::remShip(ShipAbstract * ship)
 			break;
 		}
 	}
+	switch(ship->getTypeObject())
+    {
+            case ObjectRoot::SHIP_IA:
+                for(unsigned int i = 0 ; i < lstShipIA.size() ; i++)
+                {
+                    if(lstShipIA[i]==ship)
+                    {
+                        lstShipIA.erase(lstShipIA.begin()+i);
+                        break;
+                    }
+                }
+            break;
+            case ObjectRoot::SHIP_PLAYER:
+               for(unsigned int i = 0 ; i < lstShipPlayer.size() ; i++)
+                {
+                    if(lstShipPlayer[i]==ship)
+                    {
+                        lstShipPlayer.erase(lstShipPlayer.begin()+i);
+                        break;
+                    }
+                }
+            break;
+            case ObjectRoot::SHIP_BATTLE_STATION:
+                for(unsigned int i = 0 ; i < lstShipBattleStation.size() ; i++)
+                {
+                    if(lstShipBattleStation[i]==ship)
+                    {
+                        lstShipBattleStation.erase(lstShipBattleStation.begin()+i);
+                        break;
+                    }
+                }
+            break;
+    }
 }
 
 void GestShip::updateShips(void *)
@@ -59,6 +104,21 @@ void GestShip::deleteAllShips()
 	while(itShip != lstShip.end())
     {
 		itShip = lstShip.erase(itShip);
+    }
+    itShip = lstShipIA.begin();
+	while(itShip != lstShipIA.end())
+    {
+		itShip = lstShipIA.erase(itShip);
+    }
+    itShip = lstShipPlayer.begin();
+	while(itShip != lstShipPlayer.end())
+    {
+		itShip = lstShipPlayer.erase(itShip);
+    }
+    itShip = lstShipBattleStation.begin();
+	while(itShip != lstShipBattleStation.end())
+    {
+		itShip = lstShipBattleStation.erase(itShip);
     }
 }
 

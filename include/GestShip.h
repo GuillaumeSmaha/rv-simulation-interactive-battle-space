@@ -24,6 +24,18 @@ class GestShip : public ClassRoot
 		 * \brief Liste des vaisseaux
 		*/
         std::vector<ShipAbstract *> lstShip;
+        /*!
+		 * \brief Liste des vaisseaux IA
+		*/
+        std::vector<ShipAbstract *> lstShipIA;
+        /*!
+		 * \brief Liste des vaisseaux Player
+		*/
+        std::vector<ShipAbstract *> lstShipPlayer;
+        /*!
+		 * \brief Liste des vaisseaux BattleStation
+		*/
+        std::vector<ShipAbstract *> lstShipBattleStation;
 
 		/*!
 		 *  \brief Instance de GestShip pour le singleton
@@ -69,6 +81,27 @@ class GestShip : public ClassRoot
 		{
 			return lstShip;
 		}
+		/*!
+		 * \brief Récupère la liste des vaisseaux d'un type
+		 * \return Liste des vaisseaux
+		*/
+        std::vector<ShipAbstract *> getAllShips(ObjectRoot::ObjectType type)
+		{
+                 switch(type)
+                {
+                        case ObjectRoot::SHIP_IA:
+                            return lstShipIA;
+                        break;
+                        case ObjectRoot::SHIP_PLAYER:
+                            return lstShipPlayer;
+                        break;
+                        case ObjectRoot::SHIP_BATTLE_STATION:
+                            return lstShipBattleStation;
+                        break;
+                        default:
+                            return lstShip;
+                }
+        }
 		/*!
 		 * \brief Met à jour la position de tous les vaisseaux
 		*/
