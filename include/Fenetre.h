@@ -28,7 +28,7 @@ class Fenetre
         /*!
 		* \brief Permet de créer une fentre de menus générique
 		*/
-        CEGUI::Window * create_std_window(std::string name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu);
+        CEGUI::Window * create_std_window(CEGUI::utf8 * name, float posX, float posY ,float largeur, float hauteur, int nbEl ,CEGUI::Window ** contenu);
 
         /*!
 		* \brief Permet de supprimer une fenetre (appeler par create_std_window, ne devrait pas être utilisé ailleurs).

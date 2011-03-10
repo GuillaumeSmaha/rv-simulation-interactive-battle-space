@@ -3,7 +3,7 @@
 int Message::nbMessage= 0;
 
 
-void Message::afficher_message(Ogre::String titre,Ogre::String txt)
+void Message::afficher_message(CEGUI::utf8 * titre,CEGUI::utf8 * txt)
 {
     affiche = true;
     std::ostringstream internalName;
@@ -16,7 +16,7 @@ void Message::afficher_message(Ogre::String titre,Ogre::String txt)
     textWnd->setText(txt);
     textWnd->setProperty( "VertScrollbar", "True" );
 
-    this->mainWdw = create_std_window(titre, 0.2, 0.9 ,0.6, 0.06, 1 ,&textWnd);
+    this->mainWdw = create_std_window(  titre, 0.2, 0.9 ,0.6, 0.06, 1 ,&textWnd);
 
     CEGUI::System::getSingleton().setGUISheet(this->mainWdw);
     this->mainWdw->show();

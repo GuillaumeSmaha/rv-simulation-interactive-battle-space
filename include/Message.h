@@ -54,7 +54,7 @@ class Message: public ClassRoot, public Fenetre
 		* \param titre Titre du message à afficher
 		* \param txt Contenu du message à afficher
 		*/
-		void afficher_message(Ogre::String titre, Ogre::String txt);
+		void afficher_message(CEGUI::utf8 * titre, CEGUI::utf8 * txt);
 		/*!
 		* \brief Permet de supprimer une fenetre (appeler par create_std_window, ne devrait pas être utilisé ailleurs).
 		* \param evt Evenement de CEGUI

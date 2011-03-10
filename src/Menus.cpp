@@ -216,7 +216,7 @@ void Menus::creer_main_window(void)
     tblWin[2]=about;
     tblWin[3]=scenario;
 
-    this->mainWdw=create_std_window("Combat de vaiseaux", 0.1, 0.05, 0.8, 0.2,4, tblWin);
+    this->mainWdw=create_std_window((CEGUI::utf8 *)"Combat de vaiseaux", 0.1, 0.05, 0.8, 0.2,4, tblWin);
 
     this->mainWdw->hide();
 }
@@ -248,7 +248,7 @@ void Menus::creer_menus_start(void)
     tblWin[0]=onePlayer;
     tblWin[1]=twoPlayer;
 
-    startWdw=create_std_window("Choisir mode de jeux", 0.1, 0.05, 0.8, 0.8,2, tblWin);
+    startWdw=create_std_window((CEGUI::utf8 *)"Choisir mode de jeux", 0.1, 0.05, 0.8, 0.8,2, tblWin);
 
     afficher_souris();
     CEGUI::System::getSingleton().setGUISheet(startWdw);
@@ -326,7 +326,7 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt)
     Ogre::String txt = Utils::read_file(file.c_str());
     textAbout->setText(txt);
     textAbout->setProperty( "VertScrollbar", "True" );
-    CEGUI::Window * nouvWdw= create_std_window("A propos", 0.1, 0.5, 0.8, 0.3, 1, &textAbout);
+    CEGUI::Window * nouvWdw= create_std_window((CEGUI::utf8 *)"A propos", 0.1, 0.5, 0.8, 0.3, 1, &textAbout);
 
     this->mainWdw->addChildWindow(nouvWdw);
 
@@ -345,7 +345,7 @@ bool Menus::clicScenario(const CEGUI::EventArgs & evt)
     textScen->setText(txt);
     textScen->setProperty( "VertScrollbar", "True" );
     //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
-    CEGUI::Window * nouvWdw= create_std_window("Scenario", 0.1, 0.5, 0.8, 0.3, 1, &textScen);
+    CEGUI::Window * nouvWdw= create_std_window((CEGUI::utf8 *)"Scenario", 0.1, 0.5, 0.8, 0.3, 1, &textScen);
     this->mainWdw->addChildWindow(nouvWdw);
 
     return true;
