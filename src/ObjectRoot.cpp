@@ -31,11 +31,24 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
 		case SHIP_PLAYER :
 		case SHIP_IA :
 		{
+			OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter = new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity());
 
-			OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter= new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity());
+			OgreBulletCollisions::ConvexHullCollisionShape * convexCollisionShape = shapeConverter->createConvex();
+			this->shape = (OgreBulletCollisions::CollisionShape *) convexCollisionShape;
 
-			OgreBulletCollisions::ConvexHullCollisionShape * convexCollisionShape =shapeConverter->createConvex();
-			this->shape =(OgreBulletCollisions::CollisionShape *) convexCollisionShape;
+			delete shapeConverter;
+			break;
+		}
+		case SHIP_BATTLE_STATION :
+		{
+			Ogre::Matrix4 mat = Ogre::Matrix4::IDENTITY;
+			for(int i = 0 ; i < 3 ; i ++)
+				mat[i][i] *= this->getNode()->_getDerivedScale()[i];
+			
+			OgreBulletCollisions::StaticMeshToShapeConverter * shapeConverter = new OgreBulletCollisions::StaticMeshToShapeConverter(this->getEntity(), mat);
+
+			OgreBulletCollisions::ConvexHullCollisionShape * convexCollisionShape = shapeConverter->createConvex();
+			this->shape = (OgreBulletCollisions::CollisionShape *) convexCollisionShape;
 
 			delete shapeConverter;
 			break;

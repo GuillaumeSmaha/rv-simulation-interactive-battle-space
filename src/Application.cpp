@@ -381,10 +381,14 @@ void Application::initScene(void)
         GestShip::getSingleton()->addShip(ship3);
 		ship3->createCollisionObject(this->listenerCollision);
     }
+    
+    
+  
     BattleStation * station;
     station = new BattleStation();
     station->setPosition(100,100,1000);
     GestShip::getSingleton()->addShip(station);
+    station->createCollisionObject(this->listenerCollision);
 /*
     Ogre::BillboardSet * bill = this->sceneMgr->createBillboardSet("test", 1);
     //~ Ogre::Billboard * board = bill->createBillboard(Ogre::Vector3(0,0,0), ColourValue::White);
