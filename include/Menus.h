@@ -129,6 +129,11 @@ class Menus: public ClassRoot, public Fenetre
         void creer_main_window(void);
 
         /*!
+         * \brief Crée le menus principal
+         */
+        void creer_menus_start(void);
+
+        /*!
          * \brief Affiche le menus principal
          */
         void afficher_main_window(void);
@@ -172,6 +177,16 @@ class Menus: public ClassRoot, public Fenetre
 		* \brief Action appelé lors de l'appui sur le bouton scenario
 		*/
         bool clicScenario(const CEGUI::EventArgs & evt);
+
+        /*!
+		* \brief Declenche le jeux à 1 joueur
+		*/
+        bool PlayOnePlayer(const CEGUI::EventArgs & evt);
+
+        /*!
+		* \brief Declenche le jeux à 2 joueur
+		*/
+        bool PlayTwoPlayer(const CEGUI::EventArgs & evt);
 
         /*!
 		* \brief Permet de supprimer les intéractions du jeux en cours (actions des touches, défilement...)

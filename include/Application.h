@@ -260,7 +260,11 @@ class Application : public ClassRoot
 			this->shutDown = shutdown;
 		}
 
-
+    	/*!
+		*  \brief Initialise la scène
+        *  Public car démarrer depuis le Menus
+		*/
+		void initScene(bool isTwoPlayer);
 	private:
 		/*!
 		*  \brief Charge les ressources listées dans resources.cfg
@@ -275,10 +279,7 @@ class Application : public ClassRoot
 		*  \brief Initialise le graphe de scène
 		*/
 		void initSceneGraph(void);
-    	/*!
-		*  \brief Initialise la scène
-		*/
-		void initScene(void);
+
 
         /*!
          * \brief Reçoit les évènements clavier de PlayerControls (utilisé notamment pour fermer la fenêtre avec échap)

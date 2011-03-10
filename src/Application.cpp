@@ -140,8 +140,6 @@ bool Application::start(void)
     menus= new Menus(this->listenerMouse, this->listenerKeyboard, this->player, this);
     menus->signalPaused.add(&ListenerTime::pause, this->listenerTime);
 
-    // create the scene
-	this->initScene();
 
 	// activate debugging overlay
 	debugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
@@ -158,8 +156,6 @@ bool Application::start(void)
 	*/
 
 	// start the scene rendering (main loop)
-    Message * message= new Message(this->listenerTime);
-    message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
 
 	this->root->startRendering();
 
@@ -349,7 +345,7 @@ void Application::initSceneGraph(void)
 }
 
 
-void Application::initScene(void)
+void Application::initScene(bool isTwoPlayer)
 {
 	// Mise en place du SkyBox "Etoiles"
 	this->sceneMgr->setSkyBox(true, "SpaceSkyBox", 5000);
@@ -383,16 +379,17 @@ void Application::initScene(void)
 	//ship->setOrientation(5, 5, 5, 5);
 	GestShip::getSingleton()->addShip(ship);
 
+    if(isTwoPlayer){
+        ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
+        ship2->setPosition(-130,0,0);
+        //ship2->touched();
+        GestShip::getSingleton()->addShip(ship2);
 
-	/*ShipPlayer * ship2 = new ShipPlayer(this->player2, listenerTime);
-    ship2->setPosition(-130,0,0);
-    //ship2->touched();
-    GestShip::getSingleton()->addShip(ship2);
-
-	ship2->createCollisionObject(this->listenerCollision);
-	player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
-	player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_S);
-	*/
+        ship2->createCollisionObject(this->listenerCollision);
+        player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_Z);
+        player2->setKeyControl(PlayerControls::BRAKE, OIS::KC_S);
+    }
+	
 
 
  //MECHANT VAISSEAUX
@@ -458,6 +455,11 @@ void Application::initScene(void)
 	//l->setType(Light::LT_POINT);
 	Ogre::SceneNode * nodeLight1 = sun->getNode()->createChildSceneNode("NodeLight1");
 	nodeLight1->attachObject(l);
+
+	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
+
+    Message * message= new Message(this->listenerTime);
+    message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 }

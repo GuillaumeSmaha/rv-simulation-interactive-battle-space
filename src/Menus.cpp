@@ -40,6 +40,7 @@ Menus::Menus(ListenerMouse * mouseControl, ListenerKeyboard * keyControl, Player
 
     creer_souris();
     creer_main_window();
+    creer_menus_start();
 }
 
 Menus::~Menus()
@@ -220,6 +221,52 @@ void Menus::creer_main_window(void)
     this->mainWdw->hide();
 }
 
+
+void Menus::creer_menus_start(void)
+{
+    CEGUI::Window * startWdw;
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+
+    //the one player button
+    CEGUI::Window * onePlayer = wmgr.createWindow("SleekSpace/Button", "SpaceShip/OnePtButton");
+    onePlayer->setText("1 joueur");
+    onePlayer->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.25,0)));
+    onePlayer->setPosition( UVector2( UDim( 0.05, 0.0f ), UDim( 0.32, 0.0f) ) );
+    //menuBackground->addChildWindow(onePlayer);
+    onePlayer->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::PlayOnePlayer, this));
+
+    //the two player button
+    CEGUI::Window * twoPlayer = wmgr.createWindow("SleekSpace/Button", "SpaceShip/TwoPtButton");
+    twoPlayer->setText("2 joueur");
+    twoPlayer->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.25,0)));
+    twoPlayer->setPosition( UVector2( UDim( 0.8, 0.0f ), UDim( 0.32, 0.0f) ) );
+    //menuBackground->addChildWindow(twoPlayer);
+    twoPlayer->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::PlayTwoPlayer, this));
+
+
+    CEGUI::Window * tblWin[2];
+    tblWin[0]=onePlayer;
+    tblWin[1]=twoPlayer;
+
+    startWdw=create_std_window("Choisir mode de jeux", 0.1, 0.05, 0.8, 0.8,2, tblWin);
+
+    afficher_souris();
+    CEGUI::System::getSingleton().setGUISheet(startWdw);
+    startWdw->show();
+}
+
+bool Menus::PlayOnePlayer(const CEGUI::EventArgs & evt){
+    destroyWindow(evt);
+    this->app->initScene(false);
+    cacher_souris();
+    return true;
+}
+bool Menus::PlayTwoPlayer(const CEGUI::EventArgs & evt){
+    destroyWindow(evt);
+    cacher_souris();
+    this->app->initScene(true);
+    return true;
+}
 //void Menus::creer_background(void)
 //{
 

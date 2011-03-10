@@ -32,8 +32,8 @@ CEGUI::Window * Fenetre::create_std_window(std::string name, float posX, float p
     //on ajoute un close bouton à chaque fenetre
     CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/close"+name);
     quit->setText("Fermer");
-    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.2,0)));
-    quit->setPosition( UVector2( UDim( 0.8, 0.0f ), UDim( 0.7, 0.0f) ) );
+    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.1,0)));
+    quit->setPosition( UVector2( UDim( 0.8, 0.0f ), UDim( 0.8, 0.0f) ) );
     //menuBackground->addChildWindow(quit);
     quit->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Fenetre::destroyWindow, this));
     menuBackground->addChildWindow(quit);
