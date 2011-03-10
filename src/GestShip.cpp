@@ -34,26 +34,22 @@ void GestShip::addShip(ShipAbstract * ship)
             case ObjectRoot::SHIP_IA:
                 lstShipIA.push_back(ship);
             break;
+            
             case ObjectRoot::SHIP_PLAYER:
                 lstShipPlayer.push_back(ship);
             break;
+            
             case ObjectRoot::SHIP_BATTLE_STATION:
                 lstShipBattleStation.push_back(ship);
             break;
+            
+            default:
+            break;
     }
-    ship->signalDestruction.add(&GestShip::remShip, this);
 }
 
 void GestShip::remShip(ShipAbstract * ship)
 {
-	for(unsigned int i = 0 ; i < lstShip.size() ; i++)
-	{
-		if(lstShip[i]==ship)
-		{
-			lstShip.erase(lstShip.begin()+i);
-			break;
-		}
-	}
 	switch(ship->getTypeObject())
     {
             case ObjectRoot::SHIP_IA:
@@ -66,6 +62,7 @@ void GestShip::remShip(ShipAbstract * ship)
                     }
                 }
             break;
+            
             case ObjectRoot::SHIP_PLAYER:
                for(unsigned int i = 0 ; i < lstShipPlayer.size() ; i++)
                 {
@@ -76,6 +73,7 @@ void GestShip::remShip(ShipAbstract * ship)
                     }
                 }
             break;
+            
             case ObjectRoot::SHIP_BATTLE_STATION:
                 for(unsigned int i = 0 ; i < lstShipBattleStation.size() ; i++)
                 {
@@ -86,7 +84,20 @@ void GestShip::remShip(ShipAbstract * ship)
                     }
                 }
             break;
+            
+            default:
+            break;
     }
+    
+	for(unsigned int i = 0 ; i < lstShip.size() ; i++)
+	{
+		if(lstShip[i] == ship)
+		{
+			delete ship;
+			lstShip.erase(lstShip.begin()+i);
+			break;
+		}
+	}
 }
 
 void GestShip::updateShips(void *)
@@ -103,23 +114,13 @@ void GestShip::deleteAllShips()
     vector<ShipAbstract *>::iterator itShip = lstShip.begin();
 	while(itShip != lstShip.end())
     {
+		delete *itShip;
 		itShip = lstShip.erase(itShip);
     }
-    itShip = lstShipIA.begin();
-	while(itShip != lstShipIA.end())
-    {
-		itShip = lstShipIA.erase(itShip);
-    }
-    itShip = lstShipPlayer.begin();
-	while(itShip != lstShipPlayer.end())
-    {
-		itShip = lstShipPlayer.erase(itShip);
-    }
-    itShip = lstShipBattleStation.begin();
-	while(itShip != lstShipBattleStation.end())
-    {
-		itShip = lstShipBattleStation.erase(itShip);
-    }
+    
+    lstShipIA.clear();
+    lstShipPlayer.clear();
+    lstShipBattleStation.clear();
 }
 
 void GestShip::destroy()

@@ -49,6 +49,7 @@ void GestLaser::remove(Laser * laser)
 	{
 		if(this->listLasers[i] == laser)
 		{
+			delete laser;
 			this->listLasers.erase(this->listLasers.begin()+i);
 			break;
 		}
@@ -63,6 +64,7 @@ void GestLaser::updateLasers(void *)
     {
 		if(!(*itLaser)->isAlive())
 		{
+			delete *itLaser;
 			itLaser = this->listLasers.erase(itLaser);
 		}
 		else
@@ -78,6 +80,7 @@ void GestLaser::deleteAll()
 	vector<Laser *>::iterator itLaser = this->listLasers.begin();
 	while (itLaser != listLasers.end())
     {
+		delete *itLaser;
 		itLaser = this->listLasers.erase(itLaser);
     }
 }

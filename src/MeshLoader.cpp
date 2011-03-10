@@ -168,7 +168,6 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 	Ogre::SceneNode * nodeParent = object->getParentSceneNode();
 	nodeParent->setVisible(false);
 	object->setVisible(false);
-	nodeParent->detachObject(object);
 
 	switch(type)
 	{
@@ -230,15 +229,17 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 			particle->removeAllEmitters();
 			particle->removeAllAffectors();
 			this->sceneMgr->destroyParticleSystem(particle);
+			nodeParent->removeAndDestroyAllChildren();
+			node->removeAndDestroyChild(nodeParent->getName());
 			break;
 		}
 		default:
 			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
 	}
-
-	nodeParent->removeAndDestroyAllChildren();
-	node->removeAndDestroyChild(nodeParent->getName());
+	
+	//~ nodeParent->removeAndDestroyAllChildren();
+	//~ node->removeAndDestroyChild(nodeParent->getName());
 }
 
 
@@ -291,7 +292,7 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 	switch(type)
 	{
 		case SHIP:
-			static_cast<Ogre::Entity *>(object)->setMaterialName("StationSpatiale");
+			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");
 			break;
 		case SHIP_TOUCHED:
 			static_cast<Ogre::Entity *>(object)->setMaterialName("greychrome");

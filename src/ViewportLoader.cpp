@@ -88,6 +88,8 @@ bool ViewportLoader::removeViewport(int idViewport)
 			this->listViewport.erase(this->listViewport.begin()+idViewport);
 			return true;
 		}
+		
+		delete viewport;
 	}
 	return false;
 }

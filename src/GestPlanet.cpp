@@ -47,6 +47,7 @@ void GestPlanet::deleteAllPlanet()
     vector<Planet *>::iterator itPlanet = lstPlanet.begin();
 	while (itPlanet != lstPlanet.end())
 	{
+		delete *itPlanet;
 		itPlanet = lstPlanet.erase(itPlanet);
     }
 }

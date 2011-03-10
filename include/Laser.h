@@ -23,7 +23,7 @@ class GestLaser;
 * \brief Classe gérant les lasers
 */
 class Laser : public ObjectRoot
-{	
+{		 
 	private:
          /*!
          * \brief Position initial du laser

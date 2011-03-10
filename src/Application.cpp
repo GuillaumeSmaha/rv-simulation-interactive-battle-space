@@ -31,36 +31,55 @@ Application::Application(void)
 
 Application::~Application(void)
 {
+	std::cout << std::endl << "-" << std::endl << "Stop	application !!" << std::endl;
 
+	std::cout << "delete GestLaser::deleteAll" << std::endl;
     GestLaser::getSingleton()->deleteAll();
+	std::cout << "delete GestLaser::destroy" << std::endl;
     GestLaser::destroy();
 
+	std::cout << "delete GestShip::deleteAll" << std::endl;
     GestShip::getSingleton()->deleteAllShips();
+	std::cout << "delete GestShip::destroy" << std::endl;
     GestShip::destroy();
 
+	std::cout << "delete GestPlanet::deletAll" << std::endl;
 	GestPlanet::getSingleton()->deleteAllPlanet();
+	std::cout << "delete GestPlanet::destroy" << std::endl;
 	GestPlanet::destroy();
 
+	std::cout << "delete menus" << std::endl;
 	GestGroupAsteroids::getSingleton()->deleteAllGroupsAsteroids();
 	GestGroupAsteroids::destroy();
 
+	std::cout << "delete GestSceneManager::deleteAll" << std::endl;
 	GestSceneManager::getSingleton()->deleteAll();
-
 	GestSceneManager::destroy();
 
 	GestSound::destroy();
 
+	std::cout << "delete menus" << std::endl;
     delete this->menus;
+	std::cout << "delete player" << std::endl;
 	delete this->player;
+	std::cout << "delete player2" << std::endl;
 	delete this->player2;
 
+	std::cout << "delete listenerMouse" << std::endl;
 	delete this->listenerMouse;
+	std::cout << "delete listenerKeyboard" << std::endl;
 	delete this->listenerKeyboard;
+	std::cout << "delete listenerTime" << std::endl;
 	delete this->listenerTime;
+	std::cout << "delete listenerFrame" << std::endl;
 	delete this->listenerFrame;
+	std::cout << "delete listenerCollision" << std::endl;
     delete this->listenerCollision;
+	std::cout << "delete deleteViewportLoader" << std::endl;
 	ViewportLoader::deleteViewportLoader();
+	std::cout << "delete deleteMeshLoader" << std::endl;
 	MeshLoader::deleteMeshLoader();
+	std::cout << "delete listenerWindow" << std::endl;
 
 	delete this->listenerWindow;
 

@@ -10,14 +10,17 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
 	  isTouched(false), isDead(false), firstPos(true), firstDir(true)
 {
-    if(type==ObjectRoot::SHIP_IA)
+    if(type == ObjectRoot::SHIP_IA)
     {
         this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_IA));
-    }else{
-        if(type==ObjectRoot::SHIP_BATTLE_STATION)
+    }
+    else
+    {
+        if(type == ObjectRoot::SHIP_BATTLE_STATION)
         {
             this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_BATTLE_STATION));
-        }else
+        }
+        else
         {
             this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
         }
@@ -56,7 +59,6 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 
 ShipAbstract::~ShipAbstract(void)
 {
-	this->signalDestruction.dispatch(this);
 	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::SHIP, this->getEntity());
 }
 

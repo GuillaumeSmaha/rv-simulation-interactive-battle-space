@@ -117,10 +117,7 @@ Planet::~Planet(void)
 		scnMgr->destroyEntity(outerSphere);
 	}
 
-	scnMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES)->removeAndDestroyChild(planetNode->getName());
-
-    //nettoie les pointeurs utilisé pour géré les collisions
-    //destroyCollisionObject();
+	//~ scnMgr->getSceneNode(NODE_NAME_GROUPE_DECOR_GROUPE_PLANETES)->removeAndDestroyChild(planetNode->getName());
 }
 
 void Planet::update()

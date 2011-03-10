@@ -23,7 +23,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
 	this->nodeCameraFirstPerson->setPosition(0, 30, 30);
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
-    compteur= new Compteur(this, listenerTime);
+    compteur = new Compteur(this, listenerTime);
 	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 
     accelerationPressed = false;
@@ -43,7 +43,6 @@ ShipPlayer::~ShipPlayer(void)
 	this->playerControl->signalMouseMoved.remove(&ShipPlayer::mouseMoved, this);
 
     GestSceneManager::remCamera(this->gestCamera);
-	delete this->gestCamera;
 }
 
 void ShipPlayer::updatePosition(void)

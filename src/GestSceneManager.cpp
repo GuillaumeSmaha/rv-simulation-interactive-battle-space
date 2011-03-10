@@ -62,8 +62,9 @@ void GestSceneManager::remCam(CameraFixeAbstract * cam)
 {
    for(unsigned int i = 0; i < _listCameras.size() ; i++)
    {
-       if(_listCameras[i]==cam)
+       if(_listCameras[i] == cam)
        {
+		   //~ delete cam;
            _listCameras.erase(_listCameras.begin()+i);
            return;
        }
