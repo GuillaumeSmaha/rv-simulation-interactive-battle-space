@@ -48,14 +48,17 @@ Application::~Application(void)
 	std::cout << "delete GestPlanet::destroy" << std::endl;
 	GestPlanet::destroy();
 
-	std::cout << "delete menus" << std::endl;
+	std::cout << "delete GestGroupAsteroids::deleteAll" << std::endl;
 	GestGroupAsteroids::getSingleton()->deleteAllGroupsAsteroids();
+	std::cout << "delete GestGroupAsteroids::destroy" << std::endl;
 	GestGroupAsteroids::destroy();
 
 	std::cout << "delete GestSceneManager::deleteAll" << std::endl;
 	GestSceneManager::getSingleton()->deleteAll();
+	std::cout << "delete GestSceneManager::destroy" << std::endl;
 	GestSceneManager::destroy();
 
+	std::cout << "delete GestSound::destroy" << std::endl;
 	GestSound::destroy();
 
 	std::cout << "delete menus" << std::endl;
