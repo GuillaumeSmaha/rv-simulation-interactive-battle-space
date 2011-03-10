@@ -3,10 +3,10 @@
 
 #include <OISInputManager.h>
 #include <OISJoyStick.h>
-#include "ObjectRoot.h"
+#include "ClassRoot.h"
 #include "Signal.h"
 #include "Ogre.h"
-class ListenerJoystick : public ObjectRoot
+class ListenerJoystick : public ClassRoot, public OIS::JoyStickListener
 {
     private:
 		/*!

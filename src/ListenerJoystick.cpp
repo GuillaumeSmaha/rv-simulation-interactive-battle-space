@@ -4,7 +4,7 @@ ListenerJoystick::ListenerJoystick(OIS::InputManager * inputManager)
 {
  	this->inputManager = inputManager;
 	this->joystick = static_cast<OIS::JoyStick*>(inputManager->createInputObject(OIS::OISJoyStick, true));
-//	this->joystick->setEventCallback(this);
+	this->joystick->setEventCallback(this);
 }
 
 ListenerJoystick::~ListenerJoystick()
