@@ -202,7 +202,7 @@ class Utils
 		* \param asteroid
 		* \return angle [0.0,0.4[ gauche; [O.4,0.6] centre; ]0.6, 1.0] droite;
 		*/
-		static Ogre::Real Utils::getAngle(Ogre::Vector3 ship, Ogre::Vector3 shipFutur, Ogre::Vector3 asteroid);
+		static Ogre::Real getAngle(Ogre::Vector3 ship, Ogre::Vector3 shipFutur, Ogre::Vector3 asteroid);
 };
 
 
