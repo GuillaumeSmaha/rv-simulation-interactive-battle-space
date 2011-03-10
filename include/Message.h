@@ -20,7 +20,6 @@ class Message: public ClassRoot, public Fenetre
 		* \brief Nombre de message affiché
 		*/
 		static int nbMessage;
-		
 		/*!
 		* \brief Indique si le message est en cours d'affichage à l'écran
 		*/
@@ -29,7 +28,11 @@ class Message: public ClassRoot, public Fenetre
 		* \brief Variable de temps pour le timer 
 		*/
 		int elapsedtime;
-		
+	    /*!
+		 *  \brief Instance de Message pour le singleton
+		 */
+		static Message * _instance ;
+	
 	public:
 	  
 		/*!
@@ -41,6 +44,7 @@ class Message: public ClassRoot, public Fenetre
 			listenerTime->signalTimerElapsed.add(&Message::timer, this);
 			elapsedtime = 0;
 			affiche = false;
+            _instance=this;
 		}
 		/*!
 		* \brief Destructeur
@@ -48,7 +52,11 @@ class Message: public ClassRoot, public Fenetre
 		~Message()
 		{
 		}
-		
+		/*!
+		 *  \brief Retourne une instance du singleton
+		 */
+		static Message * getSingleton(void);
+
 		/*!
 		* \brief Affiche un message
 		* \param titre Titre du message à afficher

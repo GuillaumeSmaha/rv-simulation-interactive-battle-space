@@ -2,9 +2,24 @@
 
 int Message::nbMessage= 0;
 
+Message * Message::_instance = NULL;
+
+Message* Message::getSingleton(void)
+{
+	if (_instance == NULL)
+	{
+        std::cout<<"Intance doit être initalisé explicitement une premiere fois"<<std::endl;
+	}
+	return _instance;
+}
 
 void Message::afficher_message(CEGUI::utf8 * titre,CEGUI::utf8 * txt)
 {
+    //si un message est déja afficher on le détruit avant d'en afficher un autre
+    if(affiche==true)
+    {
+        destroyWindow();
+    }
     affiche = true;
     std::ostringstream internalName;
     internalName << "tmpText" << Utils::toString(nbMessage);

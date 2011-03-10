@@ -114,17 +114,28 @@ void ShipAbstract::exploded(void)
 	switch(this->getTypeObject())
 	{
 		case ObjectRoot::SHIP_PLAYER :
+            {
 			std::cout << "ShipPlayer : Explosion de " << this->getName() << std::endl;
+            Message* message = Message::getSingleton();
+            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, Nous avons été détruits!");
 			break;
+            }
 			
 		case ObjectRoot::SHIP_IA :
+            {
 			std::cout << "ShipIA : Explosion de " << this->getName() << std::endl;
+            Message* message = Message::getSingleton();
+            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, Un vaisseau ennemi de moins!");
 			break;
+            }
 			
-		case ObjectRoot::SHIP_BATTLE_STATION :
+		case ObjectRoot::SHIP_BATTLE_STATION :    
+            {
 			std::cout << "ShipBattleStation : Explosion de " << this->getName() << std::endl;
+            Message* message = Message::getSingleton();
+            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, La station spatiale est détruite!");
 			break;
-			
+            }
 		default:
 			break;
 	}

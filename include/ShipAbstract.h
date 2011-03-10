@@ -15,6 +15,7 @@
 #include "GestSceneManager.h"
 #include "GestLaser.h"
 #include "GestSound.h"
+#include "Message.h"
 
 //class ObjectRoot;
 //class ListenerCollision;

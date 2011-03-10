@@ -460,8 +460,8 @@ void Application::initScene(bool isTwoPlayer)
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 
-    //Message * message = new Message(this->listenerTime);
-    //message->afficher_message("Du bon paté", "je te le dis elle envoit du paté cet appli (maudit encodage)");
+    Message * message = new Message(this->listenerTime);
+    message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, mise en marche des réacteurs imminentes!");
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 }
