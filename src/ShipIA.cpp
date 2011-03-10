@@ -6,14 +6,13 @@ using namespace Ogre;
 ShipIA::ShipIA(void) : ShipAbstract(ObjectRoot::SHIP_IA)
 {
     this->typeObject = ObjectRoot::SHIP_IA;
-    this->speed = 10;
+    this->speed = 50;
+    this->target = Utils::randRangeInt(0,GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).size()+GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size()-1);//0;
+    this->mRotFrames = 50;
     this->destination = Ogre::Vector3(130,0,9000);
-            mRotating = true;
-        mRotFactor = 1.0f / 10;
-        mOrientSrc = this->getNode()->getOrientation();
-        Ogre::Quaternion quat =  (this->getNode()->getOrientation()* Vector3::UNIT_X).getRotationTo( GestShip::getSingleton()->getAllShips().at(0)->getNode()->getPosition());
-        mOrientDest = quat * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
-        mRotProgress = 0;
+    mRotating = true;
+    mRotFactor = 1;
+    mRotProgress = 1;
 }
 
 ShipIA::~ShipIA(void)
@@ -24,6 +23,7 @@ ShipIA::~ShipIA(void)
 void ShipIA::updatePosition(void)
 {
     Ogre::Vector3 direction = this->getNode()->getPosition()-this->destination;
+    ShipAbstract * targetShip;
     //commenté pke bouffeur de FPS = les particules ne meurent pas
     if(direction.squaredLength()<40000000)
     {
@@ -38,14 +38,27 @@ void ShipIA::updatePosition(void)
           if(mRotProgress>1)
           {
               //destination = autour de nous (faudra faire une répartition autour des 2 joueurs)
-              this->destination = GestShip::getSingleton()->getAllShips().at(0)->getNode()->getPosition()+Ogre::Vector3(Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000));
+              if(Utils::randRangeInt(0,100)==42 || GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).size()+GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size()<=target)
+              {
+                  target = Utils::randRangeInt(0,GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_BATTLE_STATION).size()+GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size()-1);
+              }
+              if(target < GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size())
+              {
+                targetShip = GestShip::getSingleton()->getAllShips(SHIP_PLAYER).at(target);
+              }else
+              {
+                targetShip = GestShip::getSingleton()->getAllShips(SHIP_BATTLE_STATION).at(target- GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_PLAYER).size());
+              }
+
+
+              this->destination = targetShip->getNode()->getPosition()+Ogre::Vector3(Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000));
               mRotating = false;
-               mRotating = true;
-                mRotFactor = 1.0f / 50;
-                mOrientSrc = this->getNode()->getOrientation();
-                Ogre::Quaternion quat =  (this->getNode()->getOrientation()* Vector3::UNIT_Z).getRotationTo(    this->destination-this->getNode()->getPosition());
-                mOrientDest = quat * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
-                mRotProgress = 0;
+              mRotating = true;
+              mRotFactor = 1.0f / mRotFrames;
+              mOrientSrc = this->getNode()->getOrientation();
+              Ogre::Quaternion quat =  (this->getNode()->getOrientation()* Vector3::UNIT_Z).getRotationTo(    this->destination-this->getNode()->getPosition());
+              mOrientDest = quat * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
+              mRotProgress = 0;
           }
           else
           {
@@ -57,7 +70,7 @@ void ShipIA::updatePosition(void)
         //si on est encore loin on avance
         if(direction.squaredLength()>4000000)
         {
-            this->setSpeed(50);
+            this->setSpeed(speed);
 
         }else{
             this->setSpeed(0);

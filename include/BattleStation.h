@@ -14,13 +14,38 @@
 class BattleStation : public ShipAbstract
 {
 	private:
+        /*!
+		 * \brief Point de destination (utilisé pour calculé la distance entre la station et sa destination)
+		*/
         Ogre::Vector3 destination;
+        /*!
+		 * \brief Vitesse de la station
+		*/
         Ogre::Real speed;
-        Ogre::Quaternion mOrientSrc;               // Initial orientation
-          Ogre::Quaternion mOrientDest;              // Destination orientation
-          Ogre::Real mRotProgress;                   // How far we've interpolated
-          Ogre::Real mRotFactor;                     // Interpolation step
-          bool mRotating;
+        /*!
+		 * \brief Nombre de frames pour la rotation
+		*/
+        Ogre::Real mRotFrames;
+        /*!
+		 * \brief Orientation courante (avant le début de la rotation)
+		*/
+        Ogre::Quaternion mOrientSrc;
+        /*!
+		 * \brief Orientation future (après la rotation)
+		*/
+        Ogre::Quaternion mOrientDest;
+        /*!
+		 * \brief Avancement de la rotation
+		*/
+        Ogre::Real mRotProgress;
+        /*!
+		 * \brief "Pas" pour la rotation
+		*/
+        Ogre::Real mRotFactor;
+        /*!
+		 * \brief Station en rotation ?
+		*/
+        bool mRotating;
 	public:
 		/*!
 		 * \brief Construction
