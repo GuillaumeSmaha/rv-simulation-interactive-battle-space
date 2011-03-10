@@ -1,9 +1,8 @@
 #include "Sun.h"
 
-Sun::Sun(Vector3 LightPosition, Camera* camera, SceneManager* SceneMgr)
+Sun::Sun(Vector3 LightPosition, SceneManager* SceneMgr)
 {
 	mSceneMgr      = SceneMgr;
-	mCamera        = camera;
 	this->createSun();
 	this->setLightPosition(LightPosition);
 }
@@ -16,7 +15,6 @@ Sun::~Sun()
 	mSceneMgr->destroyBillboardSet(mBurstSet);
 	/// TODO destroy mNode
 } 
-
 
 void Sun::createSun()
 {
@@ -66,38 +64,44 @@ void Sun::createSun()
 
 void Sun::update(const Ogre::FrameEvent &evt)
 {
-	// If the Light is out of the Camera field Of View, the Sun is hidden.
-	if (!mCamera->isVisible(mLightPosition)) 
+	int nbCams = GestSceneManager::getCamCount();
+
+	for (int i = 0; i < nbCams; i++)
 	{
-		mHaloSet->setVisible(false);
-		mBurstSet->setVisible(false);
-		return;
+		Camera *currentCam = GestSceneManager::getCamera(i)->getCamera();
+
+		// If the Light is out of the Camera field Of View, the Sun is hidden.
+		if (!currentCam->isVisible(mLightPosition)) 
+		{
+			mHaloSet->setVisible(false);
+			mBurstSet->setVisible(false);
+			return;
+		}
+		else
+		{
+			mHaloSet->setVisible(true);
+			mBurstSet->setVisible(true);
+		}
+
+		Real LightDistance  = mLightPosition.distance(currentCam->getPosition());
+		Vector3 CameraVect  = currentCam->getDirection(); // normalized vector (length 1)
+
+		CameraVect = currentCam->getPosition() + (LightDistance * CameraVect);
+
+
+		// The Sun effect takes place along this vector.
+		Vector3 LFvect = (CameraVect - mLightPosition);
+		//LFvect += Vector3(-64,-64,0);  // sprite dimension (to be adjusted, but not necessary)
+
+		// The different sprites are placed along this line.
+		//mHaloSet->getBillboard(0)->setPosition( LFvect*0.500);
+		//mHaloSet->getBillboard(1)->setPosition( LFvect*0.125);
+		//mHaloSet->getBillboard(2)->setPosition(-LFvect*0.250);
+
+		mBurstSet->getBillboard(0)->setPosition( LFvect*0.333);
+		mBurstSet->getBillboard(1)->setPosition(-LFvect*0.500);
+		mBurstSet->getBillboard(2)->setPosition(-LFvect*0.180);
 	}
-	else
-	{
-		mHaloSet->setVisible(true);
-		mBurstSet->setVisible(true);
-	}
-
-	Real LightDistance  = mLightPosition.distance(mCamera->getPosition());
-	Vector3 CameraVect  = mCamera->getDirection(); // normalized vector (length 1)
-
-	CameraVect = mCamera->getPosition() + (LightDistance * CameraVect);
-
-
-	// The Sun effect takes place along this vector.
-	Vector3 LFvect = (CameraVect - mLightPosition);
-	//LFvect += Vector3(-64,-64,0);  // sprite dimension (to be adjusted, but not necessary)
-
-	// The different sprites are placed along this line.
-	//mHaloSet->getBillboard(0)->setPosition( LFvect*0.500);
-	//mHaloSet->getBillboard(1)->setPosition( LFvect*0.125);
-	//mHaloSet->getBillboard(2)->setPosition(-LFvect*0.250);
-
-	mBurstSet->getBillboard(0)->setPosition( LFvect*0.333);
-	mBurstSet->getBillboard(1)->setPosition(-LFvect*0.500);
-	mBurstSet->getBillboard(2)->setPosition(-LFvect*0.180);
-
 }
 
 /* ------------------------------------------------------------------------- */

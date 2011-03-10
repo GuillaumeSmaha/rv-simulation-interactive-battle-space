@@ -81,7 +81,8 @@ bool Application::start(void)
 	this->loadRessources();
 
 	// restore the config or show the configuration dialog and
-	if(! this->root->restoreConfig() && ! this->root->showConfigDialog())
+	//if(! this->root->restoreConfig() && ! this->root->showConfigDialog())
+	if (!this->root->showConfigDialog())
 		return false;
 
 	// initialise the system, create the default rendering window
@@ -417,7 +418,7 @@ void Application::initScene(void)
 
 //Temporaire :
 	Vector3 lightPosition(100, 200, -100000);
-	Sun *sun = new Sun(lightPosition, GestSceneManager::getCamera(0)->getCamera(), sceneMgr);
+	Sun *sun = new Sun(lightPosition, sceneMgr);
 
     // Set ambient light
     //this->sceneMgr->setAmbientLight(Ogre::ColourValue(1.0, 1.0, 1.0));

@@ -3,20 +3,21 @@
 
 #include <Ogre.h>
 #include "ClassRoot.h"
+#include "GestSceneManager.h"
 
 using namespace Ogre;
 
 class Sun : public ClassRoot
 {
 public:
-	Sun(Vector3 LightPosition, Camera* camera, SceneManager* SceneMgr);
+	Sun(Vector3 LightPosition, SceneManager* SceneMgr);
 	virtual ~Sun();
 	void createSun();
 	void update(const Ogre::FrameEvent &evt);
 	void setLightPosition(Vector3 pos);
 	void setHaloColour(ColourValue color);
 	void setBurstColour(ColourValue color);
-
+	
 	SceneNode * getNode() 
 	{
 		return mNode;
@@ -25,7 +26,6 @@ public:
 
 protected:
 	SceneManager* mSceneMgr;
-	Camera*       mCamera;
 	ColourValue   mColour;
 	SceneNode*    mNode;
 	BillboardSet* mHaloSet;
