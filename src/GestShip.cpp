@@ -129,6 +129,20 @@ void GestShip::updateShips(void *)
 			//~ delete *itShip;
 			itShip = lstShip.erase(itShip);
 		}
+		else if((*itShip)->getIsDead())
+		{
+			(*itShip)->setShipLife(0);
+			(*itShip)->setSpeed(0);
+			(*itShip)->setAcceleration(0);
+			(*itShip)->setTranslateSpeed(0);
+			(*itShip)->setTranslateAcceleration(0);
+			(*itShip)->setRollSpeed(Ogre::Radian(0));
+			(*itShip)->setRollAcceleration(Ogre::Radian(0));
+			(*itShip)->setPitchSpeed(Ogre::Radian(0));
+			(*itShip)->setPitchAcceleration(Ogre::Radian(0));
+			(*itShip)->setYawSpeed(Ogre::Radian(0));
+			(*itShip)->setYawAcceleration(Ogre::Radian(0));
+		}
 		else
 		{
 			(*itShip)->updatePosition();
