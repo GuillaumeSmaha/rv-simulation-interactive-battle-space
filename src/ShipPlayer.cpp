@@ -330,7 +330,7 @@ void ShipPlayer::defineParticules(void)
     emitterFriend->setTimeToLive(0.3);
     emitterFriend->setEmissionRate(25);
     emitterFriend->setParticleVelocity(200);
-    emitterFriend->setColour(Ogre::ColourValue::Green, Ogre::ColourValue::Green);
+    emitterFriend->setColour(Ogre::ColourValue::White, Ogre::ColourValue::White);
 
 
     this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);

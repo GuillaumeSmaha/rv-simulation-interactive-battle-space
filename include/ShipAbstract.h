@@ -246,30 +246,7 @@ class ShipAbstract : public ObjectRoot
 		 * 		method = 2 : x^3
 		 * \return Le facteur calculé
 		*/
-		Ogre::Real getFactorRotation(int method = 1)
-		{
-			Ogre::Real factor;
-			Ogre::Real ratio = this->getSpeed()/ShipAbstract::MAXSPEED;
-			if(method == 2)
-			{
-				factor = ratio*ratio*ratio;
-				//~ factor = std::min(1.0, std::max(0.0, ratio*ratio*ratio*0.5+0.5));
-			}
-			else
-			{
-				if(ratio < 0.01)
-				{
-					factor = 0.0;
-				}
-				else
-				{
-					//~ factor = (log10(ratio)+2.0)/2.0;
-					factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.5 + 0.5));
-				}
-			}
-
-			return factor;
-		}
+		Ogre::Real getFactorRotation(int method = 1);
 
         //Getter/Setter
 

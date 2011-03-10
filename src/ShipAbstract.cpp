@@ -34,22 +34,19 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 		this->entity->getMesh()->buildTangentVectors(VES_TANGENT, src, dest);
 	}
 
-	switch(Utils::randRangeInt(0, 2))
+	switch(this->getTypeObject())
 	{
-		case 0 :
-			this->colorLaser = Ogre::ColourValue::Blue;
-			break;
-
-		case 1 :
+		case ObjectRoot::SHIP_PLAYER :
+		case ObjectRoot::SHIP_BATTLE_STATION :
 			this->colorLaser = Ogre::ColourValue::Green;
 			break;
 
-		case 2 :
+		case ObjectRoot::SHIP_IA :
 			this->colorLaser = Ogre::ColourValue::Red;
 			break;
 
 		default:
-			this->colorLaser = Ogre::ColourValue::Red;
+			this->colorLaser = Ogre::ColourValue::Green;
 			break;
 	}
 
@@ -273,6 +270,31 @@ void ShipAbstract::yawAccelerate(const Ogre::Radian coefAcceleration)
     this->yawAcceleration += Ogre::Radian(coefAcceleration.valueRadians()*this->getFactorRotation());
 }
 
+
+Ogre::Real ShipAbstract::getFactorRotation(int method)
+{
+	Ogre::Real factor;
+	Ogre::Real ratio = this->getSpeed()/ShipAbstract::MAXSPEED;
+	if(method == 2)
+	{
+		factor = ratio*ratio*ratio;
+		//~ factor = std::min(1.0, std::max(0.0, ratio*ratio*ratio*0.5+0.5));
+	}
+	else
+	{
+		if(ratio < 0.01)
+		{
+			factor = 0.0;
+		}
+		else
+		{
+			//~ factor = (log10(ratio)+2.0)/2.0;
+			factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.25 + 0.75));
+		}
+	}
+
+	return factor;
+}
 
 //Getter-Setter
 
