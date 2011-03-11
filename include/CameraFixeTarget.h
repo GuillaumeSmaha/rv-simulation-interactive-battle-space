@@ -58,8 +58,6 @@ class CameraFixeTarget : public CameraFixeAbstract {
 		 * \brief Met à jour la position de la caméra
 		 */
 		void update_camera();
-
-		void update_particles();
 		
 		//getter/setter
 		

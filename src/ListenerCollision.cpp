@@ -35,7 +35,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
     Ogre::Vector3 intersectionPoint;
     
     for(itShip = listShips.begin() ; itShip < listShips.end() ; itShip++)
-	{
+	{		
 		if(!(*itShip)->getIsDead() && (*itShip)->getTypeObject() != ObjectRoot::SHIP_BATTLE_STATION)
 		{
 			Ogre::Ray rayToFront((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
@@ -50,11 +50,11 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackUp;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackDown;
 			
-			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 90.0);
-			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 50.0);
-			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 50.0);
-			mCollisionClosestRayResultCallbackUp = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 50.0);
-			mCollisionClosestRayResultCallbackDown = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 50.0);
+			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 50*2);
+			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 50);
+			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 50);
+			mCollisionClosestRayResultCallbackUp = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 50);
+			mCollisionClosestRayResultCallbackDown = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 50);
 
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackFront);
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackLeft);

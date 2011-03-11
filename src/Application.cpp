@@ -34,6 +34,7 @@ Application::~Application(void)
 	std::cout << "delete sun" << std::endl;
     delete sun;
 
+#if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	std::cout << "delete GestLaser::deleteAll" << std::endl;
     GestLaser::getSingleton()->deleteAll();
 	std::cout << "delete GestLaser::destroy" << std::endl;
@@ -43,6 +44,7 @@ Application::~Application(void)
     GestShip::getSingleton()->deleteAllShips();
 	std::cout << "delete GestShip::destroy" << std::endl;
     GestShip::destroy();
+#endif
 
 	std::cout << "delete GestPlanet::deletAll" << std::endl;
 	GestPlanet::getSingleton()->deleteAllPlanet();
@@ -83,8 +85,8 @@ Application::~Application(void)
 	ViewportLoader::deleteViewportLoader();
 	std::cout << "delete deleteMeshLoader" << std::endl;
 	MeshLoader::deleteMeshLoader();
+	
 	std::cout << "delete listenerWindow" << std::endl;
-
 	delete this->listenerWindow;
 
 	//this->root->destroySceneManager(this->sceneMgr);
@@ -404,7 +406,7 @@ void Application::initScene(bool isTwoPlayer)
 
  //MECHANT VAISSEAUX
     ShipIA * ship3;
-    for(int i = 0 ; i < 30 ; i++)
+    for(int i = 0 ; i < 100 ; i++)
     {
         ship3 = new ShipIA();
         ship3->setPosition(Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000));

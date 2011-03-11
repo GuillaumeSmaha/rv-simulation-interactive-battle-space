@@ -10,7 +10,7 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 	: shipLife(100),
 	  speed(0), translateSpeed(0), rollSpeed(0), pitchSpeed(0), yawSpeed(0),
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
-	  isTouched(false), isDead(false), firstPos(true), firstDir(true), lightSpeedPressed(false)
+	  isTouched(false), isDead(false), lightSpeedPressed(false), firstPos(true), firstDir(true)
 {
     if(type == ObjectRoot::SHIP_IA)
     {
@@ -368,6 +368,8 @@ void ShipAbstract::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogr
 
 void ShipAbstract::reset()
 {
+    setIsDead(false);
+    setShipLife(getShipLifeMax());
     setSpeed(0);
     setAcceleration(0);
     setTranslateSpeed(0);

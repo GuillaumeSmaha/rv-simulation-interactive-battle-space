@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Ogre::Real GestLaser::speedLaserBase = 250.0;
+Ogre::Real GestLaser::speedLaserBase = 1000.0;
 Ogre::Real GestLaser::timeLife = 2500.0;
 
 GestLaser * GestLaser::_instance = NULL;
