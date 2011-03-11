@@ -17,7 +17,7 @@ ShipIA::ShipIA(void) : ShipAbstract(ObjectRoot::SHIP_IA)
     mRotating = true;
     mRotFactor = 1;
     mRotProgress = 1;
-    
+
 	this->setColorLaser(Ogre::ColourValue::Red);
 }
 
@@ -30,7 +30,7 @@ void ShipIA::updatePosition(void)
 {
     Ogre::Vector3 direction = this->getNode()->_getDerivedPosition()-this->destination;
     ShipAbstract * targetShip;
-    
+
     //commenté pke bouffeur de FPS = les particules ne meurent pas
     if(direction.squaredLength()<40000000)
     {
@@ -112,4 +112,26 @@ void ShipIA::updatePosition(void)
 	{
 		this->moveRelative(0.0, 0.0, this->getSpeed());
 	}*/
+
+	//CULLING
+	  Ogre::Real size = GestSceneManager::getProjectedSize(this->getEntity(), 100);
+        if(size > -1)
+        {
+       // Utils::log(size);
+
+            if(size < 0.005 && this->getEntity()->isVisible())
+            {
+               this->getNode()->setVisible(false);
+               this->getEntity()->setVisible(false);
+
+            }
+            if(size > 0.0070 && ! this->getEntity()->isVisible())
+            {
+
+                this->getNode()->setVisible(true);
+                this->getEntity()->setVisible(true);
+
+
+            }
+        }
 }

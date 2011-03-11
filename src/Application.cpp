@@ -33,7 +33,7 @@ Application::~Application(void)
 
 	std::cout << "delete sun" << std::endl;
     delete sun;
-    
+
 	std::cout << "delete GestLaser::deleteAll" << std::endl;
     GestLaser::getSingleton()->deleteAll();
 	std::cout << "delete GestLaser::destroy" << std::endl;
@@ -389,7 +389,7 @@ void Application::initScene(bool isTwoPlayer)
         GestShip::getSingleton()->addShip(ship2);
 
         ship2->createCollisionObject(this->listenerCollision);
-        
+
 		player2->resetControls();
 		player2->setKeyControl(PlayerControls::SHOOT1, OIS::KC_R);
 		player2->setKeyControl(PlayerControls::ACCELERATION, OIS::KC_E);
@@ -399,7 +399,7 @@ void Application::initScene(bool isTwoPlayer)
 		player2->setKeyControl(PlayerControls::UP, OIS::KC_U);
 		player2->setKeyControl(PlayerControls::DOWN, OIS::KC_Y);
     }
-	
+
 
 
  //MECHANT VAISSEAUX
@@ -411,9 +411,9 @@ void Application::initScene(bool isTwoPlayer)
         GestShip::getSingleton()->addShip(ship3);
 		ship3->createCollisionObject(this->listenerCollision);
     }
-    
-    
-  
+
+
+
     BattleStation * station;
     station = new BattleStation();
     station->setPosition(100,100,1000);
@@ -472,7 +472,7 @@ void Application::initScene(bool isTwoPlayer)
     message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, mise en marche des réacteurs imminente!");
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
-	
+
 	GestSound::getSingleton()->play(GestSound::SOUND_MUSIC);
 }
 

@@ -223,8 +223,7 @@ void Planet::updatePosition(void)
                 this->outerSphere->setVisible(true);
             }
         }
-        Utils::log(sizeViewed);
-	}
+  	}
 }
 
 
