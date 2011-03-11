@@ -115,11 +115,9 @@ void Asteroid::updatePosition(void)
 
            this->entity->setVisible(false);
             this->entitySmall->setVisible(true);
-            Utils::log("switch");
         }
         if(!this->entity->getVisible() && sizeViewed>0.02)
         {
-            Utils::log("unswitch");
             this->entity->setVisible(true);
             this->entitySmall->setVisible(false);
         }

@@ -217,11 +217,9 @@ void Planet::updatePosition(void)
             {
 
                this->outerSphere->setVisible(false);
-                Utils::log("switch");
             }
             if(!this->outerSphere->getVisible() && sizeViewed>0.29)
             {
-                Utils::log("unswitch");
                 this->outerSphere->setVisible(true);
             }
         }
