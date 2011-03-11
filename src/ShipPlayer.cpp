@@ -4,6 +4,8 @@ using namespace Ogre;
 
 ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) : ShipAbstract()
 {
+    this->isAutoPiloted = false;
+    shootDelay = 0 ;
     this->typeObject = ObjectRoot::SHIP_PLAYER;
     this->playerControl = pControl;
 	pControl->signalKeyPressed.add(&ShipPlayer::keyPressed, this);
@@ -32,9 +34,9 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
     rightPressed = false;
     upPressed = false;
     downPressed = false;
-    
+
 	this->setColorLaser(Ogre::ColourValue::Green);
-	
+
     this->defineParticules();
 }
 
@@ -52,93 +54,224 @@ void ShipPlayer::updatePosition(void)
     this->updateParticules();
     update_differente_acceleration();
 
-    //calcule des nouvelles vitesses et positions
-    this->setSpeed(this->getSpeed()+this->getAcceleration());
-	this->setTranslateSpeed(this->getTranslateSpeed()+this->getTranslateAcceleration());
-	//if (this->getSpeed() != 0)
-	//{
-		//this->moveRelative(0.0, 0.0, this->getSpeed());
-	this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
-	//}
-    this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
-    this->rotateRollRelative(this->getRollSpeed());
+    if(this->isAutoPiloted)
+    {
+    Ogre::Vector3 direction = this->getNode()->_getDerivedPosition()-this->destination;
+    //commenté pke bouffeur de FPS = les particules ne meurent pas
 
-	this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
-    this->rotateYawRelative(this->getYawSpeed());
+    if(direction.squaredLength()<40000000 && shootDelay--<=0)
+    {
+		if(!this->getIsDead())
+			this->shootLaser();
+        shootDelay = 15;
+    }
 
-    this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
-    this->goUp(this->getPitchSpeed());
+    //Se tourne vers nous plus ou moins (mRotFactor == vitesse à laquelle c fait et avant que le vsx change de destination => inversement proportionnel)
+		if(mRotating)
+		{
+			mRotProgress += mRotFactor;
+			if(mRotProgress>1)
+			{
+				int iRand = Utils::randRangeInt(0, GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_IA).size()-1);
+				this->destination = GestShip::getSingleton()->getAllShips(ObjectRoot::SHIP_IA).at(iRand)->getNode()->_getDerivedPosition()+Ogre::Vector3(Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000),Utils::randRangeInt(-10000,10000));
+				mRotating = false;
+				mRotating = true;
+				mRotFactor = 1.0f / mRotFrames;
+				mOrientSrc = this->getNode()->getOrientation();
+				Ogre::Quaternion quat =  (this->getNode()->getOrientation()* Vector3::UNIT_Z).getRotationTo(    this->destination-this->getNode()->_getDerivedPosition());
+				mOrientDest = quat * mOrientSrc;           // We want dest orientation, not a relative rotation (quat)
+				mRotProgress = 0;
+			}
+			else
+			{
+				//rotation
+				Quaternion delta = Quaternion::Slerp(mRotProgress, mOrientSrc, mOrientDest, true);
+				this->getNode()->setOrientation(delta);
+			}
+		}
+        //si on est encore loin on avance
+        if(direction.squaredLength()>4000000)
+        {
+            this->setSpeed(speed);
 
-    //on réduit chacune des accélération
-    if(this->getAcceleration() > 0)
-    {
-		this->setAcceleration(this->getAcceleration()-0.1);
-		if(this->getAcceleration() < 0)
-			this->setAcceleration(0);
-	}
-    else if(this->getAcceleration() < 0)
-    {
-		this->setAcceleration(this->getAcceleration()+0.1);
-		if(this->getAcceleration() > 0)
-			this->setAcceleration(0);
-	}
+        }else{
+            this->setSpeed(0);
+        }
+        /*
+             if (this->getSpeed() != 0)
+            {
+                this->moveRelative(0.0, 0.0, this->getSpeed());
+            }*/
+              this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
+        //}
+        this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+        this->rotateRollRelative(this->getRollSpeed());
 
-	if(this->getTranslateAcceleration() > 0)
-    {
-		this->setTranslateAcceleration(this->getTranslateAcceleration()-1);
-		if(this->getTranslateAcceleration() < 0)
-			this->setTranslateAcceleration(0);
-	}
-    else if(this->getTranslateAcceleration() < 0)
-    {
-		this->setTranslateAcceleration(this->getTranslateAcceleration()+1);
-		if(this->getTranslateAcceleration() > 0)
-			this->setTranslateAcceleration(0);
-	}
-    this->setPitchAcceleration(Ogre::Radian(0));
-	this->setYawAcceleration(Ogre::Radian(0));
-    this->setRollAcceleration(Ogre::Radian(0));
+        this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
+        this->rotateYawRelative(this->getYawSpeed());
 
-	//on reduit la vitesse de rotation
-    if(this->getRollSpeed() > Ogre::Radian(0))
-    {
-		this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
-		if(this->getRollSpeed() < Ogre::Radian(0))
-			this->setRollSpeed(Ogre::Radian(0));
-	}
-    else if(this->getRollSpeed() < Ogre::Radian(0))
-    {
-		this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
-		if(this->getRollSpeed() > Ogre::Radian(0))
-			this->setRollSpeed(Ogre::Radian(0));
-	}
+        this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+        this->goUp(this->getPitchSpeed());
 
-	if(this->getYawSpeed() > Ogre::Radian(0))
-    {
-		this->setYawSpeed(this->getYawSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
-		if(this->getYawSpeed() < Ogre::Radian(0))
-			this->setYawSpeed(Ogre::Radian(0));
-	}
-    else if(this->getYawSpeed() < Ogre::Radian(0))
-    {
-		this->setYawSpeed(this->getYawSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
-		if(this->getYawSpeed() > Ogre::Radian(0))
-			this->setYawSpeed(Ogre::Radian(0));
-	}
+        //on réduit chacune des accélération
+        if(this->getAcceleration() > 0)
+        {
+            this->setAcceleration(this->getAcceleration()-0.1);
+            if(this->getAcceleration() < 0)
+                this->setAcceleration(0);
+        }
+        else if(this->getAcceleration() < 0)
+        {
+            this->setAcceleration(this->getAcceleration()+0.1);
+            if(this->getAcceleration() > 0)
+                this->setAcceleration(0);
+        }
 
-    if(this->getPitchSpeed() > Ogre::Radian(0))
-    {
-		this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
-		if(this->getPitchSpeed() < Ogre::Radian(0))
-			this->setPitchSpeed(Ogre::Radian(0));
-	}
-    else if(this->getPitchSpeed() < Ogre::Radian(0))
-    {
-		this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
-		if(this->getPitchSpeed() > Ogre::Radian(0))
-			this->setPitchSpeed(Ogre::Radian(0));
-	}
+        if(this->getTranslateAcceleration() > 0)
+        {
+            this->setTranslateAcceleration(this->getTranslateAcceleration()-1);
+            if(this->getTranslateAcceleration() < 0)
+                this->setTranslateAcceleration(0);
+        }
+        else if(this->getTranslateAcceleration() < 0)
+        {
+            this->setTranslateAcceleration(this->getTranslateAcceleration()+1);
+            if(this->getTranslateAcceleration() > 0)
+                this->setTranslateAcceleration(0);
+        }
+        this->setPitchAcceleration(Ogre::Radian(0));
+        this->setYawAcceleration(Ogre::Radian(0));
+        this->setRollAcceleration(Ogre::Radian(0));
 
+        //on reduit la vitesse de rotation
+        if(this->getRollSpeed() > Ogre::Radian(0))
+        {
+            this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getRollSpeed() < Ogre::Radian(0))
+                this->setRollSpeed(Ogre::Radian(0));
+        }
+        else if(this->getRollSpeed() < Ogre::Radian(0))
+        {
+            this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getRollSpeed() > Ogre::Radian(0))
+                this->setRollSpeed(Ogre::Radian(0));
+        }
+
+        if(this->getYawSpeed() > Ogre::Radian(0))
+        {
+            this->setYawSpeed(this->getYawSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getYawSpeed() < Ogre::Radian(0))
+                this->setYawSpeed(Ogre::Radian(0));
+        }
+        else if(this->getYawSpeed() < Ogre::Radian(0))
+        {
+            this->setYawSpeed(this->getYawSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getYawSpeed() > Ogre::Radian(0))
+                this->setYawSpeed(Ogre::Radian(0));
+        }
+
+        if(this->getPitchSpeed() > Ogre::Radian(0))
+        {
+            this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getPitchSpeed() < Ogre::Radian(0))
+                this->setPitchSpeed(Ogre::Radian(0));
+        }
+        else if(this->getPitchSpeed() < Ogre::Radian(0))
+        {
+            this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getPitchSpeed() > Ogre::Radian(0))
+                this->setPitchSpeed(Ogre::Radian(0));
+        }
+
+    }else
+    {
+        //calcule des nouvelles vitesses et positions
+        this->setSpeed(this->getSpeed()+this->getAcceleration());
+        this->setTranslateSpeed(this->getTranslateSpeed()+this->getTranslateAcceleration());
+        //if (this->getSpeed() != 0)
+        //{
+            //this->moveRelative(0.0, 0.0, this->getSpeed());
+        this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
+        //}
+        this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+        this->rotateRollRelative(this->getRollSpeed());
+
+        this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
+        this->rotateYawRelative(this->getYawSpeed());
+
+        this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+        this->goUp(this->getPitchSpeed());
+
+        //on réduit chacune des accélération
+        if(this->getAcceleration() > 0)
+        {
+            this->setAcceleration(this->getAcceleration()-0.1);
+            if(this->getAcceleration() < 0)
+                this->setAcceleration(0);
+        }
+        else if(this->getAcceleration() < 0)
+        {
+            this->setAcceleration(this->getAcceleration()+0.1);
+            if(this->getAcceleration() > 0)
+                this->setAcceleration(0);
+        }
+
+        if(this->getTranslateAcceleration() > 0)
+        {
+            this->setTranslateAcceleration(this->getTranslateAcceleration()-1);
+            if(this->getTranslateAcceleration() < 0)
+                this->setTranslateAcceleration(0);
+        }
+        else if(this->getTranslateAcceleration() < 0)
+        {
+            this->setTranslateAcceleration(this->getTranslateAcceleration()+1);
+            if(this->getTranslateAcceleration() > 0)
+                this->setTranslateAcceleration(0);
+        }
+        this->setPitchAcceleration(Ogre::Radian(0));
+        this->setYawAcceleration(Ogre::Radian(0));
+        this->setRollAcceleration(Ogre::Radian(0));
+
+        //on reduit la vitesse de rotation
+        if(this->getRollSpeed() > Ogre::Radian(0))
+        {
+            this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getRollSpeed() < Ogre::Radian(0))
+                this->setRollSpeed(Ogre::Radian(0));
+        }
+        else if(this->getRollSpeed() < Ogre::Radian(0))
+        {
+            this->setRollSpeed(this->getRollSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getRollSpeed() > Ogre::Radian(0))
+                this->setRollSpeed(Ogre::Radian(0));
+        }
+
+        if(this->getYawSpeed() > Ogre::Radian(0))
+        {
+            this->setYawSpeed(this->getYawSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getYawSpeed() < Ogre::Radian(0))
+                this->setYawSpeed(Ogre::Radian(0));
+        }
+        else if(this->getYawSpeed() < Ogre::Radian(0))
+        {
+            this->setYawSpeed(this->getYawSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getYawSpeed() > Ogre::Radian(0))
+                this->setYawSpeed(Ogre::Radian(0));
+        }
+
+        if(this->getPitchSpeed() > Ogre::Radian(0))
+        {
+            this->setPitchSpeed(this->getPitchSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getPitchSpeed() < Ogre::Radian(0))
+                this->setPitchSpeed(Ogre::Radian(0));
+        }
+        else if(this->getPitchSpeed() < Ogre::Radian(0))
+        {
+            this->setPitchSpeed(this->getPitchSpeed()+Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
+            if(this->getPitchSpeed() > Ogre::Radian(0))
+                this->setPitchSpeed(Ogre::Radian(0));
+        }
+    }
     /**/
     check_out_of_battle();
 
@@ -344,6 +477,10 @@ void ShipPlayer::defineParticules(void)
 
 void ShipPlayer::update_differente_acceleration()
 {
+    if(!this->isAutoPiloted)
+    {
+
+
     if(accelerationPressed)
     {
         this->accelerate(0.2);
@@ -370,7 +507,7 @@ void ShipPlayer::update_differente_acceleration()
     {
         this->pitchAccelerate(Ogre::Radian(-0.003));
     }
-
+  }
 }
 
 
@@ -385,8 +522,9 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
             GestSound::getSingleton()->play(GestSound::SOUND_SHOOT);
             break;
 		case PlayerControls::SHOOT2 :
-            this->exploded();
-            this->setIsDead(false);
+         //   this->exploded();
+          //  this->setIsDead(false);
+          this->switchAutopilote();
             break;
 		case PlayerControls::ACCELERATION :
             accelerationPressed = true;
@@ -449,9 +587,11 @@ void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 	// TODO: Amélioreeeeeeeeeeeeeer =)
 
 	//Quaternion rotation(Degree(-mouseVec[0] / 40.0), Vector3::UNIT_Y);
-
-	this->pitchAccelerate(Ogre::Radian(mouseVec[1] / 8000.0));
-	this->yawAccelerate(Ogre::Radian(-mouseVec[0] / 8000.0));
+    if(!this->isAutoPiloted)
+    {
+        this->pitchAccelerate(Ogre::Radian(mouseVec[1] / 8000.0));
+        this->yawAccelerate(Ogre::Radian(-mouseVec[0] / 8000.0));
+	}
 
 	//this->rollAccelerate(Ogre::Radian(mouseVec[0] / 3000.0));
 	//this->getNode()->rotate(rotation);

@@ -29,6 +29,39 @@
 class ShipPlayer : public ShipAbstract
 {
 	private:
+        int shootDelay;
+	       /*!
+		 * \brief Point de destination (utilisé pour calculé la distance entre le vaisseau et sa destination)
+		*/
+        Ogre::Vector3 destination;
+        /*!
+		 * \brief Vitesse du vaisseau
+		*/
+        Ogre::Real speed;
+        /*!
+		 * \brief Nombre de frames pour la rotation
+		*/
+        Ogre::Real mRotFrames;
+        /*!
+		 * \brief Orientation courante (avant le début de la rotation)
+		*/
+        Ogre::Quaternion mOrientSrc;
+        /*!
+		 * \brief Orientation future (après la rotation)
+		*/
+        Ogre::Quaternion mOrientDest;
+        /*!
+		 * \brief Avancement de la rotation
+		*/
+        Ogre::Real mRotProgress;
+        /*!
+		 * \brief "Pas" pour la rotation
+		*/
+        Ogre::Real mRotFactor;
+        /*!
+		 * \brief Vaisseau en rotation ?
+		*/
+        bool mRotating;
        	/*!
          * \brief Noeud cible
         */
@@ -95,7 +128,10 @@ class ShipPlayer : public ShipAbstract
          * \brief Particules indiquant la station
          */
         Ogre::ParticleEmitter * emitterFriend;
-
+        /*!
+		*  \brief Pilote automatique
+		*/
+        bool isAutoPiloted;
 	public:
 		/*!
 		 * \brief Construction
@@ -184,6 +220,29 @@ class ShipPlayer : public ShipAbstract
 		{
 			return this->gestCamera;
 		}
+		/*!
+		 * \brief Switch le pilote automatique
+		 */
+		 void switchAutopilote()
+		 {
+		     switchAutopilote(!this->isAutoPiloted);
+
+		 }
+		 void switchAutopilote(bool autopiloteActivated)
+		 {
+            this->isAutoPiloted = autopiloteActivated;
+            if(this->isAutoPiloted)
+            {
+                 this->typeObject = ObjectRoot::SHIP_BATTLE_STATION;
+                this->speed = 60;
+                this->mRotFrames = 120;
+                this->destination = Ogre::Vector3(130,0,6000);
+                mRotating = true;
+                mRotFactor = 1;
+                mRotProgress = 1;
+
+            }
+		 }
 
     private:
         /*!
