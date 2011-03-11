@@ -98,7 +98,7 @@ void ShipAbstract::exploded(Ogre::Real size)
     this->getNode()->createChildSceneNode(Vector3(0.0, 0.0, 0.0))->attachObject(particleSystem);
 
     this->isDead = true;
-		
+
 	switch(this->getTypeObject())
 	{
 		case ObjectRoot::SHIP_PLAYER :
@@ -108,7 +108,7 @@ void ShipAbstract::exploded(Ogre::Real size)
             message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, nous avons été détruit!");
 			break;
 		}
-			
+
 		case ObjectRoot::SHIP_IA :
 		{
 			std::cout << "ShipIA : Explosion de " << this->getName() << std::endl;
@@ -116,7 +116,7 @@ void ShipAbstract::exploded(Ogre::Real size)
             message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, un vaisseau ennemi de moins!");
 			break;
         }
-			
+
 		case ObjectRoot::SHIP_BATTLE_STATION :
         {
 			std::cout << "ShipBattleStation : Explosion de " << this->getName() << std::endl;
@@ -124,7 +124,7 @@ void ShipAbstract::exploded(Ogre::Real size)
             message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, La station spatiale est détruite!");
 			break;
 		}
-        
+
 		default:
 			break;
 	}
@@ -139,9 +139,10 @@ void ShipAbstract::shootLaser(void)
 
 void ShipAbstract::defineParticules(void)
 {
-    Ogre::ParticleSystem* thrusters = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem(25);
+    thrusters = MeshLoader::getSingleton()->getSceneManager()->createParticleSystem(25);
     thrusters->setMaterialName("Reactor");
     thrusters->setDefaultDimensions(25, 25);
+    thrusters->setKeepParticlesInLocalSpace(true);
 
 	// Création de 2 émetteurs pour le système de particules
 	for (unsigned int i = 0; i < 2; i++)
@@ -167,13 +168,13 @@ void ShipAbstract::isTouch(int degat)
     {
         setShipLife(getShipLife()-degat);
         if(getShipLife() < 0)
-        {            
+        {
 			switch(this->getTypeObject())
-			{						
+			{
 				case ObjectRoot::SHIP_BATTLE_STATION :
 					this->exploded(1000);
 					break;
-				
+
 				default:
 					this->exploded();
 					break;
@@ -254,6 +255,7 @@ void ShipAbstract::goUp(const Ogre::Radian w)
 void ShipAbstract::accelerate(const Ogre::Real coefAcceleration)
 {
     this->acceleration += coefAcceleration;
+
 }
 
 void ShipAbstract::translateAccelerate(const Ogre::Real coefAcceleration)

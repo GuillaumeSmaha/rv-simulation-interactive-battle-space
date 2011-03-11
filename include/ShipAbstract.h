@@ -30,7 +30,11 @@
 
 class ShipAbstract : public ObjectRoot
 {
+    protected:
+    Ogre::ParticleSystem* thrusters;
 	private:
+
+
 		/*!
 		 * \brief Entité du mesh du vaisseau
 		*/

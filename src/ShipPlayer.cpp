@@ -56,6 +56,8 @@ void ShipPlayer::updatePosition(void)
 
     if(this->isAutoPiloted)
     {
+    thrusters->getEmitter(0)->setParticleVelocity(5+speed);
+    thrusters->getEmitter(1)->setParticleVelocity(5+speed);
     Ogre::Vector3 direction = this->getNode()->_getDerivedPosition()-this->destination;
     //commenté pke bouffeur de FPS = les particules ne meurent pas
 
@@ -185,6 +187,9 @@ void ShipPlayer::updatePosition(void)
 
     }else
     {
+
+        thrusters->getEmitter(0)->setParticleVelocity(5+this->getSpeed());
+        thrusters->getEmitter(1)->setParticleVelocity(5+this->getSpeed());
         //calcule des nouvelles vitesses et positions
         this->setSpeed(this->getSpeed()+this->getAcceleration());
         this->setTranslateSpeed(this->getTranslateSpeed()+this->getTranslateAcceleration());

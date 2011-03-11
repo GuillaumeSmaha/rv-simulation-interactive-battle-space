@@ -30,7 +30,8 @@ void ShipIA::updatePosition(void)
 {
     Ogre::Vector3 direction = this->getNode()->_getDerivedPosition()-this->destination;
     ShipAbstract * targetShip;
-
+    thrusters->getEmitter(0)->setParticleVelocity(5+speed);
+    thrusters->getEmitter(1)->setParticleVelocity(5+speed);
     //commenté pke bouffeur de FPS = les particules ne meurent pas
     if(direction.squaredLength()<40000000)
     {
