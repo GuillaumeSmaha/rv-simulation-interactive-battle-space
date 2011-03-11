@@ -129,7 +129,6 @@ Application::~Application(void)
 	std::cout << "delete deleteMeshLoader" << std::endl;
 	MeshLoader::deleteMeshLoader();
 	
-	}
 
 	if(this->listenerWindow != NULL)
 	{
