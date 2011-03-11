@@ -7,19 +7,19 @@ Laser::Laser(const Ogre::Vector3 &position, const Ogre::Quaternion &orientation,
 {
 	this->typeObject = ObjectRoot::LASER;
 	this->timerLife = new Ogre::Timer();
-		
-    this->particule = static_cast<Ogre::ParticleSystem *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::LASER));
+
+    this->particule = static_cast<Ogre::ParticleSystem *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::LASER_STATION));
 	this->particule->getEmitter(0)->setColour(color);
-    
+
 	this->getNode()->_setDerivedPosition(position);
 	this->getNode()->_setDerivedOrientation(orientation);
-	
-	
+
+
 }
 
 Laser::~Laser()
 {
-	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::LASER, this->getMovableObject());
+	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::LASER_STATION, this->getMovableObject());
     delete this->timerLife;
 }
 
@@ -30,12 +30,12 @@ void Laser::updatePosition(void)
 
 bool Laser::isAlive()
 {
-    
+
     if(this->timerLife->getMilliseconds() > GestLaser::timeLife)
     {
 		return false;
     }
-    
+
     return true;
 }
 
@@ -70,7 +70,7 @@ void Laser::moveRelative(const Ogre::Vector3 &vec)
 
 
 
-Ogre::Quaternion Laser::getOrientation(void) 
+Ogre::Quaternion Laser::getOrientation(void)
 {
 	return this->getNode()->getOrientation();
 }
@@ -80,7 +80,7 @@ void Laser::setOrientation(const Ogre::Quaternion &q)
 	this->getNode()->setOrientation(q);
 }
 
-void Laser::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a) 
+void Laser::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a)
 {
 	this->getNode()->setOrientation(x, y, z, a);
 }
@@ -88,7 +88,7 @@ void Laser::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::R
 
 Ogre::Vector3 Laser::getPosition(void)
 {
-    return this->getNode()->getPosition();   
+    return this->getNode()->getPosition();
 }
 
 void Laser::setPosition(const Ogre::Vector3 &v)

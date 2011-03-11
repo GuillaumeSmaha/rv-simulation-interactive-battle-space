@@ -17,6 +17,7 @@ ShipIA::ShipIA(void) : ShipAbstract(ObjectRoot::SHIP_IA)
     mRotating = true;
     mRotFactor = 1;
     mRotProgress = 1;
+    shootDelay = 0;
 
 	this->setColorLaser(Ogre::ColourValue::Red);
 }
@@ -35,8 +36,13 @@ void ShipIA::updatePosition(void)
     //commenté pke bouffeur de FPS = les particules ne meurent pas
     if(direction.squaredLength()<40000000)
     {
-		if(!this->getIsDead())
-			this->shootLaser();
+        if(shootDelay--<=0)
+        {
+            if(!this->getIsDead())
+                this->shootLaser();
+			shootDelay = 15;
+        }
+
     }
 
     //Se tourne vers nous plus ou moins (mRotFactor == vitesse à laquelle c fait et avant que le vsx change de destination => inversement proportionnel)

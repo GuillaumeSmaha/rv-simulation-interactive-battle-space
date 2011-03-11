@@ -41,7 +41,8 @@ class MeshLoader
 			MISSILE = 15,
 			LASER = 16,
 			SHIP_REACTOR = 17,
-			ASTEROID_SMALL = 18
+			ASTEROID_SMALL = 18,
+			LASER_STATION = 19
 		};
 
 	private:

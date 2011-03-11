@@ -42,6 +42,7 @@ MeshLoader::~MeshLoader(void)
 Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Ogre::String name, bool random)
 {
 	Ogre::MovableObject * object;
+	Ogre::ParticleSystem * particle;
 	switch(type)
 	{
 		case SHIP:
@@ -86,7 +87,8 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
 			break;
 		case LASER:
 		{
-			Ogre::ParticleSystem * particle;
+
+
 			particle = this->sceneMgr->createParticleSystem("Laser"+Utils::toString(Utils::unique()), 25);
 			particle->setDefaultDimensions(10, 10);
 			Ogre::ParticleEmitter * emitter = particle->addEmitter("Point");
@@ -102,6 +104,27 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
 			object = particle;
 			break;
 		}
+		case LASER_STATION:
+        {
+
+
+			particle = this->sceneMgr->createParticleSystem("Laser"+Utils::toString(Utils::unique()), 25);
+			//particle->
+//			particle->setLocalSpace(true);
+            particle->setParameter("common_up_vector", "0 0 -1");
+			particle->setParameter("billboard_type","perpendicular_self");
+			Ogre::ParticleEmitter * emitter = particle->addEmitter("Point");
+			emitter->setAngle(Ogre::Degree(3));
+			emitter->setTimeToLive(0.1);
+			emitter->setEmissionRate(50);
+			emitter->setParticleVelocity(500);
+			emitter->setDuration(GestLaser::timeLife/1000);
+			emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
+			emitter->setColour(Ogre::ColourValue::Red);
+			emitter->setPosition(Ogre::Vector3(5.7, 0, 100));
+						object = particle;
+        }
+        break;
 
 		default:
 			Utils::log("@Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Ogre::String name, bool random) : type inconnu");
@@ -151,6 +174,7 @@ Ogre::MovableObject * MeshLoader::getNodedMovableObject(MeshLoader::MeshType typ
 			node->attachObject(object);
 			break;
 		case LASER:
+		case LASER_STATION:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_LASERS);
 			node = node->createChildSceneNode(nodeName);
 			node->attachObject(object);
@@ -198,6 +222,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_MISSILES);
 			break;
 		case LASER:
+		case LASER_STATION:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_LASERS);
 			break;
 
@@ -225,7 +250,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 		case MISSILE:
 			this->sceneMgr->destroyEntity(static_cast<Ogre::Entity *>(object));
 			break;
-
+        case LASER_STATION:
 		case LASER:
 		{
 			Ogre::ParticleSystem * particle = static_cast<Ogre::ParticleSystem *>(object);
@@ -279,6 +304,7 @@ Ogre::SceneNode * MeshLoader::getNode(MeshLoader::MeshType type, Ogre::String no
 			node = node->createChildSceneNode(nodeName);
 			break;
 		case LASER:
+		case LASER_STATION:
 			node = this->sceneMgr->getSceneNode(NODE_NAME_GROUPE_LASERS);
 			node = node->createChildSceneNode(nodeName);
 			break;
@@ -324,7 +350,9 @@ void MeshLoader::setMaterial(Ogre::MovableObject * object, MeshLoader::MeshType 
 		case MISSILE:
 			static_cast<Ogre::Entity *>(object)->setMaterialName("missile");
 			break;
+        case LASER_STATION:
 		case LASER:
+
 			static_cast<Ogre::ParticleSystem *>(object)->setMaterialName("laser");
 			break;
 

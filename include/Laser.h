@@ -23,7 +23,7 @@ class GestLaser;
 * \brief Classe gérant les lasers
 */
 class Laser : public ObjectRoot
-{		 
+{
 	private:
          /*!
          * \brief Position initial du laser
@@ -54,18 +54,18 @@ class Laser : public ObjectRoot
 		 * \brief Destructeur
 		*/
         ~Laser();
-        
+
         /*!
          * \brief Detruit le singleton
          */
         void updatePosition(void);
-		
+
 		/*!
 		 * \brief Indique si le laser est en vie ou non
 		 * \return Vrai s'il est actif
 		*/
 		bool isAlive();
-        
+
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel du monde
 		 * \param x Déplacement de l'objet en x
@@ -91,10 +91,10 @@ class Laser : public ObjectRoot
 		 * \param vec Déplacement de l'objet selon le vecteur v
 		*/
 		void moveRelative(const Ogre::Vector3 &vec);
-		
-		
+
+
 		//Getter/Setter
-		
+
 		/*!
 		 * \brief [Getter] Récupère l'orientation de l'objet
 		 * \return Orientation de l'objet
@@ -113,7 +113,7 @@ class Laser : public ObjectRoot
 		 * \param a Orientation
 		*/
         void setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a);
-		
+
 		/*!
 		 * \brief [Getter] Récupère la position de l'objet
 		 * \return Position de l'objet
@@ -131,7 +131,7 @@ class Laser : public ObjectRoot
 		 * \param z Position de l'objet en z
 		*/
 		void setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
-		
+
 		/*!
 		 * \brief [Getter] Récupère le nom du noeud
 		 * \return Nom du noeud

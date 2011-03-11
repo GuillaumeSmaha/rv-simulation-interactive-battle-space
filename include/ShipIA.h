@@ -14,6 +14,7 @@
 class ShipIA : public ShipAbstract
 {
 	private:
+        int shootDelay;
         /*!
 		 * \brief Point de destination (utilisé pour calculé la distance entre le vaisseau et sa destination)
 		*/
