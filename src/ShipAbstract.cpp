@@ -3,13 +3,14 @@
 using namespace Ogre;
 
 Ogre::Real ShipAbstract::MAXSPEED = 100;
+Ogre::Real ShipAbstract::MAXLIGHTSPEED = 200;
 Ogre::Real ShipAbstract::MAXLIFE= 100;
 
 ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 	: shipLife(100),
 	  speed(0), translateSpeed(0), rollSpeed(0), pitchSpeed(0), yawSpeed(0),
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
-	  isTouched(false), isDead(false), firstPos(true), firstDir(true)
+	  isTouched(false), isDead(false), firstPos(true), firstDir(true), lightSpeedPressed(false)
 {
     if(type == ObjectRoot::SHIP_IA)
     {
@@ -156,7 +157,7 @@ void ShipAbstract::defineParticules(void)
 		emitter->setParticleVelocity(5);
 		emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
 		emitter->setColour(Ogre::ColourValue::White, Ogre::ColourValue::Red);
-		emitter->setPosition(Ogre::Vector3(i == 0 ? 12.7 : -5, 0, 0));
+		emitter->setPosition(Ogre::Vector3(i == 0 ? 12 : -12, 0, 0));
 	}
     this->getNode()->createChildSceneNode(Vector3(0, 6.5, -77))->attachObject(thrusters);
 }

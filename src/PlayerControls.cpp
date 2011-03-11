@@ -21,6 +21,7 @@ PlayerControls::PlayerControls(ListenerMouse* mouse, ListenerKeyboard* keyboard)
 	this->setKeyControl(PlayerControls::RIGHT, OIS::KC_RIGHT);
 	this->setKeyControl(PlayerControls::UP, OIS::KC_H);
 	this->setKeyControl(PlayerControls::DOWN, OIS::KC_N);
+	this->setKeyControl(PlayerControls::LIGHTSPEED, OIS::KC_O);
 	
 	this->setKeyControl(PlayerControls::OPEN_MENU, OIS::KC_ESCAPE);
 	

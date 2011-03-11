@@ -10,6 +10,10 @@
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgrePrerequisites.h>
+#include <OgreParticle.h>	
+#include <OgreParticleSystem.h>
+#include <OgreParticleEmitter.h>
+#include <OgreParticleIterator.h>
 
 /*!
  * \class CameraFixeAbstract
@@ -55,6 +59,13 @@ class CameraFixeAbstract {
 		 * Méthode virtuelle pure à réimplémenter.
 		 */
 		virtual void update_camera() = 0;
+
+		/*!
+		 * \brief Met à jour les particules de vitesse lumière
+		 * liées à la caméra
+		 */
+		virtual void update_particles();
+
 		/*!
 		 *  \brief Direction de la caméra
 		 * 	\param x Coordonnée en X
@@ -84,7 +95,7 @@ class CameraFixeAbstract {
 		 * 	\param position Position
 		 */
         virtual void setPosition( Ogre::Vector3 position );
-		
+
 		/*!
 		 * \brief [Getter] Pointeur sur la caméra
 		 * \return Le nom de la caméra
@@ -101,6 +112,17 @@ class CameraFixeAbstract {
 		{
 			return cameraName;
 		}
+
+		/*!
+		 * \brief [Getter] Système de particules attaché à la caméra
+		 * \return le système de particules (vitesse lumière)
+		 */
+		/*
+		Ogre::ParticleSystem* getLightSpeedSystem()
+		{
+			return lightSpeedSystem;
+		}
+		*/
 		
 	protected:
 		/*!
@@ -115,6 +137,7 @@ class CameraFixeAbstract {
 		 * \brief Nom de la caméra
 		 */
 		Ogre::String cameraName;
+
 };
 
 #endif // __CAMERA_FIXE_ABSTRACT_H__ 

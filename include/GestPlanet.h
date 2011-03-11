@@ -59,7 +59,10 @@ class GestPlanet : public ClassRoot
 		 * \brief Récupère la liste des planètes
 		 * \return La liste des planètes
 		 */
-        std::vector<Planet> getAllPlanet();
+        std::vector<Planet *> getAllPlanet()
+		{
+			return lstPlanet;
+		}
 
 		/*!
 		 * \brief Effectue la mise à jour des planètes

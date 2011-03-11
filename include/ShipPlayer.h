@@ -75,6 +75,10 @@ class ShipPlayer : public ShipAbstract
         */
         Ogre::SceneNode * nodeCameraExterieureFixe;
 		/*!
+		 * \brief Noeud pour l'emetteur de vitesse lumière
+		 */
+		Ogre::SceneNode * nodeLightSpeed;
+		/*!
 		*  \brief Type de la caméra utilisé
 		*/
 		CameraFixeAbstract::CameraType typeCamera;
@@ -111,6 +115,10 @@ class ShipPlayer : public ShipAbstract
 		*  \brief Indique si la touche bas est appuyée
 		*/
         bool downPressed;
+		/*!
+		 * \brief Indique si la touche vitesse lumière est appuyée
+		 */
+		//bool lightSpeedPressed;
         /*!
          * \brief Controleur de vaiseau
         */
@@ -132,6 +140,12 @@ class ShipPlayer : public ShipAbstract
 		*  \brief Pilote automatique
 		*/
         bool isAutoPiloted;
+
+		/*!
+		 * \brief Système de particules vitesse lumière
+		 */
+		Ogre::ParticleSystem * lightSpeedSystem;
+
 	public:
 		/*!
 		 * \brief Construction
@@ -180,9 +194,18 @@ class ShipPlayer : public ShipAbstract
 		*/
 		void defineParticules(void);
 		/*!
-		 * \brief Oriente les particules vers le vaisseau ennemi (future : vers la station aussi)
+		 * \brief Oriente les particules vers le vaisseau ennemi et la station
 		*/
         void updateParticules(void);
+
+		/*!
+		 * \brief Définit le système de vitesse lumière
+		 */
+		void defineLightSpeedSystem(void);
+		/*!
+		 * \brief Active la vitesse lumière
+		 */
+		void activateLightSpeed();
 
 
         //getter/setter

@@ -13,14 +13,17 @@ CameraFixeAbstract::CameraFixeAbstract(Ogre::SceneManager * sceneMgr, Ogre::Stri
 	// enable infinite far clip distance if we can
 	if (Ogre::Root::getSingleton().getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
 		this->camera->setFarClipDistance(0);
-}
 
+}
 
 CameraFixeAbstract::~CameraFixeAbstract()
 {
 	this->sceneMgr->destroyCamera(this->cameraName);
 }
 
+void CameraFixeAbstract::update_particles()
+{
+}
 
 void CameraFixeAbstract::setDirection( Ogre::Real x, Ogre::Real y, Ogre::Real z )
 {

@@ -40,7 +40,8 @@ class PlayerControls: public ClassRoot
             OPEN_MENU= 9,
 			QUIT = 10,
             SWITCH_NEXT_CAMERA = 11,
-            SWITCH_PREV_CAMERA = 12
+            SWITCH_PREV_CAMERA = 12,
+			LIGHTSPEED = 13
 		};
 		
          /*!

@@ -34,10 +34,13 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
     rightPressed = false;
     upPressed = false;
     downPressed = false;
+	lightSpeedPressed = false;
 
 	this->setColorLaser(Ogre::ColourValue::Green);
 
     this->defineParticules();
+
+	this->defineLightSpeedSystem();
 }
 
 ShipPlayer::~ShipPlayer(void)
@@ -292,6 +295,50 @@ void ShipPlayer::updatePosition(void)
 	//this->gestCamera->update_particles();
 }
 
+void ShipPlayer::defineLightSpeedSystem()
+{
+	this->lightSpeedSystem = GestSceneManager::getSingleton()->getSceneManager()->createParticleSystem(2000);
+	this->lightSpeedSystem->setEmitting(false);
+
+	lightSpeedSystem->setMaterialName("LightSpeedMat");
+    lightSpeedSystem->setDefaultDimensions(100, 5000);
+	Ogre::ParticleSystemRenderer* renderer = lightSpeedSystem->getRenderer();
+	renderer->setParameter("billboard_type", "oriented_self");
+
+	Ogre::ParticleEmitter * emitter = lightSpeedSystem->addEmitter("Ring");
+
+	// set the emitter properties
+	emitter->setAngle(Ogre::Degree(1));
+	emitter->setTimeToLive(0.2);
+	emitter->setEmissionRate(1000);
+	emitter->setParticleVelocity(1);
+	emitter->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Z);
+	emitter->setColour(Ogre::ColourValue::White, Ogre::ColourValue::Red);
+	emitter->setParameter("width", "650");
+	emitter->setParameter("height", "450");
+	//emitter->setParameter("depth", "5");
+	emitter->setParameter("inner_width", "0.8");
+	emitter->setParameter("inner_height", "0.8");
+
+	nodeLightSpeed = this->getNode()->createChildSceneNode("LightSpeedNode" + Utils::toString(Utils::unique()));
+	nodeLightSpeed->attachObject(lightSpeedSystem);
+	nodeLightSpeed->setPosition(0, 0, 500);
+}
+
+void ShipPlayer::activateLightSpeed()
+{
+	if (lightSpeedPressed)
+	{
+		lightSpeedSystem->setEmitting(true);
+		this->gestCamera->getCamera()->setFOVy(Ogre::Radian(Ogre::Degree(55)));
+		GestSound::getSingleton()->play(GestSound::SOUND_LIGHTSPEED);
+	}
+	else
+	{
+		lightSpeedSystem->setEmitting(false);
+		this->gestCamera->getCamera()->setFOVy(Ogre::Radian(Ogre::Degree(45)));
+	}
+}
 
 void ShipPlayer::check_out_of_battle(void){
 
@@ -526,6 +573,10 @@ void ShipPlayer::update_differente_acceleration()
     {
         this->pitchAccelerate(Ogre::Radian(-0.003));
     }
+	if (lightSpeedPressed)
+	{
+		this->accelerate(0.8);
+	}
   }
 }
 
@@ -562,6 +613,14 @@ void ShipPlayer::keyPressed(PlayerControls::Controls key)
             break;
         case PlayerControls::DOWN :
             downPressed = true;
+			break;
+		case PlayerControls::LIGHTSPEED :
+			lightSpeedPressed = true;
+			this->setYawSpeed(Ogre::Radian(0));
+			this->setRollSpeed(Ogre::Radian(0));
+			this->setPitchSpeed(Ogre::Radian(0));
+			activateLightSpeed();
+			break;
 		default:
 			break;
 	}
@@ -594,6 +653,10 @@ void ShipPlayer::keyReleased(PlayerControls::Controls key)
         case PlayerControls::SWITCH_NEXT_CAMERA :
             this->switchNextCamera();
             break;
+		case PlayerControls::LIGHTSPEED :
+			lightSpeedPressed = false;
+			activateLightSpeed();
+			break;
 		default:
 			break;
 	}
@@ -606,7 +669,7 @@ void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 	// TODO: Amélioreeeeeeeeeeeeeer =)
 
 	//Quaternion rotation(Degree(-mouseVec[0] / 40.0), Vector3::UNIT_Y);
-    if(!this->isAutoPiloted)
+	if(!this->isAutoPiloted && !this->lightSpeedPressed)
     {
         this->pitchAccelerate(Ogre::Radian(mouseVec[1] / 8000.0));
         this->yawAccelerate(Ogre::Radian(-mouseVec[0] / 8000.0));

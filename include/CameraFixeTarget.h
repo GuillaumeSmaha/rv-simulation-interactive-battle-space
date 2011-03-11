@@ -27,6 +27,13 @@ class CameraFixeTarget : public CameraFixeAbstract {
 		 * \brief Le noeud position de la caméra
 		 */
 		Ogre::SceneNode * nodePosition;
+
+		/*!
+		 * \brief Système de particules associé à la caméra (vitesse lumière)
+		 */
+		Ogre::ParticleSystem * lightSpeedSystem;
+
+		Ogre::SceneNode * nodeLightSpeed;
 		
 	public:
 		/*!
@@ -51,6 +58,8 @@ class CameraFixeTarget : public CameraFixeAbstract {
 		 * \brief Met à jour la position de la caméra
 		 */
 		void update_camera();
+
+		void update_particles();
 		
 		//getter/setter
 		

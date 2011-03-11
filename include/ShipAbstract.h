@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <Ogre.h>
+#include <OgreParticleSystemRenderer.h>
 #include "MeshLoader.h"
 #include "Utils.h"
 #include "ObjectRoot.h"
@@ -107,6 +108,10 @@ class ShipAbstract : public ObjectRoot
          * \brief permet de savoir si le vaiseau à été détruit
         */
         bool isDead;
+		/*!
+		 * \brief Indique si la touche vitesse lumière est appuyée
+		 */
+		bool lightSpeedPressed;
         /*!
          * \brief vrai si la premiere fois que l'on regle la position
         */
@@ -126,6 +131,10 @@ class ShipAbstract : public ObjectRoot
 		 * \brief Vitesse maximale du vaisseau
 		 */
         static Ogre::Real MAXSPEED;
+		/*!
+		 * \brief Vitesse maximale du vaisseau en mode vitesse lumière
+		 */
+		static Ogre::Real MAXLIGHTSPEED;
         /*!
 		 * \brief Vie maximale du vaisseau
 		 */
@@ -344,13 +353,27 @@ class ShipAbstract : public ObjectRoot
             }
             else
             {
-                 if(speed > MAXSPEED)
-                {
-                    this->speed = MAXSPEED;
-                    this->setAcceleration(0);
-                }
-                else
-			        this->speed = speed;
+				if (lightSpeedPressed)
+				{
+					if (speed > MAXLIGHTSPEED)
+					{
+						this->speed = MAXLIGHTSPEED;
+						this->setAcceleration(0);
+					}
+					else
+						this->speed = speed;
+				}
+				else
+				{
+					if(speed > MAXSPEED)
+					{
+						this->speed = MAXSPEED;
+						this->setAcceleration(0);
+					}
+					else
+						this->speed = speed;
+				}
+                 
             }
 		}
 
