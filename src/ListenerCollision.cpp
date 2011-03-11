@@ -139,13 +139,13 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 				switch(object->getTypeObject())
 				{						
 					case ObjectRoot::SHIP_BATTLE_STATION :
+					case ObjectRoot::SHIP_PLAYER :
 					{
 						ShipAbstract * ship = static_cast<ShipAbstract *>(object);
 						ship->isTouch(25);
 						break;
 					}
 					
-					case ObjectRoot::SHIP_PLAYER :
 					case ObjectRoot::SHIP_IA :
 					{
 						ShipAbstract * ship = static_cast<ShipAbstract *>(object);
