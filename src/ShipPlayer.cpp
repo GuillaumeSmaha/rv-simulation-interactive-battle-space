@@ -56,19 +56,19 @@ void ShipPlayer::updatePosition(void)
 
     if(this->isAutoPiloted)
     {
-    thrusters->getEmitter(0)->setParticleVelocity(5+speed);
-    thrusters->getEmitter(1)->setParticleVelocity(5+speed);
-    Ogre::Vector3 direction = this->getNode()->_getDerivedPosition()-this->destination;
-    //commenté pke bouffeur de FPS = les particules ne meurent pas
+		thrusters->getEmitter(0)->setParticleVelocity(5+speed);
+		thrusters->getEmitter(1)->setParticleVelocity(5+speed);
+		Ogre::Vector3 direction = this->getNode()->_getDerivedPosition()-this->destination;
+		//commenté pke bouffeur de FPS = les particules ne meurent pas
 
-    if(direction.squaredLength()<40000000 && shootDelay--<=0)
-    {
-		if(!this->getIsDead())
-			this->shootLaser();
-        shootDelay = 15;
-    }
+		if(direction.squaredLength()<40000000 && shootDelay--<=0)
+		{
+			if(!this->getIsDead())
+				this->shootLaser();
+			shootDelay = 15;
+		}
 
-    //Se tourne vers nous plus ou moins (mRotFactor == vitesse à laquelle c fait et avant que le vsx change de destination => inversement proportionnel)
+		//Se tourne vers nous plus ou moins (mRotFactor == vitesse à laquelle c fait et avant que le vsx change de destination => inversement proportionnel)
 		if(mRotating)
 		{
 			mRotProgress += mRotFactor;
@@ -185,7 +185,8 @@ void ShipPlayer::updatePosition(void)
                 this->setPitchSpeed(Ogre::Radian(0));
         }
 
-    }else
+    }
+	else
     {
 
         thrusters->getEmitter(0)->setParticleVelocity(5+this->getSpeed());
@@ -196,16 +197,23 @@ void ShipPlayer::updatePosition(void)
         //if (this->getSpeed() != 0)
         //{
             //this->moveRelative(0.0, 0.0, this->getSpeed());
-        this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
-        //}
-        this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
-        this->rotateRollRelative(this->getRollSpeed());
+		if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+			this->moveRelative(this->getTranslateSpeed(), 0.0, -this->getSpeed());
+		else
+			this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
+		//}
+		this->setRollSpeed(this->getRollSpeed()+this->getRollAcceleration());
+		this->rotateRollRelative(this->getRollSpeed());
 
-        this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
-        this->rotateYawRelative(this->getYawSpeed());
+		this->setYawSpeed(this->getYawSpeed()+this->getYawAcceleration());
+		this->rotateYawRelative(this->getYawSpeed());
 
-        this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
-        this->goUp(this->getPitchSpeed());
+		this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
+		
+		if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+			this->goUp(-this->getPitchSpeed());
+		else
+			this->goUp(this->getPitchSpeed());
 
         //on réduit chacune des accélération
         if(this->getAcceleration() > 0)
@@ -316,7 +324,8 @@ void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 		{
 			case CameraFixeAbstract::CAMERA_NULL :
 			case CameraFixeAbstract::CAMERA_FIXE :
-				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()));
+				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()), this->getNode());
+				this->isAutoPiloted = false;
 				break;
 
 			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
@@ -349,7 +358,8 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 		{
 			case CameraFixeAbstract::CAMERA_NULL :
 			case CameraFixeAbstract::CAMERA_FIXE :
-				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()));
+				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()), this->getNode());
+				this->isAutoPiloted = false;
 				break;
 
 			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
@@ -378,6 +388,8 @@ void ShipPlayer::switchNextCamera(void)
 	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FISRT_PERSON)
 		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 	else if(this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
+		this->changeCamera(CameraFixeAbstract::CAMERA_FIXE);
+	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
 		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
 }
 
@@ -388,6 +400,8 @@ void ShipPlayer::switchPrevCamera(void)
 	else if(this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
 		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
 	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FISRT_PERSON)
+		this->changeCamera(CameraFixeAbstract::CAMERA_FIXE);
+	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
 		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
 }
 
@@ -602,4 +616,168 @@ void ShipPlayer::mouseMoved(Ogre::Vector3 mouseVec)
 	//this->getNode()->rotate(rotation);
 	//this->getNode()->yaw(Radian(-mouseVec[0] / 2000.0));
 	//this->getNode()->translate(-mouseVec[0] / 10.0, 0, 0);
+}
+
+
+
+Ogre::Real ShipPlayer::getFactorRotation(int method)
+{
+	Ogre::Real factor;
+	Ogre::Real ratio = this->getSpeed()/ShipAbstract::MAXSPEED;
+	if(method == 2)
+	{
+		factor = ratio*ratio*ratio;
+		//~ factor = std::min(1.0, std::max(0.0, ratio*ratio*ratio*0.5+0.5));
+	}
+	else
+	{
+		if(ratio < 0.01)
+		{
+			factor = 0.0;
+		}
+		else
+		{
+			if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+				return 1.0;
+			//~ factor = (log10(ratio)+2.0)/2.0;
+			factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.25 + 0.75));
+		}
+	}
+
+	return factor;
+}
+
+void ShipPlayer::moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->moveRelative(Ogre::Vector3(x, y, z));
+		return;
+	}
+	Ogre::Vector3 vec = Ogre::Vector3(x, y, z);
+	this->moveRelative(vec);
+}
+
+void ShipPlayer::moveRelative(const Ogre::Vector3 &vec)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->moveRelative(vec);
+		return;
+	}
+	Vector3 trans = this->getOrientation() * vec;
+	Vector3 pos = this->getPosition() + trans;
+	this->setPosition(pos[0], pos[1], pos[2]);
+}
+
+void ShipPlayer::rotateRollRelative(const Ogre::Radian w)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->roll(w);
+		return;
+	}
+    this->entity->getParentNode()->roll(w);
+}
+
+void ShipPlayer::rotateYawRelative(const Ogre::Radian w)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->yaw(w);
+		return;
+	}
+    this->entity->getParentNode()->yaw(w);
+}
+
+void ShipPlayer::goUp(const Ogre::Radian w)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->pitch(w);
+		return;
+	}
+    this->entity->getParentNode()->pitch(w);
+}
+
+
+Quaternion ShipPlayer::getOrientation(void)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		return this->gestCamera->getCamera()->getOrientation();
+	}
+	return this->getNode()->getOrientation();
+}
+
+void ShipPlayer::setOrientation(const Ogre::Quaternion &q)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->setOrientation(q);
+		return;
+	}
+    if(firstDir)
+    {
+        dirInit = q;
+        firstDir = false;
+    }
+	this->getNode()->setOrientation(q);
+}
+
+void ShipPlayer::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->setOrientation(Ogre::Quaternion(x, y, z, a));
+		return;
+	}
+    if(firstDir)
+    {
+        dirInit = Quaternion(x,y,z,a);
+        firstDir = false;
+    }
+	this->getNode()->setOrientation(x, y, z, a);
+}
+
+
+Ogre::Vector3 ShipPlayer::getPosition(void)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		return this->gestCamera->getCamera()->getPosition();
+	}
+    return this->getNode()->getPosition();
+}
+
+void ShipPlayer::setPosition(const Ogre::Vector3 &v)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->setPosition(v);
+		return;
+	}
+    if(firstPos)
+    {
+        posInit = v;
+        firstPos = false;
+    }
+    this->getNode()->setPosition(v);
+}
+
+void ShipPlayer::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
+{
+	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	{
+		this->gestCamera->getCamera()->setPosition(x, y, z);
+		return;
+	}
+    if(firstPos)
+    {
+        posInit[0] = x;
+        posInit[1] = y;
+        posInit[2] = z;
+        firstPos = false;
+    }
+    this->getNode()->setPosition(x, y, z);
 }

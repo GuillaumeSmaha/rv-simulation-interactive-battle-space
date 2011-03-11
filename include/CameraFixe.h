@@ -18,7 +18,7 @@ class CameraFixe : public CameraFixeAbstract {
 		 * \param sceneMgr Pointeur sur le manager de la scène
 		 * \param cameraName Nom de la nouvelle caméra
 		 */
-		CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName);
+		CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeInit);
 		
 		/*!
 		 * \brief Initialise la position de la caméra

@@ -31,10 +31,10 @@
 class ShipAbstract : public ObjectRoot
 {
     protected:
-    Ogre::ParticleSystem* thrusters;
-	private:
-
-
+		/*!
+		 * \brief Particule du vaisseau
+		*/
+		Ogre::ParticleSystem* thrusters;
 		/*!
 		 * \brief Entité du mesh du vaisseau
 		*/
@@ -198,19 +198,19 @@ class ShipAbstract : public ObjectRoot
          * \brief Rotation autour de l'axe direction de l'objet, permet donc de tourner
          * \param w un angle en radian
         */
-		void rotateRollRelative(const Ogre::Radian w);
+		virtual void rotateRollRelative(const Ogre::Radian w);
 
 		/*!
          * \brief Rotation autour de la normale à la direction de l'objet, permet donc de tourner
          * \param w un angle en radian
         */
-		void rotateYawRelative(const Ogre::Radian w);
+		virtual void rotateYawRelative(const Ogre::Radian w);
 
         /*!
          * \brief Permet d'incliner le vaiseau vers le haut (angle positif) ou vers le bas (angle négatif)
          * /param w l'angle d'inclinaison
         */
-        void goUp(const Ogre::Radian w);
+        virtual void goUp(const Ogre::Radian w);
 
 
         /*!
@@ -251,7 +251,7 @@ class ShipAbstract : public ObjectRoot
 		 * 		method = 2 : x^3
 		 * \return Le facteur calculé
 		*/
-		Ogre::Real getFactorRotation(int method = 1);
+		virtual Ogre::Real getFactorRotation(int method = 1);
 
         //Getter/Setter
 
@@ -526,12 +526,12 @@ class ShipAbstract : public ObjectRoot
 		 * \brief [Getter] Récupère l'orientation de l'objet
 		 * \return Orientation de l'objet
 		*/
-        Ogre::Quaternion getOrientation(void);
+        virtual Ogre::Quaternion getOrientation(void);
 		/*!
 		 * \brief [Setter] Définit l'orientation de l'objet
 		 * \param q Orientation de l'objet
 		*/
-		void setOrientation(const Ogre::Quaternion &q);
+		virtual void setOrientation(const Ogre::Quaternion &q);
 		/*!
 		 * \brief [Setter] Définit l'orientation de l'objet
 		 * \param x Orientation de l'objet sur l'axe x
@@ -539,18 +539,18 @@ class ShipAbstract : public ObjectRoot
 		 * \param z Orientation de l'objet sur l'axe z
 		 * \param a Orientation
 		*/
-        void setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a);
+        virtual void setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a);
 
 		/*!
 		 * \brief [Getter] Récupère la position de l'objet
 		 * \return Position de l'objet
 		*/
-        Ogre::Vector3 getPosition(void);
+        virtual Ogre::Vector3 getPosition(void);
 		/*!
 		 * \brief [Setter] Définit la position de l'objet
 		 * \param v Position de l'objet
 		*/
-        void setPosition(const Ogre::Vector3 &v);
+        virtual void setPosition(const Ogre::Vector3 &v);
 		/*!
 		 * \brief [Setter] Définit la position de l'objet
 		 * \param x Position de l'objet en x
