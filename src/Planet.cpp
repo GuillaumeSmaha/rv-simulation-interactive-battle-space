@@ -202,6 +202,31 @@ void Planet::updatePosition(void)
 		Ogre::Vector3 pos = this->getNode()->getPosition()+trans;
 		this->setPosition(pos[0], pos[1], pos[2]);
 	}
+	if(this->hasAtmosphere)
+	{
+
+        Ogre::Real sizeViewed = GestSceneManager::getProjectedSize(this->getEntity());
+
+
+        //LOD
+
+        if(sizeViewed>-1)
+        {
+
+            if(this->outerSphere->getVisible() && sizeViewed<0.26)
+            {
+
+               this->outerSphere->setVisible(false);
+                Utils::log("switch");
+            }
+            if(!this->outerSphere->getVisible() && sizeViewed>0.29)
+            {
+                Utils::log("unswitch");
+                this->outerSphere->setVisible(true);
+            }
+        }
+        Utils::log(sizeViewed);
+	}
 }
 
 

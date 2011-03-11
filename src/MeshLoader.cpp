@@ -78,6 +78,9 @@ Ogre::MovableObject * MeshLoader::getMovableObject(MeshLoader::MeshType type, Og
 				type = (MeshLoader::MeshType)((int)ASTEROID + Utils::randRangeInt(0,1));
 			}
 			break;
+        case ASTEROID_SMALL:
+            object = this->sceneMgr->createEntity(name, "asteroidLight.mesh");
+        break;
 		case MISSILE:
 			object = this->sceneMgr->createEntity(name, "missile.mesh");
 			break;
@@ -237,7 +240,7 @@ void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObjec
 			Utils::log("@void MeshLoader::deleteNodedObject(MeshLoader::MeshType type, Ogre::MovableObject * object) : type inconnu");
 			break;
 	}
-	
+
 	//~ nodeParent->removeAndDestroyAllChildren();
 	//~ node->removeAndDestroyChild(nodeParent->getName());
 }

@@ -11,9 +11,13 @@ Asteroid::Asteroid(void) : speed(0), rotationSpeed(Utils::randRangeInt(-1,1)/100
 	quat[2] = (Utils::randRangeInt(1,10))/10.0;//randomiser
 	quat[3] = (Utils::randRangeInt(1,10))/10.0;//randomiser
     this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::ASTEROID));
+    this->entitySmall = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getMovableObject(MeshLoader::ASTEROID_SMALL));
+    this->getNode()->attachObject(entitySmall);
+    entitySmall->setVisible(false);
 	this->getNode()->setOrientation(quat);
 	this->getNode()->setScale(100,100,100);
     this->getNode()->setPosition(0, 0, 0);
+
 }
 
 Asteroid::~Asteroid(void)
@@ -21,7 +25,7 @@ Asteroid::~Asteroid(void)
 	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::ASTEROID, this->getEntity());
 }
 
-Quaternion Asteroid::getOrientation(void) 
+Quaternion Asteroid::getOrientation(void)
 {
 	return this->getNode()->getOrientation();
 }
@@ -29,7 +33,7 @@ void Asteroid::setOrientation(Ogre::Quaternion  q)
 {
 	this->getNode()->setOrientation(q);
 }
-void Asteroid::setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a) 
+void Asteroid::setOrientation(Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Real a)
 {
 	this->getNode()->setOrientation(x,y,z,a);
 }
@@ -38,24 +42,24 @@ Ogre::Real Asteroid::getSpeed(void)
 {
 	return this->speed;
 }
-void Asteroid::setSpeed (Ogre::Real speed) 
+void Asteroid::setSpeed (Ogre::Real speed)
 {
 	this->speed = speed;
 }
 
-Ogre::Real Asteroid::getRotationSpeed(void) 
+Ogre::Real Asteroid::getRotationSpeed(void)
 {
 	return this->rotationSpeed;
 }
 
-void Asteroid::setRotationSpeed (Ogre::Real rotationSpeed) 
+void Asteroid::setRotationSpeed (Ogre::Real rotationSpeed)
 {
 	this->rotationSpeed = rotationSpeed;
 }
 
 Ogre::Vector3 Asteroid::getPosition(void)
 {
-    return this->getNode()->getPosition();   
+    return this->getNode()->getPosition();
 }
 void Asteroid::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
 {
@@ -93,10 +97,31 @@ void Asteroid::rotateRelative(const Ogre::Radian angle)
 
 void Asteroid::updatePosition(void)
 {
+    Ogre::Entity * visibleEntity = this->getEntity()->getVisible()?this->entity:this->entitySmall;
+    Ogre::Real sizeViewed = GestSceneManager::getProjectedSize(visibleEntity, 500);
+
 	if (this->getRotationSpeed() != 0)
 	this->rotateRelative(Ogre::Radian(this->getRotationSpeed()));
-	if (this->getSpeed() != 0) 
+	if (this->getSpeed() != 0)
 	{
 		this->moveRelative(0.0, 0.0, this->getSpeed());
+	}
+    //LOD
+	if(sizeViewed>-1)
+	{
+
+        if(this->entity->getVisible() && sizeViewed<0.01)
+        {
+
+           this->entity->setVisible(false);
+            this->entitySmall->setVisible(true);
+            Utils::log("switch");
+        }
+        if(!this->entity->getVisible() && sizeViewed>0.02)
+        {
+            Utils::log("unswitch");
+            this->entity->setVisible(true);
+            this->entitySmall->setVisible(false);
+        }
 	}
 }

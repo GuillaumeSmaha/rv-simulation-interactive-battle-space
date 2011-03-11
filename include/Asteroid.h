@@ -26,6 +26,10 @@ class Asteroid : public ObjectRoot
 		*/
 		Ogre::Entity * entity;
 		/*!
+		 * \brief Entité du mesh de l'asteroid
+		*/
+		Ogre::Entity * entitySmall;
+		/*!
 		 * \brief Vitesse de l'asteroid
 		 */
 		Ogre::Real speed;
@@ -33,7 +37,8 @@ class Asteroid : public ObjectRoot
 		 * \brief vitesse de rotation de l'asteroid
 		 */
 		Ogre::Real rotationSpeed;
-		
+
+
 	public:
 		/*!
 		 * \brief Construction
@@ -68,19 +73,19 @@ class Asteroid : public ObjectRoot
 		/*!
 		 * \brief Setter de la vitesse de rotation l'asteroid
 		 * \param rotationSpeed vitesse de rotation
-		 */		
+		 */
 		void setRotationSpeed (Ogre::Real);
 		/*!
 		 *  \brief Getter de la vitesse de l'asteroid
-		 */		
+		 */
         Ogre::Real getSpeed(void);
 		/*!
 		 * \brief Getter de la vitesse de rotation l'asteroid
-		 */		
+		 */
 		Ogre::Real getRotationSpeed(void);
 		/*!
 		 * \brief Getter de la position de l'asteroid
-		 */		
+		 */
         Ogre::Vector3 getPosition(void);
 		/*!
 		 * \brief Setter de la position de l'asteroid
@@ -106,7 +111,7 @@ class Asteroid : public ObjectRoot
 		 * \param x Déplacement de l'objet en x
 		 * \param y Déplacement de l'objet en y
 		 * \param z Déplacement de l'objet en z
-		*/	
+		*/
 		void moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z);
 		/*!
 		 * \brief Déplacement l'objet dans le référentiel de l'objet
