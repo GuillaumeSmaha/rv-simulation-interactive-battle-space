@@ -23,8 +23,8 @@
 
 //#define LIMIT_DOWN_CULLING 0.5
 //#define LIMIT_UP_CULLING 0.7
-#define LIMIT_DOWN_CULLING 0.05
-#define LIMIT_UP_CULLING 0.0625
+#define LIMIT_DOWN_CULLING 0.005
+#define LIMIT_UP_CULLING 0.00625
 
 
 //#include "ListenerCollision.h"
@@ -43,7 +43,7 @@ class ObjectRoot : public ClassRoot
 		 * \brief Définit les relations entre un rigid body et l'objet associé
 		 */
 		static std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *> lstRigidbodyToObject;
-		
+
 	public:
 		/*!
 		 * \brief Ajoute une relation entre le rigidBody et l'objet
@@ -61,7 +61,7 @@ class ObjectRoot : public ClassRoot
 		 * \return Liste des relations
 		*/
 		static std::map<OgreBulletDynamics::RigidBody *, ObjectRoot *> getAllRigidbodyToObject();
-	
+
 	public:
 		/*!
 		 *  \brief Définit les différents types de mesh
