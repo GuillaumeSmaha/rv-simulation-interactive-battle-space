@@ -343,7 +343,7 @@ void ShipPlayer::activateLightSpeed()
 void ShipPlayer::check_out_of_battle(void){
 
 	static int playSound = 100;
-	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0))>50000)
+	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0)) > limit)
 	{
 		if (playSound >= 100)
 		{

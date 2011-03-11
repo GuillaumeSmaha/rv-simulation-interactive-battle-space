@@ -20,6 +20,8 @@
 #include "ListenerTime.h"
 #include "Message.h"
 
+#define limit 50000
+
 /*!
 * \class ShipPlayer
 * \brief Classe gérant les vaiseaux du joueur
