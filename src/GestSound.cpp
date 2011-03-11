@@ -38,6 +38,7 @@ GestSound::GestSound()
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_MOTEUR), Utils::getFullPathSound("moteur.ogg"), false, false);
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_STATS), Utils::getFullPathSound("stats.ogg"), false, false);
 		this->soundManager->createSound(Utils::toString(GestSound::SOUND_MUSIC), Utils::getFullPathSound("music.ogg"), false, false);
+		this->soundManager->createSound(Utils::toString(GestSound::SOUND_LIGHTSPEED), Utils::getFullPathSound("lightspeed.ogg"), false, false);
 
 	}
 }

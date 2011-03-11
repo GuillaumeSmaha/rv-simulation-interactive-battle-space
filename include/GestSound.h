@@ -40,7 +40,9 @@ class GestSound : public ClassRoot
 			/// Son statistique
 			SOUND_STATS = 10,
 			/// Son Musique de fond
-			SOUND_MUSIC = 11
+			SOUND_MUSIC = 11,
+			/// Son vitesse lumiere
+			SOUND_LIGHTSPEED = 12
 		};
 	
 	private:
