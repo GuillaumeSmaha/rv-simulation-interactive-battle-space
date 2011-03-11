@@ -150,7 +150,7 @@ void ShipPlayer::updatePosition(void)
 void ShipPlayer::check_out_of_battle(void){
 
 	static int playSound = 100;
-	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0))>100000)
+	if (Utils::distance(this->getPosition(),Ogre::Vector3(0,0,0))>50000)
 	{
 		if (playSound >= 100)
 		{

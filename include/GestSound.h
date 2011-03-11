@@ -39,8 +39,8 @@ class GestSound : public ClassRoot
 			SOUND_MOTEUR = 9,
 			/// Son statistique
 			SOUND_STATS = 10,
-			/// Son champ asteroid
-			SOUND_AST = 11
+			/// Son Musique de fond
+			SOUND_MUSIC = 11
 		};
 	
 	private:

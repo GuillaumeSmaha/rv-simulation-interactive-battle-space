@@ -178,7 +178,7 @@ void Menus::creer_main_window(void)
 
     //the Quit button
     CEGUI::Window * quit = wmgr.createWindow("SleekSpace/Button", "SpaceShip/QuitButton");
-    quit->setText("Quit");
+    quit->setText("Quitter");
     quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.3,0)));
     quit->setPosition( UVector2( UDim( 0.05, 0.0f ), UDim( 0.32, 0.0f) ) );
     //menuBackground->addChildWindow(quit);
@@ -216,7 +216,7 @@ void Menus::creer_main_window(void)
     tblWin[2]=about;
     tblWin[3]=scenario;
 
-    this->mainWdw=create_std_window((CEGUI::utf8 *)"Combat de vaiseaux", 0.1, 0.05, 0.8, 0.2,4, tblWin);
+    this->mainWdw=create_std_window((CEGUI::utf8 *)"Combat de vaisseaux", 0.1, 0.05, 0.8, 0.2,4, tblWin);
 
     this->mainWdw->hide();
 }
@@ -237,7 +237,7 @@ void Menus::creer_menus_start(void)
 
     //the two player button
     CEGUI::Window * twoPlayer = wmgr.createWindow("SleekSpace/Button", "SpaceShip/TwoPtButton");
-    twoPlayer->setText("2 joueur");
+    twoPlayer->setText("2 joueurs");
     twoPlayer->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.25,0)));
     twoPlayer->setPosition( UVector2( UDim( 0.8, 0.0f ), UDim( 0.32, 0.0f) ) );
     //menuBackground->addChildWindow(twoPlayer);

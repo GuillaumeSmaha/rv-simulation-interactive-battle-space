@@ -469,9 +469,11 @@ void Application::initScene(bool isTwoPlayer)
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
 
     Message * message = new Message(this->listenerTime);
-    message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, mise en marche des réacteurs imminentes!");
+    message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, mise en marche des réacteurs imminente!");
 
 	this->listenerFrame->signalFrameEnded.add(&Sun::update, sun);
+	
+	GestSound::getSingleton()->play(GestSound::SOUND_MUSIC);
 }
 
 void Application::onKeyPressed(PlayerControls::Controls key)

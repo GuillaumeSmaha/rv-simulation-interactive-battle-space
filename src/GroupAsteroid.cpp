@@ -74,31 +74,23 @@ void GroupAsteroid::updateGroupAsteroids(void)
 					{
 						if (angle < 0.6)
 						{
-							GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
+							GestSound::getSingleton()->play(GestSound::SOUND_FROLED);
 						}
 						else 
 						{
-							GestSound::getSingleton()->play(GestSound::SOUND_FROLEG);
+							GestSound::getSingleton()->play(GestSound::SOUND_FROLE);
 						}
 					}
 					frole = true;
 				}
 				else 
 				{
-					if (dist > 5000 && dist < 15000) 
+					if (dist > 5000 && dist < 12000) 
 					{
 						if (first == 0)
 						{
 							first++;
-							GestSound::getSingleton()->play(GestSound::SOUND_AST);
-						}
-						else 
-						{
-							if (first == 1)
-							{
-								first++;
-								GestSound::getSingleton()->play(GestSound::SOUND_STATS);
-							}
+							GestSound::getSingleton()->play(GestSound::SOUND_STATS);
 						}
 					}
 				}

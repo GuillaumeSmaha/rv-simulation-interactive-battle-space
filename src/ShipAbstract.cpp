@@ -105,7 +105,7 @@ void ShipAbstract::exploded(Ogre::Real size)
 		{
 			std::cout << "ShipPlayer : Explosion de " << this->getName() << std::endl;
             Message* message = Message::getSingleton();
-            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, Nous avons été détruits!");
+            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, nous avons été détruit!");
 			break;
 		}
 			
@@ -113,7 +113,7 @@ void ShipAbstract::exploded(Ogre::Real size)
 		{
 			std::cout << "ShipIA : Explosion de " << this->getName() << std::endl;
             Message* message = Message::getSingleton();
-            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, Un vaisseau ennemi de moins!");
+            message->afficher_message((CEGUI::utf8*)"Rapport de mission",(CEGUI::utf8 *)"Capitaine, un vaisseau ennemi de moins!");
 			break;
         }
 			
