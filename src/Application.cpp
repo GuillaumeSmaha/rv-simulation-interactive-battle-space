@@ -16,7 +16,16 @@ Application::Application(void)
 	this->pluginsCfg = "plugins.cfg";
 #endif
 
+    this->sun = NULL;
     this->menus = NULL;
+    this->player = NULL;
+    this->player2 = NULL;
+    this->listenerMouse = NULL;
+    this->listenerKeyboard = NULL;
+    this->listenerTime = NULL;
+    this->listenerFrame = NULL;
+    this->listenerCollision = NULL;
+    this->listenerWindow = NULL;
 
 	this->shutDown = false;
 
@@ -31,9 +40,12 @@ Application::~Application(void)
 {
 	std::cout << std::endl << "-" << std::endl << "Stop	application !!" << std::endl;
 
-	std::cout << "delete sun" << std::endl;
-    delete sun;
-
+	if(this->sun != NULL)
+	{
+		std::cout << "delete sun" << std::endl;
+		delete sun;
+	}
+	
 #if OGRE_PLATFORM != OGRE_PLATFORM_WIN32
 	std::cout << "delete GestLaser::deleteAll" << std::endl;
     GestLaser::getSingleton()->deleteAll();
@@ -64,30 +76,66 @@ Application::~Application(void)
 	std::cout << "delete GestSound::destroy" << std::endl;
 	GestSound::destroy();
 
-	std::cout << "delete menus" << std::endl;
-    delete this->menus;
-	std::cout << "delete player" << std::endl;
-	delete this->player;
-	std::cout << "delete player2" << std::endl;
-	delete this->player2;
+	if(this->menus != NULL)
+	{
+		std::cout << "delete menus" << std::endl;
+		delete this->menus;
+	}
+    
+	if(this->player != NULL)
+	{
+		std::cout << "delete player" << std::endl;
+		delete this->player;
+	}
+	
+	if(this->player2 != NULL)
+	{
+		std::cout << "delete player2" << std::endl;
+		delete this->player2;
+	}
 
+	if(this->listenerMouse != NULL)
+	{
 	std::cout << "delete listenerMouse" << std::endl;
 	delete this->listenerMouse;
-	std::cout << "delete listenerKeyboard" << std::endl;
-	delete this->listenerKeyboard;
-	std::cout << "delete listenerTime" << std::endl;
-	delete this->listenerTime;
-	std::cout << "delete listenerFrame" << std::endl;
-	delete this->listenerFrame;
-	std::cout << "delete listenerCollision" << std::endl;
-    delete this->listenerCollision;
+	}
+
+	if(this->listenerKeyboard != NULL)
+	{
+		std::cout << "delete listenerKeyboard" << std::endl;
+		delete this->listenerKeyboard;
+	}
+
+	if(this->listenerTime != NULL)
+	{
+		std::cout << "delete listenerTime" << std::endl;
+		delete this->listenerTime;
+	}
+
+	if(this->listenerFrame != NULL)
+	{
+		std::cout << "delete listenerFrame" << std::endl;
+		delete this->listenerFrame;
+	}
+
+	if(this->listenerCollision != NULL)
+	{
+		std::cout << "delete listenerCollision" << std::endl;
+		delete this->listenerCollision;
+	}
+
 	std::cout << "delete deleteViewportLoader" << std::endl;
 	ViewportLoader::deleteViewportLoader();
 	std::cout << "delete deleteMeshLoader" << std::endl;
 	MeshLoader::deleteMeshLoader();
 	
-	std::cout << "delete listenerWindow" << std::endl;
-	delete this->listenerWindow;
+	}
+
+	if(this->listenerWindow != NULL)
+	{
+		std::cout << "delete listenerWindow" << std::endl;
+		delete this->listenerWindow;
+	}
 
 	//this->root->destroySceneManager(this->sceneMgr);
     //delete this->root;
