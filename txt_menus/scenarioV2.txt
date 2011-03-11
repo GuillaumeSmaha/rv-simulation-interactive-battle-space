@@ -1,0 +1,12 @@
+Alors que les terriens ont colonisé toute la galaxie, 
+un vaisseau éclaireur revient vers sa planète 
+d'origine. 
+
+Son objectif: anéantir le générateur de bouclier
+et ainsi permettre à sa flotte de passer à 
+l'attaque et s'approprier les ressources 
+terriennes.
+
+[colour='FFFF0000']Votre mission est simple: 
+ces vaisseaux doivent être détruit avant 
+qu'il ne soit trop tard.[colour='FFFFFFFF']

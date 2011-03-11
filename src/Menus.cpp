@@ -243,12 +243,26 @@ void Menus::creer_menus_start(void)
     //menuBackground->addChildWindow(twoPlayer);
     twoPlayer->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&Menus::PlayTwoPlayer, this));
 
+    std::string file;
+	file.assign(Utils::getFullPathRessources("scenarioV2.txt"));
+    CEGUI::Window * textScen= wmgr.createWindow("TaharezLook/StaticText", "TextScenDebut");
+    Ogre::String txt = Utils::read_file(file.c_str());
+    textScen->setSize(CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.6,0)));
+    textScen->setPosition( CEGUI::UVector2( UDim( 0.2, 0.0f ), UDim( 0.2, 0.0f) ) );
 
-    CEGUI::Window * tblWin[2];
+    textScen->setText(txt);
+    textScen->setProperty( "VertScrollbar", "True" );
+    //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
+
+
+
+
+    CEGUI::Window * tblWin[3];
     tblWin[0]=onePlayer;
-    tblWin[1]=twoPlayer;
+    tblWin[1]=textScen;
+    tblWin[2]=twoPlayer;
 
-    startWdw=create_std_window((CEGUI::utf8 *)"Choisir mode de jeu", 0.1, 0.05, 0.8, 0.8,2, tblWin);
+    startWdw=create_std_window((CEGUI::utf8 *)"Choisir mode de jeu", 0.1, 0.05, 0.8, 0.8,3, tblWin);
 
     afficher_souris();
     CEGUI::System::getSingleton().setGUISheet(startWdw);
@@ -326,6 +340,10 @@ bool Menus::clicAbout(const CEGUI::EventArgs & evt)
     Ogre::String txt = Utils::read_file(file.c_str());
     textAbout->setText(txt);
     textAbout->setProperty( "VertScrollbar", "True" );
+    textAbout->setSize(CEGUI::UVector2(CEGUI::UDim(1.0, 0), CEGUI::UDim(0.6,0)));
+    textAbout->setPosition( UVector2( UDim( 0.0, 0.0f ), UDim( 0.2, 0.0f) ) );
+
+
     CEGUI::Window * nouvWdw= create_std_window((CEGUI::utf8 *)"A propos", 0.1, 0.5, 0.8, 0.3, 1, &textAbout);
 
     this->mainWdw->addChildWindow(nouvWdw);
@@ -345,6 +363,11 @@ bool Menus::clicScenario(const CEGUI::EventArgs & evt)
     textScen->setText(txt);
     textScen->setProperty( "VertScrollbar", "True" );
     //textAbout->setMinSize(UVector2(UDim(2,0), UDim(2,0)));
+
+    textScen->setSize(CEGUI::UVector2(CEGUI::UDim(1.0, 0), CEGUI::UDim(0.6,0)));
+    textScen->setPosition( UVector2( UDim( 0.0, 0.0f ), UDim( 0.2, 0.0f) ) );
+
+
     CEGUI::Window * nouvWdw= create_std_window((CEGUI::utf8 *)"Scenario", 0.1, 0.5, 0.8, 0.3, 1, &textScen);
     this->mainWdw->addChildWindow(nouvWdw);
 
