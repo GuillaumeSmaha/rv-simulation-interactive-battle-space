@@ -453,7 +453,7 @@ void Application::initScene(bool isTwoPlayer)
 
  //MECHANT VAISSEAUX
     ShipIA * ship3;
-    for(int i = 0 ; i < 100 ; i++)
+    for(int i = 0 ; i < 200 ; i++)
     {
         ship3 = new ShipIA();
         ship3->setPosition(Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000), Utils::randRangeInt(0, 10000));

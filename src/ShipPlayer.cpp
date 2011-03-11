@@ -340,6 +340,23 @@ void ShipPlayer::activateLightSpeed()
 	}
 }
 
+void ShipPlayer::shootLaser(void)
+{
+	if (this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
+	{
+		Quaternion camOrientation = this->gestCamera->getCamera()->getDerivedOrientation();
+		Quaternion rotX(Degree(185), Vector3::UNIT_X);
+		
+		camOrientation = camOrientation * rotX;
+
+		GestLaser::getSingleton()->create(this->getNode()->_getDerivedPosition(), camOrientation, this->getColorLaser());
+	}
+	else
+	{
+		GestLaser::getSingleton()->create(this->getNode()->_getDerivedPosition(), this->getNode()->_getDerivedOrientation(), this->getColorLaser());
+	}
+}
+
 void ShipPlayer::check_out_of_battle(void){
 
 	static int playSound = 100;

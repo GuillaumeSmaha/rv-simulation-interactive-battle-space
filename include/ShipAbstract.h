@@ -165,7 +165,7 @@ class ShipAbstract : public ObjectRoot
 		/*!
 		 * \brief envoi un laser
 		*/
-		void shootLaser(void);
+		virtual void shootLaser(void);
 		/*!
 		 * \brief Définit les particules des réacteurs
 		*/

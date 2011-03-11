@@ -208,7 +208,10 @@ class ShipPlayer : public ShipAbstract
 		 * \brief Active la vitesse lumière
 		 */
 		void activateLightSpeed();
-
+		/*!
+		 * \brief envoi un laser
+		*/
+		void shootLaser(void);
 
         //getter/setter
 
@@ -258,14 +261,20 @@ class ShipPlayer : public ShipAbstract
             this->isAutoPiloted = autopiloteActivated;
             if(this->isAutoPiloted)
             {
+				Message* message = Message::getSingleton();
+				message->afficher_message((CEGUI::utf8*)"AutoPilot",(CEGUI::utf8 *)"Pilote Automatique Activé !");
                 this->speed = 60;
                 this->mRotFrames = 120;
                 this->destination = Ogre::Vector3(130,0,6000);
                 mRotating = true;
                 mRotFactor = 1;
                 mRotProgress = 1;
-
-            }
+			}
+			else
+			{
+				Message* message = Message::getSingleton();
+				message->afficher_message((CEGUI::utf8*)"AutoPilot",(CEGUI::utf8 *)"Pilote Automatique Désactivé !");
+			}
 		 }
 
     private:

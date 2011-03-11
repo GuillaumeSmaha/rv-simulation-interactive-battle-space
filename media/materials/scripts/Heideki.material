@@ -1,5 +1,9 @@
-material greychrome
+import * from "PPL.material"
+
+material greychrome : PPL
 {
+	set_texture_alias Texture mmchrome.jpg
+	/*
 	receive_shadows on
 	technique
 	{
@@ -15,4 +19,5 @@ material greychrome
 			}
 		}
 	}
+	*/
 }
