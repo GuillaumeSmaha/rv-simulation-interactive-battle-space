@@ -6,7 +6,7 @@
 #define __GEST_SCENE_MANAGER_H__
 
 #include <Ogre.h>
-#include "CameraFixeAbstract.h"
+#include "CameraAbstract.h"
 
 /*!
  * \class GestSceneManager
@@ -22,7 +22,7 @@ class GestSceneManager
         /*!
 		 *  \brief Vecteur des caméras
 		 */
-        std::vector<CameraFixeAbstract*>_listCameras;
+        std::vector<CameraAbstract*>_listCameras;
         /*!
 		 *  \brief SceneManager
 		 */
@@ -53,12 +53,12 @@ class GestSceneManager
 		 *  \brief Rajoute une caméra à la liste
 		 *  \param camera Caméra à rajouter à la liste
 		 */
-        void addCam(CameraFixeAbstract * camera);
+        void addCam(CameraAbstract * camera);
         /*!
 		 *  \brief [Static] Rajoute une caméra à la liste
 		 *  \param camera Caméra à rajouter à la liste
 		 */
-        static void addCamera(CameraFixeAbstract * camera)
+        static void addCamera(CameraAbstract * camera)
         {
             getSingleton()->addCam(camera);
         }
@@ -67,13 +67,13 @@ class GestSceneManager
 		 *  \param id ID de la caméra à récupérer
 		 *  \return Instance de la caméra
 		 */
-        CameraFixeAbstract * getCam(unsigned int id);
+        CameraAbstract * getCam(unsigned int id);
         /*!
 		 *  \brief [Static] Récupère l'instance d'une caméra (nonsafe)
 		 *  \param id ID de la caméra à récupérer
 		 *  \return Instance de la caméra
 		 */
-        static CameraFixeAbstract * getCamera(int id)
+        static CameraAbstract * getCamera(int id)
         {
             return getSingleton()->getCam(id);
         }
@@ -81,12 +81,12 @@ class GestSceneManager
 		 *  \brief Supprime la caméra de la liste
 		 *  \param cam Camera à supprimer
 		 */
-        void remCam(CameraFixeAbstract * cam);
+        void remCam(CameraAbstract * cam);
         /*!
 		 *  \brief [Static] Supprime la caméra de la liste
 		 *  \param cam Camera à supprimer
 		 */
-        static void remCamera(CameraFixeAbstract * cam)
+        static void remCamera(CameraAbstract * cam)
         {
             getSingleton()->remCam(cam);
         }

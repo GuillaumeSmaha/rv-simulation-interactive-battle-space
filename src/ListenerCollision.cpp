@@ -39,10 +39,10 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 		if(!(*itShip)->getIsDead() && (*itShip)->getTypeObject() != ObjectRoot::SHIP_BATTLE_STATION)
 		{
 			Ogre::Ray rayToFront((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
-			Ogre::Ray rayToLeft((*itShip)->getPosition()+ Ogre::Vector3(0,-50,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
-			Ogre::Ray rayToRight((*itShip)->getPosition()+ Ogre::Vector3(0,50,0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
-			Ogre::Ray rayToUp((*itShip)->getPosition()+ Ogre::Vector3(-50,0,0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
-			Ogre::Ray rayToDown((*itShip)->getPosition()+ Ogre::Vector3(50,0,0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
+			Ogre::Ray rayToLeft((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(0.0, 50.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
+			Ogre::Ray rayToRight((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(0.0, -50.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
+			Ogre::Ray rayToUp((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(50.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
+			Ogre::Ray rayToDown((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(-50.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
 			
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackFront;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackLeft;
@@ -61,25 +61,40 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackRight);
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackUp);
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackDown);
-			if (mCollisionClosestRayResultCallbackFront->doesCollide () || 
-                mCollisionClosestRayResultCallbackLeft->doesCollide() ||
-                mCollisionClosestRayResultCallbackRight->doesCollide() ||
-                mCollisionClosestRayResultCallbackUp->doesCollide() ||
-                mCollisionClosestRayResultCallbackDown->doesCollide()
+			if (mCollisionClosestRayResultCallbackFront->doesCollide() 
+                || mCollisionClosestRayResultCallbackLeft->doesCollide()
+                || mCollisionClosestRayResultCallbackRight->doesCollide()
+                || mCollisionClosestRayResultCallbackUp->doesCollide()
+                || mCollisionClosestRayResultCallbackDown->doesCollide()
                 )
 			{
 				OgreBulletDynamics::RigidBody * body;
 				
 				if(mCollisionClosestRayResultCallbackFront->doesCollide ())
+				{
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackFront->getCollidedObject());
+					std::cout << "[Front] " << std::ends;
+				}
                 else if(mCollisionClosestRayResultCallbackLeft->doesCollide())
+                {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackLeft->getCollidedObject());
+					std::cout << "[Left] " << std::ends;
+				}
                 else if(mCollisionClosestRayResultCallbackRight->doesCollide())
+                {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackRight->getCollidedObject());
+					std::cout << "[Right] " << std::ends;
+				}
                 else if(mCollisionClosestRayResultCallbackUp->doesCollide())
+                {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackUp->getCollidedObject());
+					std::cout << "[Up] " << std::ends;
+				}
                 else if(mCollisionClosestRayResultCallbackDown->doesCollide())
+                {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackDown->getCollidedObject());
+					std::cout << "[Down] " << std::ends;
+				}
                 
 				ObjectRoot * object = ObjectRoot::getObjectWithRigidBody(body);
 											
@@ -158,7 +173,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 					{
 						Asteroid * asteroid = static_cast<Asteroid *>(object);
 						asteroid->exploded();
-						GestAst::getSingleton()->remShip(ship);
+						GestGroupAsteroid::getSingleton()->remShip(asteroid);
 						break;
 					}*/
 						
@@ -193,7 +208,7 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 		Ogre::Ray rayTo((*itLaser)->getPosition(), (*itLaser)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
 		
 		OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallback;
-		mCollisionClosestRayResultCallback = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayTo, mWorld, 90.0);
+		mCollisionClosestRayResultCallback = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayTo, mWorld, GestLaser::speedLaserBase);
 
 		mWorld->launchRay(*mCollisionClosestRayResultCallback);
 		if (mCollisionClosestRayResultCallback->doesCollide ())

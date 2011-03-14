@@ -37,7 +37,7 @@ ViewportLoader::~ViewportLoader(void)
 }
 
 
-int ViewportLoader::addViewport(CameraFixeAbstract * gestCamera)
+int ViewportLoader::addViewport(CameraAbstract * gestCamera)
 {
 	Ogre::Viewport * viewport = this->listenerWindow->getRenderWindow()->addViewport(gestCamera->getCamera(), this->countViewport());
 	viewport->setBackgroundColour(Ogre::ColourValue(0.0f, 0.0f, 0.0f));
@@ -62,7 +62,7 @@ int ViewportLoader::addViewport(CameraFixeAbstract * gestCamera)
 }
 
 
-bool ViewportLoader::changeCameraViewport(int idViewport, CameraFixeAbstract * gestCamera)
+bool ViewportLoader::changeCameraViewport(int idViewport, CameraAbstract * gestCamera)
 {
 	if(idViewport < this->countViewport())
 	{

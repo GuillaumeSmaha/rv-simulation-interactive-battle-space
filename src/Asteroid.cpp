@@ -107,7 +107,7 @@ void Asteroid::updatePosition(void)
 		this->moveRelative(0.0, 0.0, this->getSpeed());
 	}
     //LOD
-	if(sizeViewed>-1)
+	if(sizeViewed > -1)
 	{
 
         if(this->entity->getVisible() && sizeViewed<0.01)

@@ -53,6 +53,7 @@ void GroupAsteroid::updateGroupAsteroids(void)
     for(itAsteroid=lstGroupAsteroid.begin(); itAsteroid!=lstGroupAsteroid.end();itAsteroid++)
 	{
         (*itAsteroid)->updatePosition();
+        
 		if (test <= 0 && !frole)
 		{
 			i = 0;

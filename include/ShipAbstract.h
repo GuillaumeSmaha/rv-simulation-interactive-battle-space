@@ -139,6 +139,10 @@ class ShipAbstract : public ObjectRoot
 		 * \brief Vie maximale du vaisseau
 		 */
         static Ogre::Real MAXLIFE;
+        
+        
+        
+	public:
 		/*!
 		 * \brief Construction
 		*/
@@ -148,6 +152,8 @@ class ShipAbstract : public ObjectRoot
 		*/
 		virtual ~ShipAbstract(void);
 
+		
+		void drawLine(Ogre::Vector3 pos);
 
 		/*!
 		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration

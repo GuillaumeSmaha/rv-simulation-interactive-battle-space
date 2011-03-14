@@ -1,7 +1,7 @@
 #include "CameraFixeTarget.h"
 
 
-CameraFixeTarget::CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeTarget, Ogre::SceneNode * nodePosition) : CameraFixeAbstract(sceneMgr, cameraName)
+CameraFixeTarget::CameraFixeTarget(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeTarget, Ogre::SceneNode * nodePosition) : CameraAbstract(sceneMgr, cameraName)
 {
 	this->nodeTarget = nodeTarget;
 	this->nodePosition = nodePosition;

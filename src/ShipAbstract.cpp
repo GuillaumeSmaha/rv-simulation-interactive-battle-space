@@ -48,6 +48,22 @@ ShipAbstract::~ShipAbstract(void)
 }
 
 
+void ShipAbstract::drawLine(Ogre::Vector3 pos)
+{
+	static int id = 0;
+	Ogre::ManualObject* myManualObject =  GestSceneManager::getSceneManager()->createManualObject("manual"+Utils::toString(id)); 
+	Ogre::SceneNode* myManualObjectNode = this->getNode()->createChildSceneNode("manual_node"+Utils::toString(id)); 
+	 
+	myManualObject->begin("manualMaterial"+Utils::toString(id), Ogre::RenderOperation::OT_LINE_LIST); 
+	myManualObject->position(0.0, 0.0, 0.0); 
+	myManualObject->position(pos);
+	myManualObject->end(); 
+	 
+	myManualObjectNode->attachObject(myManualObject);
+	id++;
+}
+
+
 void ShipAbstract::updatePosition(void)
 {
     std::cout<<"vitesse"<<this->getRollSpeed()<<std::endl;
@@ -305,7 +321,7 @@ Ogre::Real ShipAbstract::getFactorRotation(int method)
 		else
 		{
 			//~ factor = (log10(ratio)+2.0)/2.0;
-			factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.25 + 0.75));
+			factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.2 + 0.8));
 		}
 	}
 

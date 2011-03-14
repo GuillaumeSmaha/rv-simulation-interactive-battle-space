@@ -12,7 +12,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
 	pControl->signalKeyReleased.add(&ShipPlayer::keyReleased, this);
 	pControl->signalMouseMoved.add(&ShipPlayer::mouseMoved, this);
 
-	this->typeCamera = CameraFixeAbstract::CAMERA_NULL;
+	this->typeCamera = CameraAbstract::CAMERA_NULL;
 	this->gestCamera = NULL;
 
 
@@ -26,7 +26,7 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
 	this->nodeCameraExterieureFixe->setPosition(0, 150, -300);
 
     compteur = new Compteur(this, listenerTime);
-	this->initCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
+	this->initCamera(CameraAbstract::CAMERA_EXTERIEURE_FIXE);
 
     accelerationPressed = false;
     brakePressed = false;
@@ -41,6 +41,15 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
     this->defineParticules();
 
 	this->defineLightSpeedSystem();
+	
+	
+	this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
+	this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, 50.0, 0.0));
+	this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, -50.0, 0.0));
+	this->drawLine(this->getOrientation()*Ogre::Vector3(50.0, 0.0, 0.0));
+	this->drawLine(this->getOrientation()*Ogre::Vector3(-50.0, 0.0, 0.0));
+	
+	this->getEntity()->setVisible(false);
 }
 
 ShipPlayer::~ShipPlayer(void)
@@ -148,7 +157,13 @@ void ShipPlayer::updatePosition(void)
         this->setYawAcceleration(Ogre::Radian(0));
         this->setRollAcceleration(Ogre::Radian(0));
 
-        //on reduit la vitesse de rotation
+        //on reduit la vitesse de rotation et de translation
+        if(this->getTranslateSpeed() > 0)
+        {
+            this->setTranslateSpeed(this->getTranslateSpeed()-1);
+            if(this->getTranslateSpeed() < 0)
+                this->setTranslateSpeed(0);
+        }
         if(this->getRollSpeed() > Ogre::Radian(0))
         {
             this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
@@ -200,7 +215,7 @@ void ShipPlayer::updatePosition(void)
         //if (this->getSpeed() != 0)
         //{
             //this->moveRelative(0.0, 0.0, this->getSpeed());
-		if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+		if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 			this->moveRelative(this->getTranslateSpeed(), 0.0, -this->getSpeed());
 		else
 			this->moveRelative(this->getTranslateSpeed(), 0.0, this->getSpeed());
@@ -213,7 +228,7 @@ void ShipPlayer::updatePosition(void)
 
 		this->setPitchSpeed(this->getPitchSpeed()+this->getPitchAcceleration());
 		
-		if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+		if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 			this->goUp(-this->getPitchSpeed());
 		else
 			this->goUp(this->getPitchSpeed());
@@ -248,7 +263,13 @@ void ShipPlayer::updatePosition(void)
         this->setYawAcceleration(Ogre::Radian(0));
         this->setRollAcceleration(Ogre::Radian(0));
 
-        //on reduit la vitesse de rotation
+        //on reduit la vitesse de rotation et de translation
+        if(this->getTranslateSpeed() > 0)
+        {
+            this->setTranslateSpeed(this->getTranslateSpeed()-1);
+            if(this->getTranslateSpeed() < 0)
+                this->setTranslateSpeed(0);
+        }
         if(this->getRollSpeed() > Ogre::Radian(0))
         {
             this->setRollSpeed(this->getRollSpeed()-Ogre::Radian(0.001+0.005*(1.0-this->getFactorRotation(2))));
@@ -343,7 +364,7 @@ void ShipPlayer::activateLightSpeed()
 
 void ShipPlayer::shootLaser(void)
 {
-	if (this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
+	if (this->typeCamera == CameraAbstract::CAMERA_EXTERIEURE_FIXE)
 	{
 		Quaternion camOrientation = this->gestCamera->getCamera()->getDerivedOrientation();
 		Quaternion rotX(Degree(185), Vector3::UNIT_X);
@@ -378,27 +399,27 @@ void ShipPlayer::check_out_of_battle(void){
 	}
 }
 
-void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
+void ShipPlayer::initCamera(CameraAbstract::CameraType type)
 {
-	if(this->gestCamera == NULL && type != CameraFixeAbstract::CAMERA_NULL)
+	if(this->gestCamera == NULL && type != CameraAbstract::CAMERA_NULL)
 	{
 		this->typeCamera = type;
 		this->getEntity()->setVisible(true);
 
 		switch(this->typeCamera)
 		{
-			case CameraFixeAbstract::CAMERA_NULL :
-			case CameraFixeAbstract::CAMERA_FIXE :
-				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()), this->getNode());
+			case CameraAbstract::CAMERA_NULL :
+			case CameraAbstract::CAMERA_LIBRE :
+				this->gestCamera = new CameraLibre(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()), this->getNode());
 				this->isAutoPiloted = false;
 				break;
 
-			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
+			case CameraAbstract::CAMERA_FISRT_PERSON :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
 				this->getEntity()->setVisible(false);
 				break;
 
-			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
+			case CameraAbstract::CAMERA_EXTERIEURE_FIXE :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraExterieureFixe"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraExterieureFixe());
 				break;
 		}
@@ -411,28 +432,28 @@ void ShipPlayer::initCamera(CameraFixeAbstract::CameraType type)
 	}
 }
 
-void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
+void ShipPlayer::changeCamera(CameraAbstract::CameraType type)
 {
-	if(this->typeCamera != type && type != CameraFixeAbstract::CAMERA_NULL)
+	if(this->typeCamera != type && type != CameraAbstract::CAMERA_NULL)
 	{
 		this->typeCamera = type;
-		CameraFixeAbstract * tmpGestCamera = this->gestCamera;
+		CameraAbstract * tmpGestCamera = this->gestCamera;
 		this->getEntity()->setVisible(true);
 
 		switch(this->typeCamera)
 		{
-			case CameraFixeAbstract::CAMERA_NULL :
-			case CameraFixeAbstract::CAMERA_FIXE :
-				this->gestCamera = new CameraFixe(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()), this->getNode());
+			case CameraAbstract::CAMERA_NULL :
+			case CameraAbstract::CAMERA_LIBRE :
+				this->gestCamera = new CameraLibre(MeshLoader::getSingleton()->getSceneManager(), "cameraFixe"+Utils::toString(Utils::unique()), this->getNode());
 				this->isAutoPiloted = false;
 				break;
 
-			case CameraFixeAbstract::CAMERA_FISRT_PERSON :
+			case CameraAbstract::CAMERA_FISRT_PERSON :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraFirstPerson"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraFirstPerson());
 				this->getEntity()->setVisible(false);
 				break;
 
-			case CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE :
+			case CameraAbstract::CAMERA_EXTERIEURE_FIXE :
 				this->gestCamera = new CameraFixeTarget(MeshLoader::getSingleton()->getSceneManager(), "cameraExterieureFixe"+Utils::toString(Utils::unique()), this->getNodeCameraTarget(), this->getNodeCameraExterieureFixe());
 				break;
 		}
@@ -448,26 +469,26 @@ void ShipPlayer::changeCamera(CameraFixeAbstract::CameraType type)
 
 void ShipPlayer::switchNextCamera(void)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_NULL)
-		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
-	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FISRT_PERSON)
-		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
-	else if(this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
-		this->changeCamera(CameraFixeAbstract::CAMERA_FIXE);
-	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
-		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
+	if(this->typeCamera == CameraAbstract::CAMERA_NULL)
+		this->changeCamera(CameraAbstract::CAMERA_FISRT_PERSON);
+	else if(this->typeCamera == CameraAbstract::CAMERA_FISRT_PERSON)
+		this->changeCamera(CameraAbstract::CAMERA_EXTERIEURE_FIXE);
+	else if(this->typeCamera == CameraAbstract::CAMERA_EXTERIEURE_FIXE)
+		this->changeCamera(CameraAbstract::CAMERA_LIBRE);
+	else if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
+		this->changeCamera(CameraAbstract::CAMERA_FISRT_PERSON);
 }
 
 void ShipPlayer::switchPrevCamera(void)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_NULL)
-		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
-	else if(this->typeCamera == CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE)
-		this->changeCamera(CameraFixeAbstract::CAMERA_FISRT_PERSON);
-	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FISRT_PERSON)
-		this->changeCamera(CameraFixeAbstract::CAMERA_FIXE);
-	else if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
-		this->changeCamera(CameraFixeAbstract::CAMERA_EXTERIEURE_FIXE);
+	if(this->typeCamera == CameraAbstract::CAMERA_NULL)
+		this->changeCamera(CameraAbstract::CAMERA_EXTERIEURE_FIXE);
+	else if(this->typeCamera == CameraAbstract::CAMERA_EXTERIEURE_FIXE)
+		this->changeCamera(CameraAbstract::CAMERA_FISRT_PERSON);
+	else if(this->typeCamera == CameraAbstract::CAMERA_FISRT_PERSON)
+		this->changeCamera(CameraAbstract::CAMERA_LIBRE);
+	else if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
+		this->changeCamera(CameraAbstract::CAMERA_EXTERIEURE_FIXE);
 }
 
 
@@ -718,10 +739,10 @@ Ogre::Real ShipPlayer::getFactorRotation(int method)
 		}
 		else
 		{
-			if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+			if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 				return 1.0;
 			//~ factor = (log10(ratio)+2.0)/2.0;
-			factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.25 + 0.75));
+			factor = std::min(1.0, std::max(0.0, ((log10(ratio)+2.0)/2.0) * 0.2 + 0.8));
 		}
 	}
 
@@ -730,7 +751,7 @@ Ogre::Real ShipPlayer::getFactorRotation(int method)
 
 void ShipPlayer::moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->moveRelative(Ogre::Vector3(x, y, z));
 		return;
@@ -741,7 +762,7 @@ void ShipPlayer::moveRelative(const Ogre::Real x, const Ogre::Real y, const Ogre
 
 void ShipPlayer::moveRelative(const Ogre::Vector3 &vec)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->moveRelative(vec);
 		return;
@@ -753,7 +774,7 @@ void ShipPlayer::moveRelative(const Ogre::Vector3 &vec)
 
 void ShipPlayer::rotateRollRelative(const Ogre::Radian w)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->roll(w);
 		return;
@@ -763,7 +784,7 @@ void ShipPlayer::rotateRollRelative(const Ogre::Radian w)
 
 void ShipPlayer::rotateYawRelative(const Ogre::Radian w)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->yaw(w);
 		return;
@@ -773,7 +794,7 @@ void ShipPlayer::rotateYawRelative(const Ogre::Radian w)
 
 void ShipPlayer::goUp(const Ogre::Radian w)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->pitch(w);
 		return;
@@ -784,7 +805,7 @@ void ShipPlayer::goUp(const Ogre::Radian w)
 
 Quaternion ShipPlayer::getOrientation(void)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		return this->gestCamera->getCamera()->getOrientation();
 	}
@@ -793,7 +814,7 @@ Quaternion ShipPlayer::getOrientation(void)
 
 void ShipPlayer::setOrientation(const Ogre::Quaternion &q)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->setOrientation(q);
 		return;
@@ -808,7 +829,7 @@ void ShipPlayer::setOrientation(const Ogre::Quaternion &q)
 
 void ShipPlayer::setOrientation(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z, const Ogre::Real a)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->setOrientation(Ogre::Quaternion(x, y, z, a));
 		return;
@@ -824,7 +845,7 @@ void ShipPlayer::setOrientation(const Ogre::Real x, const Ogre::Real y, const Og
 
 Ogre::Vector3 ShipPlayer::getPosition(void)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		return this->gestCamera->getCamera()->getPosition();
 	}
@@ -833,7 +854,7 @@ Ogre::Vector3 ShipPlayer::getPosition(void)
 
 void ShipPlayer::setPosition(const Ogre::Vector3 &v)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->setPosition(v);
 		return;
@@ -848,7 +869,7 @@ void ShipPlayer::setPosition(const Ogre::Vector3 &v)
 
 void ShipPlayer::setPosition(const Ogre::Real x, const Ogre::Real y, const Ogre::Real z)
 {
-	if(this->typeCamera == CameraFixeAbstract::CAMERA_FIXE)
+	if(this->typeCamera == CameraAbstract::CAMERA_LIBRE)
 	{
 		this->gestCamera->getCamera()->setPosition(x, y, z);
 		return;

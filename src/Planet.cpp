@@ -124,7 +124,7 @@ Planet::~Planet(void)
 void Planet::update()
 {
 	// Mise à jour de la position de la planète
-	updatePosition();
+	this->updatePosition();
 
 
 	// Mise à jour nécessaire seulement si une atmosphère est présente
@@ -189,6 +189,10 @@ void Planet::update()
 			pParams->setNamedConstant("fExposure",mExposure);
 		}
 	}
+	
+
+    //mise à jour de la physique
+    this->updateBounding();
 }
 
 void Planet::updatePosition(void)

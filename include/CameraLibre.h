@@ -1,17 +1,17 @@
 /*!
- *  \file  CameraFixe.h
- *  \brief Ce fichier contient la déclaration de la classe CameraFixe. C'est la classe gérant une caméra fixe.
+ *  \file  CameraLibre.h
+ *  \brief Ce fichier contient la déclaration de la classe CameraLibre. C'est la classe gérant une caméra fixe.
  */
-#ifndef __CAMERA_FIXE_H__
-#define __CAMERA_FIXE_H__
+#ifndef __CAMERA_LIBRE_H__
+#define __CAMERA_LIBRE_H__
 
-#include "CameraFixeAbstract.h"
+#include "CameraAbstract.h"
 
 /*!
- * \class CameraFixe
+ * \class CameraLibre
  * \brief Classe permettant de gérer une caméra fixe.
  */
-class CameraFixe : public CameraFixeAbstract {
+class CameraLibre : public CameraAbstract {
 	public:
 		/*!
 		 * \brief Constructeur
@@ -19,7 +19,7 @@ class CameraFixe : public CameraFixeAbstract {
 		 * \param cameraName Nom de la nouvelle caméra
 		 * \param nodeInit Position initiale de la caméra
 		 */
-		CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeInit);
+		CameraLibre(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeInit);
 		
 		/*!
 		 * \brief Initialise la position de la caméra
@@ -31,4 +31,4 @@ class CameraFixe : public CameraFixeAbstract {
 		void update_camera();
 };
 
-#endif //__CAMERA_FIXE_H__
+#endif //__CAMERA_LIBRE_H__

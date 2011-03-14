@@ -1,7 +1,7 @@
-#include "CameraFixe.h"
+#include "CameraLibre.h"
 
 
-CameraFixe::CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeInit) : CameraFixeAbstract(sceneMgr, cameraName)
+CameraLibre::CameraLibre(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, Ogre::SceneNode * nodeInit) : CameraAbstract(sceneMgr, cameraName)
 {
     this->camera->setFixedYawAxis(true);
 	this->camera->setOrientation(nodeInit->_getDerivedOrientation());
@@ -11,7 +11,7 @@ CameraFixe::CameraFixe(Ogre::SceneManager * sceneMgr, Ogre::String cameraName, O
 	//this->camera->lookAt(nodeInit->_getDerivedPosition());
 }
 		
-void CameraFixe::init_camera()
+void CameraLibre::init_camera()
 {
 	/*
 	this->camera->setPosition(Ogre::Vector3(100, 100, -500));
@@ -21,6 +21,6 @@ void CameraFixe::init_camera()
 
 }
 		
-void CameraFixe::update_camera()
+void CameraLibre::update_camera()
 {
 }

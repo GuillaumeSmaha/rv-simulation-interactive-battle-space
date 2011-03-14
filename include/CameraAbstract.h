@@ -1,9 +1,9 @@
 /*!
- *  \file  CameraFixeAbstract.h
- *  \brief Ce fichier contient la déclaration de la classe CameraFixeAbstract. C'est la classe une classe abstraite qui permet d'utiliser différents types de caméras fixes.
+ *  \file  CameraAbstract.h
+ *  \brief Ce fichier contient la déclaration de la classe CameraAbstract. C'est la classe une classe abstraite qui permet d'utiliser différents types de caméras fixes.
  */
-#ifndef __CAMERA_FIXE_ABSTRACT_H__
-#define __CAMERA_FIXE_ABSTRACT_H__
+#ifndef __CAMERA_ABSTRACT_H__
+#define __CAMERA_ABSTRACT_H__
 
 #include <OgreRoot.h>
 #include <OgreCamera.h>
@@ -16,10 +16,11 @@
 #include <OgreParticleIterator.h>
 
 /*!
- * \class CameraFixeAbstract
+ * \class CameraAbstract
  * \brief Classe abstraite entre le programme principale et la caméra effectivement utilisé. Elle ne peut donc pas être instancié directement
  */
-class CameraFixeAbstract {
+class CameraAbstract
+{
 	public:
 
 		/// Définit les différents types de caméra
@@ -28,7 +29,7 @@ class CameraFixeAbstract {
 			/// Caméra Null
 			CAMERA_NULL = 0,
 			/// Caméra fixe
-			CAMERA_FIXE = 1,
+			CAMERA_LIBRE = 1,
 			/// Caméra à la première personne attachée à un noeud
 			CAMERA_FISRT_PERSON = 2,
 			/// Caméra Extérieure fixe attachée à un noeud
@@ -43,11 +44,11 @@ class CameraFixeAbstract {
 		 * \param sceneMgr Pointeur sur le manager de la scène
 		 * \param cameraName Nom de la nouvelle caméra
 		 */
-		CameraFixeAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName);
+		CameraAbstract(Ogre::SceneManager * sceneMgr, Ogre::String cameraName);
 		/*!
 		 * \brief Destructeur virtuel
 		 */
-		 virtual ~CameraFixeAbstract();
+		 virtual ~CameraAbstract();
 		 
 		/*!
 		 * \brief Initialise la position de la caméra\n
@@ -140,4 +141,4 @@ class CameraFixeAbstract {
 
 };
 
-#endif // __CAMERA_FIXE_ABSTRACT_H__ 
+#endif // __CAMERA_ABSTRACT_H__ 

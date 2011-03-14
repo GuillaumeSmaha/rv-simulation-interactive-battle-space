@@ -9,7 +9,7 @@
 #include <sstream>
 #include "Utils.h"
 #include "ListenerWindow.h"
-#include "CameraFixeAbstract.h"
+#include "CameraAbstract.h"
 
 /*!
  * \class ViewportLoader
@@ -58,14 +58,14 @@ class ViewportLoader
 		 * \param gestCamera La caméra correspondant au viewport
 		 * \return Id du viewport
 		 */
-		int addViewport(CameraFixeAbstract * gestCamera);
+		int addViewport(CameraAbstract * gestCamera);
 		/*!
 		 * \brief Change la caméra affecté à un viewport
 		 * \param idViewport Id du viewport
 		 * \param gestCamera La caméra correspondant au viewport
 		 * \return Si le changement a réussit
 		 */
-		bool changeCameraViewport(int idViewport, CameraFixeAbstract * gestCamera);
+		bool changeCameraViewport(int idViewport, CameraAbstract * gestCamera);
 		/*!
 		 * \brief Supprime un viewport
 		 * \param idViewport Id du viewport

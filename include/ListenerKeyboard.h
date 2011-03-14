@@ -8,7 +8,7 @@
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include "ClassRoot.h"
-#include "CameraFixeAbstract.h"
+#include "CameraAbstract.h"
 #include "Signal.h"
 
 /*!

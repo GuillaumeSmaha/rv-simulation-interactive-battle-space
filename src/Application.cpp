@@ -38,7 +38,7 @@ Application::Application(void)
 
 Application::~Application(void)
 {
-	std::cout << std::endl << "-" << std::endl << "Stop	application !!" << std::endl;
+	std::cout << "-" << std::endl << "Stop	application !!" << std::endl;
 
 	if(this->sun != NULL)
 	{

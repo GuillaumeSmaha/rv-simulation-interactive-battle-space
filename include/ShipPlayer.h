@@ -8,8 +8,8 @@
 #include <sstream>
 #include <Ogre.h>
 #include "MeshLoader.h"
-#include "CameraFixeAbstract.h"
-#include "CameraFixe.h"
+#include "CameraAbstract.h"
+#include "CameraLibre.h"
 #include "CameraFixeTarget.h"
 #include "ViewportLoader.h"
 #include "PlayerControls.h"
@@ -83,11 +83,11 @@ class ShipPlayer : public ShipAbstract
 		/*!
 		*  \brief Type de la caméra utilisé
 		*/
-		CameraFixeAbstract::CameraType typeCamera;
+		CameraAbstract::CameraType typeCamera;
 		/*!
 		*  \brief Pointeur sur la caméra utilisée
 		*/
-		CameraFixeAbstract * gestCamera;
+		CameraAbstract * gestCamera;
 		/*!
 		*  \brief Id du viewport
 		*/
@@ -174,13 +174,13 @@ class ShipPlayer : public ShipAbstract
 		 * \brief Active la premiere caméra
 		 * \param type Type de caméra
 		*/
-		void initCamera(CameraFixeAbstract::CameraType type);
+		void initCamera(CameraAbstract::CameraType type);
 
 		/*!
 		 * \brief Change de caméra
 		 * \param type Type de caméra
 		*/
-		void changeCamera(CameraFixeAbstract::CameraType type);
+		void changeCamera(CameraAbstract::CameraType type);
 
 		/*!
 		 * \brief Change de caméra par la suivante
@@ -244,7 +244,7 @@ class ShipPlayer : public ShipAbstract
 		 * \brief [Getter] Récupère le gestionnaire de caméra
 		 * \return Gestionnaire de caméra
 		*/
-		CameraFixeAbstract * getGestCamera(void)
+		CameraAbstract * getGestCamera(void)
 		{
 			return this->gestCamera;
 		}

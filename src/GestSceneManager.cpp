@@ -32,13 +32,13 @@ GestSceneManager::~GestSceneManager()
 
 }
 
-void GestSceneManager::addCam(CameraFixeAbstract * camera)
+void GestSceneManager::addCam(CameraAbstract * camera)
 {
 
     this->_listCameras.push_back(camera);
 }
 
-CameraFixeAbstract * GestSceneManager::getCam(unsigned int id)
+CameraAbstract * GestSceneManager::getCam(unsigned int id)
 {
 
     if(id > _listCameras.size())
@@ -58,7 +58,7 @@ void GestSceneManager::setSceneManager(Ogre::SceneManager * sceneManager)
     this->_sceneManager = sceneManager;
 }
 
-void GestSceneManager::remCam(CameraFixeAbstract * cam)
+void GestSceneManager::remCam(CameraAbstract * cam)
 {
    for(unsigned int i = 0; i < _listCameras.size() ; i++)
    {
