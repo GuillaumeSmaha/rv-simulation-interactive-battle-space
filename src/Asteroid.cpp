@@ -122,4 +122,7 @@ void Asteroid::updatePosition(void)
             this->entitySmall->setVisible(false);
         }
 	}
+
+    //mise à jour de la physique
+    this->updateBounding();
 }

@@ -293,6 +293,7 @@ void ShipPlayer::updatePosition(void)
 
     this->gestCamera->update_camera();
 	//this->gestCamera->update_particles();
+    this->updateBounding();
 }
 
 void ShipPlayer::defineLightSpeedSystem()

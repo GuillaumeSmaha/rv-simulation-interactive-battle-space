@@ -85,6 +85,10 @@ class ObjectRoot : public ClassRoot
 		 *  \brief Rigid Body
 		 */
 		OgreBulletDynamics::RigidBody * rigidBody;
+
+        std::string rigidBodyName;
+        ListenerCollision *listenerCollision;
+
         /*!
 		 *  \brief Type de l'objet
 		 */
@@ -162,6 +166,13 @@ class ObjectRoot : public ClassRoot
         {
             return this->getEntity()->getWorldBoundingSphere().getRadius();
         }
+
+        /*!
+         * \brief Permet de mettre à jour la position des boundings
+        */
+        void updateBounding(void);
+
+
         /*!
          * \brief Permet de linker avec un signal
          */

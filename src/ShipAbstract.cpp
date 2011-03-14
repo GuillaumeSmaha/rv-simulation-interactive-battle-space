@@ -76,6 +76,10 @@ void ShipAbstract::updatePosition(void)
     this->setPitchAcceleration(Ogre::Radian(0));
     this->setRollAcceleration(Ogre::Radian(0));
 	this->setYawAcceleration(Ogre::Radian(0));
+
+    //mise à jour de la physique
+    this->updateBounding();
+
 }
 
 

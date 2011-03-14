@@ -6,9 +6,9 @@ ListenerCollision::ListenerCollision(ListenerFrame * listenerFrame)
     mWorld = new OgreBulletDynamics::DynamicsWorld(GestSceneManager::getSceneManager(), Ogre::AxisAlignedBox(Ogre::Vector3 (-1, -1, -1), Ogre::Vector3 (1,  1,  1)), Ogre::Vector3(0,0,0));
     //add Debug info display tool
     debugDrawer = new OgreBulletCollisions::DebugDrawer();
-    debugDrawer->setDrawWireframe(false);   // we want to see the Bullet containers
+    debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
     mWorld->setDebugDrawer(debugDrawer);
-    mWorld->setShowDebugShapes(false);      // enable it if you want to see the Bullet containers
+    mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
     Ogre::SceneNode *node_debugDrawer = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
     node_debugDrawer->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
     mWorld->getBulletDynamicsWorld()->clearForces();

@@ -141,4 +141,5 @@ void ShipIA::updatePosition(void)
 
             }
         }
+    this->updateBounding();
 }
