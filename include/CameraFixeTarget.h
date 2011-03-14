@@ -2,8 +2,8 @@
  *  \file  CameraFixeTarget.h
  *  \brief Ce fichier contient la déclaration de la classe CameraFixe. C'est la classe gérant une caméra fixe ciblé sur un noeud.
  */
-#ifndef __CAMERA_LIBRE_TARGET_ABSTRACT_H__
-#define __CAMERA_LIBRE_TARGET_ABSTRACT_H__
+#ifndef __CAMERA_FIXE_TARGET_ABSTRACT_H__
+#define __CAMERA_FIXE_TARGET_ABSTRACT_H__
 
 #include <OgreRoot.h>
 #include <OgreCamera.h>
@@ -80,4 +80,4 @@ class CameraFixeTarget : public CameraAbstract
 		}
 };
 
-#endif //__CAMERA_LIBRE_TARGET_ABSTRACT_H__
+#endif //__CAMERA_FIXE_TARGET_ABSTRACT_H__

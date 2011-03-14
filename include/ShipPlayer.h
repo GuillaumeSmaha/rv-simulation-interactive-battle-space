@@ -9,7 +9,7 @@
 #include <Ogre.h>
 #include "MeshLoader.h"
 #include "CameraAbstract.h"
-#include "CameraLibre.h"
+#include "CameraFree.h"
 #include "CameraFixeTarget.h"
 #include "ViewportLoader.h"
 #include "PlayerControls.h"
