@@ -106,6 +106,7 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
     this->rigidBody = new OgreBulletDynamics::RigidBody(this->rigidBodyName ,listenerCollision->getWorld());
 
     this->rigidBody->setShape(this->getNode(), this->shape, 0.6, 0.6, 1.0, pos, dir);
+    
     //this->rigidBody->setKinematicObject(true);
     this->getEntity()->setCastShadows(true);
     

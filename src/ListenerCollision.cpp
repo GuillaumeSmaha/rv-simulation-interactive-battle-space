@@ -6,9 +6,9 @@ ListenerCollision::ListenerCollision(ListenerFrame * listenerFrame)
     mWorld = new OgreBulletDynamics::DynamicsWorld(GestSceneManager::getSceneManager(), Ogre::AxisAlignedBox(Ogre::Vector3 (-1, -1, -1), Ogre::Vector3 (1,  1,  1)), Ogre::Vector3(0,0,0));
     //add Debug info display tool
     debugDrawer = new OgreBulletCollisions::DebugDrawer();
-    debugDrawer->setDrawWireframe(true);   // we want to see the Bullet containers
+    debugDrawer->setDrawWireframe(false);   // we want to see the Bullet containers
     mWorld->setDebugDrawer(debugDrawer);
-    mWorld->setShowDebugShapes(true);      // enable it if you want to see the Bullet containers
+    mWorld->setShowDebugShapes(false);      // enable it if you want to see the Bullet containers
     Ogre::SceneNode *node_debugDrawer = GestSceneManager::getSceneManager()->getRootSceneNode()->createChildSceneNode("debugDrawer", Ogre::Vector3::ZERO);
     node_debugDrawer->attachObject(static_cast <Ogre::SimpleRenderable *> (debugDrawer));
     mWorld->getBulletDynamicsWorld()->clearForces();
@@ -38,23 +38,36 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 	{		
 		if(!(*itShip)->getIsDead() && (*itShip)->getTypeObject() != ObjectRoot::SHIP_BATTLE_STATION)
 		{
-			Ogre::Ray rayToFront((*itShip)->getPosition(), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
-			Ogre::Ray rayToLeft((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(0.0, 50.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
-			Ogre::Ray rayToRight((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(0.0, -50.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
-			Ogre::Ray rayToUp((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(50.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
-			Ogre::Ray rayToDown((*itShip)->getPosition()+ (*itShip)->getOrientation()*Ogre::Vector3(-50.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
-			
+			Ogre::Ray rayToFront, rayToLeft, rayToRight, rayToUp, rayToDown;			
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackFront;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackLeft;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackRight;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackUp;
 			OgreBulletCollisions::CollisionClosestRayResultCallback * mCollisionClosestRayResultCallbackDown;
 			
-			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, 50*2);
-			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, 50);
-			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, 50);
-			mCollisionClosestRayResultCallbackUp = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, 50);
-			mCollisionClosestRayResultCallbackDown = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, 50);
+			if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER)
+			{
+				rayToFront = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 101.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
+				rayToLeft = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(56.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
+				rayToRight = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(-56.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
+				rayToUp = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(0.0, 10.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
+				rayToDown = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(0.0, -10.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
+			}
+			else
+			{
+				rayToFront = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 80.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
+				rayToLeft = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(40.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(1.0, 0.0, 0.0));
+				rayToRight = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(-40.0, 0.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(-1.0, 0.0, 0.0));
+				rayToUp = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(0.0, 20.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, 1.0, 0.0));
+				rayToDown = Ogre::Ray((*itShip)->getPosition() + (*itShip)->getOrientation()*Ogre::Vector3(0.0, -10.0, 0.0), (*itShip)->getOrientation()*Ogre::Vector3(0.0, -1.0, 0.0));
+			}
+			
+			Ogre::Real rayDist = 20+((*itShip)->getSpeed()/4.0);
+			mCollisionClosestRayResultCallbackFront = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToFront, mWorld, rayDist);
+			mCollisionClosestRayResultCallbackLeft = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToLeft, mWorld, rayDist);
+			mCollisionClosestRayResultCallbackRight = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToRight, mWorld, rayDist);
+			mCollisionClosestRayResultCallbackUp = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToUp, mWorld, rayDist);
+			mCollisionClosestRayResultCallbackDown = new OgreBulletCollisions::CollisionClosestRayResultCallback(rayToDown, mWorld, rayDist);
 
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackFront);
 			mWorld->launchRay(*mCollisionClosestRayResultCallbackLeft);
@@ -73,82 +86,91 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 				if(mCollisionClosestRayResultCallbackFront->doesCollide ())
 				{
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackFront->getCollidedObject());
-					std::cout << "[Front] " << std::ends;
 				}
                 else if(mCollisionClosestRayResultCallbackLeft->doesCollide())
                 {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackLeft->getCollidedObject());
-					std::cout << "[Left] " << std::ends;
 				}
                 else if(mCollisionClosestRayResultCallbackRight->doesCollide())
                 {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackRight->getCollidedObject());
-					std::cout << "[Right] " << std::ends;
 				}
                 else if(mCollisionClosestRayResultCallbackUp->doesCollide())
                 {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackUp->getCollidedObject());
-					std::cout << "[Up] " << std::ends;
 				}
                 else if(mCollisionClosestRayResultCallbackDown->doesCollide())
                 {
 					body = static_cast <OgreBulletDynamics::RigidBody *>(mCollisionClosestRayResultCallbackDown->getCollidedObject());
-					std::cout << "[Down] " << std::ends;
 				}
                 
 				ObjectRoot * object = ObjectRoot::getObjectWithRigidBody(body);
-											
-
-				switch((*itShip)->getTypeObject())
-				{
-					case ObjectRoot::SHIP_PLAYER :
-						std::cout << "ShipPlayer " << std::ends;
-						break;
-						
-					case ObjectRoot::SHIP_IA :
-						std::cout << "ShipIA " << std::ends;
-						break;
-						
-					case ObjectRoot::SHIP_BATTLE_STATION :
-						std::cout << "ShipBattleStation " << std::ends;
-						break;
-						
-					default:
-						break;
-				}
+							
 								
-				switch(object->getTypeObject())
+				if(mWorld->getShowDebugShapes())
 				{
-					case ObjectRoot::SHIP_PLAYER :
-						std::cout << "Collision Hit ShipPlayer :" << object->getName() << std::endl;
-						break;
+					if(mCollisionClosestRayResultCallbackFront->doesCollide ())
+						std::cout << "[Front] " << std::ends;
+					else if(mCollisionClosestRayResultCallbackLeft->doesCollide())
+						std::cout << "[Left] " << std::ends;
+					else if(mCollisionClosestRayResultCallbackRight->doesCollide())
+						std::cout << "[Right] " << std::ends;
+					else if(mCollisionClosestRayResultCallbackUp->doesCollide())
+						std::cout << "[Up] " << std::ends;
+					else if(mCollisionClosestRayResultCallbackDown->doesCollide())
+						std::cout << "[Down] " << std::ends;
 						
-					case ObjectRoot::SHIP_IA :
-						std::cout << "Collision Hit ShipIA :" << object->getName() << std::endl;
-						break;
-						
-					case ObjectRoot::SHIP_BATTLE_STATION :
-						std::cout << "Collision Hit ShipBattleStation :" << object->getName() << std::endl;
-						break;
-				
-					case ObjectRoot::PLANET :
-						std::cout << "Collision Hit Planet :" << object->getName() << std::endl;
-						break;
-						
-					case ObjectRoot::ASTEROID :
-						std::cout << "Collision Hit Asteroid :" << object->getName() << std::endl;
-						break;
-						
-					case ObjectRoot::MISSILE :
-						std::cout << "Collision Hit Missile :" << object->getName() << std::endl;
-						break;
-						
-					case ObjectRoot::LASER :
-						std::cout << "Collision Hit Laser :" << object->getName() << std::endl;
-						break;
+					switch((*itShip)->getTypeObject())
+					{
+						case ObjectRoot::SHIP_PLAYER :
+							std::cout << "ShipPlayer " << std::ends;
+							break;
+							
+						case ObjectRoot::SHIP_IA :
+							std::cout << "ShipIA " << std::ends;
+							break;
+							
+						case ObjectRoot::SHIP_BATTLE_STATION :
+							std::cout << "ShipBattleStation " << std::ends;
+							break;
 							
 						default:
 							break;
+					}
+									
+					switch(object->getTypeObject())
+					{
+						case ObjectRoot::SHIP_PLAYER :
+							std::cout << "Collision Hit ShipPlayer :" << object->getName() << std::endl;
+							break;
+							
+						case ObjectRoot::SHIP_IA :
+							std::cout << "Collision Hit ShipIA :" << object->getName() << std::endl;
+							break;
+							
+						case ObjectRoot::SHIP_BATTLE_STATION :
+							std::cout << "Collision Hit ShipBattleStation :" << object->getName() << std::endl;
+							break;
+					
+						case ObjectRoot::PLANET :
+							std::cout << "Collision Hit Planet :" << object->getName() << std::endl;
+							break;
+							
+						case ObjectRoot::ASTEROID :
+							std::cout << "Collision Hit Asteroid :" << object->getName() << std::endl;
+							break;
+							
+						case ObjectRoot::MISSILE :
+							std::cout << "Collision Hit Missile :" << object->getName() << std::endl;
+							break;
+							
+						case ObjectRoot::LASER :
+							std::cout << "Collision Hit Laser :" << object->getName() << std::endl;
+							break;
+								
+							default:
+								break;
+					}
 				}
 				
 				switch(object->getTypeObject())
@@ -218,34 +240,37 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
             
 			ObjectRoot * object = ObjectRoot::getObjectWithRigidBody(body);
 				
-			switch(object->getTypeObject())
+			if(mWorld->getShowDebugShapes())
 			{
-				case ObjectRoot::SHIP_PLAYER :
-					std::cout << "LASER Hit ShipPlayer :" << object->getName() << std::endl;
-					break;
+				switch(object->getTypeObject())
+				{
+					case ObjectRoot::SHIP_PLAYER :
+						std::cout << "LASER Hit ShipPlayer :" << object->getName() << std::endl;
+						break;
+						
+					case ObjectRoot::SHIP_IA :
+						std::cout << "LASER Hit ShipIA :" << object->getName() << std::endl;
+						break;
+						
+					case ObjectRoot::SHIP_BATTLE_STATION :
+						std::cout << "LASER Hit ShipBattleStation :" << object->getName() << std::endl;
+						break;
 					
-				case ObjectRoot::SHIP_IA :
-					std::cout << "LASER Hit ShipIA :" << object->getName() << std::endl;
-					break;
-					
-				case ObjectRoot::SHIP_BATTLE_STATION :
-					std::cout << "LASER Hit ShipBattleStation :" << object->getName() << std::endl;
-					break;
-				
-				case ObjectRoot::PLANET :
-					break;
-					
-				case ObjectRoot::ASTEROID :
-					std::cout << "LASER Hit Asteroid :" << object->getName() << std::endl;
-					break;
-					
-				case ObjectRoot::MISSILE :
-					std::cout << "LASER Hit Missile :" << object->getName() << std::endl;
-					break;
-					
-				case ObjectRoot::LASER :
-					std::cout << "LASER Hit Laser :" << object->getName() << std::endl;
-					break;
+					case ObjectRoot::PLANET :
+						break;
+						
+					case ObjectRoot::ASTEROID :
+						std::cout << "LASER Hit Asteroid :" << object->getName() << std::endl;
+						break;
+						
+					case ObjectRoot::MISSILE :
+						std::cout << "LASER Hit Missile :" << object->getName() << std::endl;
+						break;
+						
+					case ObjectRoot::LASER :
+						std::cout << "LASER Hit Laser :" << object->getName() << std::endl;
+						break;
+				}
 			}
 			
 			switch(object->getTypeObject())

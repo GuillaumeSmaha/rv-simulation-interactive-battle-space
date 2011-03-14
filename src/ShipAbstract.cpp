@@ -48,15 +48,15 @@ ShipAbstract::~ShipAbstract(void)
 }
 
 
-void ShipAbstract::drawLine(Ogre::Vector3 pos)
+void ShipAbstract::drawLine(Ogre::Vector3 posDeb, Ogre::Vector3 posFin)
 {
 	static int id = 0;
 	Ogre::ManualObject* myManualObject =  GestSceneManager::getSceneManager()->createManualObject("manual"+Utils::toString(id)); 
 	Ogre::SceneNode* myManualObjectNode = this->getNode()->createChildSceneNode("manual_node"+Utils::toString(id)); 
 	 
 	myManualObject->begin("manualMaterial"+Utils::toString(id), Ogre::RenderOperation::OT_LINE_LIST); 
-	myManualObject->position(0.0, 0.0, 0.0); 
-	myManualObject->position(pos);
+	myManualObject->position(posDeb);
+	myManualObject->position(posFin);
 	myManualObject->end(); 
 	 
 	myManualObjectNode->attachObject(myManualObject);

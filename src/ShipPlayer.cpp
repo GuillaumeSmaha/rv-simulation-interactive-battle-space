@@ -1,5 +1,6 @@
 #include "ShipPlayer.h"
 #include "GestShip.h"
+
 using namespace Ogre;
 
 ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) : ShipAbstract()
@@ -42,14 +43,13 @@ ShipPlayer::ShipPlayer(PlayerControls * pControl, ListenerTime * listenerTime) :
 
 	this->defineLightSpeedSystem();
 	
-	
-	this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, 0.0, 1.0));
-	this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, 50.0, 0.0));
-	this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, -50.0, 0.0));
-	this->drawLine(this->getOrientation()*Ogre::Vector3(50.0, 0.0, 0.0));
-	this->drawLine(this->getOrientation()*Ogre::Vector3(-50.0, 0.0, 0.0));
-	
-	this->getEntity()->setVisible(false);
+	// Pour le debug des rayCast des collisions
+	//~ this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, 0.0, 80.0), this->getOrientation()*Ogre::Vector3(0.0, 0.0, 100.0));
+	//~ this->drawLine(this->getOrientation()*Ogre::Vector3(40.0, 0.0, 0.0), this->getOrientation()*Ogre::Vector3(70.0, 0.0, 0.0));
+	//~ this->drawLine(this->getOrientation()*Ogre::Vector3(-40.0, 0.0, 0.0), this->getOrientation()*Ogre::Vector3(-70.0, 0.0, 0.0));
+	//~ this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, 20.0, 0.0), this->getOrientation()*Ogre::Vector3(0.0, 40.0, 0.0));
+	//~ this->drawLine(this->getOrientation()*Ogre::Vector3(0.0, -10.0, 0.0), this->getOrientation()*Ogre::Vector3(0.0, -30.0, 0.0));
+	//~ this->getEntity()->setVisible(false);
 }
 
 ShipPlayer::~ShipPlayer(void)
@@ -160,7 +160,7 @@ void ShipPlayer::updatePosition(void)
         //on reduit la vitesse de rotation et de translation
         if(this->getTranslateSpeed() > 0)
         {
-            this->setTranslateSpeed(this->getTranslateSpeed()-1);
+            this->setTranslateSpeed(this->getTranslateSpeed()-2);
             if(this->getTranslateSpeed() < 0)
                 this->setTranslateSpeed(0);
         }
@@ -266,7 +266,7 @@ void ShipPlayer::updatePosition(void)
         //on reduit la vitesse de rotation et de translation
         if(this->getTranslateSpeed() > 0)
         {
-            this->setTranslateSpeed(this->getTranslateSpeed()-1);
+            this->setTranslateSpeed(this->getTranslateSpeed()-2);
             if(this->getTranslateSpeed() < 0)
                 this->setTranslateSpeed(0);
         }

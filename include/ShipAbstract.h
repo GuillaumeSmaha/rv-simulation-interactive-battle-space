@@ -153,7 +153,7 @@ class ShipAbstract : public ObjectRoot
 		virtual ~ShipAbstract(void);
 
 		
-		void drawLine(Ogre::Vector3 pos);
+		void drawLine(Ogre::Vector3 posDeb, Ogre::Vector3 posFin);
 
 		/*!
 		 * \brief Update la position en fonction de la position actuelle, de la vitesse et de l'acceleration
