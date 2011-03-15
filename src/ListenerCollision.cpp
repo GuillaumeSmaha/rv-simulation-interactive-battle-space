@@ -173,20 +173,51 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 					}
 				}
 				
+				
+				//On vérifie après via if(!object->getIsDead()) si le vaisseau avec la collision est toujours en vie !
+				// -> evite d'entrer en collision avec un vaisseau mort
+				// Ce bug est du au fait qu'on vérifie plus souvent les collisions que l'on met à jour la position des vaisseaux et donc gestShip ne supprime pas directement le vaisseau mort.
+				
+					
+				//intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
+				if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER
+					&& ( (object->getTypeObject() == ObjectRoot::SHIP_PLAYER) || (object->getTypeObject() == ObjectRoot::SHIP_IA) ) )
+				{
+					ShipAbstract * ship = static_cast<ShipAbstract *>(object);
+					if(!ship->getIsDead())
+					{
+						(*itShip)->isTouch(25);
+						std::cout << "\t -> " << (*itShip)->getName() << " : On le touche" << std::endl;
+					}
+				}
+				else
+				{
+					(*itShip)->exploded();
+					std::cout << "\t -> " << (*itShip)->getName() << " : On l'explose" << std::endl;
+				}
+				
 				switch(object->getTypeObject())
 				{						
 					case ObjectRoot::SHIP_BATTLE_STATION :
 					case ObjectRoot::SHIP_PLAYER :
 					{
 						ShipAbstract * ship = static_cast<ShipAbstract *>(object);
-						ship->isTouch(25);
+						if(!ship->getIsDead())
+						{
+							ship->isTouch(25);
+							std::cout << "\t -> " << ship->getName() << " : On le touche" << std::endl;
+						}
 						break;
 					}
 					
 					case ObjectRoot::SHIP_IA :
 					{
 						ShipAbstract * ship = static_cast<ShipAbstract *>(object);
-						ship->exploded();
+						if(!ship->getIsDead())
+						{
+							ship->exploded();
+							std::cout << "\t -> " << ship->getName() << " : On l'explose" << std::endl;
+						}
 						
 						break;
 					}
@@ -201,19 +232,6 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 						
 					default:
 						break;
-				}
-				
-				//intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
-				if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER
-					&& ( (object->getTypeObject() == ObjectRoot::SHIP_PLAYER) || (object->getTypeObject() == ObjectRoot::SHIP_IA) ) )
-				{
-					std::cout << "\t ->" << (*itShip)->getName() << " : On le touche" << std::endl;
-					(*itShip)->isTouch(25);
-				}
-				else
-				{
-					std::cout << "\t ->" << (*itShip)->getName() << " : On l'explose" << std::endl;
-					(*itShip)->exploded();
 				}
 				
 				break;
