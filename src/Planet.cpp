@@ -197,7 +197,7 @@ void Planet::update()
 
 void Planet::updatePosition(void)
 {
-	if(this->planetOrbit!=NULL)
+	if(this->planetOrbit != NULL)
 	{
 		Ogre::Real rotationSpeed = 0.002;
 		Ogre::Vector3 direction = this->planetOrbit->getParentNode()->getPosition()-this->getNode()->getPosition();
@@ -214,7 +214,7 @@ void Planet::updatePosition(void)
 
         //LOD
 
-        if(sizeViewed>-1)
+        if(sizeViewed > -1)
         {
 
             if(this->outerSphere->getVisible() && sizeViewed<0.26)

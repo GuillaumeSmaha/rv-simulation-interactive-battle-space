@@ -18,7 +18,7 @@ void GroupAsteroid::addAsteroid(Asteroid * asteroid, ListenerCollision * listene
 	//node = this->sceneMgr->getSceneNode(NODE_NAME_ENSEMBLE_GROUPE_ASTEROIDES);
 	//node = node->createChildSceneNode(nodeName);
 	nodeAsteroid = asteroid->getNode();
-	if (nodeAsteroid->getParentSceneNode()!=NULL)
+	if (nodeAsteroid->getParentSceneNode() != NULL)
 	{
 		nodeAsteroid->getParentSceneNode()->removeChild(nodeAsteroid);
 	}
@@ -182,6 +182,13 @@ Ogre::Real GroupAsteroid::getRotationSpeed(void)
 
 void GroupAsteroid::setNodeGroupAsteroid(Ogre::SceneNode * node)
 {
+	if(this->node != NULL)
+	{
+		if(this->node->getParentSceneNode() != NULL)
+			this->node->getParentSceneNode()->removeChild(this->node);	
+		
+		GestSceneManager::getSingleton()->getSceneManager()->destroySceneNode(this->node);
+	}
 	this->node = node;
 }
 

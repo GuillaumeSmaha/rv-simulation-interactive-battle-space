@@ -1,6 +1,8 @@
 #include "GestGroupAsteroids.h"
-GestGroupAsteroids* GestGroupAsteroids::_instance = NULL;
+
 using namespace std;
+
+GestGroupAsteroids * GestGroupAsteroids::_instance = NULL;
 
 GestGroupAsteroids::GestGroupAsteroids()
 {
@@ -69,7 +71,13 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 	GroupAsteroid * groupAsteroid = new GroupAsteroid();
 	groupAsteroid->setRotationSpeed(rotationSpeed);
 
-	groupAsteroid->setNodeGroupAsteroid(planet->createChildSceneNode("GroupAsteroids"+Utils::toString(Utils::unique())));
+	groupAsteroid->setNodeGroupAsteroid(planet->createChildSceneNode("GroupAsteroidsOrbitPlanet"+Utils::toString(Utils::unique())));
+	//~ groupAsteroid->getNodeGroupAsteroid()->setPosition(planet->getPosition());
+	//~ groupAsteroid->getNodeGroupAsteroid()->setPosition(planet->getPosition())
+	
+	groupAsteroid->getNodeGroupAsteroid()->_setDerivedPosition(planet->_getDerivedPosition());
+	
+	
 	for (x = rayon; x > 0; x=x-rayon/(nb/4)) //le 4 car on crée les asteroids 4 par 4
 	{
 		asteroid1 = new Asteroid();
@@ -129,5 +137,25 @@ void GestGroupAsteroids::createGroup(int nb, int degreLiberte, int scale, Ogre::
 		}
 	}
 	GestGroupAsteroids::getSingleton()->addGroupAsteroids(groupAsteroid);
+	
+	
+	
+	//Affiche le graphe de scène du groupe planète !!!
+	/*
+	Utils::log("Groupe planet : "+planet->getParentSceneNode()->getName()+"\t(pos:"+Utils::toString(planet->getParentSceneNode()->getPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getPosition()[2])+" & posGlobal: "+Utils::toString(planet->getParentSceneNode()->_getDerivedPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->_getDerivedPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->_getDerivedPosition()[2])+")");
+	for(int i = 0 ; i < planet->getParentSceneNode()->numChildren() ; i++)
+	{
+		Utils::log("\tPlanet: "+planet->getParentSceneNode()->getChild(i)->getName()+"\t(pos:"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getPosition()[2])+" & posGlobal: "+Utils::toString(planet->getParentSceneNode()->getChild(i)->_getDerivedPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->_getDerivedPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->_getDerivedPosition()[2])+")");
+		for(int j = 0 ; j < planet->getParentSceneNode()->getChild(i)->numChildren() ; j++)
+		{
+			Utils::log("\t\tGroupe asteroide: "+planet->getParentSceneNode()->getChild(i)->getChild(j)->getName()+"\t(pos:"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getPosition()[2])+" & posGlobal: "+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->_getDerivedPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->_getDerivedPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->_getDerivedPosition()[2])+")");
+			for(int k = 0 ; k < planet->getParentSceneNode()->getChild(i)->getChild(j)->numChildren() ; k++)
+			{
+				Utils::log("\t\t\tAsteroide: "+planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->getName()+"\t(pos:"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->getPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->getPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->getPosition()[2])+" & posGlobal: "+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->_getDerivedPosition()[0])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->_getDerivedPosition()[1])+"/"+Utils::toString(planet->getParentSceneNode()->getChild(i)->getChild(j)->getChild(k)->_getDerivedPosition()[2])+")");
+			}
+		}
+	}
+	*/
+	
 }
 

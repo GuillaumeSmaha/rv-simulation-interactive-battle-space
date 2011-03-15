@@ -23,6 +23,7 @@ Asteroid::Asteroid(void) : speed(0), rotationSpeed(Utils::randRangeInt(-1,1)/100
 Asteroid::~Asteroid(void)
 {
 	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::ASTEROID, this->getEntity());
+	MeshLoader::getSingleton()->deleteNodedObject(MeshLoader::ASTEROID_SMALL, this->entitySmall);
 }
 
 Quaternion Asteroid::getOrientation(void)

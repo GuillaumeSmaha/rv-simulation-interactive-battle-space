@@ -16,6 +16,7 @@
 
 #include "OgreBulletCollisionsPreRequisites.h"
 #include "Shapes/OgreBulletCollisionsSphereShape.h"
+#include "Utils/OgreBulletConverter.h"
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "Utils.h"
 #include "GestSceneManager.h"

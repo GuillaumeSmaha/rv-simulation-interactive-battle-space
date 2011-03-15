@@ -187,7 +187,13 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 					if(!ship->getIsDead())
 					{
 						(*itShip)->isTouch(25);
-						std::cout << "\t -> " << (*itShip)->getName() << " : On le touche" << std::endl;
+						if(mWorld->getShowDebugShapes())
+							std::cout << "\t -> " << (*itShip)->getName() << " : On le touche" << std::endl;
+					}
+					else
+					{
+						if(mWorld->getShowDebugShapes())
+							std::cout << "\t -> " << (*itShip)->getName() << " : On ignore la touche" << std::endl;
 					}
 				}
 				else
@@ -207,6 +213,11 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 							ship->isTouch(25);
 							std::cout << "\t -> " << ship->getName() << " : On le touche" << std::endl;
 						}
+						else
+						{
+							if(mWorld->getShowDebugShapes())
+								std::cout << "\t -> " << ship->getName() << " : On ignore la touche" << std::endl;
+						}
 						break;
 					}
 					
@@ -218,7 +229,11 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 							ship->exploded();
 							std::cout << "\t -> " << ship->getName() << " : On l'explose" << std::endl;
 						}
-						
+						else
+						{
+							if(mWorld->getShowDebugShapes())
+								std::cout << "\t -> " << ship->getName() << " : On ignore l'explosion" << std::endl;
+						}
 						break;
 					}
 					

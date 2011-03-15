@@ -49,6 +49,8 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
 {
 
     std::cout << "size=" << size << "ObjectType: " << typeObject << std::endl;
+    //~ Ogre::Vector3 pos = this->getNode()->_getDerivedPosition();
+    //~ Ogre::Quaternion dir = this->getNode()->_getDerivedOrientation();
     Ogre::Vector3 pos = this->getNode()->getPosition();
     Ogre::Quaternion dir = this->getNode()->getOrientation();
 
@@ -116,11 +118,11 @@ void ObjectRoot::createCollisionObject(ListenerCollision * listenerCollision, in
 
 void ObjectRoot::updateBounding(void)
 {
-	Ogre::Vector3 posOgre = this->getNode()->getPosition();
-    Ogre::Quaternion dirOgre = this->getNode()->getOrientation();
+	Ogre::Vector3 posOgre = this->getNode()->_getDerivedPosition();
+    Ogre::Quaternion dirOgre = this->getNode()->_getDerivedOrientation();
     
-    btVector3 posBt(posOgre[0], posOgre[1], posOgre[2]);
-    btQuaternion dirBt(dirOgre.x, dirOgre.y, dirOgre.z, dirOgre.w);
+    btVector3 posBt = OgreBtConverter::to(posOgre);
+    btQuaternion dirBt = OgreBtConverter::to(dirOgre);
     
 
     //~ this->rigidBody->getBulletDynamicsWorld()->removeRigidBody(this->rigidBody->getBulletRigidBody());
