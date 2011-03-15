@@ -206,9 +206,15 @@ void ListenerCollision::updateCollision(const Ogre::FrameEvent &evt)
 				//intersectionPoint = mCollisionClosestRayResultCallback->getCollisionPoint();
 				if((*itShip)->getTypeObject() == ObjectRoot::SHIP_PLAYER
 					&& ( (object->getTypeObject() == ObjectRoot::SHIP_PLAYER) || (object->getTypeObject() == ObjectRoot::SHIP_IA) ) )
+				{
+					std::cout << "\t ->" << (*itShip)->getName() << " : On le touche" << std::endl;
 					(*itShip)->isTouch(25);
+				}
 				else
+				{
+					std::cout << "\t ->" << (*itShip)->getName() << " : On l'explose" << std::endl;
 					(*itShip)->exploded();
+				}
 				
 				break;
 			}

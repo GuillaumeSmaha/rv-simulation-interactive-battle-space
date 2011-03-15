@@ -33,15 +33,15 @@ ObjectRoot::ObjectRoot()
 
 ObjectRoot::~ObjectRoot()
 {
-    
-    if(shape != NULL)
-        delete shape;
 
     if(rigidBody != NULL)
     {
 		this->rigidBody->getBulletDynamicsWorld()->removeCollisionObject(this->rigidBody->getBulletRigidBody());
         delete rigidBody;
 	}
+	
+    if(shape != NULL)
+        delete shape;
 }
 
 

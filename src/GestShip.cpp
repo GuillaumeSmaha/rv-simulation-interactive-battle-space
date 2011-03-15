@@ -48,14 +48,16 @@ void GestShip::addShip(ShipAbstract * ship)
     }
 }
 
-void GestShip::remShip(ShipAbstract * ship)
+std::vector<ShipAbstract *>::iterator GestShip::remShip(ShipAbstract * ship)
 {
+	std::vector<ShipAbstract *>::iterator itRes = lstShip.end();
+	
 	switch(ship->getTypeObject())
     {
             case ObjectRoot::SHIP_IA:
                 for(unsigned int i = 0 ; i < lstShipIA.size() ; i++)
                 {
-                    if(lstShipIA[i]==ship)
+                    if(lstShipIA[i] == ship)
                     {
                         lstShipIA.erase(lstShipIA.begin()+i);
                         break;
@@ -66,7 +68,7 @@ void GestShip::remShip(ShipAbstract * ship)
             case ObjectRoot::SHIP_PLAYER:
                for(unsigned int i = 0 ; i < lstShipPlayer.size() ; i++)
                 {
-                    if(lstShipPlayer[i]==ship)
+                    if(lstShipPlayer[i] == ship)
                     {
                         lstShipPlayer.erase(lstShipPlayer.begin()+i);
                         break;
@@ -77,7 +79,7 @@ void GestShip::remShip(ShipAbstract * ship)
             case ObjectRoot::SHIP_BATTLE_STATION:
                 for(unsigned int i = 0 ; i < lstShipBattleStation.size() ; i++)
                 {
-                    if(lstShipBattleStation[i]==ship)
+                    if(lstShipBattleStation[i] == ship)
                     {
                         lstShipBattleStation.erase(lstShipBattleStation.begin()+i);
                         break;
@@ -94,10 +96,12 @@ void GestShip::remShip(ShipAbstract * ship)
 		if(lstShip[i] == ship)
 		{
 			delete ship;
-			lstShip.erase(lstShip.begin()+i);
+			itRes = lstShip.erase(lstShip.begin()+i);
 			break;
 		}
 	}
+	
+	return itRes;
 }
 
 std::vector<ShipAbstract *> GestShip::getAllShips()
@@ -110,10 +114,8 @@ void GestShip::updateShips(void *)
     vector<ShipAbstract *>::iterator itShip = lstShip.begin();
 	while (itShip != lstShip.end())
     {
-		if((*itShip)->getIsDead() && (*itShip)->getTypeObject() != ObjectRoot::SHIP_PLAYER)
+		if((*itShip)->getIsDead())
 		{
-			(*itShip)->getNode()->setVisible(false);
-			(*itShip)->getEntity()->setVisible(false);
 			(*itShip)->setShipLife(0);
 			(*itShip)->setSpeed(0);
 			(*itShip)->setAcceleration(0);
@@ -126,24 +128,19 @@ void GestShip::updateShips(void *)
 			(*itShip)->setYawSpeed(Ogre::Radian(0));
 			(*itShip)->setYawAcceleration(Ogre::Radian(0));
 
-			//~ delete *itShip;
-			itShip = lstShip.erase(itShip);
-		}
-		else if((*itShip)->getIsDead())
-		{
-			(*itShip)->setShipLife(0);
-			(*itShip)->setSpeed(0);
-			(*itShip)->setAcceleration(0);
-			(*itShip)->setTranslateSpeed(0);
-			(*itShip)->setTranslateAcceleration(0);
-			(*itShip)->setRollSpeed(Ogre::Radian(0));
-			(*itShip)->setRollAcceleration(Ogre::Radian(0));
-			(*itShip)->setPitchSpeed(Ogre::Radian(0));
-			(*itShip)->setPitchAcceleration(Ogre::Radian(0));
-			(*itShip)->setYawSpeed(Ogre::Radian(0));
-			(*itShip)->setYawAcceleration(Ogre::Radian(0));
-			(*itShip)->updatePosition();
-			itShip++;
+			if((*itShip)->getTypeObject() != ObjectRoot::SHIP_PLAYER)
+			{
+				(*itShip)->getNode()->setVisible(false);
+				(*itShip)->getEntity()->setVisible(false);				
+				//~ delete *itShip;
+				//~ itShip = lstShip.erase(itShip);
+				itShip = this->remShip(*itShip);
+			}
+			else
+			{
+				(*itShip)->updatePosition();
+				itShip++;
+			}
 		}
 		else
 		{

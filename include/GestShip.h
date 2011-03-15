@@ -72,7 +72,7 @@ class GestShip : public ClassRoot
 		 * \brief Supprime un vaisseau du gestionnaire
 		 * \param ship Pointeur sur le vaisseau
 		*/
-        void remShip(ShipAbstract * ship);
+        std::vector<ShipAbstract *>::iterator remShip(ShipAbstract * ship);
 		/*!
 		 * \brief Récupère la liste des vaisseaux
 		 * \return Liste des vaisseaux

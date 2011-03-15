@@ -12,20 +12,19 @@ ShipAbstract::ShipAbstract(ObjectRoot::ObjectType type)
 	  acceleration(0), translateAcceleration(0), rollAcceleration(0), pitchAcceleration(0), yawAcceleration(0),
 	  isTouched(false), isDead(false), lightSpeedPressed(false), firstPos(true), firstDir(true)
 {
-    if(type == ObjectRoot::SHIP_IA)
-    {
-        this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_IA));
-    }
-    else
-    {
-        if(type == ObjectRoot::SHIP_BATTLE_STATION)
-        {
+    switch(type)
+	{
+		case ObjectRoot::SHIP_IA :
+			this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_IA));
+			break;
+			
+		case ObjectRoot::SHIP_BATTLE_STATION :
             this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP_BATTLE_STATION));
-        }
-        else
-        {
+            break;
+		
+		default:
             this->entity = static_cast<Ogre::Entity *>(MeshLoader::getSingleton()->getNodedMovableObject(MeshLoader::SHIP));
-        }
+            break;
     }
 
 	// Calcul des tangentes (si pas présentes dans le mesh)
@@ -188,7 +187,7 @@ void ShipAbstract::isTouch(int degat)
     if(isDead == false)
     {
         setShipLife(getShipLife()-degat);
-        if(getShipLife() < 0)
+        if(getShipLife() <= 0)
         {
 			switch(this->getTypeObject())
 			{
@@ -200,7 +199,6 @@ void ShipAbstract::isTouch(int degat)
 					this->exploded();
 					break;
 			}
-            isDead = true;
         }
         else
         {
