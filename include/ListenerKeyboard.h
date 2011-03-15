@@ -5,10 +5,10 @@
 #ifndef __LISTENER_KEYBOARD_H__
 #define __LISTENER_KEYBOARD_H__
 
+#include <Ogre.h>
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include "ClassRoot.h"
-#include "CameraAbstract.h"
 #include "Signal.h"
 
 /*!

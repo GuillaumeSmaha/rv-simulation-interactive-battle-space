@@ -5,10 +5,10 @@
 #ifndef __LISTENER_MOUSE_H__
 #define __LISTENER_MOUSE_H__
 
+#include <Ogre.h>
 #include <OISInputManager.h>
 #include <OISMouse.h>
 #include "ClassRoot.h"
-#include "CameraAbstract.h"
 #include "Signal.h"
 
 
