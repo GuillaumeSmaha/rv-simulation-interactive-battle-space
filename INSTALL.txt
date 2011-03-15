@@ -1,0 +1,62 @@
+
+Pré-requis pour l'utilisation et la compilation du code :
+
+-----------------------------------------------------------------------------
+Windows :
+
+Il est nécessaire d'installer les librairies suivantes :
+CEGUI, Ogre, Bullet, OgreBullet, OpenAL, libVorbis, libOgg, OgreAL
+
+Il est important de choisir la version en fonction du compilateur utilisé :
+
+CEGUI : http://www.cegui.org.uk/wiki/index.php/CEGUI_Downloads_0.7.5
+Ogre : http://www.ogre3d.org/download/sdk
+OpenAL : http://connect.creativelabs.com/openal/Downloads/OpenAL11CoreSDK.zip
+Bullet : http://code.google.com/p/rv-simulation-interactive-battle-space/downloads/list
+OgreBullet : http://code.google.com/p/rv-simulation-interactive-battle-space/downloads/list
+Vorbis : http://code.google.com/p/rv-simulation-interactive-battle-space/downloads/list
+Ogg : http://code.google.com/p/rv-simulation-interactive-battle-space/downloads/list
+OgreAL : http://code.google.com/p/rv-simulation-interactive-battle-space/downloads/list
+
+A noter qu'il faut définir des variables d'environnement pour chaque librairie afin que Cmake puisse détecter la librairie :
+OGRE_HOME : répertoire de Ogre
+OIS_HOME : répertoire de Ogre
+BOOST_ROOT : le dossier "boost..." dans le répertoire de Ogre
+CEGUI_HOME : le répertoire de CEGUI
+BULLET_HOME : le répertoire de Bullet
+OGREBULLET_HOME : le répertoire de OgreBullet
+OPENAL_SDK : le répertoire où c'est installé OpenAL
+OGG_HOME : le répertoire de Ogg
+VORBIS_HOME : le répertoire de Vorbis
+OGREAL_HOME : le répertoire de OgreAL
+Il y a de disponible dans les sources, deux fichiers bat enregistrant automatiquement les variables d'environnements utilisateur ou global avec les chemins suivants :
+	$DossierCourant suivi de "ogre", "ogrebullet", "cegui", "ogreal", "bullet", "ogg", "vorbis"
+
+
+
+-----------------------------------------------------------------------------
+Linux :
+Installer les packages suivants :
+libois-dev
+libcegui-dev
+libogre-dev
+nvidia-cg-toolkit
+libogg-dev
+libvorbis-dev
+libopenal-dev
+
+Puis exporter les svn suivants :
+bullet : http://bullet.googlecode.com/svn/tags/bullet-2.77/
+ogrebullet : https://ogreaddons.svn.sourceforge.net/svnroot/ogreaddons/trunk/ogrebullet/
+ogreal : https://ogreal.svn.sourceforge.net/svnroot/ogreal/trunk/OgreAL-Eihort/
+Les compiler et les installer.
+
+Attention : 
+	- Pour générer le makefile pour bullet, il faut spécifier les variables suivantes pour cmake : BUILD_SHARED_LIBS=1  et INSTALL_EXTRA_LIBS=1
+		Ce qui donne la commande suivante depuis un sous-répertoire "build" : cmake -DBUILD_SHARED_LIBS=1 -DINSTALL_EXTRA_LIBS=1 ..
+		Cela permet de générer les extras de bullet et de générer la librairie dynamique et pas la statique.
+	- Pour la librairie ogrebullet, il y a 1 erreur à corriger :
+		Dans le fichier "Collisions/src/Utils/OgreBulletCollisionsMeshToShapeConverter.cpp", il faut remplacer la ligne suivante :
+			#include "ConvexBuilder.h"
+			par celle-ci :
+			#include "ConvexDecomposition/ConvexBuilder.h"
