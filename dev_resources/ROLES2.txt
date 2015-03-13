@@ -1,0 +1,7 @@
+Rôle de chacun à la fin de la séance 2:
+	Dimitri - Jérémy: Factory de texture / mesh
+	Pascal - nicolas: Création de mesh
+	Pierre: gestion clef/nom pour les scene node à quantité variable
+	Ting show: creation class planète/Soleil
+	Guillaume Smaha: caméra basique (avec classe vaiseau si nécéssaire)
+	
